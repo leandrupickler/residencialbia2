@@ -1,1717 +1,3503 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Residencial Beatriz - Gerenciador de Aluguéis</title>
-  
-  <!-- Google Fonts -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Residencial Beatriz</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Roboto', 'sans-serif'],
-            display: ['Outfit', 'sans-serif'],
-          },
-          colors: {
-            gblue: {
-              DEFAULT: '#1a73e8',
-              dark: '#1557b0',
-              light: '#e8f0fe',
-            },
-            gred: {
-              DEFAULT: '#ea4335',
-              dark: '#b31412',
-              light: '#fce8e6',
-            },
-            gyellow: {
-              DEFAULT: '#fbbc05',
-              dark: '#b06000',
-              light: '#fef7e0',
-            },
-            ggreen: {
-              DEFAULT: '#34a853',
-              dark: '#137333',
-              light: '#e6f4ea',
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
-    body {
-      background-color: #f8f9fa;
-      color: #202124;
-      -webkit-font-smoothing: antialiased;
+    :root {
+      --blue: #4285F4;
+      --red: #EA4335;
+      --yellow: #FBBC05;
+      --green: #34A853;
+      --bg: #f6f8fc;
+      --card: #ffffff;
+      --text: #202124;
+      --muted: #5f6368;
+      --border: #e8eaed;
+      --shadow: 0 8px 28px rgba(60, 64, 67, 0.12), 0 1px 4px rgba(60, 64, 67, 0.10);
+      --shadow-soft: 0 4px 18px rgba(60, 64, 67, 0.10);
+      --radius: 22px;
     }
-    
-    .ripple-effect {
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(66, 133, 244, 0.14), transparent 34%),
+        radial-gradient(circle at top right, rgba(52, 168, 83, 0.12), transparent 32%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Poppins", "Roboto", Arial, sans-serif;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .login-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: min(620px, 100%);
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 30px;
+      backdrop-filter: blur(18px);
       position: relative;
       overflow: hidden;
     }
-    .ripple-effect::after {
+
+    .login-card::before,
+    .card::before {
       content: "";
-      background: rgba(255, 255, 255, 0.3);
-      display: block;
       position: absolute;
-      border-radius: 50%;
-      padding-top: 240%;
-      padding-left: 240%;
-      margin-top: -120%;
-      margin-left: -120%;
-      opacity: 0;
-      transition: all 0.8s ease;
-    }
-    .ripple-effect:active::after {
-      padding-top: 0;
-      padding-left: 0;
-      margin-top: 0;
-      margin-left: 0;
-      opacity: 1;
-      transition: 0s;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--blue), var(--red), var(--yellow), var(--green));
     }
 
-    .border-google-rainbow {
-      position: relative;
+    .login-logo {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 18px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      box-shadow: 0 14px 28px rgba(66, 133, 244, 0.25);
+      overflow: hidden;
     }
-    .border-google-rainbow::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
+
+    .login-logo img,
+    .brand-logo img,
+    .preview-box img,
+    .photo img {
       width: 100%;
-      height: 6px;
-      background: linear-gradient(90deg, #1a73e8 25%, #ea4335 25%, #ea4335 50%, #fbbc05 50%, #fbbc05 75%, #34a853 75%);
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .login-card h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 1.7rem;
+    }
+
+    .login-card > p {
+      text-align: center;
+      color: var(--muted);
+      margin: 8px 0 22px;
+    }
+
+    .container {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      overflow: hidden;
+      color: #fff;
+      font-weight: 800;
+      font-size: 22px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      box-shadow: 0 12px 24px rgba(66, 133, 244, 0.26);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.2vw, 1.9rem);
+      line-height: 1.05;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .tab-btn,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      transition: 0.18s ease;
+      text-decoration: none;
+    }
+
+    .tab-btn:hover,
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      background: var(--blue);
+      border-color: var(--blue);
+      box-shadow: 0 8px 18px rgba(66, 133, 244, 0.28);
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .btn-success {
+      color: #fff;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .btn-danger {
+      color: #fff;
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    .btn-warning {
+      color: #2b2100;
+      background: var(--yellow);
+      border-color: var(--yellow);
+    }
+
+    .btn-light {
+      color: var(--muted);
+      background: #f8fafd;
+    }
+
+    .btn-sm {
+      min-height: 34px;
+      padding: 8px 12px;
+      font-size: 0.84rem;
+    }
+
+    main {
+      margin-top: 22px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+      animation: fadeIn 0.18s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 14px;
+      margin: 24px 0 14px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.28rem;
+    }
+
+    .section-title p {
+      margin: 5px 0 0;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(232, 234, 237, 0.9);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-filter {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .dashboard-filter .field {
+      min-width: 240px;
+    }
+
+    .filter-badge,
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(66, 133, 244, 0.10);
+      color: var(--blue);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .sync-badge.ok {
+      background: rgba(52, 168, 83, 0.12);
+      color: var(--green);
+    }
+
+    .sync-badge.warn {
+      background: rgba(251, 188, 5, 0.18);
+      color: #8a6500;
+    }
+
+    .sync-badge.error {
+      background: rgba(234, 67, 53, 0.12);
+      color: var(--red);
+    }
+
+    .stat-card {
+      min-height: 128px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .stat-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(66, 133, 244, 0.12);
+      color: var(--blue);
+      flex: 0 0 auto;
+    }
+
+    .icon.red {
+      background: rgba(234, 67, 53, 0.12);
+      color: var(--red);
+    }
+
+    .icon.yellow {
+      background: rgba(251, 188, 5, 0.18);
+      color: #8a6500;
+    }
+
+    .icon.green {
+      background: rgba(52, 168, 83, 0.12);
+      color: var(--green);
+    }
+
+    .stat-value {
+      margin-top: 16px;
+      font-size: clamp(1.35rem, 2.8vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .stat-note {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .chart-card h3,
+    .profit-card h3 {
+      margin: 0 0 14px;
+      font-size: 1.05rem;
+    }
+
+    .pie-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      align-items: center;
+      gap: 18px;
+      min-height: 220px;
+    }
+
+    .pie {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 0 1px rgba(60, 64, 67, 0.08), 0 16px 30px rgba(60, 64, 67, 0.12);
+    }
+
+    .pie-center {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid var(--border);
+      font-weight: 800;
+      font-size: 0.86rem;
+    }
+
+    .pie-empty {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      text-align: center;
+      background: repeating-linear-gradient(45deg, #eef1f6, #eef1f6 8px, #f8fafd 8px, #f8fafd 16px);
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .legend {
+      display: grid;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .legend-item {
+      display: grid;
+      grid-template-columns: 14px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .legend strong {
+      color: var(--text);
+    }
+
+    .profit-card {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(145deg, #fff, #f7fbff);
+    }
+
+    .profit-value {
+      margin: 10px 0;
+      color: var(--green);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.06em;
+    }
+
+    .profit-value.negative {
+      color: var(--red);
+    }
+
+    .reference {
+      padding: 14px;
+      border-radius: 16px;
+      background: #f1f4f9;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .form-row.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-row.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    label {
+      color: #3c4043;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      outline: none;
+      background: #fff;
+      color: var(--text);
+      transition: 0.18s ease;
+    }
+
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.12);
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .mini {
+      font-size: 0.82rem;
+    }
+
+    .list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 3px 14px rgba(60, 64, 67, 0.07);
+    }
+
+    .photo {
+      width: 74px;
+      height: 74px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: var(--blue);
+      background: linear-gradient(135deg, rgba(66, 133, 244, 0.18), rgba(52, 168, 83, 0.18));
+      font-weight: 900;
+    }
+
+    .item h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 7px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #f1f4f9;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .pill.blue {
+      background: rgba(66, 133, 244, 0.12);
+      color: var(--blue);
+    }
+
+    .pill.red {
+      background: rgba(234, 67, 53, 0.12);
+      color: var(--red);
+    }
+
+    .pill.yellow {
+      background: rgba(251, 188, 5, 0.18);
+      color: #8a6500;
+    }
+
+    .pill.green {
+      background: rgba(52, 168, 83, 0.12);
+      color: var(--green);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      min-width: 980px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f8fafd;
+      color: #3c4043;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .td-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      min-width: 190px;
+    }
+
+    .empty {
+      padding: 28px;
+      border: 1px dashed #cfd5df;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.72);
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty i {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--blue);
+      font-size: 2rem;
+    }
+
+    .alert-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contract-alert {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(251, 188, 5, 0.34);
+      background: rgba(251, 188, 5, 0.13);
+    }
+
+    .contract-alert strong {
+      color: #6f5100;
+    }
+
+    .preview-box {
+      display: grid;
+      place-items: center;
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      border: 1px dashed #cfd5df;
+      background: #f1f4f9;
+      overflow: hidden;
+      color: var(--muted);
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+
+    .file-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .total-preview {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(66, 133, 244, 0.16);
+      background: linear-gradient(135deg, rgba(66, 133, 244, 0.10), rgba(52, 168, 83, 0.10));
+    }
+
+    .total-preview .amount {
+      color: var(--blue);
+      font-size: 1.7rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .footer {
+      margin: 22px 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 999;
+      max-width: min(480px, calc(100vw - 48px));
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: #202124;
+      color: #fff;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: 0.2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .security-note {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(234, 67, 53, 0.18);
+      background: rgba(234, 67, 53, 0.07);
+      color: #7a2019;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .github-panel {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: #f8fafd;
+    }
+
+    @media (max-width: 1120px) {
+      .topbar {
+        position: static;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .tabs {
+        justify-content: flex-start;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row,
+      .form-row.two,
+      .form-row.three {
+        grid-template-columns: 1fr;
+      }
+
+      .pie-layout {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        padding: 14px;
+      }
+
+      .topbar,
+      .card,
+      .login-card {
+        border-radius: 20px;
+      }
+
+      .brand h1 {
+        white-space: normal;
+      }
+
+      .tab-btn {
+        flex: 1 1 auto;
+      }
+
+      .item {
+        grid-template-columns: 1fr;
+      }
+
+      .actions,
+      .form-actions {
+        justify-content: flex-start;
+      }
+
+      .contract-alert,
+      .total-preview {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-filter .field {
+        min-width: 100%;
+      }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans">
 
-  <!-- CABEÇALHO DO GOOGLE (Navbar) -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 px-4 sm:px-6 lg:px-8 border-google-rainbow pt-1.5 flex-shrink-0">
-    <div class="max-w-7xl mx-auto flex items-center justify-between h-16">
-      <div class="flex items-center space-x-3">
-        <!-- Logo customizável injetada por JS -->
-        <div id="appLogoContainer" class="flex-shrink-0">
-          <!-- padrão: icone de casinha SVG -->
-        </div>
-        <div class="flex space-x-1 font-display font-medium text-lg text-slate-800 tracking-tight items-center">
-          <span id="appNamePlaceholder" class="font-display font-extrabold text-[#3c4043] tracking-tight">Residencial Beatriz</span>
-          <span class="hidden md:inline-block text-[10px] font-bold uppercase tracking-widest text-[#1a73e8] bg-blue-100/60 px-2.5 py-0.5 rounded-full ml-2">
-            Material LocalStorage
-          </span>
-        </div>
+<body>
+  <section id="loginScreen" class="login-screen">
+    <article class="login-card">
+      <div class="login-logo" id="loginLogo">RB</div>
+      <h1 id="loginTitle">Residencial Beatriz</h1>
+      <p>Entre para acessar o painel de gestão.</p>
+
+      <div class="sync-badge warn" id="loginSyncStatus">
+        <i class="fa-brands fa-github"></i>
+        GitHub não configurado
       </div>
 
-      <div class="flex items-center space-x-2">
-        <button onclick="openModalConfig()" class="border border-gray-300 text-gray-600 hover:bg-gray-100 p-2.5 rounded-full transition-all flex items-center justify-center" title="Configurações do Sistema">
-          <svg class="h-4.5 w-4.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
+      <form id="loginForm" style="margin-top:18px;">
+        <div class="field">
+          <label for="loginUser">Usuário</label>
+          <input id="loginUser" type="text" autocomplete="username" placeholder="residencial" required>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Senha</label>
+          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
+        </div>
+
+        <button class="btn btn-primary" type="submit" style="width:100%; margin-top:8px;">
+          <i class="fa-solid fa-right-to-bracket"></i> Entrar
         </button>
-        <button id="btnOpenAddModal" class="bg-gblue text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-gblue-dark transition-all ripple-effect inline-flex items-center space-x-1.5 shadow-xs">
-          <span>Cadastrar Imóvel</span>
+      </form>
+
+      <div class="github-panel">
+        <h3 style="margin:0 0 10px;"><i class="fa-brands fa-github"></i> Conexão GitHub</h3>
+
+        <form id="githubLoginConfigForm">
+          <div class="form-row two">
+            <div class="field">
+              <label for="loginGithubOwner">Usuário/Organização</label>
+              <input id="loginGithubOwner" type="text" placeholder="Ex.: leandropickler">
+            </div>
+
+            <div class="field">
+              <label for="loginGithubRepo">Repositório</label>
+              <input id="loginGithubRepo" type="text" placeholder="Ex.: residencial-beatriz">
+            </div>
+          </div>
+
+          <div class="form-row two">
+            <div class="field">
+              <label for="loginGithubBranch">Branch</label>
+              <input id="loginGithubBranch" type="text" value="main">
+            </div>
+
+            <div class="field">
+              <label for="loginGithubPath">Arquivo de dados</label>
+              <input id="loginGithubPath" type="text" value="dados/residencial-beatriz.json">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="loginGithubToken">Token GitHub</label>
+            <input id="loginGithubToken" type="password" placeholder="Cole aqui o Fine-grained Personal Access Token">
+            <span class="mini muted">O token fica salvo somente neste navegador. Não coloque o token dentro do código.</span>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">
+              <i class="fa-solid fa-floppy-disk"></i> Salvar conexão
+            </button>
+
+            <button class="btn btn-light" type="button" id="loginLoadGithubBtn">
+              <i class="fa-solid fa-cloud-arrow-down"></i> Carregar dados
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <p class="mini muted" style="margin-top:18px;">
+        Usuário padrão inicial: <strong>residencial</strong> | Senha: <strong>beatrizpickler</strong>
+      </p>
+    </article>
+  </section>
+
+  <div id="appShell" class="container hidden">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo" id="brandLogo">RB</div>
+        <div>
+          <h1 id="brandTitle">Residencial Beatriz</h1>
+          <p id="currentUserInfo">Gestão de imóveis, moradores, contratos, despesas e cobranças</p>
+        </div>
+      </div>
+
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i> Dashboard
         </button>
-      </div>
-    </div>
-  </header>
+        <button class="tab-btn" data-tab="apartments">
+          <i class="fa-solid fa-building"></i> Imóveis
+        </button>
+        <button class="tab-btn" data-tab="expenses">
+          <i class="fa-solid fa-receipt"></i> Despesas
+        </button>
+        <button class="tab-btn" data-tab="entries">
+          <i class="fa-solid fa-file-invoice-dollar"></i> Lançamentos
+        </button>
+        <button class="tab-btn" data-tab="settings">
+          <i class="fa-solid fa-gear"></i> Configurações
+        </button>
+        <button class="btn btn-light" id="reloadGithubBtn">
+          <i class="fa-solid fa-rotate"></i> Atualizar
+        </button>
+        <button class="btn btn-danger" id="logoutBtn">
+          <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </button>
+      </nav>
+    </header>
 
-  <!-- CONTEÚDO PRINCIPAL (Main) -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-    
-    <!-- BANNER HERO -->
-    <div class="bg-gradient-to-r from-gblue-light/50 via-white to-white border border-blue-100 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
-      <div>
-        <h2 class="text-2xl font-bold font-display text-gray-950 flex items-center gap-2">
-          <span id="heroWelcomeTitle">Bem-vindo ao Residencial Beatriz</span>
-          <span class="text-lg">⚡</span>
-        </h2>
-        <p class="text-sm text-gray-500 max-w-xl mt-1">
-          Controle financeiro de aluguéis, leitura de energia elétrica, recálculo de COSIP e demonstrativo acumulativo. Salvo localmente de forma rápida no navegador.
-        </p>
-      </div>
-    </div>
-
-    <!-- SEÇÃO DE RELATÓRIO / TOTAIS COM GRÁFICOS EM PIZZA -->
-    <section class="space-y-6">
-      <div class="flex items-center justify-between flex-wrap gap-2 text-left">
-        <div class="flex items-center space-x-2">
-          <svg class="h-5 w-5 text-gblue" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-          </svg>
-          <h3 class="text-lg font-bold text-gray-905 font-display text-gray-900">Painel Geral & Dashboards Analíticos</h3>
-        </div>
-        <span class="text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-gray-200">
-          Dados em Real-Time • Consolidado Geral
-        </span>
-      </div>
-
-      <!-- BOARD PIE CHARTS BENTO BLOCK -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 text-left">
-        
-        <!-- GRÁFICO 1: Faturamento vs Despesas -->
-        <div class="bg-white rounded-3xl p-5 border border-gray-200 shadow-xs flex flex-col justify-between" id="grafico-faturamento-vs-despesas">
+    <main>
+      <section id="page-dashboard" class="page active">
+        <div class="section-title">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Pizza 1 • Faturamento vs Despesas</span>
-              <span class="text-xs font-semibold text-gray-500">Geral</span>
-            </div>
-            <h4 class="text-sm font-bold text-gray-800 tracking-tight mb-4 font-display">Eficiência Operacional</h4>
+            <h2>Painel financeiro</h2>
+            <p>Resumo automático com filtro temporal e dados salvos no GitHub.</p>
+          </div>
+        </div>
+
+        <div class="dashboard-filter">
+          <div class="field">
+            <label for="dashboardPeriod">Seletor de Período</label>
+            <select id="dashboardPeriod">
+              <option value="last6">Últimos 6 Meses</option>
+              <option value="currentYear">Último Ano (Padrão/Corrente)</option>
+              <option value="last2">Últimos 2 Anos</option>
+            </select>
           </div>
 
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-6 py-2">
-            <!-- SVG Pizza 1 -->
-            <div class="relative w-28 h-28 flex-shrink-0">
-              <svg viewBox="0 0 42 42" class="w-full h-full transform -rotate-90">
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f3f4f6" stroke-width="6" />
-                <circle id="p1FatSegment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#1a73e8" stroke-width="6" stroke-dasharray="100 0" stroke-dashoffset="0" class="transition-all duration-350" />
-                <circle id="p1DesSegment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ea4335" stroke-width="6" stroke-dasharray="0 100" stroke-dashoffset="0" class="transition-all duration-350" />
-              </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span class="text-[9px] font-bold text-gray-400 uppercase leading-none">Net</span>
-                <span id="p1NetPercent" class="text-sm font-black text-gray-800 mt-0.5">100%</span>
+          <div class="field">
+            <label for="dashboardYear">Histórico por Ano</label>
+            <select id="dashboardYear"></select>
+          </div>
+
+          <div class="filter-badge" id="periodBadge">
+            <i class="fa-solid fa-calendar-days"></i>
+            Ano corrente
+          </div>
+
+          <div class="sync-badge" id="syncStatusBadge">
+            <i class="fa-brands fa-github"></i>
+            Aguardando sincronização
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Faturamento bruto</span>
+              <span class="icon"><i class="fa-solid fa-sack-dollar"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="grossValue">R$ 0,00</div>
+              <p class="stat-note">Aluguel + Luz + COSIP no período.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesas administrativas</span>
+              <span class="icon red"><i class="fa-solid fa-arrow-trend-down"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="expenseValue">R$ 0,00</div>
+              <p class="stat-note">IPTU + Internet + Manutenção.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Aluguel recebido</span>
+              <span class="icon yellow"><i class="fa-solid fa-key"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="rentValue">R$ 0,00</div>
+              <p class="stat-note">Somente valor de aluguel.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Luz/COSIP recebida</span>
+              <span class="icon green"><i class="fa-solid fa-bolt"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="energyValue">R$ 0,00</div>
+              <p class="stat-note">kWh + COSIP.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid grid-3" style="margin-top:18px;">
+          <article class="card chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Faturamento Bruto vs Despesas</h3>
+            <div id="pieCashFlow" class="pie-layout"></div>
+          </article>
+
+          <article class="card chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Proporção de Ganhos</h3>
+            <div id="pieRevenueDivision" class="pie-layout"></div>
+          </article>
+
+          <article class="card profit-card">
+            <div>
+              <h3><i class="fa-solid fa-trophy"></i> Lucro Líquido Real</h3>
+              <p class="muted mini">Despesas do proprietário não são cobradas do inquilino.</p>
+              <div class="profit-value" id="netProfitValue">R$ 0,00</div>
+            </div>
+
+            <div class="reference" id="profitReference">
+              R$ 0,00 - R$ 0,00 = R$ 0,00
+            </div>
+          </article>
+        </div>
+
+        <div class="section-title">
+          <div>
+            <h2>Alertas de contratos</h2>
+            <p>Contratos que vencem no mês seguinte, considerando ciclo de 6 meses.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div id="contractAlerts" class="alert-list"></div>
+        </article>
+      </section>
+
+      <section id="page-apartments" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Gestão de imóveis e ficha dos moradores</h2>
+            <p>Todos os dados cadastrais podem ser editados a qualquer momento.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <form id="apartmentForm">
+            <input type="hidden" id="apartmentEditId">
+
+            <h3>Dados do apartamento</h3>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="apartmentNumber">ID/Número do Apto *</label>
+                <input id="apartmentNumber" type="text" placeholder="Ex.: Apto 01" required>
+              </div>
+
+              <div class="field">
+                <label for="baseRent">Valor Base do Aluguel *</label>
+                <input id="baseRent" type="number" min="0" step="0.01" placeholder="0,00" required>
+              </div>
+
+              <div class="field">
+                <label for="contractStart">Início do Contrato *</label>
+                <input id="contractStart" type="date" required>
+              </div>
+
+              <div class="field">
+                <label for="contractEnd">Vencimento do Contrato</label>
+                <input id="contractEnd" type="date" required>
+                <span class="mini muted">Calculado para 6 meses, mas pode ser ajustado.</span>
               </div>
             </div>
 
-            <!-- Legenda Lateral -->
-            <div class="flex-1 space-y-2.5 w-full">
-              <div class="flex flex-col">
-                <div class="flex items-center gap-1.5 flex" style="display: flex; align-items: center;">
-                  <div class="h-2.5 w-2.5 rounded-full bg-gblue flex-shrink-0 mr-1.5"></div>
-                  <span class="text-xs font-bold text-gray-750">Faturamento Bruto</span>
-                </div>
-                <div class="flex justify-between items-center text-[11px] pl-4 text-gray-500 font-semibold font-mono">
-                  <span id="lblP1FaturamentoVal">R$ 0,00</span>
-                  <span id="lblP1FaturamentoPct" class="text-gblue">100%</span>
-                </div>
+            <div class="form-row two">
+              <div class="field">
+                <label for="apartmentDescription">Descrição do Imóvel</label>
+                <textarea id="apartmentDescription" placeholder="Ex.: quarto, cozinha, banheiro, garagem, observações..."></textarea>
               </div>
 
-              <div class="flex flex-col">
-                <div class="flex items-center gap-1.5 flex" style="display: flex; align-items: center;">
-                  <div class="h-2.5 w-2.5 rounded-full bg-gred flex-shrink-0 mr-1.5"></div>
-                  <span class="text-xs font-bold text-gray-750">Despesas Adm.</span>
+              <div class="file-row">
+                <div class="preview-box" id="apartmentPhotoPreview">Foto</div>
+
+                <div class="field" style="flex:1; min-width:260px;">
+                  <label for="apartmentPhoto">Foto do imóvel</label>
+                  <input id="apartmentPhoto" type="file" accept="image/*">
+                  <span class="mini muted">A imagem será convertida em Base64 e salva no GitHub.</span>
                 </div>
-                <div class="flex justify-between items-center text-[11px] pl-4 text-gray-500 font-semibold font-mono">
-                  <span id="lblP1DespesaVal">R$ 0,00</span>
-                  <span id="lblP1DespesaPct" class="text-gred">0%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- GRÁFICO 2: Divisão de Receita (Aluguel vs Luz) -->
-        <div class="bg-white rounded-3xl p-5 border border-gray-200 shadow-xs flex flex-col justify-between" id="grafico-divisao-receita">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Pizza 2 • Divisão de Receita</span>
-              <span class="text-xs font-semibold text-gray-500">Misto</span>
-            </div>
-            <h4 class="text-sm font-bold text-gray-800 tracking-tight mb-4 font-display">Composição de Entrada</h4>
-          </div>
-
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-6 py-2">
-            <!-- SVG Pizza 2 -->
-            <div class="relative w-28 h-28 flex-shrink-0">
-              <svg viewBox="0 0 42 42" class="w-full h-full transform -rotate-90">
-                <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#f3f4f6" stroke-width="6" />
-                <circle id="p2AluSegment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#34a853" stroke-width="6" stroke-dasharray="80 20" stroke-dashoffset="0" class="transition-all duration-350" />
-                <circle id="p2LuzSegment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#fbbc05" stroke-width="6" stroke-dasharray="20 80" stroke-dashoffset="0" class="transition-all duration-350" />
-              </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span class="text-[9px] font-bold text-gray-400 uppercase leading-none">Aluguel</span>
-                <span id="p2AluPercent" class="text-sm font-black text-gray-800 mt-0.5">80%</span>
-              </div>
-            </div>
-
-            <!-- Legenda Lateral -->
-            <div class="flex-1 space-y-2.5 w-full">
-              <div class="flex flex-col">
-                <div class="flex items-center gap-1.5 flex" style="display: flex; align-items: center;">
-                  <div class="h-2.5 w-2.5 rounded-full bg-ggreen flex-shrink-0 mr-1.5"></div>
-                  <span class="text-xs font-bold text-gray-750">Aluguel Base</span>
-                </div>
-                <div class="flex justify-between items-center text-[11px] pl-4 text-gray-500 font-semibold font-mono">
-                  <span id="lblP2AluguelVal">R$ 0,00</span>
-                  <span id="lblP2AluguelPct" class="text-ggreen-dark text-emerald-600">80%</span>
-                </div>
-              </div>
-
-              <div class="flex flex-col">
-                <div class="flex items-center gap-1.5 flex" style="display: flex; align-items: center;">
-                  <div class="h-2.5 w-2.5 rounded-full bg-gyellow flex-shrink-0 mr-1.5"></div>
-                  <span class="text-xs font-bold text-gray-750">Luz & COSIP</span>
-                </div>
-                <div class="flex justify-between items-center text-[11px] pl-4 text-gray-500 font-semibold font-mono">
-                  <span id="lblP2LuzVal">R$ 0,00</span>
-                  <span id="lblP2LuzPct" class="text-gyellow-dark text-amber-600">20%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD DE DESTAQUE: Lucro Líquido Real -->
-        <div class="bg-gradient-to-br from-blue-600 via-indigo-600 to-gblue text-white rounded-3xl p-5 shadow-sm flex flex-col justify-between border border-blue-500 relative overflow-hidden" id="card-lucro-liquido-total">
-          <!-- Círculos decorativos -->
-          <div class="absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-white/10 blur-xl pointer-events-none"></div>
-
-          <div>
-            <div class="flex justify-between items-center flex" style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="text-[10px] uppercase font-bold tracking-wider text-white/70">Lucro Líquido Real</span>
-              <span class="bg-emerald-500/30 border border-emerald-500/20 text-white text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full">
-                ✔ Ativo
-              </span>
-            </div>
-            
-            <div class="mt-4">
-              <span class="text-xs text-white/80 font-medium">Lucro Líquido Consolidado</span>
-              <h3 id="totLucroLiquidoGlobal" class="text-3xl font-black font-display tracking-tight text-white mt-1">
-                R$ 0,00
-              </h3>
-            </div>
-          </div>
-
-          <div class="border-t border-white/15 pt-3.5 mt-5 text-left">
-            <!-- Requisito de linha descritiva literal -->
-            <p id="lblLucroLiquidoDescLine" class="text-[10px] text-white/80 font-mono tracking-tight leading-normal uppercase">
-              Faturamento Bruto: R$ 0,00 | Despesas: R$ 0,00 | Lucro Líquido: R$ 0,00
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- QUICK STATS CARDS -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-        <!-- Card 1: Total Geral Arrecadado -->
-        <div class="bg-white rounded-2xl p-4.5 border border-gray-200 shadow-xs flex items-center" style="display: flex; align-items: center; padding: 1rem;">
-          <div class="p-2.5 rounded-xl bg-gblue-light text-gblue border border-blue-100 flex-shrink-0 mr-3" style="font-size: 1.25rem; margin-right: 0.75rem;">
-            💵
-          </div>
-          <div>
-            <span class="text-[9px] uppercase font-extrabold text-gray-400 tracking-wider">Faturamento Geral</span>
-            <h4 id="totGeralDevido" class="text-sm font-black text-gray-950 tracking-tight mt-0.5">R$ 0,00</h4>
-          </div>
-        </div>
-
-        <!-- Card 2: Receita Aluguel Total -->
-        <div class="bg-white rounded-2xl p-4.5 border border-gray-200 shadow-xs flex items-center" style="display: flex; align-items: center; padding: 1rem;">
-          <div class="p-2.5 rounded-xl bg-green-50 text-ggreen border border-green-100 flex-shrink-0 mr-3" style="font-size: 1.25rem; margin-right: 0.75rem;">
-            🏠
-          </div>
-          <div>
-            <span class="text-[9px] uppercase font-extrabold text-gray-400 tracking-wider">Soma de Aluguéis</span>
-            <h4 id="totGeralAluguelExib" class="text-sm font-black text-gray-950 tracking-tight mt-0.5">R$ 0,00</h4>
-          </div>
-        </div>
-
-        <!-- Card 3: Luz/COSIP Total -->
-        <div class="bg-white rounded-2xl p-4.5 border border-gray-200 shadow-xs flex items-center" style="display: flex; align-items: center; padding: 1rem;">
-          <div class="p-2.5 rounded-xl bg-yellow-50 text-gyellow border border-yellow-100 flex-shrink-0 mr-3" style="font-size: 1.25rem; margin-right: 0.75rem;">
-            ⚡
-          </div>
-          <div>
-            <span class="text-[9px] uppercase font-extrabold text-gray-400 tracking-wider">Luz Coletada</span>
-            <h4 id="totGeralLuz" class="text-sm font-black text-gray-950 tracking-tight mt-0.5">R$ 0,00</h4>
-          </div>
-        </div>
-
-        <!-- Card 4: Despesas Gerais -->
-        <div class="bg-white rounded-2xl p-4.5 border border-gray-200 shadow-xs flex items-center" style="display: flex; align-items: center; padding: 1rem;">
-          <div class="p-2.5 rounded-xl bg-red-50 text-gred border border-red-100 flex-shrink-0 mr-3" style="font-size: 1.25rem; margin-right: 0.75rem;">
-            🔧
-          </div>
-          <div>
-            <span class="text-[9px] uppercase font-extrabold text-gray-400 tracking-wider">Despesas Administrativas</span>
-            <h4 id="totDespesasExib" class="text-sm font-black text-gray-950 tracking-tight mt-0.5">R$ 0,00</h4>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- PAINEL CENTRALIZADO: CONTROLE DE DESPESAS DO PROPRIETÁRIO -->
-    <div class="bg-white rounded-3xl border border-gray-200 shadow-xs overflow-hidden mt-8 text-left" id="painel-controle-despesas-proprietario">
-      <button
-        onclick="toggleOwnerDespesasExpanded()"
-        class="w-full px-6 py-4 flex justify-between items-center bg-gray-50/50 hover:bg-gray-100/40 transition-all text-sm font-bold text-gray-900 border-b border-gray-100"
-      >
-        <div class="flex items-center space-x-3 text-left animate-fade-in" style="display: flex; align-items: center;">
-          <div class="p-2.5 bg-red-50 text-gred border border-red-100 rounded-2xl flex-shrink-0 mr-3">
-            🔧
-          </div>
-          <div>
-            <h4 class="font-extrabold text-sm text-gray-900">Controle de Despesas do Proprietário (Controle Interno)</h4>
-            <p class="text-xs text-gray-500 font-normal mt-0.5">IPTU, Internet e Custos Extras Administrativos. <strong class="text-gred font-semibold">Isso não é cobrado dos inquilinos.</strong></p>
-          </div>
-        </div>
-        
-        <div class="flex items-center space-x-3 flex-shrink-0" style="display: flex; align-items: center;">
-          <span id="ownerDespesasHeaderCount" class="text-xs font-black bg-red-50 border border-red-100 text-gred px-3 py-1 rounded-full">
-            0 Registro(s) • Total: R$ 0,00
-          </span>
-          <span id="ownerDespesasTogglerIcon" class="ml-2">▼</span>
-        </div>
-      </button>
-
-      <div id="ownerDespesasPanelBody" class="hidden">
-        <div class="p-6 space-y-6">
-          <!-- Formulário de Adicionar / Editar Despesa -->
-          <div id="ownerDespesaFormContainer" class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
-            <div class="flex justify-between items-center" style="display: flex; justify-content: space-between; align-items: center;">
-              <h5 class="font-bold text-gray-900 text-xs flex items-center">
-                <span class="mr-1.5">🔧</span> <span id="lblOwnerDespesaFormTitle">Lançar Nova Despesa Administrativa</span>
-              </h5>
-              <button onclick="clearOwnerDespesaForm()" type="button" class="text-gray-400 hover:text-gray-600 rounded-full text-xs">✕ Limpar</button>
-            </div>
-
-            <form id="formOwnerDespesa" onsubmit="saveOwnerDespesa(event)" class="space-y-4">
-              <input type="hidden" id="ownerDespesaEditId">
-              <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
-                <div class="sm:col-span-2 text-left">
-                  <label class="block text-[10px] uppercase font-bold text-gray-500 mb-1">Descrição / Finalidade</label>
-                  <input
-                    type="text"
-                    id="ownerDespesaDesc"
-                    required
-                    placeholder="Ex: IPTU Mensal Beatriz, Provedor Fibra, Pintor"
-                    class="w-full px-3 py-2 border border-gray-250 rounded-xl bg-white focus:outline-hidden text-xs text-slate-900 font-semibold focus:ring-1 focus:ring-gred"
-                  />
-                </div>
-                <div class="text-left">
-                  <label class="block text-[10px] uppercase font-bold text-gray-500 mb-1">Valor do Gasto (R$)</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    id="ownerDespesaValor"
-                    required
-                    placeholder="0,00"
-                    class="w-full px-3 py-2 border border-gray-250 rounded-xl bg-white focus:outline-hidden text-xs text-slate-900 font-bold focus:ring-1 focus:ring-gred"
-                  />
-                </div>
-                <div class="text-left">
-                  <label class="block text-[10px] uppercase font-bold text-gray-500 mb-1">Tipo da Despesa</label>
-                  <select
-                    id="ownerDespesaCategoria"
-                    class="w-full px-3 py-1.5 border border-gray-250 rounded-xl bg-white focus:outline-hidden text-xs text-slate-800 font-bold focus:ring-1 focus:ring-gred"
-                  >
-                    <option value="IPTU">IPTU Geral</option>
-                    <option value="Internet">Internet Banda Larga</option>
-                    <option value="Manutenção">Manutenção/Serviços</option>
-                    <option value="Outros">Outras Despesas</option>
-                  </select>
-                </div>
-                <div class="text-left">
-                  <label class="block text-[10px] uppercase font-bold text-gray-500 mb-1">Data de Lançamento</label>
-                  <input
-                    type="date"
-                    id="ownerDespesaData"
-                    required
-                    class="w-full px-3 py-2 text-xs border border-gray-250 rounded-xl bg-white focus:outline-hidden text-slate-800 font-semibold focus:ring-1 focus:ring-gred"
-                  />
-                </div>
-              </div>
-
-              <div class="flex justify-end gap-2.5 pt-1" style="display: flex; justify-content: flex-end; gap: 0.5rem;">
-                <button
-                  type="button"
-                  onclick="clearOwnerDespesaForm()"
-                  class="px-4 py-2 hover:bg-gray-100 border border-gray-200 rounded-full text-xs font-bold text-gray-600 transition-all focus:outline-none"
-                >
-                  Limpar
-                </button>
-                <button
-                  type="submit"
-                  class="px-5 py-2 bg-gred text-white hover:bg-gred-dark rounded-full text-xs font-bold transition-all shadow-sm focus:outline-none"
-                >
-                  <span id="lblOwnerDespesaBtnSubmit">Cadastrar Gasto</span>
+                <button class="btn btn-light" type="button" id="removeApartmentPhotoBtn">
+                  <i class="fa-solid fa-ban"></i> Remover foto
                 </button>
               </div>
-            </form>
-          </div>
-
-          <!-- Tabela de Despesas Lançadas -->
-          <div id="ownerDespesasTableContainer" class="overflow-x-auto border border-gray-150 rounded-2xl hidden">
-            <!-- Renderizado via JS -->
-          </div>
-          <div id="ownerDespesasEmptyMsg" class="text-center py-8 text-gray-400 italic text-xs bg-slate-50 border border-dashed border-gray-200 rounded-2xl block">
-            Nenhuma despesa de controle interno cadastrada no momento. Use o formulário acima para lançá-las.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LISTAGEM DE IMÓVEIS E PAINEL -->
-    <section>
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-bold text-gray-900 font-display flex items-center space-x-2">
-          <span>Apartamentos Cadastrados</span>
-          <span id="totImoveisCount" class="text-xs font-bold bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">0</span>
-        </h3>
-      </div>
-
-      <!-- Grid de Cards de Apartamento -->
-      <div id="apartmentsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Inserido via Javascript dinamicamente -->
-      </div>
-    </section>
-  </main>
-
-  <!-- MODAL: CONFIGURAÇÕES GERAIS DA IDENTIDADE -->
-  <div id="modalConfig" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
-    <div class="absolute inset-0 bg-gray-950/60 backdrop-blur-xs" onclick="closeModalConfig()"></div>
-    <div class="bg-white rounded-3xl w-full max-w-lg shadow-xl relative border border-gray-250 overflow-hidden flex flex-col max-h-[90vh]">
-      <div class="p-6 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
-        <h3 class="text-lg font-bold text-gray-900 font-display">Configurações do Residencial</h3>
-        <button onclick="closeModalConfig()" class="text-gray-400 hover:text-gray-800 p-1 rounded-full hover:bg-gray-200 transition-all">✕</button>
-      </div>
-      
-      <form id="formConfig" class="p-6 space-y-4 overflow-y-auto flex-1">
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Nome Personalizado da Aplicação</label>
-          <input type="text" id="configAppName" placeholder="Ex: Residencial Beatriz" class="w-full px-4 py-2.5 border border-gray-250 rounded-xl focus:outline-none focus:ring-2 focus:ring-gblue bg-slate-50 focus:bg-white text-sm font-semibold">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Opção 1: Link de Imagem Logo Externo</label>
-          <input type="url" id="configLogoUrl" placeholder="Ex: https://meuservico.com.br/logo.png" class="w-full px-4 py-2.5 border border-gray-250 rounded-xl focus:outline-none focus:ring-2 focus:ring-gblue bg-slate-50 focus:bg-white text-sm" oninput="previewConfigLogoUrl()">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Opção 2: Ou faça upload da Image para Logo</label>
-          <div class="border-2 border-dashed border-gray-300 rounded-2xl p-4 text-center cursor-pointer hover:bg-gray-50 transition-all relative" onclick="triggerConfigLogoFileInput()">
-            <input type="file" id="configLogoFile" accept="image/*" class="hidden" onchange="previewConfigLogoImage(event)">
-            <div id="configUploadPlaceholder" class="space-y-1.5">
-              <span class="text-lg">📸</span>
-              <p class="text-xs text-gray-600">Arraste ou clique para carregar a logo do residencial</p>
             </div>
-            <div id="configLogoPreviewContainer" class="hidden relative inline-block">
-              <img id="configLogoPreview" class="h-14 w-auto mx-auto object-contain rounded-md border border-gray-200 p-1 bg-white">
-              <button type="button" onclick="removeConfigLogoPreview(event)" class="absolute -top-1.5 -right-1.5 bg-gred text-white p-1 rounded-full text-[9px] shadow hover:scale-105">✕</button>
-            </div>
-          </div>
-        </div>
 
-        <div class="bg-gray-50 p-4 rounded-2xl border border-gray-150 flex items-center justify-between text-xs">
-          <span class="text-gray-500 font-medium">Deseja desfazer as alterações e voltar ao original?</span>
-          <button type="button" onclick="restaurarConfigPadrao()" class="text-gred font-bold hover:underline">Restaurar Padrão</button>
-        </div>
+            <h3>Ficha cadastral do inquilino</h3>
 
-        <div class="pt-4 flex justify-end space-x-2">
-          <button type="button" onclick="closeModalConfig()" class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-full text-xs font-bold">Cancelar</button>
-          <button type="submit" class="bg-gblue text-white hover:bg-gblue-dark px-5 py-2.5 rounded-full text-xs font-bold shadow-sm hover:shadow transition-all">Salvar Configurações</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- MODAL: CADASTRO E EDIÇÃO DE APARTAMENTO -->
-  <div id="modalApto" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
-    <div class="absolute inset-0 bg-gray-950/60 backdrop-blur-xs" onclick="closeModalApto()"></div>
-    <div class="bg-white rounded-3xl w-full max-w-lg shadow-xl relative border border-gray-200 overflow-hidden flex flex-col max-h-[90vh]">
-      <div class="p-6 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
-        <h3 id="modalAptoTitle" class="text-lg font-bold text-gray-900 font-display">Cadastrar Novo Apartamento</h3>
-        <button onclick="closeModalApto()" class="text-gray-400 hover:text-gray-800 p-1 rounded-full hover:bg-gray-200 transition-all">✕</button>
-      </div>
-      
-      <form id="formApto" class="p-6 space-y-4 overflow-y-auto flex-1">
-        <!-- Campo id para saber se é edição -->
-        <input type="hidden" id="aptoEditControlId">
-        
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Identificador do Imóvel <span class="text-gred">*</span></label>
-          <input type="text" id="aptoId" required placeholder="Ex: Apto 101" class="w-full px-4 py-2 border border-gray-250 rounded-xl focus:outline-none focus:ring-2 focus:ring-gblue bg-slate-50 focus:bg-white text-sm">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Nome do Inquilino Atual</label>
-          <input type="text" id="aptoInquilino" placeholder="Ex: Rodrigo Souza (Deixe em branco se vago)" class="w-full px-4 py-2 border border-gray-250 rounded-xl focus:outline-none focus:ring-2 focus:ring-gblue bg-slate-50 focus:bg-white text-sm">
-        </div>
-
-        <!-- FICHA DO MORADOR (Exibido dinamicamente se houver Inquilino) -->
-        <div id="fichaMoradorContainer" class="hidden space-y-4 border-t border-gray-200 pt-4">
-          <h4 class="text-xs font-black text-gblue uppercase tracking-widest flex items-center gap-1.5">
-            <span class="text-sm">👤</span>
-            <span>Ficha do Morador (PF • Obrigatória)</span>
-          </h4>
-          
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">CPF <span class="text-gred">*</span></label>
-              <input type="text" id="aptoInquilinoCpf" placeholder="000.000.000-00" class="w-full px-3 py-1.5 border border-gray-250 rounded-xl text-xs font-mono">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Telefone de Contato <span class="text-gred">*</span></label>
-              <input type="text" id="aptoInquilinoTelefone" placeholder="(41) 98888-7777" class="w-full px-3 py-1.5 border border-gray-250 rounded-xl text-xs">
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Data Nascimento <span class="text-gred">*</span></label>
-              <input type="date" id="aptoInquilinoNascimento" class="w-full px-3 py-1.5 border border-gray-250 rounded-xl text-xs">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Início do Contrato <span class="text-gred">*</span></label>
-              <input type="date" id="aptoDataInicioContrato" class="w-full px-3 py-1.5 border border-gray-250 rounded-xl text-xs">
-            </div>
-          </div>
-
-          <div class="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-3">
-            <span class="text-[9px] font-bold uppercase tracking-widest text-gray-550 block">📞 Contato de Emergência</span>
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-[9px] uppercase font-bold text-gray-400 mb-1">Nome Completo <span class="text-gred">*</span></label>
-                <input type="text" id="aptoInquilinoEmergenciaNome" placeholder="Ex: Maria" class="w-full px-3 py-1.5 border border-gray-250 rounded-lg text-xs">
+            <div class="form-row">
+              <div class="field">
+                <label for="tenantName">Nome Completo *</label>
+                <input id="tenantName" type="text" placeholder="Nome completo" required>
               </div>
-              <div>
-                <label class="block text-[9px] uppercase font-bold text-gray-400 mb-1">Telefone <span class="text-gred">*</span></label>
-                <input type="text" id="aptoInquilinoEmergenciaTelefone" placeholder="Ex: (41) 98888-7777" class="w-full px-3 py-1.5 border border-gray-250 rounded-lg text-xs">
+
+              <div class="field">
+                <label for="tenantCpf">CPF *</label>
+                <input id="tenantCpf" type="text" placeholder="000.000.000-00" required>
+              </div>
+
+              <div class="field">
+                <label for="tenantPhone">Telefone *</label>
+                <input id="tenantPhone" type="text" placeholder="(48) 99999-9999" required>
+              </div>
+
+              <div class="field">
+                <label for="tenantBirth">Data de Nascimento *</label>
+                <input id="tenantBirth" type="date" required>
               </div>
             </div>
+
+            <div class="form-row two">
+              <div class="field">
+                <label for="emergencyName">Contato de Emergência - Nome *</label>
+                <input id="emergencyName" type="text" placeholder="Nome do contato" required>
+              </div>
+
+              <div class="field">
+                <label for="emergencyPhone">Contato de Emergência - Telefone *</label>
+                <input id="emergencyPhone" type="text" placeholder="(48) 99999-9999" required>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-light" type="button" id="clearApartmentBtn">
+                <i class="fa-solid fa-eraser"></i> Limpar
+              </button>
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar imóvel e morador
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Imóveis cadastrados</h2>
+            <p>Edite dados do imóvel, morador e contrato sempre que necessário.</p>
           </div>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Valor Base do Aluguel (R$) <span class="text-gred">*</span></label>
-          <input type="number" step="0.01" id="aptoAluguel" required placeholder="Ex: 1200.00" class="w-full px-4 py-2 border border-gray-250 rounded-xl focus:outline-none focus:ring-2 focus:ring-gblue bg-slate-50 focus:bg-white text-sm font-medium">
-        </div>
+        <div id="apartmentsList" class="list"></div>
+      </section>
 
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Descrição Curta do Imóvel</label>
-          <textarea id="aptoDescricao" placeholder="Ex: Studio 1 dormitório mobiliado, bela iluminação..." class="w-full px-4 py-2 border border-gray-250 rounded-xl focus:outline-none focus:ring-2 focus:ring-gblue bg-slate-50 focus:bg-white text-sm"></textarea>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Anexar Foto (Conversão Base64 automática)</label>
-          <div class="border-2 border-dashed border-gray-300 rounded-2xl p-4 text-center cursor-pointer hover:bg-gray-50 transition-all relative" onclick="triggerFileInput()">
-            <input type="file" id="aptoFile" accept="image/*" class="hidden" onchange="previewImage(event)">
-            <div id="uploadPlaceholder" class="space-y-1.5">
-              <span class="text-xl">📸</span>
-              <p class="text-xs text-gray-600">Arraste ou clique para anexar uma foto</p>
-            </div>
-            <div id="imagePreviewContainer" class="hidden relative inline-block">
-              <img id="imagePreview" class="h-24 w-auto mx-auto object-cover rounded-md border border-gray-200">
-              <button type="button" onclick="removePreviewImage(event)" class="absolute -top-1.5 -right-1.5 bg-gred text-white p-1 rounded-full text-[9px] shadow hover:scale-105">✕</button>
-            </div>
+      <section id="page-expenses" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Despesas do proprietário</h2>
+            <p>Não alteram o valor cobrado do inquilino. Apenas deduzem no lucro líquido do dashboard.</p>
           </div>
         </div>
 
-        <div class="pt-4 flex justify-end space-x-2">
-          <button type="button" onclick="closeModalApto()" class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-full text-xs font-bold">Cancelar</button>
-          <button type="submit" class="bg-gblue text-white hover:bg-gblue-dark px-5 py-2.5 rounded-full text-xs font-bold shadow hover:shadow-md transition-all">Salvar Apartamento</button>
+        <article class="card">
+          <form id="expenseForm">
+            <input type="hidden" id="expenseEditId">
+
+            <div class="form-row">
+              <div class="field">
+                <label for="expenseMonth">Mês/Ano *</label>
+                <input id="expenseMonth" type="month" required>
+              </div>
+
+              <div class="field">
+                <label for="expenseType">Tipo *</label>
+                <select id="expenseType" required>
+                  <option value="IPTU">IPTU</option>
+                  <option value="Internet">Internet</option>
+                  <option value="Manutenção Extra">Manutenção Extra</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="expenseApartmentId">Unidade</label>
+                <select id="expenseApartmentId"></select>
+              </div>
+
+              <div class="field">
+                <label for="expenseAmount">Valor *</label>
+                <input id="expenseAmount" type="number" min="0" step="0.01" placeholder="0,00" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="expenseDescription">Descrição</label>
+              <input id="expenseDescription" type="text" placeholder="Ex.: IPTU, internet, pintura, manutenção elétrica...">
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-light" type="button" id="clearExpenseBtn">
+                <i class="fa-solid fa-eraser"></i> Limpar
+              </button>
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar despesa
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Histórico de despesas</h2>
+            <p id="expensesSummary">Total interno geral: R$ 0,00</p>
+          </div>
         </div>
-      </form>
-    </div>
+
+        <div id="expensesList"></div>
+      </section>
+
+      <section id="page-entries" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Lançamentos mensais dos inquilinos</h2>
+            <p>Cálculo automático: Aluguel + (kWh consumido × Valor kWh) + COSIP.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <form id="entryForm">
+            <input type="hidden" id="entryEditId">
+
+            <div class="form-row three">
+              <div class="field">
+                <label for="entryApartmentId">Apartamento *</label>
+                <select id="entryApartmentId" required></select>
+              </div>
+
+              <div class="field">
+                <label for="entryMonth">Mês/Ano *</label>
+                <input id="entryMonth" type="month" required>
+              </div>
+
+              <div class="field">
+                <label for="entryRent">Valor Aluguel *</label>
+                <input id="entryRent" type="number" min="0" step="0.01" required>
+              </div>
+            </div>
+
+            <div class="form-row three">
+              <div class="field">
+                <label for="entryKwhValue">Valor kWh *</label>
+                <input id="entryKwhValue" type="number" min="0" step="0.0001" placeholder="Ex.: 0.9500" required>
+              </div>
+
+              <div class="field">
+                <label for="entryKwhConsumed">kWh consumido *</label>
+                <input id="entryKwhConsumed" type="number" min="0" step="0.01" placeholder="Ex.: 120" required>
+              </div>
+
+              <div class="field">
+                <label for="entryCosip">COSIP *</label>
+                <input id="entryCosip" type="number" min="0" step="0.01" placeholder="0,00" required>
+              </div>
+            </div>
+
+            <div class="total-preview">
+              <div>
+                <strong>Total a cobrar do inquilino</strong>
+                <p class="mini muted" id="entryFormula">Aluguel + Luz + COSIP</p>
+              </div>
+              <div class="amount" id="entryTotalPreview">R$ 0,00</div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-light" type="button" id="clearEntryBtn">
+                <i class="fa-solid fa-eraser"></i> Limpar
+              </button>
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar lançamento
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Histórico por apartamento</h2>
+            <p>Todos os lançamentos anteriores podem ser editados ou removidos.</p>
+          </div>
+        </div>
+
+        <div id="entriesList"></div>
+      </section>
+
+      <section id="page-settings" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Configurações</h2>
+            <p>Personalize o aplicativo, gerencie acessos e configure a sincronização com GitHub.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <form id="settingsForm">
+            <div class="field">
+              <label for="appName">Nome do App *</label>
+              <input id="appName" type="text" required>
+            </div>
+
+            <div class="file-row">
+              <div class="preview-box" id="appLogoPreview">Logo</div>
+
+              <div class="field" style="flex:1; min-width:260px;">
+                <label for="appLogo">Upload da Logo</label>
+                <input id="appLogo" type="file" accept="image/*">
+                <span class="mini muted">A logo será convertida em Base64 e salva no arquivo JSON do GitHub.</span>
+              </div>
+
+              <button class="btn btn-light" type="button" id="removeLogoBtn">
+                <i class="fa-solid fa-ban"></i> Remover logo
+              </button>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar configurações
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Configuração GitHub</h2>
+            <p>Os dados serão salvos em um arquivo JSON dentro do seu repositório.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="security-note">
+            <strong>Atenção:</strong> o token GitHub é salvo somente neste navegador. Não publique token dentro do código. Se o repositório for público, o arquivo JSON também poderá ser acessado publicamente.
+          </div>
+
+          <form id="githubConfigForm" style="margin-top:16px;">
+            <div class="form-row two">
+              <div class="field">
+                <label for="githubOwner">Usuário/Organização</label>
+                <input id="githubOwner" type="text" placeholder="Ex.: leandropickler">
+              </div>
+
+              <div class="field">
+                <label for="githubRepo">Repositório</label>
+                <input id="githubRepo" type="text" placeholder="Ex.: residencial-beatriz">
+              </div>
+            </div>
+
+            <div class="form-row two">
+              <div class="field">
+                <label for="githubBranch">Branch</label>
+                <input id="githubBranch" type="text" value="main">
+              </div>
+
+              <div class="field">
+                <label for="githubPath">Arquivo de dados</label>
+                <input id="githubPath" type="text" value="dados/residencial-beatriz.json">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="githubToken">Token GitHub</label>
+              <input id="githubToken" type="password" placeholder="Cole aqui o Fine-grained Personal Access Token">
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-brands fa-github"></i> Salvar conexão
+              </button>
+
+              <button class="btn btn-light" type="button" id="loadGithubBtn">
+                <i class="fa-solid fa-cloud-arrow-down"></i> Carregar do GitHub
+              </button>
+
+              <button class="btn btn-success" type="button" id="forceSaveGithubBtn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Enviar dados atuais
+              </button>
+
+              <button class="btn btn-danger" type="button" id="removeGithubTokenBtn">
+                <i class="fa-solid fa-ban"></i> Remover token
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Configurações de acesso</h2>
+            <p>Adicione, edite ou remova usuários que podem acessar o sistema.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="security-note">
+            <strong>Aviso de segurança:</strong> este login é local no front-end. As senhas são salvas como hash SHA-256 no arquivo JSON. Para segurança corporativa real, o ideal seria backend ou autenticação externa.
+          </div>
+
+          <form id="userForm" style="margin-top:16px;">
+            <input type="hidden" id="userEditId">
+
+            <div class="form-row three">
+              <div class="field">
+                <label for="accessLogin">Login *</label>
+                <input id="accessLogin" type="text" placeholder="Ex.: admin" required>
+              </div>
+
+              <div class="field">
+                <label for="accessPassword">Senha *</label>
+                <input id="accessPassword" type="password" placeholder="Senha">
+                <span class="mini muted">Ao editar, deixe em branco para manter a senha atual.</span>
+              </div>
+
+              <div class="field">
+                <label for="accessPasswordConfirm">Confirmar Senha *</label>
+                <input id="accessPasswordConfirm" type="password" placeholder="Confirme a senha">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-light" type="button" id="clearUserBtn">
+                <i class="fa-solid fa-eraser"></i> Limpar
+              </button>
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-user-shield"></i> Salvar usuário
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Usuários cadastrados</h2>
+            <p>O usuário padrão pode ser editado após o primeiro acesso.</p>
+          </div>
+        </div>
+
+        <div id="usersList"></div>
+
+        <div class="section-title">
+          <div>
+            <h2>Backup local</h2>
+            <p>Além do GitHub, você pode exportar uma cópia local em JSON.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="form-actions" style="justify-content:flex-start;">
+            <button class="btn btn-success" id="exportBtn">
+              <i class="fa-solid fa-file-export"></i> Exportar backup JSON
+            </button>
+
+            <label class="btn btn-warning" for="importInput">
+              <i class="fa-solid fa-file-import"></i> Importar backup JSON
+            </label>
+
+            <input id="importInput" type="file" accept="application/json" style="display:none;">
+
+            <button class="btn btn-danger" id="resetBtn">
+              <i class="fa-solid fa-trash"></i> Apagar dados locais e GitHub
+            </button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <p class="footer">
+      Residencial Beatriz • GitHub Pages + GitHub JSON Storage • HTML5/CSS3/JS Vanilla
+    </p>
   </div>
 
-  <!-- MODAL: LANÇAMENTO DE CONSUMO MENSAL HISTÓRICO -->
-  <div id="modalLuz" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
-    <div class="absolute inset-0 bg-gray-950/60 backdrop-blur-xs" onclick="closeModalLuz()"></div>
-    <div class="bg-white rounded-3xl w-full max-w-lg shadow-xl relative border border-gray-200 overflow-hidden flex flex-col max-h-[90vh]">
-      <div class="p-6 border-b border-gray-200 bg-yellow-50 flex items-center justify-between">
-        <h3 class="text-lg font-bold text-gray-900 font-display flex items-center gap-1.5">
-          <span class="text-base text-yellow-500">⚡</span>
-          <span id="luzModalTitle">Lançamento Mensal de Consumo</span>
-        </h3>
-        <button onclick="closeModalLuz()" class="text-gray-400 hover:text-gray-800 p-1 rounded-full hover:bg-yellow-101 hover:bg-yellow-103 transition-all">✕</button>
-      </div>
-      
-      <form id="formLuz" class="p-6 space-y-4 overflow-y-auto flex-1">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Apartamento <span class="text-gred">*</span></label>
-            <select id="luzAptoId" class="w-full px-4 py-2 border border-gray-250 rounded-xl bg-slate-50 focus:bg-white text-sm font-semibold" onchange="syncRentInputValue()"></select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Mês de Referência <span class="text-gred">*</span></label>
-            <input type="text" id="luzMesReferencia" required placeholder="Ex: 05/2026" class="w-full px-4 py-2 border border-gray-250 rounded-xl bg-slate-50 focus:bg-white text-sm font-bold">
-          </div>
-        </div>
+  <div class="toast" id="toast"></div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Valor do Aluguel (Mês R$)</label>
-            <input type="number" step="0.01" id="luzAluguel" required class="w-full px-4 py-2 border border-gray-250 rounded-xl bg-slate-50 focus:bg-white text-sm font-semibold">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Valor do kWh (R$)</label>
-            <input type="number" step="0.0001" id="luzKwhPreco" required placeholder="Padrão ex: 0.89" class="w-full px-4 py-2 border border-gray-250 rounded-xl bg-slate-50 focus:bg-white text-sm font-semibold">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Quantidade kWh Consumida</label>
-            <input type="number" step="1" id="luzKwhConsumido" required placeholder="Ex: 150 kWh" class="w-full px-4 py-2 border border-gray-250 rounded-xl bg-slate-50 focus:bg-white text-sm font-semibold">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-gray-700 uppercase mb-1.5">Valor da COSIP (R$)</label>
-            <input type="number" step="0.01" id="luzCosip" required placeholder="Padrão ex: 25.40" class="w-full px-4 py-2 border border-gray-250 rounded-xl bg-slate-50 focus:bg-white text-sm font-semibold">
-          </div>
-        </div>
-
-        <!-- Painel de faturamento instantâneo -->
-        <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 text-xs space-y-1.5 text-gray-600">
-          <div class="flex justify-between font-bold text-slate-800 border-b border-gray-250/50 pb-1.5 mb-1 bg-gray-50">
-            <span>Demonstrativo do Lançamento</span>
-            <span>Subtotal</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Energia Calculada:</span>
-            <span id="labelSubtotalLuz" class="font-semibold text-gray-900">R$ 0,00</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Taxa COSIP:</span>
-            <span id="labelSubtotalCosip" class="font-semibold text-gray-900">R$ 0,00</span>
-          </div>
-          <div class="flex justify-between border-t border-gray-200 pt-1.5 mt-1 text-sm font-bold text-gblue">
-            <span>Cobrança Consolidada:</span>
-            <span id="labelTotalMensal">R$ 0,00</span>
-          </div>
-        </div>
-
-        <div class="pt-2 flex justify-end space-x-2">
-          <button type="button" onclick="closeModalLuz()" class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-full text-xs font-bold">Cancelar</button>
-          <button type="submit" class="bg-gyellow text-gyellow-dark border border-amber-300 hover:bg-amber-400 px-5.5 py-2.5 rounded-full text-xs font-bold shadow hover:shadow-md transition-all">Salvar Lançamento</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- RODAPÉ INSTITUCIONAL -->
-  <footer class="bg-white border-t border-gray-200 py-6 text-center text-xs text-slate-400 mt-12 flex-shrink-0">
-    <p class="mb-1"><span id="footerAppName">Residencial Beatriz</span> • Material Design LocalStorage</p>
-    <p class="text-[10px] text-gray-400">Engenharia de Software • Leandro Pickler 2026</p>
-  </footer>
-
-  <!-- LÓGICA DO LOCAL STORAGE ATIVA (JavaScript Puro) -->
   <script>
-    let apartamentos = [];
-    const baseFallback = [
-      {
-        id: "Apto 101",
-        descricao: "Apartamento aconchegante de dois quartos, armários embutidos e varanda ampla.",
-        inquilino: "Ana Júlia de Souza",
-        inquilinoCpf: "111.222.333-44",
-        inquilinoTelefone: "(41) 98765-4321",
-        inquilinoDataNascimento: "1994-08-14",
-        inquilinoContatoEmergenciaNome: "Cláudia de Souza",
-        inquilinoContatoEmergenciaTelefone: "(41) 99999-8888",
-        dataInicioContrato: "2025-12-15",
-        fotoUrl: "",
-        aluguelBase: 1200.00,
-        historico: [
-          {
-            id: "lan-101-1",
-            mesReferencia: "04/2026",
-            aluguelBase: 1200.00,
-            kwhPreco: 0.89,
-            kwhConsumido: 130,
-            cosip: 25.40
-          },
-          {
-            id: "lan-101-2",
-            mesReferencia: "05/2026",
-            aluguelBase: 1200.00,
-            kwhPreco: 0.89,
-            kwhConsumido: 154,
-            cosip: 25.40
-          }
-        ]
-      },
-      {
-        id: "Apto 102",
-        descricao: "Studio reformado mobiliado ideal para casais de estudantes.",
-        inquilino: "Carlos Eduardo Santos",
-        inquilinoCpf: "555.666.777-88",
-        inquilinoTelefone: "(41) 99888-7766",
-        inquilinoDataNascimento: "1988-11-20",
-        inquilinoContatoEmergenciaNome: "Regina Santos",
-        inquilinoContatoEmergenciaTelefone: "(41) 99111-2233",
-        dataInicioContrato: "2026-01-01",
-        fotoUrl: "",
-        aluguelBase: 950.00,
-        historico: [
-          {
-            id: "lan-102-1",
-            mesReferencia: "04/2026",
-            aluguelBase: 950.00,
-            kwhPreco: 0.89,
-            kwhConsumido: 85,
-            cosip: 25.40
-          },
-          {
-            id: "lan-102-2",
-            mesReferencia: "05/2026",
-            aluguelBase: 950.00,
-            kwhPreco: 0.89,
-            kwhConsumido: 98,
-            cosip: 25.40
-          }
-        ]
-      },
-      {
-        id: "Apto 201",
-        descricao: "Apartamento amplo com suíte, reformado e com churrasqueira integrada.",
-        inquilino: "Mariana Albuquerque",
-        inquilinoCpf: "999.888.777-66",
-        inquilinoTelefone: "(41) 99123-4567",
-        inquilinoDataNascimento: "1991-03-25",
-        inquilinoContatoEmergenciaNome: "Paulo Albuquerque",
-        inquilinoContatoEmergenciaTelefone: "(41) 98877-6655",
-        dataInicioContrato: "2026-02-10",
-        fotoUrl: "",
-        aluguelBase: 1600.00,
-        historico: [
-          {
-            id: "lan-201-1",
-            mesReferencia: "05/2026",
-            aluguelBase: 1600.00,
-            kwhPreco: 0.89,
-            kwhConsumido: 185,
-            cosip: 28.50
-          }
-        ]
+    (() => {
+      "use strict";
+
+      const CONFIG_KEY = "residencial_beatriz_github_config_v1";
+      const CACHE_KEY = "residencial_beatriz_cache_v1";
+
+      const DEFAULT_STATE = {
+        settings: {
+          appName: "Residencial Beatriz",
+          logo: "",
+          dashboardPeriod: "currentYear",
+          dashboardYear: new Date().getFullYear()
+        },
+        users: [],
+        apartments: [],
+        expenses: [],
+        entries: [],
+        meta: {
+          updatedAt: "",
+          updatedBy: ""
+        }
+      };
+
+      let state = clone(DEFAULT_STATE);
+      let githubConfig = loadGithubConfig();
+      let loggedUser = null;
+      let tempApartmentPhoto = "";
+      let tempAppLogo = "";
+      let manualEntryRent = false;
+      let isSaving = false;
+
+      const $ = selector => document.querySelector(selector);
+      const $$ = selector => Array.from(document.querySelectorAll(selector));
+
+      function clone(obj) {
+        return JSON.parse(JSON.stringify(obj));
       }
-    ];
 
-    let base64FotoCache = "";
-    let expandedHistories = {};
-    let editingLancamentoId = "";
-    let editingAptoIdForLuz = "";
+      function normalizeState(input) {
+        const source = input && typeof input === "object" ? input : {};
 
-    // Despesas do Proprietário (Controle Interno)
-    let despesasProprietario = [];
-    const defaultDespesasFallback = [
-      {
-        id: "admin-des-1",
-        categoria: "Internet",
-        descricao: "Internet Banda Larga Condomínio (Beatriz Fibra)",
-        valor: 120.00,
-        data: "2026-05-01"
-      },
-      {
-        id: "admin-des-2",
-        categoria: "IPTU",
-        descricao: "IPTU Quota Única Predial Beatriz",
-        valor: 280.00,
-        data: "2026-05-08"
-      },
-      {
-        id: "admin-des-3",
-        categoria: "Manutenção",
-        descricao: "Mão de Obra Elétrica e Pintura Geral Beatriz",
-        valor: 450.00,
-        data: "2026-05-15"
+        return {
+          settings: { ...DEFAULT_STATE.settings, ...(source.settings || {}) },
+          users: Array.isArray(source.users) ? source.users : [],
+          apartments: Array.isArray(source.apartments) ? source.apartments : [],
+          expenses: Array.isArray(source.expenses) ? source.expenses : [],
+          entries: Array.isArray(source.entries) ? source.entries : [],
+          meta: { ...DEFAULT_STATE.meta, ...(source.meta || {}) }
+        };
       }
-    ];
 
-    let isOwnerDespesasExpanded = false;
-
-    // Configurações Globais
-    let appConfig = {
-      appName: "Residencial Beatriz",
-      logoType: "default", // default, base64, url
-      logoData: ""
-    };
-    let configLogoBase64Cache = "";
-
-    // Safe storage wrapper to handle browser restrictions / double clicking standalone html
-    const safeStorage = {
-      getItem(key) {
+      function loadGithubConfig() {
         try {
-          return localStorage.getItem(key);
-        } catch (e) {
-          console.warn("Storage restricted in this environment. Falling back to memory state.", e);
+          const raw = localStorage.getItem(CONFIG_KEY);
+
+          if (!raw) {
+            return {
+              owner: "",
+              repo: "",
+              branch: "main",
+              path: "dados/residencial-beatriz.json",
+              token: ""
+            };
+          }
+
+          return {
+            owner: "",
+            repo: "",
+            branch: "main",
+            path: "dados/residencial-beatriz.json",
+            token: "",
+            ...JSON.parse(raw)
+          };
+        } catch {
+          return {
+            owner: "",
+            repo: "",
+            branch: "main",
+            path: "dados/residencial-beatriz.json",
+            token: ""
+          };
+        }
+      }
+
+      function saveGithubConfig(config) {
+        githubConfig = {
+          owner: String(config.owner || "").trim(),
+          repo: String(config.repo || "").trim(),
+          branch: String(config.branch || "main").trim(),
+          path: String(config.path || "dados/residencial-beatriz.json").trim(),
+          token: String(config.token || githubConfig.token || "").trim()
+        };
+
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(githubConfig));
+        fillGithubConfigForms();
+        updateSyncStatus();
+      }
+
+      function removeGithubToken() {
+        githubConfig.token = "";
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(githubConfig));
+        fillGithubConfigForms();
+        updateSyncStatus();
+      }
+
+      function hasGithubBaseConfig() {
+        return Boolean(githubConfig.owner && githubConfig.repo && githubConfig.branch && githubConfig.path);
+      }
+
+      function hasGithubWriteConfig() {
+        return hasGithubBaseConfig() && Boolean(githubConfig.token);
+      }
+
+      function encodedGithubPath() {
+        return githubConfig.path
+          .split("/")
+          .map(part => encodeURIComponent(part))
+          .join("/");
+      }
+
+      function githubApiUrl() {
+        return `https://api.github.com/repos/${encodeURIComponent(githubConfig.owner)}/${encodeURIComponent(githubConfig.repo)}/contents/${encodedGithubPath()}`;
+      }
+
+      function utf8ToBase64(text) {
+        return btoa(unescape(encodeURIComponent(text)));
+      }
+
+      function base64ToUtf8(base64) {
+        return decodeURIComponent(escape(atob(base64)));
+      }
+
+      async function githubRequest(url, options = {}) {
+        const headers = {
+          "Accept": "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+          ...(options.headers || {})
+        };
+
+        if (githubConfig.token) {
+          headers.Authorization = `Bearer ${githubConfig.token}`;
+        }
+
+        const response = await fetch(url, {
+          ...options,
+          headers
+        });
+
+        if (response.status === 404) {
           return null;
         }
-      },
-      setItem(key, value) {
+
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(`GitHub ${response.status}: ${text}`);
+        }
+
+        return response.json();
+      }
+
+      function saveLocalCache() {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(state));
+      }
+
+      function loadLocalCache() {
         try {
-          localStorage.setItem(key, value);
-        } catch (e) {
-          console.warn("Save restricted in this environment. State is local to session.", e);
+          const raw = localStorage.getItem(CACHE_KEY);
+          return raw ? normalizeState(JSON.parse(raw)) : clone(DEFAULT_STATE);
+        } catch {
+          return clone(DEFAULT_STATE);
         }
       }
-    };
 
-    function lerLocalStorage() {
-      // Carregar imóveis
-      const db = safeStorage.getItem('google_rent_manager_data_historic');
-      if (db) {
-        try {
-          apartamentos = JSON.parse(db);
-          apartamentos.forEach(a => {
-            if (!a.historico) a.historico = [];
-          });
-        } catch(e) {
-          apartamentos = baseFallback;
-        }
-      } else {
-        apartamentos = baseFallback;
-        salvarLocalStorage();
-      }
-
-      // Carregar Despesas de Controle Interno
-      const dbAdmin = safeStorage.getItem('google_rent_manager_admin_despesas');
-      if (dbAdmin) {
-        try {
-          despesasProprietario = JSON.parse(dbAdmin);
-        } catch(e) {
-          despesasProprietario = defaultDespesasFallback;
-        }
-      } else {
-        despesasProprietario = defaultDespesasFallback;
-        safeStorage.setItem('google_rent_manager_admin_despesas', JSON.stringify(despesasProprietario));
-      }
-
-      // Carregar Configurações de Nome e Logo
-      const config = safeStorage.getItem('google_rent_manager_config_beatriz');
-      if (config) {
-        try {
-          appConfig = JSON.parse(config);
-        } catch(e) {
-          // Mantém padrão
-        }
-      }
-      aplicarConfiguracoes();
-    }
-
-    function aplicarConfiguracoes() {
-      const name = appConfig.appName || "Residencial Beatriz";
-      document.getElementById('appNamePlaceholder').textContent = name;
-      document.getElementById('heroWelcomeTitle').textContent = "Bem-vindo ao " + name;
-      document.getElementById('footerAppName').textContent = name;
-      document.title = name + " - Gerenciador de Aluguéis";
-
-      const logoContainer = document.getElementById('appLogoContainer');
-      logoContainer.innerHTML = '';
-
-      if (appConfig.logoType === 'url' && appConfig.logoData) {
-        logoContainer.innerHTML = '<img src="' + appConfig.logoData + '" class="h-9 w-auto max-w-[45px] rounded-lg object-contain bg-white shadow-xs border p-0.5">';
-      } else if (appConfig.logoType === 'base64' && appConfig.logoData) {
-        logoContainer.innerHTML = '<img src="' + appConfig.logoData + '" class="h-9 w-auto max-w-[45px] rounded-lg object-contain bg-white shadow-xs border p-0.5">';
-      } else {
-        // SVG casinha padrão
-        logoContainer.innerHTML = '<div class="p-2 bg-gblue-light rounded-full text-gblue flex items-center justify-center">' +
-          '<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">' +
-            '<path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>' +
-          '</svg>' +
-        '</div>';
-      }
-    }
-
-    function salvarLocalStorage() {
-      safeStorage.setItem('google_rent_manager_data_historic', JSON.stringify(apartamentos));
-    }
-
-    function formatCurrency(val) {
-      return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    }
-
-    function toggleHistory(id) {
-      expandedHistories[id] = !expandedHistories[id];
-      render();
-    }
-
-    function render() {
-      const grid = document.getElementById('apartmentsGrid');
-      grid.innerHTML = '';
-
-      let totalKwhCompleto = 0;
-      let totalLuzCosipCompleto = 0;
-      let totalAlugueisCompleto = 0;
-
-      apartamentos.forEach(apto => {
-        const historico = apto.historico || [];
-        
-        let acumAluguel = 0;
-        let acumLuzCosip = 0;
-        
-        historico.forEach(item => {
-          acumAluguel += Number(item.aluguelBase || 0);
-          const luzItem = (Number(item.kwhConsumido || 0) * Number(item.kwhPreco || 0)) + Number(item.cosip || 0);
-          acumLuzCosip += luzItem;
-
-          totalKwhCompleto += Number(item.kwhConsumido || 0);
-          totalLuzCosipCompleto += luzItem;
-          totalAlugueisCompleto += Number(item.aluguelBase || 0);
-        });
-
-        const totalAptoAcumulado = acumAluguel + acumLuzCosip;
-
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-3xl overflow-hidden border border-gray-150 shadow-sm hover:shadow-md transition-all flex flex-col";
-        
-        let headerImgHtml = '<div class="w-full aspect-video bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center text-4xl text-slate-300">🏢</div>';
-        if (apto.fotoUrl) {
-          headerImgHtml = '<img src="' + apto.fotoUrl + '" class="w-full aspect-video object-cover">';
-        }
-
-        let historyMarkup = '';
-        if (expandedHistories[apto.id]) {
-          if (historico.length === 0) {
-            historyMarkup = '<div class="p-3 text-center text-gray-400 italic text-[11px] border-t border-gray-100 font-sans">Nenhum lançamento efetuado.</div>';
-          } else {
-            historyMarkup = '<div class="border-t border-gray-100 divide-y divide-gray-50 max-h-48 overflow-y-auto font-sans">';
-            historico.forEach(item => {
-              const energiaItem = (item.kwhConsumido * item.kwhPreco) + item.cosip;
-              const subtotalItem = item.aluguelBase + energiaItem;
-              historyMarkup += '<div class="p-3 text-[11px] hover:bg-slate-50 flex flex-col space-y-1 relative">' +
-                '<div class="flex justify-between items-center font-bold text-gblue">' +
-                  '<span>Mês: ' + item.mesReferencia + '</span>' +
-                  '<div class="flex items-center space-x-1">' +
-                    '<button onclick="editarLancamento(\'' + apto.id + '\', \'' + item.id + '\')" class="text-gblue hover:bg-blue-10s hover:underline bg-blue-100/50 px-2 py-0.5 rounded text-[10px] font-bold transition-all" title="Editar este lançamento">✏️ Editar</button>' +
-                    '<button onclick="removerLancamento(\'' + apto.id + '\', \'' + item.id + '\')" class="text-gray-400 hover:text-gred font-bold text-xs p-1 rounded hover:bg-red-50 transition-all" title="Remover este lançamento">✕</button>' +
-                  '</div>' +
-                '</div>' +
-                '<div class="grid grid-cols-2 gap-x-2 text-gray-600">' +
-                  '<div>Aluguel: ' + formatCurrency(item.aluguelBase) + '</div>' +
-                  '<div>Luz: ' + item.kwhConsumido + ' kWh</div>' +
-                  '<div>kWh: ' + formatCurrency(item.kwhPreco) + '</div>' +
-                  '<div>COSIP: ' + formatCurrency(item.cosip) + '</div>' +
-                '</div>' +
-                '<div class="flex justify-between items-center text-[10.5px] border-t border-dashed border-gray-200 mt-1 pt-1 font-bold text-gray-900">' +
-                  '<span>Total do Mês:</span>' +
-                  '<span class="text-ggreen-dark text-gblue">' + formatCurrency(subtotalItem) + '</span>' +
-                '</div>' +
-              '</div>';
-            });
-            historyMarkup += '</div>';
-          }
-        }
-
-        const hToggleIcon = expandedHistories[apto.id] ? '▲' : '▼';
-
-        card.innerHTML = '<div class="relative w-full aspect-video bg-gray-100 overflow-hidden">' +
-            headerImgHtml +
-            '<div class="absolute top-3 left-3 bg-white/90 px-3.5 py-1.5 rounded-full shadow-xs border border-gray-100 text-xs font-bold text-gray-900">📍 ' + apto.id + '</div>' +
-            '<div class="absolute bottom-3 right-3 bg-gblue text-white px-3.5 py-1.5 rounded-full text-xs font-semibold shadow">Acumulado: ' + formatCurrency(totalAptoAcumulado) + '</div>' +
-          '</div>' +
-          '<div class="p-5 flex-1 flex flex-col justify-between space-y-4">' +
-            '<div class="space-y-3.5">' +
-              '<div>' +
-                '<p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Inquilino Atual</p>' +
-                '<h4 class="text-gray-950 font-bold leading-tight mt-0.5">' + (apto.inquilino || '<span class="text-gray-400 italic font-normal">Disponível</span>') + '</h4>' +
-                '<p class="text-xs text-gray-500 mt-2 line-clamp-2 min-h-[32px] border-l-2 border-gblue/40 pl-2.5 italic bg-gray-50 p-1.5 rounded-r">' + (apto.descricao || 'Sem descrição cadastrada para este imóvel.') + '</p>' +
-              '</div>' +
-              '<div class="bg-slate-50 border border-slate-150 rounded-2xl p-3 text-[11px] space-y-2">' +
-                '<span class="font-bold text-gray-500 block">Resumo Histórico do Apartamento</span>' +
-                '<div class="grid grid-cols-2 gap-2 text-[10px]">' +
-                  '<div class="bg-white p-2 rounded-xl border border-gray-100">' +
-                    '<span class="text-gray-400 block">Total de Aluguel</span>' +
-                    '<span class="font-bold text-gray-900 block mt-0.5">' + formatCurrency(acumAluguel) + '</span>' +
-                  '</div>' +
-                  '<div class="bg-white p-2 rounded-xl border border-gray-100">' +
-                    '<span class="text-gray-400 block">Total Luz+COSIP</span>' +
-                    '<span class="font-bold text-gray-900 block mt-0.5">' + formatCurrency(acumLuzCosip) + '</span>' +
-                  '</div>' +
-                '</div>' +
-              '</div>' +
-              '<div class="border border-gray-150 rounded-2xl overflow-hidden text-xs">' +
-                '<button onclick="toggleHistory(\'' + apto.id + '\')" class="w-full flex justify-between items-center px-3 py-2 bg-slate-50 hover:bg-slate-100/80 transition-all font-bold text-gray-705 text-gray-600">' +
-                  '<span>📅 Histórico Mensal (' + historico.length + ')</span>' +
-                  '<span>' + hToggleIcon + '</span>' +
-                '</button>' +
-                historyMarkup +
-              '</div>' +
-            '</div>' +
-            '<div class="flex items-center gap-2 border-t border-gray-150 pt-4">' +
-              '<button onclick="openModalLuz(\'' + apto.id + '\')" class="flex-1 bg-gyellow/20 hover:bg-gyellow/30 text-amber-800 px-3 py-2.5 rounded-full text-xs font-bold transition-all shadow-xs flex items-center justify-center space-x-1.5 font-display">' +
-                '<span>⚡ Lançar Mensalidade</span>' +
-              '</button>' +
-              '<button onclick="editarImovelInfo(\'' + apto.id + '\')" class="p-2 border border-blue-100 hover:border-gblue text-gray-400 hover:text-gblue hover:bg-blue-50 rounded-full transition-all" title="Editar informações do imóvel">✏️</button>' +
-              '<button onclick="removerApto(\'' + apto.id + '\')" class="p-2 border border-red-100 hover:border-gred text-gray-400 hover:text-gred hover:bg-gred-light rounded-full transition-all" title="Remover imóvel">✕</button>' +
-            '</div>' +
-          '</div>';
-        grid.appendChild(card);
-      });
-
-      // CARREGAR E CALCULAR DESPESAS ADMINISTRATIVAS DO PROPRIETÁRIO
-      let totalDespesasInternet = 0;
-      let totalDespesasIPTU = 0;
-      let totalDespesasManutencaoExtras = 0;
-
-      despesasProprietario.forEach(d => {
-        const val = Number(d.valor || 0);
-        if (d.categoria === 'Internet') {
-          totalDespesasInternet += val;
-        } else if (d.categoria === 'IPTU') {
-          totalDespesasIPTU += val;
-        } else {
-          totalDespesasManutencaoExtras += val;
-        }
-      });
-
-      const totalDespesasAdministrativas = totalDespesasInternet + totalDespesasIPTU + totalDespesasManutencaoExtras;
-      const totalFaturamentoBruto = totalAlugueisCompleto + totalLuzCosipCompleto;
-      const lucroLiquidoReal = totalFaturamentoBruto - totalDespesasAdministrativas;
-
-      // ATUALIZAÇÃO DO GRÁFICO 1: Faturamento vs Despesas (Pizza 1)
-      const totalP1 = totalFaturamentoBruto + totalDespesasAdministrativas;
-      const p1FatPct = totalP1 > 0 ? (totalFaturamentoBruto / totalP1) * 100 : 100;
-      const p1DesPct = totalP1 > 0 ? (totalDespesasAdministrativas / totalP1) * 100 : 0;
-
-      const p1FatSeg = document.getElementById('p1FatSegment');
-      const p1DesSeg = document.getElementById('p1DesSegment');
-      if (p1FatSeg && p1DesSeg) {
-        p1FatSeg.setAttribute('stroke-dasharray', p1FatPct + ' ' + (100 - p1FatPct));
-        p1DesSeg.setAttribute('stroke-dasharray', p1DesPct + ' ' + (100 - p1DesPct));
-        p1DesSeg.setAttribute('stroke-dashoffset', -p1FatPct);
-      }
-      document.getElementById('p1NetPercent').textContent = totalFaturamentoBruto > 0 ? Math.round((lucroLiquidoReal / totalFaturamentoBruto) * 100) + '%' : '100%';
-      document.getElementById('lblP1FaturamentoVal').textContent = formatCurrency(totalFaturamentoBruto);
-      document.getElementById('lblP1FaturamentoPct').textContent = Math.round(p1FatPct) + '%';
-      document.getElementById('lblP1DespesaVal').textContent = formatCurrency(totalDespesasAdministrativas);
-      document.getElementById('lblP1DespesaPct').textContent = Math.round(p1DesPct) + '%';
-
-      // ATUALIZAÇÃO DO GRÁFICO 2: Divisão de Receita (Aluguel vs Luz/COSIP)
-      const totalP2 = totalAlugueisCompleto + totalLuzCosipCompleto;
-      const p2AluPct = totalP2 > 0 ? (totalAlugueisCompleto / totalP2) * 100 : 80;
-      const p2LuzPct = totalP2 > 0 ? (totalLuzCosipCompleto / totalP2) * 100 : 20;
-
-      const p2AluSeg = document.getElementById('p2AluSegment');
-      const p2LuzSeg = document.getElementById('p2LuzSegment');
-      if (p2AluSeg && p2LuzSeg) {
-        p2AluSeg.setAttribute('stroke-dasharray', p2AluPct + ' ' + (100 - p2AluPct));
-        p2LuzSeg.setAttribute('stroke-dasharray', p2LuzPct + ' ' + (100 - p2LuzPct));
-        p2LuzSeg.setAttribute('stroke-dashoffset', -p2AluPct);
-      }
-      document.getElementById('p2AluPercent').textContent = Math.round(p2AluPct) + '%';
-      document.getElementById('lblP2AluguelVal').textContent = formatCurrency(totalAlugueisCompleto);
-      document.getElementById('lblP2AluguelPct').textContent = Math.round(p2AluPct) + '%';
-      document.getElementById('lblP2LuzVal').textContent = formatCurrency(totalLuzCosipCompleto);
-      document.getElementById('lblP2LuzPct').textContent = Math.round(p2LuzPct) + '%';
-
-      // ATUALIZAÇÃO DO CARD SPOTLIGHT: Lucro Líquido Real
-      document.getElementById('totLucroLiquidoGlobal').textContent = formatCurrency(lucroLiquidoReal);
-      document.getElementById('lblLucroLiquidoDescLine').textContent = 'Faturamento Bruto: ' + formatCurrency(totalFaturamentoBruto) + ' | Despesas: ' + formatCurrency(totalDespesasAdministrativas) + ' | Lucro Líquido: ' + formatCurrency(lucroLiquidoReal);
-
-      // BINDINGS CARD SIMPLES DO BENTO GRID
-      document.getElementById('totGeralDevido').textContent = formatCurrency(totalFaturamentoBruto);
-      document.getElementById('totGeralAluguelExib').textContent = formatCurrency(totalAlugueisCompleto);
-      document.getElementById('totGeralLuz').textContent = formatCurrency(totalLuzCosipCompleto);
-      document.getElementById('totImoveisCount').textContent = apartamentos.length;
-      document.getElementById('totDespesasExib').textContent = formatCurrency(totalDespesasAdministrativas);
-
-      // ATUALIZAR HEADER PANEL DE DESPESAS DO PROPRIETÁRIO
-      const totalDespesasVal = despesasProprietario.reduce((s, h) => s + Number(h.valor || 0), 0);
-      document.getElementById('ownerDespesasHeaderCount').textContent = despesasProprietario.length + ' Registro(s) • Total: ' + formatCurrency(totalDespesasVal);
-
-      // RENDERIZAR TABELA DE DESPESAS DO PROPRIETÁRIO
-      const tableCont = document.getElementById('ownerDespesasTableContainer');
-      const emptyMsg = document.getElementById('ownerDespesasEmptyMsg');
-
-      if (despesasProprietario.length === 0) {
-        tableCont.classList.add('hidden');
-        emptyMsg.classList.remove('hidden');
-      } else {
-        tableCont.classList.remove('hidden');
-        emptyMsg.classList.add('hidden');
-
-        let tableHtml = '<table class="min-w-full divide-y divide-gray-150 text-xs">' +
-          '<thead class="bg-gray-50/75">' +
-            '<tr class="text-gray-500 font-bold uppercase text-[9px] tracking-wider text-left">' +
-              '<th class="px-4 py-3">Data</th>' +
-              '<th class="px-4 py-3">Categoria</th>' +
-              '<th class="px-4 py-3 text-left">Descrição da Despesa</th>' +
-              '<th class="px-4 py-3 text-right">Valor Pago</th>' +
-              '<th class="px-4 py-3 text-center w-24">Ações</th>' +
-            '</tr>' +
-          '</thead>' +
-          '<tbody class="divide-y divide-gray-150 bg-white text-left">';
-
-        despesasProprietario.forEach(d => {
-          let catClass = '';
-          let iconVal = '🔧';
-          if (d.categoria === 'IPTU') {
-            catClass = 'bg-red-50 text-gred border border-red-100';
-            iconVal = '📄';
-          } else if (d.categoria === 'Internet') {
-            catClass = 'bg-indigo-50 text-indigo-700 border border-indigo-150';
-            iconVal = '📶';
-          } else if (d.categoria === 'Manutenção') {
-            catClass = 'bg-blue-50 text-gblue border border-blue-150';
-            iconVal = '🛠';
-          } else {
-            catClass = 'bg-slate-100 text-slate-700 border border-slate-200';
-            iconVal = '⚙';
-          }
-
-          tableHtml += '<tr class="hover:bg-slate-50/50 transition-colors">' +
-            '<td class="px-4 py-3 whitespace-nowrap text-gray-600 font-medium">' + new Date(d.data + "T12:00:00").toLocaleDateString('pt-BR') + '</td>' +
-            '<td class="px-4 py-3 whitespace-nowrap"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold ' + catClass + '">' + iconVal + ' ' + d.categoria + '</span></td>' +
-            '<td class="px-4 py-3 font-semibold text-gray-900 truncate max-w-xs text-left">' + d.descricao + '</td>' +
-            '<td class="px-4 py-3 text-right whitespace-nowrap font-bold text-gray-950">' + formatCurrency(d.valor) + '</td>' +
-            '<td class="px-4 py-3 text-center whitespace-nowrap">' +
-              '<div class="inline-flex items-center space-x-2" style="display: flex; justify-content: center; gap: 0.5rem;">' +
-                '<button onclick="editarOwnerDespesa('' + d.id + '')" class="text-gblue hover:underline font-bold">✏️ Editar</button>' +
-                '<button onclick="removerOwnerDespesa('' + d.id + '')" class="text-gred hover:underline font-bold">✕ Excluir</button>' +
-              '</div>' +
-            '</td>' +
-          '</tr>';
-        });
-
-        tableHtml += '</tbody></table>';
-        tableCont.innerHTML = tableHtml;
-      }
-    }
-
-    function removerApto(id) {
-      if (confirm('Deseja realmente remover o "' + id + '" do seu faturamento e apagar todo o histórico de lançamentos?')) {
-        apartamentos = apartamentos.filter(a => a.id !== id);
-        salvarLocalStorage();
-        render();
-      }
-    }
-
-    function removerLancamento(aptoId, lanId) {
-      if (confirm('Deseja realmente apagar este lançamento mensal do histórico?')) {
-        const apto = apartamentos.find(a => a.id === aptoId);
-        if (apto && apto.historico) {
-          apto.historico = apto.historico.filter(l => l.id !== lanId);
-          salvarLocalStorage();
-          render();
-        }
-      }
-    }
-
-    // ABRIR CONFIGURAÇÃO DA LOGO E NOME
-    function openModalConfig() {
-      document.getElementById('configAppName').value = appConfig.appName || "Residencial Beatriz";
-      document.getElementById('configLogoUrl').value = appConfig.logoType === 'url' ? appConfig.logoData : '';
-      
-      configLogoBase64Cache = appConfig.logoType === 'base64' ? appConfig.logoData : '';
-      const previewCont = document.getElementById('configLogoPreviewContainer');
-      const uploadPl = document.getElementById('configUploadPlaceholder');
-      
-      if (configLogoBase64Cache) {
-        document.getElementById('configLogoPreview').src = configLogoBase64Cache;
-        previewCont.classList.remove('hidden');
-        uploadPl.classList.add('hidden');
-      } else {
-        previewCont.classList.add('hidden');
-        uploadPl.classList.remove('hidden');
-      }
-      
-      document.getElementById('modalConfig').classList.remove('hidden');
-    }
-
-    function closeModalConfig() {
-      document.getElementById('modalConfig').classList.add('hidden');
-    }
-
-    function triggerConfigLogoFileInput() {
-      document.getElementById('configLogoFile').click();
-    }
-
-    function previewConfigLogoImage(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          configLogoBase64Cache = e.target.result;
-          document.getElementById('configLogoPreview').src = configLogoBase64Cache;
-          document.getElementById('configLogoPreviewContainer').classList.remove('hidden');
-          document.getElementById('configUploadPlaceholder').classList.add('hidden');
-          document.getElementById('configLogoUrl').value = ""; // limpa url externa para previnir dubiedade
-        }
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function removeConfigLogoPreview(e) {
-      e.stopPropagation();
-      configLogoBase64Cache = "";
-      document.getElementById('configLogoFile').value = '';
-      document.getElementById('configLogoPreviewContainer').classList.add('hidden');
-      document.getElementById('configUploadPlaceholder').classList.remove('hidden');
-    }
-
-    function previewConfigLogoUrl() {
-      const url = document.getElementById('configLogoUrl').value.trim();
-      if (url) {
-        // esvazia base64 se inserido link externo
-        configLogoBase64Cache = "";
-        document.getElementById('configLogoFile').value = '';
-        document.getElementById('configLogoPreview').src = url;
-        document.getElementById('configLogoPreviewContainer').classList.remove('hidden');
-        document.getElementById('configUploadPlaceholder').classList.add('hidden');
-      }
-    }
-
-    function restaurarConfigPadrao() {
-      if (confirm('Restaurar o nome da aplicação para "Residencial Beatriz" e o ícone para a casinha original?')) {
-        appConfig = {
-          appName: "Residencial Beatriz",
-          logoType: "default",
-          logoData: ""
-        };
-        safeStorage.setItem('google_rent_manager_config_beatriz', JSON.stringify(appConfig));
-        aplicarConfiguracoes();
-        closeModalConfig();
-      }
-    }
-
-    document.getElementById('formConfig').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('configAppName').value.trim();
-      const logoUrl = document.getElementById('configLogoUrl').value.trim();
-
-      appConfig.appName = name || "Residencial Beatriz";
-      
-      if (logoUrl) {
-        appConfig.logoType = 'url';
-        appConfig.logoData = logoUrl;
-      } else if (configLogoBase64Cache) {
-        appConfig.logoType = 'base64';
-        appConfig.logoData = configLogoBase64Cache;
-      } else {
-        appConfig.logoType = 'default';
-        appConfig.logoData = '';
-      }
-
-      safeStorage.setItem('google_rent_manager_config_beatriz', JSON.stringify(appConfig));
-      aplicarConfiguracoes();
-      closeModalConfig();
-    });
-
-    // CRUD DE IMÓVEIS
-    document.getElementById('btnOpenAddModal').addEventListener('click', () => {
-      document.getElementById('modalAptoTitle').textContent = "Cadastrar Novo Apartamento";
-      document.getElementById('aptoEditControlId').value = "";
-      document.getElementById('aptoId').disabled = false;
-      document.getElementById('formApto').reset();
-      document.getElementById('fichaMoradorContainer').classList.add('hidden');
-      const fields = [
-        document.getElementById('aptoInquilinoCpf'),
-        document.getElementById('aptoInquilinoTelefone'),
-        document.getElementById('aptoInquilinoNascimento'),
-        document.getElementById('aptoInquilinoEmergenciaNome'),
-        document.getElementById('aptoInquilinoEmergenciaTelefone'),
-        document.getElementById('aptoDataInicioContrato')
-      ];
-      fields.forEach(f => f.removeAttribute('required'));
-      document.getElementById('imagePreviewContainer').classList.add('hidden');
-      document.getElementById('uploadPlaceholder').classList.remove('hidden');
-      base64FotoCache = "";
-      document.getElementById('modalApto').classList.remove('hidden');
-    });
-
-    // Toggle Ficha do Morador dinamicamente
-    document.getElementById('aptoInquilino').addEventListener('input', function(e) {
-      const isFilled = e.target.value.trim().length > 0;
-      const ficha = document.getElementById('fichaMoradorContainer');
-      const fields = [
-        document.getElementById('aptoInquilinoCpf'),
-        document.getElementById('aptoInquilinoTelefone'),
-        document.getElementById('aptoInquilinoNascimento'),
-        document.getElementById('aptoInquilinoEmergenciaNome'),
-        document.getElementById('aptoInquilinoEmergenciaTelefone'),
-        document.getElementById('aptoDataInicioContrato')
-      ];
-      if (isFilled) {
-        ficha.classList.remove('hidden');
-        fields.forEach(f => f.setAttribute('required', 'true'));
-      } else {
-        ficha.classList.add('hidden');
-        fields.forEach(f => {
-          f.removeAttribute('required');
-          f.value = '';
-        });
-      }
-    });
-
-    function editarImovelInfo(aptoId) {
-      const apto = apartamentos.find(a => a.id === aptoId);
-      if (apto) {
-        document.getElementById('modalAptoTitle').textContent = "Editar Apartamento " + aptoId;
-        document.getElementById('aptoEditControlId').value = aptoId;
-        document.getElementById('aptoId').value = aptoId;
-        document.getElementById('aptoId').disabled = true; // Chave primaria do ID do imovel nao editavel diretamente
-        document.getElementById('aptoInquilino').value = apto.inquilino === 'Disponível' ? '' : apto.inquilino;
-        document.getElementById('aptoAluguel').value = apto.aluguelBase;
-        document.getElementById('aptoDescricao').value = apto.descricao || '';
-        
-        // Ficha do Morador
-        const inquilinoCpf = apto.inquilinoCpf || '';
-        const inquilinoTelefone = apto.inquilinoTelefone || '';
-        const inquilinoDataNascimento = apto.inquilinoDataNascimento || '';
-        const inquilinoContatoEmergenciaNome = apto.inquilinoContatoEmergenciaNome || '';
-        const inquilinoContatoEmergenciaTelefone = apto.inquilinoContatoEmergenciaTelefone || '';
-        const dataInicioContrato = apto.dataInicioContrato || '';
-
-        document.getElementById('aptoInquilinoCpf').value = inquilinoCpf;
-        document.getElementById('aptoInquilinoTelefone').value = inquilinoTelefone;
-        document.getElementById('aptoInquilinoNascimento').value = inquilinoDataNascimento;
-        document.getElementById('aptoInquilinoEmergenciaNome').value = inquilinoContatoEmergenciaNome;
-        document.getElementById('aptoInquilinoEmergenciaTelefone').value = inquilinoContatoEmergenciaTelefone;
-        document.getElementById('aptoDataInicioContrato').value = dataInicioContrato;
-
-        const isFilled = (apto.inquilino && apto.inquilino !== 'Disponível');
-        const ficha = document.getElementById('fichaMoradorContainer');
-        const fields = [
-          document.getElementById('aptoInquilinoCpf'),
-          document.getElementById('aptoInquilinoTelefone'),
-          document.getElementById('aptoInquilinoNascimento'),
-          document.getElementById('aptoInquilinoEmergenciaNome'),
-          document.getElementById('aptoInquilinoEmergenciaTelefone'),
-          document.getElementById('aptoDataInicioContrato')
-        ];
-        if (isFilled) {
-          ficha.classList.remove('hidden');
-          fields.forEach(f => f.setAttribute('required', 'true'));
-        } else {
-          ficha.classList.add('hidden');
-          fields.forEach(f => f.removeAttribute('required'));
-        }
-
-        base64FotoCache = apto.fotoUrl || '';
-        const preview = document.getElementById('imagePreviewContainer');
-        const placeholder = document.getElementById('uploadPlaceholder');
-        
-        if (base64FotoCache) {
-          document.getElementById('imagePreview').src = base64FotoCache;
-          preview.classList.remove('hidden');
-          placeholder.classList.add('hidden');
-        } else {
-          preview.classList.add('hidden');
-          placeholder.classList.remove('hidden');
-        }
-
-        document.getElementById('modalApto').classList.remove('hidden');
-      }
-    }
-
-    function closeModalApto() {
-      document.getElementById('modalApto').classList.add('hidden');
-    }
-
-    function triggerFileInput() {
-      document.getElementById('aptoFile').click();
-    }
-
-    function previewImage(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          base64FotoCache = e.target.result;
-          document.getElementById('imagePreview').src = base64FotoCache;
-          document.getElementById('imagePreviewContainer').classList.remove('hidden');
-          document.getElementById('uploadPlaceholder').classList.add('hidden');
-        }
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function removePreviewImage(e) {
-      e.stopPropagation();
-      base64FotoCache = "";
-      document.getElementById('aptoFile').value = '';
-      document.getElementById('imagePreviewContainer').classList.add('hidden');
-      document.getElementById('uploadPlaceholder').classList.remove('hidden');
-    }
-
-    document.getElementById('formApto').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const editId = document.getElementById('aptoEditControlId').value;
-      const id = document.getElementById('aptoId').value.trim();
-      const inquilino = document.getElementById('aptoInquilino').value.trim();
-      const aluguel = Number(document.getElementById('aptoAluguel').value) || 0;
-      const descricao = document.getElementById('aptoDescricao').value.trim();
-
-      // Ficha do Morador
-      const inquilinoCpf = document.getElementById('aptoInquilinoCpf').value.trim();
-      const inquilinoTelefone = document.getElementById('aptoInquilinoTelefone').value.trim();
-      const inquilinoDataNascimento = document.getElementById('aptoInquilinoNascimento').value;
-      const inquilinoContatoEmergenciaNome = document.getElementById('aptoInquilinoEmergenciaNome').value.trim();
-      const inquilinoContatoEmergenciaTelefone = document.getElementById('aptoInquilinoEmergenciaTelefone').value.trim();
-      const dataInicioContrato = document.getElementById('aptoDataInicioContrato').value || new Date().toISOString().split('T')[0];
-
-      if (editId) {
-        // Editar modo
-        const target = apartamentos.find(a => a.id === editId);
-        if (target) {
-          target.inquilino = inquilino || 'Disponível';
-          target.inquilinoCpf = inquilino ? inquilinoCpf : '';
-          target.inquilinoTelefone = inquilino ? inquilinoTelefone : '';
-          target.inquilinoDataNascimento = inquilino ? inquilinoDataNascimento : '';
-          target.inquilinoContatoEmergenciaNome = inquilino ? inquilinoContatoEmergenciaNome : '';
-          target.inquilinoContatoEmergenciaTelefone = inquilino ? inquilinoContatoEmergenciaTelefone : '';
-          target.dataInicioContrato = inquilino ? dataInicioContrato : '';
-          target.aluguelBase = aluguel;
-          target.descricao = descricao;
-          target.fotoUrl = base64FotoCache;
-        }
-      } else {
-        // Cadastrar modo
-        const existe = apartamentos.find(a => a.id.toLowerCase() === id.toLowerCase());
-        if (existe) {
-          alert('Este identificador de apartamento já está cadastrado.');
+      async function loadStateFromGithub(showMessage = true) {
+        if (!hasGithubBaseConfig()) {
+          state = loadLocalCache();
+          await seedDefaultUserIfNeeded(false);
+          updateSyncStatus("warn", "Configure o GitHub");
+          if (showMessage) toast("Configure usuário, repositório, branch e arquivo de dados.");
+          renderAll();
           return;
         }
 
-        apartamentos.push({
-          id: id,
-          inquilino: inquilino || 'Disponível',
-          inquilinoCpf: inquilino ? inquilinoCpf : '',
-          inquilinoTelefone: inquilino ? inquilinoTelefone : '',
-          inquilinoDataNascimento: inquilino ? inquilinoDataNascimento : '',
-          inquilinoContatoEmergenciaNome: inquilino ? inquilinoContatoEmergenciaNome : '',
-          inquilinoContatoEmergenciaTelefone: inquilino ? inquilinoContatoEmergenciaTelefone : '',
-          dataInicioContrato: inquilino ? dataInicioContrato : '',
-          aluguelBase: aluguel,
-          descricao: descricao,
-          fotoUrl: base64FotoCache,
-          historico: []
-        });
-      }
+        try {
+          updateSyncStatus("warn", "Carregando do GitHub...");
 
-      salvarLocalStorage();
-      closeModalApto();
-      render();
-    });
+          const url = `${githubApiUrl()}?ref=${encodeURIComponent(githubConfig.branch)}`;
+          const file = await githubRequest(url);
 
-    // EDICAO DE LANCAMENTOS NO FORM
-    function editarLancamento(aptoId, lanId) {
-      editingAptoIdForLuz = aptoId;
-      editingLancamentoId = lanId;
-      
-      const apto = apartamentos.find(a => a.id === aptoId);
-      if (!apto) return;
-      const lan = apto.historico.find(l => l.id === lanId);
-      if (!lan) return;
-
-      // Abre o modal de faturamento e preenche os campos
-      openModalLuz(aptoId);
-      
-      document.getElementById('luzModalTitle').textContent = "Editar Lançamento Mensal";
-      document.getElementById('luzMesReferencia').value = lan.mesReferencia;
-      document.getElementById('luzAluguel').value = lan.aluguelBase;
-      document.getElementById('luzKwhPreco').value = lan.kwhPreco;
-      document.getElementById('luzKwhConsumido').value = lan.kwhConsumido;
-      document.getElementById('luzCosip').value = lan.cosip;
-      
-      simularLancamentoLuz();
-    }
-
-    function openModalLuz(focusAptoId) {
-      const select = document.getElementById('luzAptoId');
-      select.innerHTML = '';
-      
-      apartamentos.forEach(a => {
-        const opt = document.createElement('option');
-        opt.value = a.id;
-        opt.textContent = a.id + ' (' + a.inquilino + ')';
-        if (a.id === focusAptoId) {
-          opt.selected = true;
-        }
-        select.appendChild(opt);
-      });
-
-      // Se editando, não sobrescreve os campos ao resetar
-      if (!editingLancamentoId) {
-        document.getElementById('luzModalTitle').textContent = "Lançamento Mensal de Consumo";
-        const date = new Date();
-        const mm = String(date.getMonth() + 1).padStart(2, '0');
-        const yyyy = date.getFullYear();
-        document.getElementById('luzMesReferencia').value = mm + '/' + yyyy;
-        
-        document.getElementById('luzKwhPreco').value = "0.89";
-        document.getElementById('luzKwhConsumido').value = "150";
-        document.getElementById('luzCosip').value = "25.40";
-
-        syncRentInputValue();
-      }
-      
-      document.getElementById('modalLuz').classList.remove('hidden');
-    }
-
-    function syncRentInputValue() {
-      if (editingLancamentoId) return; // Não sobrescreve se estiver editando faturamento
-      const id = document.getElementById('luzAptoId').value;
-      const apto = apartamentos.find(a => a.id === id);
-      if (apto) {
-        document.getElementById('luzAluguel').value = apto.aluguelBase;
-      }
-      simularLancamentoLuz();
-    }
-
-    function closeModalLuz() {
-      editingLancamentoId = "";
-      editingAptoIdForLuz = "";
-      document.getElementById('modalLuz').classList.add('hidden');
-    }
-
-    function simularLancamentoLuz() {
-      const aluguel = Number(document.getElementById('luzAluguel').value) || 0;
-      const preco = Number(document.getElementById('luzKwhPreco').value) || 0;
-      const consumo = Number(document.getElementById('luzKwhConsumido').value) || 0;
-      const cosip = Number(document.getElementById('luzCosip').value) || 0;
-
-      const subtotalLuz = consumo * preco;
-      const totalGeral = aluguel + subtotalLuz + cosip;
-
-      document.getElementById('labelSubtotalLuz').textContent = formatCurrency(subtotalLuz);
-      document.getElementById('labelSubtotalCosip').textContent = formatCurrency(cosip);
-      document.getElementById('labelTotalMensal').textContent = formatCurrency(totalGeral);
-    }
-
-    document.getElementById('luzAluguel').addEventListener('input', simularLancamentoLuz);
-    document.getElementById('luzKwhPreco').addEventListener('input', simularLancamentoLuz);
-    document.getElementById('luzKwhConsumido').addEventListener('input', simularLancamentoLuz);
-    document.getElementById('luzCosip').addEventListener('input', simularLancamentoLuz);
-
-    document.getElementById('formLuz').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const id = document.getElementById('luzAptoId').value;
-      const mes = document.getElementById('luzMesReferencia').value.trim();
-      const aluguel = Number(document.getElementById('luzAluguel').value) || 0;
-      const preco = Number(document.getElementById('luzKwhPreco').value) || 0.89;
-      const consumo = Number(document.getElementById('luzKwhConsumido').value) || 0;
-      const cosip = Number(document.getElementById('luzCosip').value) || 0;
-
-      // Se editando, focar no apto correspondente de origem
-      const actualAptoId = editingLancamentoId ? editingAptoIdForLuz : id;
-
-      const target = apartamentos.find(a => a.id === actualAptoId);
-      if (target) {
-        if (!target.historico) {
-          target.historico = [];
-        }
-        
-        if (editingLancamentoId) {
-          const lan = target.historico.find(l => l.id === editingLancamentoId);
-          if (lan) {
-            lan.mesReferencia = mes;
-            lan.aluguelBase = aluguel;
-            lan.kwhPreco = preco;
-            lan.kwhConsumido = consumo;
-            lan.cosip = cosip;
+          if (!file || !file.content) {
+            state = clone(DEFAULT_STATE);
+            await seedDefaultUserIfNeeded(false);
+            saveLocalCache();
+            updateSyncStatus("warn", "Arquivo JSON ainda não existe");
+            if (showMessage) toast("Arquivo JSON não encontrado. Ao salvar, ele será criado no GitHub.");
+            renderAll();
+            return;
           }
-        } else {
-          target.historico.push({
-            id: "lan-" + Date.now() + "-" + Math.floor(Math.random() * 100),
-            mesReferencia: mes,
-            aluguelBase: aluguel,
-            kwhPreco: preco,
-            kwhConsumido: consumo,
-            cosip: cosip
+
+          const jsonText = base64ToUtf8(file.content.replace(/\n/g, ""));
+          state = normalizeState(JSON.parse(jsonText));
+
+          await seedDefaultUserIfNeeded(false);
+
+          saveLocalCache();
+          updateSyncStatus("ok", "Dados carregados do GitHub");
+
+          if (showMessage) {
+            toast("Dados carregados do GitHub.");
+          }
+
+          renderAll();
+        } catch (error) {
+          console.error(error);
+          state = loadLocalCache();
+          await seedDefaultUserIfNeeded(false);
+          updateSyncStatus("error", "Erro ao carregar GitHub");
+          if (showMessage) toast("Erro ao carregar do GitHub. Usando cache local.");
+          renderAll();
+        }
+      }
+
+      async function saveStateToGithub(message = "") {
+        if (isSaving) {
+          toast("Já existe um salvamento em andamento.");
+          return;
+        }
+
+        if (!hasGithubWriteConfig()) {
+          saveLocalCache();
+          renderAll();
+          updateSyncStatus("warn", "Sem token para salvar");
+          toast("Configure o token do GitHub para salvar online.");
+          return;
+        }
+
+        try {
+          isSaving = true;
+          updateSyncStatus("warn", "Salvando no GitHub...");
+
+          let currentSha = null;
+
+          try {
+            const currentFile = await githubRequest(`${githubApiUrl()}?ref=${encodeURIComponent(githubConfig.branch)}`);
+            currentSha = currentFile ? currentFile.sha : null;
+          } catch (error) {
+            console.warn("Arquivo ainda não existe ou não foi possível obter SHA.", error);
+          }
+
+          state.meta = {
+            updatedAt: new Date().toISOString(),
+            updatedBy: loggedUser ? loggedUser.login : "sistema"
+          };
+
+          const payload = {
+            message: `Atualiza dados do Residencial Beatriz - ${new Date().toLocaleString("pt-BR")}`,
+            content: utf8ToBase64(JSON.stringify(state, null, 2)),
+            branch: githubConfig.branch
+          };
+
+          if (currentSha) {
+            payload.sha = currentSha;
+          }
+
+          await githubRequest(githubApiUrl(), {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
           });
+
+          saveLocalCache();
+          updateSyncStatus("ok", "Salvo no GitHub");
+          renderAll();
+
+          if (message) {
+            toast(message);
+          }
+        } catch (error) {
+          console.error(error);
+          saveLocalCache();
+          updateSyncStatus("error", "Erro ao salvar");
+          toast("Erro ao salvar no GitHub. Verifique token, permissões e repositório.");
+        } finally {
+          isSaving = false;
         }
-        
-        salvarLocalStorage();
-        closeModalLuz();
-        render();
-      }
-    });
-
-    function toggleOwnerDespesasExpanded() {
-      isOwnerDespesasExpanded = !isOwnerDespesasExpanded;
-      const body = document.getElementById('ownerDespesasPanelBody');
-      const icon = document.getElementById('ownerDespesasTogglerIcon');
-      if (isOwnerDespesasExpanded) {
-        body.classList.remove('hidden');
-        icon.textContent = '▲';
-      } else {
-        body.classList.add('hidden');
-        icon.textContent = '▼';
-      }
-    }
-
-    function clearOwnerDespesaForm() {
-      document.getElementById('ownerDespesaEditId').value = "";
-      document.getElementById('ownerDespesaDesc').value = "";
-      document.getElementById('ownerDespesaValor').value = "";
-      document.getElementById('ownerDespesaData').value = new Date().toISOString().split('T')[0];
-      document.getElementById('ownerDespesaCategoria').value = "IPTU";
-      
-      document.getElementById('lblOwnerDespesaFormTitle').textContent = "Lançar Nova Despesa Administrativa";
-      document.getElementById('lblOwnerDespesaBtnSubmit').textContent = "Cadastrar Gasto";
-    }
-
-    function saveOwnerDespesa(e) {
-      e.preventDefault();
-      const editId = document.getElementById('ownerDespesaEditId').value;
-      const desc = document.getElementById('ownerDespesaDesc').value.trim();
-      const valor = Number(document.getElementById('ownerDespesaValor').value) || 0;
-      const data = document.getElementById('ownerDespesaData').value;
-      const cat = document.getElementById('ownerDespesaCategoria').value;
-
-      if (!desc || valor === 0 || !data) {
-        alert('Por favor, preencha todos os campos do formulário para lançar a despesa.');
-        return;
       }
 
-      if (editId) {
-        // Editar despesa
-        const item = despesasProprietario.find(x => x.id === editId);
-        if (item) {
-          item.descricao = desc;
-          item.valor = valor;
-          item.data = data;
-          item.categoria = cat;
+      async function save(message) {
+        await saveStateToGithub(message);
+      }
+
+      function updateSyncStatus(type = "", text = "") {
+        const configured = hasGithubBaseConfig();
+        const writable = hasGithubWriteConfig();
+
+        let statusType = type;
+        let statusText = text;
+
+        if (!statusText) {
+          if (!configured) {
+            statusType = "warn";
+            statusText = "GitHub não configurado";
+          } else if (!writable) {
+            statusType = "warn";
+            statusText = "GitHub configurado sem token";
+          } else {
+            statusType = "ok";
+            statusText = "GitHub conectado";
+          }
         }
-      } else {
-        // Cadastrar nova despesa
-        despesasProprietario.push({
-          id: "admin-des-" + Date.now(),
-          descricao: desc,
-          valor: valor,
-          data: data,
-          categoria: cat
+
+        ["syncStatusBadge", "loginSyncStatus"].forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+
+          el.className = `sync-badge ${statusType || ""}`;
+          el.innerHTML = `<i class="fa-brands fa-github"></i>${escapeHtml(statusText)}`;
         });
       }
 
-      safeStorage.setItem('google_rent_manager_admin_despesas', JSON.stringify(despesasProprietario));
-      clearOwnerDespesaForm();
-      render();
-    }
+      function fillGithubConfigForms() {
+        const mappings = [
+          ["githubOwner", "owner"],
+          ["githubRepo", "repo"],
+          ["githubBranch", "branch"],
+          ["githubPath", "path"],
+          ["loginGithubOwner", "owner"],
+          ["loginGithubRepo", "repo"],
+          ["loginGithubBranch", "branch"],
+          ["loginGithubPath", "path"]
+        ];
 
-    function editarOwnerDespesa(id) {
-      const item = despesasProprietario.find(x => x.id === id);
-      if (!item) return;
+        mappings.forEach(([id, key]) => {
+          const el = document.getElementById(id);
+          if (el) el.value = githubConfig[key] || "";
+        });
 
-      document.getElementById('ownerDespesaEditId').value = item.id;
-      document.getElementById('ownerDespesaDesc').value = item.descricao;
-      document.getElementById('ownerDespesaValor').value = item.valor;
-      document.getElementById('ownerDespesaData').value = item.data;
-      document.getElementById('ownerDespesaCategoria').value = item.categoria;
+        const tokenFields = ["githubToken", "loginGithubToken"];
 
-      document.getElementById('lblOwnerDespesaFormTitle').textContent = "Editar Despesa Administrativa";
-      document.getElementById('lblOwnerDespesaBtnSubmit').textContent = "Salvar Alterações";
-      
-      if (!isOwnerDespesasExpanded) {
-        toggleOwnerDespesasExpanded();
+        tokenFields.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = "";
+        });
       }
-    }
 
-    function removerOwnerDespesa(id) {
-      if (confirm('Tem certeza de que deseja excluir esta despesa administrativa de controle interno? Ela deixará de debitar nos dashboards.')) {
-        despesasProprietario = despesasProprietario.filter(x => x.id !== id);
-        safeStorage.setItem('google_rent_manager_admin_despesas', JSON.stringify(despesasProprietario));
-        render();
+      function uid(prefix) {
+        if (window.crypto && crypto.randomUUID) {
+          return `${prefix}_${crypto.randomUUID()}`;
+        }
+
+        return `${prefix}_${Date.now()}_${Math.random().toString(16).slice(2)}`;
       }
-    }
 
-    window.onload = () => {
-      lerLocalStorage();
-      render();
-    };
+      function randomSalt() {
+        const array = new Uint8Array(16);
+        crypto.getRandomValues(array);
+        return Array.from(array).map(byte => byte.toString(16).padStart(2, "0")).join("");
+      }
+
+      async function sha256(text) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+        const hash = await crypto.subtle.digest("SHA-256", data);
+        return Array.from(new Uint8Array(hash)).map(byte => byte.toString(16).padStart(2, "0")).join("");
+      }
+
+      async function hashPassword(password, salt) {
+        return sha256(`${salt}:${password}`);
+      }
+
+      async function createUser(login, password) {
+        const salt = randomSalt();
+        const passwordHash = await hashPassword(password, salt);
+
+        return {
+          id: uid("user"),
+          login: login.trim(),
+          salt,
+          passwordHash,
+          createdAt: new Date().toISOString()
+        };
+      }
+
+      async function seedDefaultUserIfNeeded(shouldSave = false) {
+        if (state.users.length > 0) return;
+
+        const defaultUser = await createUser("residencial", "beatrizpickler");
+        state.users.push(defaultUser);
+
+        if (shouldSave) {
+          await save("Usuário padrão criado.");
+        }
+      }
+
+      function toNumber(value) {
+        const number = Number(value);
+        return Number.isFinite(number) ? number : 0;
+      }
+
+      function money(value) {
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL"
+        }).format(toNumber(value));
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function currentMonthValue() {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+      }
+
+      function parseDate(iso) {
+        if (!iso) return null;
+
+        const [year, month, day] = iso.split("-").map(Number);
+
+        if (!year || !month || !day) return null;
+
+        return new Date(year, month - 1, day);
+      }
+
+      function parseMonth(yyyyMm) {
+        if (!yyyyMm || !yyyyMm.includes("-")) return null;
+
+        const [year, month] = yyyyMm.split("-").map(Number);
+
+        if (!year || !month) return null;
+
+        return new Date(year, month - 1, 1);
+      }
+
+      function isoDate(date) {
+        return [
+          date.getFullYear(),
+          String(date.getMonth() + 1).padStart(2, "0"),
+          String(date.getDate()).padStart(2, "0")
+        ].join("-");
+      }
+
+      function addMonths(iso, months) {
+        const base = parseDate(iso) || new Date();
+        const originalDay = base.getDate();
+        const result = new Date(base.getFullYear(), base.getMonth() + months, originalDay);
+
+        if (result.getDate() !== originalDay) {
+          result.setDate(0);
+        }
+
+        return isoDate(result);
+      }
+
+      function formatDate(iso) {
+        const date = parseDate(iso);
+
+        if (!date) return "-";
+
+        return new Intl.DateTimeFormat("pt-BR").format(date);
+      }
+
+      function monthName(yyyyMm) {
+        const date = parseMonth(yyyyMm);
+
+        if (!date) return "-";
+
+        return new Intl.DateTimeFormat("pt-BR", {
+          month: "long",
+          year: "numeric"
+        }).format(date);
+      }
+
+      function readImage(file, callback) {
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = () => callback(String(reader.result || ""));
+        reader.onerror = () => toast("Não foi possível carregar a imagem.");
+
+        reader.readAsDataURL(file);
+      }
+
+      function toast(message) {
+        const el = $("#toast");
+
+        el.textContent = message;
+        el.classList.add("show");
+
+        clearTimeout(toast.timer);
+
+        toast.timer = setTimeout(() => {
+          el.classList.remove("show");
+        }, 3200);
+      }
+
+      function getApartment(id) {
+        return state.apartments.find(apartment => apartment.id === id);
+      }
+
+      function apartmentName(id) {
+        const apartment = getApartment(id);
+
+        if (!apartment) {
+          return "Unidade removida";
+        }
+
+        return `${apartment.number} — ${apartment.tenant.name}`;
+      }
+
+      function energyTotal(entry) {
+        return toNumber(entry.kwhValue) * toNumber(entry.kwhConsumed) + toNumber(entry.cosip);
+      }
+
+      function entryTotal(entry) {
+        return toNumber(entry.rent) + energyTotal(entry);
+      }
+
+      function availableYears() {
+        const currentYear = new Date().getFullYear();
+        const years = new Set([currentYear]);
+
+        state.entries.forEach(entry => {
+          const date = parseMonth(entry.month);
+          if (date) years.add(date.getFullYear());
+        });
+
+        state.expenses.forEach(expense => {
+          const date = parseMonth(expense.month);
+          if (date) years.add(date.getFullYear());
+        });
+
+        return Array.from(years).sort((a, b) => b - a);
+      }
+
+      function getPeriodRange() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const selectedYear = Number(state.settings.dashboardYear || currentYear);
+        const period = state.settings.dashboardPeriod || "currentYear";
+
+        if (period === "last6") {
+          return {
+            start: new Date(now.getFullYear(), now.getMonth() - 5, 1),
+            end: new Date(now.getFullYear(), now.getMonth() + 1, 1),
+            label: "Últimos 6 meses"
+          };
+        }
+
+        if (period === "last2") {
+          return {
+            start: new Date(now.getFullYear(), now.getMonth() - 23, 1),
+            end: new Date(now.getFullYear(), now.getMonth() + 1, 1),
+            label: "Últimos 2 anos"
+          };
+        }
+
+        return {
+          start: new Date(selectedYear, 0, 1),
+          end: new Date(selectedYear + 1, 0, 1),
+          label: selectedYear === currentYear ? `Ano corrente: ${selectedYear}` : `Arquivo histórico: ${selectedYear}`
+        };
+      }
+
+      function isMonthInsideSelectedPeriod(yyyyMm) {
+        const date = parseMonth(yyyyMm);
+        const range = getPeriodRange();
+
+        if (!date) return false;
+
+        return date >= range.start && date < range.end;
+      }
+
+      function getFinancials() {
+        const filteredEntries = state.entries.filter(entry => isMonthInsideSelectedPeriod(entry.month));
+        const filteredExpenses = state.expenses.filter(expense => isMonthInsideSelectedPeriod(expense.month));
+
+        const gross = filteredEntries.reduce((sum, entry) => sum + entryTotal(entry), 0);
+        const rent = filteredEntries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
+        const energy = filteredEntries.reduce((sum, entry) => sum + energyTotal(entry), 0);
+        const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+        const net = gross - expenses;
+
+        return { gross, rent, energy, expenses, net };
+      }
+
+      function setLoggedInView(user) {
+        loggedUser = user;
+
+        $("#loginScreen").classList.add("hidden");
+        $("#appShell").classList.remove("hidden");
+
+        renderAll();
+        showTab("dashboard");
+
+        $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login}`;
+      }
+
+      function setLoggedOutView() {
+        loggedUser = null;
+
+        $("#appShell").classList.add("hidden");
+        $("#loginScreen").classList.remove("hidden");
+
+        $("#loginUser").value = "";
+        $("#loginPassword").value = "";
+        $("#loginUser").focus();
+
+        renderBrand();
+        fillGithubConfigForms();
+        updateSyncStatus();
+      }
+
+      async function handleLogin(event) {
+        event.preventDefault();
+
+        const login = $("#loginUser").value.trim();
+        const password = $("#loginPassword").value;
+
+        await seedDefaultUserIfNeeded(false);
+
+        const user = state.users.find(item => item.login.toLowerCase() === login.toLowerCase());
+
+        if (!user) {
+          toast("Usuário ou senha inválidos.");
+          return;
+        }
+
+        const candidateHash = await hashPassword(password, user.salt);
+
+        if (candidateHash !== user.passwordHash) {
+          toast("Usuário ou senha inválidos.");
+          return;
+        }
+
+        setLoggedInView(user);
+        toast("Login realizado com sucesso.");
+      }
+
+      function logout() {
+        setLoggedOutView();
+        toast("Você saiu do sistema.");
+      }
+
+      function renderAll() {
+        renderBrand();
+        fillGithubConfigForms();
+        updateSyncStatus();
+
+        if (!loggedUser) {
+          return;
+        }
+
+        renderDashboard();
+        renderApartmentOptions();
+        renderApartments();
+        renderExpenses();
+        renderEntries();
+        renderSettings();
+        renderUsers();
+        updateEntryPreview();
+      }
+
+      function renderBrand() {
+        const name = state.settings.appName || "Residencial Beatriz";
+
+        document.title = name;
+
+        $("#brandTitle").textContent = name;
+        $("#loginTitle").textContent = name;
+
+        const initials = name
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map(word => word[0])
+          .join("")
+          .toUpperCase() || "RB";
+
+        const logoHtml = state.settings.logo
+          ? `<img src="${state.settings.logo}" alt="Logo">`
+          : initials;
+
+        $("#brandLogo").innerHTML = logoHtml;
+        $("#loginLogo").innerHTML = logoHtml;
+      }
+
+      function renderDashboardControls() {
+        const periodSelect = $("#dashboardPeriod");
+        const yearSelect = $("#dashboardYear");
+        const years = availableYears();
+        const currentYear = new Date().getFullYear();
+
+        periodSelect.value = state.settings.dashboardPeriod || "currentYear";
+
+        if (!years.includes(Number(state.settings.dashboardYear))) {
+          state.settings.dashboardYear = currentYear;
+        }
+
+        yearSelect.innerHTML = years.map(year => `
+          <option value="${year}">${year}</option>
+        `).join("");
+
+        yearSelect.value = String(state.settings.dashboardYear || currentYear);
+        yearSelect.disabled = periodSelect.value !== "currentYear";
+
+        const range = getPeriodRange();
+
+        $("#periodBadge").innerHTML = `<i class="fa-solid fa-calendar-days"></i>${escapeHtml(range.label)}`;
+      }
+
+      function renderDashboard() {
+        renderDashboardControls();
+
+        const f = getFinancials();
+
+        $("#grossValue").textContent = money(f.gross);
+        $("#expenseValue").textContent = money(f.expenses);
+        $("#rentValue").textContent = money(f.rent);
+        $("#energyValue").textContent = money(f.energy);
+
+        renderPie("#pieCashFlow", [
+          { label: "Faturamento Bruto", value: f.gross, color: "#4285F4" },
+          { label: "Despesas Administrativas", value: f.expenses, color: "#EA4335" }
+        ]);
+
+        renderPie("#pieRevenueDivision", [
+          { label: "Aluguel Total", value: f.rent, color: "#FBBC05" },
+          { label: "Luz/COSIP Total", value: f.energy, color: "#34A853" }
+        ]);
+
+        const profitEl = $("#netProfitValue");
+
+        profitEl.textContent = money(f.net);
+        profitEl.classList.toggle("negative", f.net < 0);
+
+        $("#profitReference").textContent =
+          `${money(f.gross)} - ${money(f.expenses)} = ${money(f.net)}`;
+
+        renderContractAlerts();
+      }
+
+      function renderPie(target, slices) {
+        const el = $(target);
+        const normalized = slices.map(slice => ({
+          ...slice,
+          value: Math.max(0, toNumber(slice.value))
+        }));
+
+        const total = normalized.reduce((sum, slice) => sum + slice.value, 0);
+
+        if (total <= 0) {
+          el.innerHTML = `
+            <div class="pie-empty">Sem dados para exibir</div>
+            <div class="legend">
+              ${normalized.map(slice => `
+                <div class="legend-item">
+                  <span class="legend-dot" style="background:${slice.color}"></span>
+                  <span>${escapeHtml(slice.label)}</span>
+                  <strong>${money(0)}</strong>
+                </div>
+              `).join("")}
+            </div>
+          `;
+          return;
+        }
+
+        let start = 0;
+
+        const gradient = normalized.map(slice => {
+          const degrees = (slice.value / total) * 360;
+          const stop = `${slice.color} ${start.toFixed(2)}deg ${(start + degrees).toFixed(2)}deg`;
+
+          start += degrees;
+
+          return stop;
+        }).join(", ");
+
+        el.innerHTML = `
+          <div class="pie" style="background: conic-gradient(${gradient});">
+            <div class="pie-center">${money(total)}</div>
+          </div>
+
+          <div class="legend">
+            ${normalized.map(slice => {
+              const percent = total ? (slice.value / total) * 100 : 0;
+
+              return `
+                <div class="legend-item">
+                  <span class="legend-dot" style="background:${slice.color}"></span>
+                  <span>${escapeHtml(slice.label)} <span class="mini">(${percent.toFixed(1)}%)</span></span>
+                  <strong>${money(slice.value)}</strong>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      function renderContractAlerts() {
+        const el = $("#contractAlerts");
+        const now = new Date();
+        const firstNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+        const firstAfterNext = new Date(now.getFullYear(), now.getMonth() + 2, 1);
+
+        const alerts = state.apartments
+          .map(apartment => ({
+            ...apartment,
+            currentEnd: apartment.contractEnd || addMonths(apartment.contractStart, 6)
+          }))
+          .filter(apartment => {
+            const end = parseDate(apartment.currentEnd);
+            return end && end >= firstNextMonth && end < firstAfterNext;
+          })
+          .sort((a, b) => String(a.currentEnd).localeCompare(String(b.currentEnd)));
+
+        if (!alerts.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-circle-check"></i>
+              <strong>Nenhum contrato vence no mês seguinte.</strong>
+              <div class="mini">Quando algum contrato estiver próximo do vencimento, aparecerá aqui.</div>
+            </div>
+          `;
+          return;
+        }
+
+        el.innerHTML = alerts.map(apartment => `
+          <div class="contract-alert">
+            <div>
+              <strong>${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</strong>
+              <div class="mini muted">
+                Vencimento: ${formatDate(apartment.currentEnd)} • Telefone: ${escapeHtml(apartment.tenant.phone)}
+              </div>
+            </div>
+
+            <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
+              <i class="fa-solid fa-rotate-right"></i> Renovar por mais 6 meses
+            </button>
+          </div>
+        `).join("");
+      }
+
+      function renderApartmentOptions() {
+        const entrySelect = $("#entryApartmentId");
+        const expenseSelect = $("#expenseApartmentId");
+
+        const sorted = [...state.apartments].sort((a, b) =>
+          String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true })
+        );
+
+        const options = sorted.map(apartment => `
+          <option value="${apartment.id}">${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</option>
+        `).join("");
+
+        const entryCurrent = entrySelect.value;
+        const expenseCurrent = expenseSelect.value;
+
+        entrySelect.innerHTML = sorted.length
+          ? `<option value="">Selecione...</option>${options}`
+          : `<option value="">Cadastre um imóvel primeiro</option>`;
+
+        expenseSelect.innerHTML = `<option value="">Despesa global do proprietário</option>${options}`;
+
+        entrySelect.disabled = !sorted.length;
+
+        if (sorted.some(apartment => apartment.id === entryCurrent)) {
+          entrySelect.value = entryCurrent;
+        }
+
+        if (sorted.some(apartment => apartment.id === expenseCurrent)) {
+          expenseSelect.value = expenseCurrent;
+        }
+      }
+
+      function renderApartments() {
+        const el = $("#apartmentsList");
+
+        if (!state.apartments.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-building"></i>
+              <strong>Nenhum imóvel cadastrado.</strong>
+              <div class="mini">Cadastre o primeiro apartamento para liberar lançamentos mensais.</div>
+            </div>
+          `;
+          return;
+        }
+
+        const sorted = [...state.apartments].sort((a, b) =>
+          String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true })
+        );
+
+        el.innerHTML = sorted.map(apartment => {
+          const photo = apartment.photo
+            ? `<img src="${apartment.photo}" alt="Foto do imóvel">`
+            : `<span>${escapeHtml(String(apartment.number || "AP").slice(0, 3).toUpperCase())}</span>`;
+
+          return `
+            <div class="item">
+              <div class="photo">${photo}</div>
+
+              <div>
+                <h3>${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</h3>
+
+                <div class="meta">
+                  <span class="pill blue"><i class="fa-solid fa-money-bill-wave"></i> Aluguel: ${money(apartment.baseRent)}</span>
+                  <span class="pill green"><i class="fa-solid fa-calendar-day"></i> Início: ${formatDate(apartment.contractStart)}</span>
+                  <span class="pill yellow"><i class="fa-solid fa-calendar-check"></i> Vence: ${formatDate(apartment.contractEnd)}</span>
+                  <span class="pill"><i class="fa-solid fa-id-card"></i> CPF: ${escapeHtml(apartment.tenant.cpf)}</span>
+                  <span class="pill"><i class="fa-solid fa-phone"></i> ${escapeHtml(apartment.tenant.phone)}</span>
+                </div>
+
+                <p class="mini muted" style="margin:8px 0 0;">
+                  <strong>Nascimento:</strong> ${formatDate(apartment.tenant.birth)}
+                  • <strong>Emergência:</strong> ${escapeHtml(apartment.tenant.emergencyName)} - ${escapeHtml(apartment.tenant.emergencyPhone)}
+                </p>
+
+                <p class="mini muted" style="margin:6px 0 0;">
+                  ${escapeHtml(apartment.description || "Sem descrição cadastrada.")}
+                </p>
+              </div>
+
+              <div class="actions">
+                <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
+                  <i class="fa-solid fa-rotate-right"></i> Renovar
+                </button>
+
+                <button class="btn btn-light btn-sm" data-action="editApartment" data-id="${apartment.id}">
+                  <i class="fa-solid fa-pen"></i> Editar
+                </button>
+
+                <button class="btn btn-danger btn-sm" data-action="deleteApartment" data-id="${apartment.id}">
+                  <i class="fa-solid fa-trash"></i> Remover
+                </button>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderExpenses() {
+        const el = $("#expensesList");
+        const total = state.expenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+
+        $("#expensesSummary").textContent = `Total interno geral: ${money(total)}`;
+
+        if (!state.expenses.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-receipt"></i>
+              <strong>Nenhuma despesa cadastrada.</strong>
+              <div class="mini">Cadastre IPTU, Internet ou Manutenção para calcular o lucro líquido real.</div>
+            </div>
+          `;
+          return;
+        }
+
+        const sorted = [...state.expenses].sort((a, b) => String(b.month).localeCompare(String(a.month)));
+
+        el.innerHTML = `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mês/Ano</th>
+                  <th>Tipo</th>
+                  <th>Unidade</th>
+                  <th>Descrição</th>
+                  <th>Valor</th>
+                  <th style="text-align:right;">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sorted.map(expense => `
+                  <tr>
+                    <td>${monthName(expense.month)}</td>
+                    <td>
+                      <span class="pill ${expense.type === "IPTU" ? "blue" : expense.type === "Internet" ? "green" : "yellow"}">
+                        ${escapeHtml(expense.type)}
+                      </span>
+                    </td>
+                    <td>${expense.apartmentId ? escapeHtml(apartmentName(expense.apartmentId)) : "Global"}</td>
+                    <td>${escapeHtml(expense.description || "-")}</td>
+                    <td><strong>${money(expense.amount)}</strong></td>
+                    <td>
+                      <div class="td-actions">
+                        <button class="btn btn-light btn-sm" data-action="editExpense" data-id="${expense.id}">
+                          <i class="fa-solid fa-pen"></i> Editar
+                        </button>
+                        <button class="btn btn-danger btn-sm" data-action="deleteExpense" data-id="${expense.id}">
+                          <i class="fa-solid fa-trash"></i> Remover
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function renderEntries() {
+        const el = $("#entriesList");
+
+        if (!state.entries.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-file-invoice-dollar"></i>
+              <strong>Nenhum lançamento mensal cadastrado.</strong>
+              <div class="mini">Cadastre aluguel, kWh, consumo e COSIP para gerar o histórico.</div>
+            </div>
+          `;
+          return;
+        }
+
+        const apartments = [...state.apartments].sort((a, b) =>
+          String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true })
+        );
+
+        const groupedHtml = apartments.map(apartment => {
+          const entries = state.entries
+            .filter(entry => entry.apartmentId === apartment.id)
+            .sort((a, b) => String(b.month).localeCompare(String(a.month)));
+
+          if (!entries.length) return "";
+
+          return `
+            <article class="card" style="margin-bottom:18px;">
+              <h3 style="margin:0 0 12px;">
+                <i class="fa-solid fa-building"></i>
+                ${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}
+              </h3>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Mês/Ano</th>
+                      <th>Aluguel</th>
+                      <th>Valor kWh</th>
+                      <th>kWh Consumido</th>
+                      <th>Luz + COSIP</th>
+                      <th>Total Inquilino</th>
+                      <th style="text-align:right;">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${entries.map(entry => `
+                      <tr>
+                        <td>${monthName(entry.month)}</td>
+                        <td>${money(entry.rent)}</td>
+                        <td>${money(entry.kwhValue)}</td>
+                        <td>${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh</td>
+                        <td>${money(energyTotal(entry))}</td>
+                        <td><strong>${money(entryTotal(entry))}</strong></td>
+                        <td>
+                          <div class="td-actions">
+                            <button class="btn btn-light btn-sm" data-action="editEntry" data-id="${entry.id}">
+                              <i class="fa-solid fa-pen"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-sm" data-action="deleteEntry" data-id="${entry.id}">
+                              <i class="fa-solid fa-trash"></i> Remover
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          `;
+        }).join("");
+
+        const orphanEntries = state.entries
+          .filter(entry => !getApartment(entry.apartmentId))
+          .sort((a, b) => String(b.month).localeCompare(String(a.month)));
+
+        const orphanHtml = orphanEntries.length ? `
+          <article class="card" style="margin-bottom:18px;">
+            <h3 style="margin:0 0 12px;">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              Lançamentos sem unidade vinculada
+            </h3>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Mês/Ano</th>
+                    <th>Aluguel</th>
+                    <th>Valor kWh</th>
+                    <th>kWh Consumido</th>
+                    <th>Luz + COSIP</th>
+                    <th>Total</th>
+                    <th style="text-align:right;">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${orphanEntries.map(entry => `
+                    <tr>
+                      <td>${monthName(entry.month)}</td>
+                      <td>${money(entry.rent)}</td>
+                      <td>${money(entry.kwhValue)}</td>
+                      <td>${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh</td>
+                      <td>${money(energyTotal(entry))}</td>
+                      <td><strong>${money(entryTotal(entry))}</strong></td>
+                      <td>
+                        <div class="td-actions">
+                          <button class="btn btn-light btn-sm" data-action="editEntry" data-id="${entry.id}">
+                            <i class="fa-solid fa-pen"></i> Editar
+                          </button>
+                          <button class="btn btn-danger btn-sm" data-action="deleteEntry" data-id="${entry.id}">
+                            <i class="fa-solid fa-trash"></i> Remover
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </article>
+        ` : "";
+
+        el.innerHTML = groupedHtml + orphanHtml;
+      }
+
+      function renderSettings() {
+        $("#appName").value = state.settings.appName || "Residencial Beatriz";
+        tempAppLogo = state.settings.logo || "";
+        renderLogoPreview();
+      }
+
+      function renderUsers() {
+        const el = $("#usersList");
+
+        if (!state.users.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-user-shield"></i>
+              <strong>Nenhum usuário cadastrado.</strong>
+            </div>
+          `;
+          return;
+        }
+
+        el.innerHTML = `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Login</th>
+                  <th>Criado em</th>
+                  <th>Status</th>
+                  <th style="text-align:right;">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${state.users.map(user => `
+                  <tr>
+                    <td><strong>${escapeHtml(user.login)}</strong></td>
+                    <td>${user.createdAt ? new Intl.DateTimeFormat("pt-BR").format(new Date(user.createdAt)) : "-"}</td>
+                    <td>${loggedUser && loggedUser.id === user.id ? '<span class="pill green">Usuário atual</span>' : '<span class="pill blue">Ativo</span>'}</td>
+                    <td>
+                      <div class="td-actions">
+                        <button class="btn btn-light btn-sm" data-action="editUser" data-id="${user.id}">
+                          <i class="fa-solid fa-pen"></i> Editar
+                        </button>
+                        <button class="btn btn-danger btn-sm" data-action="deleteUser" data-id="${user.id}">
+                          <i class="fa-solid fa-trash"></i> Remover
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function renderApartmentPhotoPreview() {
+        $("#apartmentPhotoPreview").innerHTML = tempApartmentPhoto
+          ? `<img src="${tempApartmentPhoto}" alt="Prévia da foto">`
+          : "Foto";
+      }
+
+      function renderLogoPreview() {
+        $("#appLogoPreview").innerHTML = tempAppLogo
+          ? `<img src="${tempAppLogo}" alt="Prévia da logo">`
+          : "Logo";
+      }
+
+      function clearApartmentForm() {
+        $("#apartmentEditId").value = "";
+        $("#apartmentNumber").value = "";
+        $("#baseRent").value = "";
+        $("#contractStart").value = "";
+        $("#contractEnd").value = "";
+        $("#apartmentDescription").value = "";
+        $("#apartmentPhoto").value = "";
+
+        $("#tenantName").value = "";
+        $("#tenantCpf").value = "";
+        $("#tenantPhone").value = "";
+        $("#tenantBirth").value = "";
+        $("#emergencyName").value = "";
+        $("#emergencyPhone").value = "";
+
+        tempApartmentPhoto = "";
+        renderApartmentPhotoPreview();
+      }
+
+      function clearExpenseForm() {
+        $("#expenseEditId").value = "";
+        $("#expenseMonth").value = currentMonthValue();
+        $("#expenseType").value = "IPTU";
+        $("#expenseApartmentId").value = "";
+        $("#expenseAmount").value = "";
+        $("#expenseDescription").value = "";
+      }
+
+      function clearEntryForm() {
+        $("#entryEditId").value = "";
+        $("#entryApartmentId").value = "";
+        $("#entryMonth").value = currentMonthValue();
+        $("#entryRent").value = "";
+        $("#entryKwhValue").value = "";
+        $("#entryKwhConsumed").value = "";
+        $("#entryCosip").value = "";
+        manualEntryRent = false;
+        updateEntryPreview();
+      }
+
+      function clearUserForm() {
+        $("#userEditId").value = "";
+        $("#accessLogin").value = "";
+        $("#accessPassword").value = "";
+        $("#accessPasswordConfirm").value = "";
+      }
+
+      function updateEntryPreview() {
+        const rent = toNumber($("#entryRent")?.value);
+        const kwhValue = toNumber($("#entryKwhValue")?.value);
+        const kwhConsumed = toNumber($("#entryKwhConsumed")?.value);
+        const cosip = toNumber($("#entryCosip")?.value);
+
+        const luz = kwhValue * kwhConsumed;
+        const total = rent + luz + cosip;
+
+        $("#entryTotalPreview").textContent = money(total);
+        $("#entryFormula").textContent =
+          `${money(rent)} + (${kwhConsumed.toLocaleString("pt-BR")} kWh × ${money(kwhValue)}) + ${money(cosip)} = ${money(total)}`;
+      }
+
+      function showTab(name) {
+        $$(".tab-btn").forEach(button => {
+          button.classList.toggle("active", button.dataset.tab === name);
+        });
+
+        $$(".page").forEach(page => {
+          page.classList.toggle("active", page.id === `page-${name}`);
+        });
+      }
+
+      async function saveApartmentForm(event) {
+        event.preventDefault();
+
+        const id = $("#apartmentEditId").value;
+        const number = $("#apartmentNumber").value.trim();
+        const contractStart = $("#contractStart").value;
+        const contractEnd = $("#contractEnd").value;
+        const tenantName = $("#tenantName").value.trim();
+
+        if (!number || !contractStart || !contractEnd || !tenantName) {
+          toast("Preencha os campos obrigatórios.");
+          return;
+        }
+
+        const duplicate = state.apartments.some(apartment =>
+          apartment.id !== id &&
+          apartment.number.toLowerCase() === number.toLowerCase()
+        );
+
+        if (duplicate) {
+          toast("Já existe um apartamento com esse ID/Número.");
+          return;
+        }
+
+        const apartment = {
+          id: id || uid("apartment"),
+          number,
+          description: $("#apartmentDescription").value.trim(),
+          photo: tempApartmentPhoto,
+          baseRent: toNumber($("#baseRent").value),
+          contractStart,
+          contractEnd,
+          tenant: {
+            name: tenantName,
+            cpf: $("#tenantCpf").value.trim(),
+            phone: $("#tenantPhone").value.trim(),
+            birth: $("#tenantBirth").value,
+            emergencyName: $("#emergencyName").value.trim(),
+            emergencyPhone: $("#emergencyPhone").value.trim()
+          }
+        };
+
+        const requiredTenantFields = [
+          apartment.tenant.name,
+          apartment.tenant.cpf,
+          apartment.tenant.phone,
+          apartment.tenant.birth,
+          apartment.tenant.emergencyName,
+          apartment.tenant.emergencyPhone
+        ];
+
+        if (requiredTenantFields.some(field => !field)) {
+          toast("Preencha todos os campos obrigatórios da ficha do morador.");
+          return;
+        }
+
+        if (apartment.baseRent < 0) {
+          toast("O valor base do aluguel não pode ser negativo.");
+          return;
+        }
+
+        if (id) {
+          state.apartments = state.apartments.map(item => item.id === id ? apartment : item);
+          await save("Imóvel e ficha do morador atualizados.");
+        } else {
+          state.apartments.push(apartment);
+          await save("Imóvel e morador cadastrados.");
+        }
+
+        clearApartmentForm();
+      }
+
+      function editApartment(id) {
+        const apartment = getApartment(id);
+
+        if (!apartment) return;
+
+        $("#apartmentEditId").value = apartment.id;
+        $("#apartmentNumber").value = apartment.number || "";
+        $("#baseRent").value = apartment.baseRent ?? "";
+        $("#contractStart").value = apartment.contractStart || "";
+        $("#contractEnd").value = apartment.contractEnd || addMonths(apartment.contractStart, 6);
+        $("#apartmentDescription").value = apartment.description || "";
+
+        $("#tenantName").value = apartment.tenant?.name || "";
+        $("#tenantCpf").value = apartment.tenant?.cpf || "";
+        $("#tenantPhone").value = apartment.tenant?.phone || "";
+        $("#tenantBirth").value = apartment.tenant?.birth || "";
+        $("#emergencyName").value = apartment.tenant?.emergencyName || "";
+        $("#emergencyPhone").value = apartment.tenant?.emergencyPhone || "";
+
+        tempApartmentPhoto = apartment.photo || "";
+        renderApartmentPhotoPreview();
+
+        showTab("apartments");
+        $("#apartmentForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function deleteApartment(id) {
+        const hasEntries = state.entries.some(entry => entry.apartmentId === id);
+        const hasExpenses = state.expenses.some(expense => expense.apartmentId === id);
+
+        let message = "Remover este imóvel e a ficha do morador?";
+
+        if (hasEntries || hasExpenses) {
+          message = "Este imóvel possui lançamentos ou despesas vinculadas. Ao remover, os lançamentos serão removidos e as despesas vinculadas ficarão como globais. Deseja continuar?";
+        }
+
+        if (!confirm(message)) return;
+
+        state.apartments = state.apartments.filter(apartment => apartment.id !== id);
+        state.entries = state.entries.filter(entry => entry.apartmentId !== id);
+        state.expenses = state.expenses.map(expense =>
+          expense.apartmentId === id ? { ...expense, apartmentId: "" } : expense
+        );
+
+        await save("Imóvel removido.");
+      }
+
+      async function renewApartment(id) {
+        const apartment = getApartment(id);
+
+        if (!apartment) return;
+
+        const currentEnd = apartment.contractEnd || addMonths(apartment.contractStart, 6);
+        apartment.contractEnd = addMonths(currentEnd, 6);
+
+        await save(`Contrato renovado até ${formatDate(apartment.contractEnd)}.`);
+      }
+
+      async function saveExpenseForm(event) {
+        event.preventDefault();
+
+        const id = $("#expenseEditId").value;
+
+        const expense = {
+          id: id || uid("expense"),
+          month: $("#expenseMonth").value,
+          type: $("#expenseType").value,
+          apartmentId: $("#expenseApartmentId").value,
+          amount: toNumber($("#expenseAmount").value),
+          description: $("#expenseDescription").value.trim()
+        };
+
+        if (!expense.month || !expense.type || expense.amount < 0) {
+          toast("Preencha corretamente os dados da despesa.");
+          return;
+        }
+
+        if (id) {
+          state.expenses = state.expenses.map(item => item.id === id ? expense : item);
+          await save("Despesa atualizada.");
+        } else {
+          state.expenses.push(expense);
+          await save("Despesa cadastrada.");
+        }
+
+        clearExpenseForm();
+      }
+
+      function editExpense(id) {
+        const expense = state.expenses.find(item => item.id === id);
+
+        if (!expense) return;
+
+        $("#expenseEditId").value = expense.id;
+        $("#expenseMonth").value = expense.month;
+        $("#expenseType").value = expense.type;
+        $("#expenseApartmentId").value = expense.apartmentId || "";
+        $("#expenseAmount").value = expense.amount;
+        $("#expenseDescription").value = expense.description || "";
+
+        showTab("expenses");
+        $("#expenseForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function deleteExpense(id) {
+        if (!confirm("Remover esta despesa?")) return;
+
+        state.expenses = state.expenses.filter(expense => expense.id !== id);
+
+        await save("Despesa removida.");
+      }
+
+      async function saveEntryForm(event) {
+        event.preventDefault();
+
+        const id = $("#entryEditId").value;
+        const apartmentId = $("#entryApartmentId").value;
+
+        if (!apartmentId) {
+          toast("Selecione um apartamento.");
+          return;
+        }
+
+        const entry = {
+          id: id || uid("entry"),
+          apartmentId,
+          month: $("#entryMonth").value,
+          rent: toNumber($("#entryRent").value),
+          kwhValue: toNumber($("#entryKwhValue").value),
+          kwhConsumed: toNumber($("#entryKwhConsumed").value),
+          cosip: toNumber($("#entryCosip").value)
+        };
+
+        if (!entry.month || entry.rent < 0 || entry.kwhValue < 0 || entry.kwhConsumed < 0 || entry.cosip < 0) {
+          toast("Preencha corretamente todos os valores do lançamento.");
+          return;
+        }
+
+        if (id) {
+          state.entries = state.entries.map(item => item.id === id ? entry : item);
+          await save("Lançamento atualizado.");
+        } else {
+          state.entries.push(entry);
+          await save("Lançamento cadastrado.");
+        }
+
+        clearEntryForm();
+      }
+
+      function editEntry(id) {
+        const entry = state.entries.find(item => item.id === id);
+
+        if (!entry) return;
+
+        $("#entryEditId").value = entry.id;
+        $("#entryApartmentId").value = entry.apartmentId;
+        $("#entryMonth").value = entry.month;
+        $("#entryRent").value = entry.rent;
+        $("#entryKwhValue").value = entry.kwhValue;
+        $("#entryKwhConsumed").value = entry.kwhConsumed;
+        $("#entryCosip").value = entry.cosip;
+
+        manualEntryRent = true;
+        updateEntryPreview();
+
+        showTab("entries");
+        $("#entryForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function deleteEntry(id) {
+        if (!confirm("Remover este lançamento mensal?")) return;
+
+        state.entries = state.entries.filter(entry => entry.id !== id);
+
+        await save("Lançamento removido.");
+      }
+
+      async function saveSettingsForm(event) {
+        event.preventDefault();
+
+        state.settings.appName = $("#appName").value.trim() || "Residencial Beatriz";
+        state.settings.logo = tempAppLogo || "";
+
+        await save("Configurações salvas.");
+      }
+
+      async function saveUserForm(event) {
+        event.preventDefault();
+
+        const id = $("#userEditId").value;
+        const login = $("#accessLogin").value.trim();
+        const password = $("#accessPassword").value;
+        const passwordConfirm = $("#accessPasswordConfirm").value;
+
+        if (!login) {
+          toast("Informe o login do usuário.");
+          return;
+        }
+
+        const duplicate = state.users.some(user =>
+          user.id !== id &&
+          user.login.toLowerCase() === login.toLowerCase()
+        );
+
+        if (duplicate) {
+          toast("Já existe um usuário com esse login.");
+          return;
+        }
+
+        if (!id && !password) {
+          toast("Informe uma senha para o novo usuário.");
+          return;
+        }
+
+        if (password || passwordConfirm) {
+          if (password !== passwordConfirm) {
+            toast("As senhas não conferem.");
+            return;
+          }
+
+          if (password.length < 4) {
+            toast("A senha deve ter pelo menos 4 caracteres.");
+            return;
+          }
+        }
+
+        if (id) {
+          const user = state.users.find(item => item.id === id);
+
+          if (!user) return;
+
+          user.login = login;
+
+          if (password) {
+            user.salt = randomSalt();
+            user.passwordHash = await hashPassword(password, user.salt);
+          }
+
+          if (loggedUser && loggedUser.id === id) {
+            loggedUser = user;
+            $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login}`;
+          }
+
+          await save("Usuário atualizado.");
+        } else {
+          const newUser = await createUser(login, password);
+          state.users.push(newUser);
+          await save("Usuário criado.");
+        }
+
+        clearUserForm();
+      }
+
+      function editUser(id) {
+        const user = state.users.find(item => item.id === id);
+
+        if (!user) return;
+
+        $("#userEditId").value = user.id;
+        $("#accessLogin").value = user.login;
+        $("#accessPassword").value = "";
+        $("#accessPasswordConfirm").value = "";
+
+        showTab("settings");
+        $("#userForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function deleteUser(id) {
+        if (state.users.length <= 1) {
+          toast("Não é possível remover o último usuário.");
+          return;
+        }
+
+        if (loggedUser && loggedUser.id === id) {
+          toast("Não é possível remover o usuário que está logado.");
+          return;
+        }
+
+        if (!confirm("Remover este usuário de acesso?")) return;
+
+        state.users = state.users.filter(user => user.id !== id);
+
+        await save("Usuário removido.");
+      }
+
+      function exportBackup() {
+        const blob = new Blob([JSON.stringify(state, null, 2)], {
+          type: "application/json"
+        });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = `backup-residencial-beatriz-${new Date().toISOString().slice(0, 10)}.json`;
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(url);
+
+        toast("Backup exportado.");
+      }
+
+      async function importBackup(file) {
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = async () => {
+          try {
+            const imported = JSON.parse(String(reader.result || "{}"));
+
+            if (
+              !imported ||
+              !Array.isArray(imported.apartments) ||
+              !Array.isArray(imported.expenses) ||
+              !Array.isArray(imported.entries)
+            ) {
+              throw new Error("Backup inválido");
+            }
+
+            if (!confirm("Importar este backup substituirá todos os dados atuais. Deseja continuar?")) {
+              $("#importInput").value = "";
+              return;
+            }
+
+            state = normalizeState(imported);
+
+            await seedDefaultUserIfNeeded(false);
+            await save("Backup importado e salvo no GitHub.");
+          } catch (error) {
+            console.error(error);
+            toast("Arquivo de backup inválido.");
+          } finally {
+            $("#importInput").value = "";
+          }
+        };
+
+        reader.readAsText(file);
+      }
+
+      async function resetData() {
+        if (!confirm("Deseja apagar todos os dados do sistema? Esta ação não pode ser desfeita.")) {
+          return;
+        }
+
+        state = clone(DEFAULT_STATE);
+        await seedDefaultUserIfNeeded(false);
+
+        clearApartmentForm();
+        clearExpenseForm();
+        clearEntryForm();
+        clearUserForm();
+
+        await save("Todos os dados foram apagados.");
+        setLoggedOutView();
+      }
+
+      function saveGithubForm(prefix = "") {
+        const owner = $(`#${prefix}GithubOwner`).value.trim();
+        const repo = $(`#${prefix}GithubRepo`).value.trim();
+        const branch = $(`#${prefix}GithubBranch`).value.trim() || "main";
+        const path = $(`#${prefix}GithubPath`).value.trim() || "dados/residencial-beatriz.json";
+        const token = $(`#${prefix}GithubToken`).value.trim();
+
+        if (!owner || !repo || !branch || !path) {
+          toast("Preencha usuário/organização, repositório, branch e caminho do arquivo.");
+          return false;
+        }
+
+        saveGithubConfig({
+          owner,
+          repo,
+          branch,
+          path,
+          token: token || githubConfig.token
+        });
+
+        toast("Configuração GitHub salva neste navegador.");
+        return true;
+      }
+
+      function bindEvents() {
+        $("#loginForm").addEventListener("submit", handleLogin);
+        $("#logoutBtn").addEventListener("click", logout);
+
+        $$(".tab-btn").forEach(button => {
+          button.addEventListener("click", () => showTab(button.dataset.tab));
+        });
+
+        document.addEventListener("click", async event => {
+          const button = event.target.closest("[data-action]");
+
+          if (!button) return;
+
+          const action = button.dataset.action;
+          const id = button.dataset.id;
+
+          const actions = {
+            editApartment,
+            deleteApartment,
+            renewApartment,
+            editExpense,
+            deleteExpense,
+            editEntry,
+            deleteEntry,
+            editUser,
+            deleteUser
+          };
+
+          if (actions[action]) {
+            await actions[action](id);
+          }
+        });
+
+        $("#dashboardPeriod").addEventListener("change", async event => {
+          state.settings.dashboardPeriod = event.target.value;
+
+          if (event.target.value === "currentYear" && !state.settings.dashboardYear) {
+            state.settings.dashboardYear = new Date().getFullYear();
+          }
+
+          await save("Filtro do dashboard salvo.");
+        });
+
+        $("#dashboardYear").addEventListener("change", async event => {
+          state.settings.dashboardYear = Number(event.target.value);
+          state.settings.dashboardPeriod = "currentYear";
+          await save("Ano histórico selecionado.");
+        });
+
+        $("#apartmentForm").addEventListener("submit", saveApartmentForm);
+        $("#clearApartmentBtn").addEventListener("click", clearApartmentForm);
+
+        $("#contractStart").addEventListener("change", () => {
+          const start = $("#contractStart").value;
+
+          if (start) {
+            $("#contractEnd").value = addMonths(start, 6);
+          } else {
+            $("#contractEnd").value = "";
+          }
+        });
+
+        $("#apartmentPhoto").addEventListener("change", event => {
+          readImage(event.target.files[0], base64 => {
+            tempApartmentPhoto = base64;
+            renderApartmentPhotoPreview();
+          });
+        });
+
+        $("#removeApartmentPhotoBtn").addEventListener("click", () => {
+          tempApartmentPhoto = "";
+          $("#apartmentPhoto").value = "";
+          renderApartmentPhotoPreview();
+        });
+
+        $("#expenseForm").addEventListener("submit", saveExpenseForm);
+        $("#clearExpenseBtn").addEventListener("click", clearExpenseForm);
+
+        $("#entryForm").addEventListener("submit", saveEntryForm);
+        $("#clearEntryBtn").addEventListener("click", clearEntryForm);
+
+        $("#entryApartmentId").addEventListener("change", event => {
+          const apartment = getApartment(event.target.value);
+
+          if (apartment && !$("#entryEditId").value && !manualEntryRent) {
+            $("#entryRent").value = apartment.baseRent;
+          }
+
+          updateEntryPreview();
+        });
+
+        ["#entryRent", "#entryKwhValue", "#entryKwhConsumed", "#entryCosip"].forEach(selector => {
+          $(selector).addEventListener("input", () => {
+            if (selector === "#entryRent") {
+              manualEntryRent = true;
+            }
+
+            updateEntryPreview();
+          });
+        });
+
+        $("#settingsForm").addEventListener("submit", saveSettingsForm);
+
+        $("#appLogo").addEventListener("change", event => {
+          readImage(event.target.files[0], base64 => {
+            tempAppLogo = base64;
+            renderLogoPreview();
+          });
+        });
+
+        $("#removeLogoBtn").addEventListener("click", async () => {
+          tempAppLogo = "";
+          state.settings.logo = "";
+          $("#appLogo").value = "";
+          await save("Logo removida.");
+        });
+
+        $("#userForm").addEventListener("submit", saveUserForm);
+        $("#clearUserBtn").addEventListener("click", clearUserForm);
+
+        $("#githubConfigForm").addEventListener("submit", event => {
+          event.preventDefault();
+          saveGithubForm("");
+        });
+
+        $("#githubLoginConfigForm").addEventListener("submit", event => {
+          event.preventDefault();
+          saveGithubForm("login");
+        });
+
+        $("#loadGithubBtn").addEventListener("click", () => loadStateFromGithub(true));
+        $("#loginLoadGithubBtn").addEventListener("click", () => loadStateFromGithub(true));
+        $("#reloadGithubBtn").addEventListener("click", () => loadStateFromGithub(true));
+
+        $("#forceSaveGithubBtn").addEventListener("click", async () => {
+          await save("Dados atuais enviados para o GitHub.");
+        });
+
+        $("#removeGithubTokenBtn").addEventListener("click", () => {
+          removeGithubToken();
+          toast("Token removido deste navegador.");
+        });
+
+        $("#exportBtn").addEventListener("click", exportBackup);
+        $("#importInput").addEventListener("change", event => importBackup(event.target.files[0]));
+        $("#resetBtn").addEventListener("click", resetData);
+      }
+
+      async function init() {
+        bindEvents();
+
+        fillGithubConfigForms();
+
+        if (hasGithubBaseConfig()) {
+          await loadStateFromGithub(false);
+        } else {
+          state = loadLocalCache();
+          await seedDefaultUserIfNeeded(false);
+        }
+
+        if (!state.settings.dashboardPeriod) {
+          state.settings.dashboardPeriod = "currentYear";
+        }
+
+        if (!state.settings.dashboardYear) {
+          state.settings.dashboardYear = new Date().getFullYear();
+        }
+
+        clearExpenseForm();
+        clearEntryForm();
+        renderApartmentPhotoPreview();
+        renderBrand();
+        setLoggedOutView();
+        updateSyncStatus();
+      }
+
+      init();
+    })();
   </script>
 </body>
 </html>
