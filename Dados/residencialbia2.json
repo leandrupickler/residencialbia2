@@ -1,0 +1,16 @@
+{
+  "settings": {
+    "appName": "Residencial Beatriz",
+    "logo": "",
+    "dashboardPeriod": "currentYear",
+    "dashboardYear": 2026
+  },
+  "users": [],
+  "apartments": [],
+  "expenses": [],
+  "entries": [],
+  "meta": {
+    "updatedAt": "",
+    "updatedBy": ""
+  }
+}
