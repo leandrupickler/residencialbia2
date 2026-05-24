@@ -26,9 +26,7 @@
       --radius: 22px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -41,21 +39,9 @@
       font-family: "Poppins", "Roboto", Arial, sans-serif;
     }
 
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-    }
-
-    .hidden {
-      display: none !important;
-    }
+    button, input, select, textarea { font: inherit; }
+    button { border: none; cursor: pointer; }
+    .hidden { display: none !important; }
 
     .login-screen {
       min-height: 100vh;
@@ -65,7 +51,7 @@
     }
 
     .login-card {
-      width: min(660px, 100%);
+      width: min(700px, 100%);
       background: rgba(255, 255, 255, 0.94);
       border: 1px solid rgba(255, 255, 255, 0.72);
       border-radius: 32px;
@@ -76,8 +62,7 @@
       overflow: hidden;
     }
 
-    .login-card::before,
-    .card::before {
+    .login-card::before, .card::before {
       content: "";
       position: absolute;
       inset: 0 0 auto 0;
@@ -100,26 +85,14 @@
       overflow: hidden;
     }
 
-    .login-logo img,
-    .brand-logo img,
-    .preview-box img,
-    .photo img {
+    .login-logo img, .brand-logo img, .preview-box img, .photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .login-card h1 {
-      margin: 0;
-      text-align: center;
-      font-size: 1.7rem;
-    }
-
-    .login-card > p {
-      text-align: center;
-      color: var(--muted);
-      margin: 8px 0 22px;
-    }
+    .login-card h1 { margin: 0; text-align: center; font-size: 1.7rem; }
+    .login-card > p { text-align: center; color: var(--muted); margin: 8px 0 22px; }
 
     .container {
       max-width: 1480px;
@@ -143,12 +116,7 @@
       box-shadow: var(--shadow-soft);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
+    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
 
     .brand-logo {
       width: 62px;
@@ -174,21 +142,11 @@
       text-overflow: ellipsis;
     }
 
-    .brand p {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
+    .brand p { margin: 5px 0 0; color: var(--muted); font-size: 0.9rem; }
 
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 8px;
-    }
+    .tabs { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
 
-    .tab-btn,
-    .btn {
+    .tab-btn, .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -203,11 +161,7 @@
       text-decoration: none;
     }
 
-    .tab-btn:hover,
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-soft);
-    }
+    .tab-btn:hover, .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-soft); }
 
     .tab-btn.active {
       color: #fff;
@@ -216,64 +170,20 @@
       box-shadow: 0 8px 18px rgba(66, 133, 244, 0.28);
     }
 
-    .btn-primary {
-      color: #fff;
-      background: var(--blue);
-      border-color: var(--blue);
-    }
+    .btn-primary { color: #fff; background: var(--blue); border-color: var(--blue); }
+    .btn-success { color: #fff; background: var(--green); border-color: var(--green); }
+    .btn-danger { color: #fff; background: var(--red); border-color: var(--red); }
+    .btn-warning { color: #2b2100; background: var(--yellow); border-color: var(--yellow); }
+    .btn-light { color: var(--muted); background: #f8fafd; }
+    .btn-sm { min-height: 34px; padding: 8px 12px; font-size: 0.84rem; }
 
-    .btn-success {
-      color: #fff;
-      background: var(--green);
-      border-color: var(--green);
-    }
-
-    .btn-danger {
-      color: #fff;
-      background: var(--red);
-      border-color: var(--red);
-    }
-
-    .btn-warning {
-      color: #2b2100;
-      background: var(--yellow);
-      border-color: var(--yellow);
-    }
-
-    .btn-light {
-      color: var(--muted);
-      background: #f8fafd;
-    }
-
-    .btn-sm {
-      min-height: 34px;
-      padding: 8px 12px;
-      font-size: 0.84rem;
-    }
-
-    main {
-      margin-top: 22px;
-    }
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-      animation: fadeIn 0.18s ease;
-    }
+    main { margin-top: 22px; }
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.18s ease; }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .section-title {
@@ -284,32 +194,13 @@
       margin: 24px 0 14px;
     }
 
-    .section-title h2 {
-      margin: 0;
-      font-size: 1.28rem;
-    }
+    .section-title h2 { margin: 0; font-size: 1.28rem; }
+    .section-title p { margin: 5px 0 0; color: var(--muted); }
 
-    .section-title p {
-      margin: 5px 0 0;
-      color: var(--muted);
-    }
-
-    .grid {
-      display: grid;
-      gap: 18px;
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .grid-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
     .card {
       position: relative;
@@ -321,7 +212,7 @@
       box-shadow: var(--shadow);
     }
 
-    .dashboard-filter {
+    .dashboard-filter, .github-panel {
       display: flex;
       flex-wrap: wrap;
       align-items: end;
@@ -334,12 +225,10 @@
       box-shadow: var(--shadow-soft);
     }
 
-    .dashboard-filter .field {
-      min-width: 240px;
-    }
+    .github-panel { display: block; margin-top: 18px; background: #f8fafd; }
+    .dashboard-filter .field { min-width: 240px; }
 
-    .filter-badge,
-    .sync-badge {
+    .filter-badge, .sync-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -352,35 +241,12 @@
       font-weight: 700;
     }
 
-    .sync-badge.ok {
-      background: rgba(52, 168, 83, 0.12);
-      color: var(--green);
-    }
+    .sync-badge.ok { background: rgba(52, 168, 83, 0.12); color: var(--green); }
+    .sync-badge.warn { background: rgba(251, 188, 5, 0.18); color: #8a6500; }
+    .sync-badge.error { background: rgba(234, 67, 53, 0.12); color: var(--red); }
 
-    .sync-badge.warn {
-      background: rgba(251, 188, 5, 0.18);
-      color: #8a6500;
-    }
-
-    .sync-badge.error {
-      background: rgba(234, 67, 53, 0.12);
-      color: var(--red);
-    }
-
-    .stat-card {
-      min-height: 128px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .stat-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
+    .stat-card { min-height: 128px; display: flex; flex-direction: column; justify-content: space-between; }
+    .stat-head { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
 
     .icon {
       width: 42px;
@@ -393,20 +259,9 @@
       flex: 0 0 auto;
     }
 
-    .icon.red {
-      background: rgba(234, 67, 53, 0.12);
-      color: var(--red);
-    }
-
-    .icon.yellow {
-      background: rgba(251, 188, 5, 0.18);
-      color: #8a6500;
-    }
-
-    .icon.green {
-      background: rgba(52, 168, 83, 0.12);
-      color: var(--green);
-    }
+    .icon.red { background: rgba(234, 67, 53, 0.12); color: var(--red); }
+    .icon.yellow { background: rgba(251, 188, 5, 0.18); color: #8a6500; }
+    .icon.green { background: rgba(52, 168, 83, 0.12); color: var(--green); }
 
     .stat-value {
       margin-top: 16px;
@@ -415,17 +270,8 @@
       letter-spacing: -0.04em;
     }
 
-    .stat-note {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 0.84rem;
-    }
-
-    .chart-card h3,
-    .profit-card h3 {
-      margin: 0 0 14px;
-      font-size: 1.05rem;
-    }
+    .stat-note { margin: 5px 0 0; color: var(--muted); font-size: 0.84rem; }
+    .chart-card h3, .profit-card h3 { margin: 0 0 14px; font-size: 1.05rem; }
 
     .pie-layout {
       display: grid;
@@ -471,11 +317,7 @@
       font-weight: 700;
     }
 
-    .legend {
-      display: grid;
-      gap: 10px;
-      width: 100%;
-    }
+    .legend { display: grid; gap: 10px; width: 100%; }
 
     .legend-item {
       display: grid;
@@ -486,16 +328,8 @@
       font-size: 0.9rem;
     }
 
-    .legend-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.03);
-    }
-
-    .legend strong {
-      color: var(--text);
-    }
+    .legend-dot { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 3px rgba(0,0,0,0.03); }
+    .legend strong { color: var(--text); }
 
     .profit-card {
       min-height: 220px;
@@ -513,9 +347,7 @@
       letter-spacing: -0.06em;
     }
 
-    .profit-value.negative {
-      color: var(--red);
-    }
+    .profit-value.negative { color: var(--red); }
 
     .reference {
       padding: 14px;
@@ -526,39 +358,15 @@
       line-height: 1.5;
     }
 
-    form {
-      display: grid;
-      gap: 14px;
-    }
+    form { display: grid; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .form-row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .form-row.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
+    .field { display: grid; gap: 6px; }
+    label { color: #3c4043; font-size: 0.86rem; font-weight: 700; }
 
-    .form-row.two {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .form-row.three {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-    }
-
-    label {
-      color: #3c4043;
-      font-size: 0.86rem;
-      font-weight: 700;
-    }
-
-    input,
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
       padding: 12px 13px;
       border-radius: 14px;
@@ -569,39 +377,18 @@
       transition: 0.18s ease;
     }
 
-    textarea {
-      min-height: 86px;
-      resize: vertical;
-    }
+    textarea { min-height: 86px; resize: vertical; }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: var(--blue);
       box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.12);
     }
 
-    .form-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 10px;
-      margin-top: 2px;
-    }
+    .form-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 2px; }
+    .muted { color: var(--muted); }
+    .mini { font-size: 0.82rem; }
 
-    .muted {
-      color: var(--muted);
-    }
-
-    .mini {
-      font-size: 0.82rem;
-    }
-
-    .list {
-      display: grid;
-      gap: 14px;
-    }
+    .list { display: grid; gap: 14px; }
 
     .item {
       display: grid;
@@ -627,18 +414,8 @@
       font-weight: 900;
     }
 
-    .item h3 {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 800;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 7px;
-    }
+    .item h3 { margin: 0; font-size: 1rem; font-weight: 800; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 7px; }
 
     .pill {
       display: inline-flex;
@@ -652,53 +429,16 @@
       font-weight: 600;
     }
 
-    .pill.blue {
-      background: rgba(66, 133, 244, 0.12);
-      color: var(--blue);
-    }
+    .pill.blue { background: rgba(66, 133, 244, 0.12); color: var(--blue); }
+    .pill.red { background: rgba(234, 67, 53, 0.12); color: var(--red); }
+    .pill.yellow { background: rgba(251, 188, 5, 0.18); color: #8a6500; }
+    .pill.green { background: rgba(52, 168, 83, 0.12); color: var(--green); }
 
-    .pill.red {
-      background: rgba(234, 67, 53, 0.12);
-      color: var(--red);
-    }
+    .actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
 
-    .pill.yellow {
-      background: rgba(251, 188, 5, 0.18);
-      color: #8a6500;
-    }
-
-    .pill.green {
-      background: rgba(52, 168, 83, 0.12);
-      color: var(--green);
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background: #fff;
-    }
-
-    table {
-      width: 100%;
-      min-width: 980px;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 13px 14px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      vertical-align: middle;
-    }
+    .table-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--border); background: #fff; }
+    table { width: 100%; min-width: 980px; border-collapse: collapse; }
+    th, td { padding: 13px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
 
     th {
       background: #f8fafd;
@@ -708,16 +448,8 @@
       letter-spacing: 0.04em;
     }
 
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .td-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      min-width: 190px;
-    }
+    tr:last-child td { border-bottom: none; }
+    .td-actions { display: flex; justify-content: flex-end; gap: 8px; min-width: 190px; }
 
     .empty {
       padding: 28px;
@@ -728,17 +460,9 @@
       color: var(--muted);
     }
 
-    .empty i {
-      display: block;
-      margin-bottom: 10px;
-      color: var(--blue);
-      font-size: 2rem;
-    }
+    .empty i { display: block; margin-bottom: 10px; color: var(--blue); font-size: 2rem; }
 
-    .alert-list {
-      display: grid;
-      gap: 10px;
-    }
+    .alert-list { display: grid; gap: 10px; }
 
     .contract-alert {
       display: grid;
@@ -751,9 +475,7 @@
       background: rgba(251, 188, 5, 0.13);
     }
 
-    .contract-alert strong {
-      color: #6f5100;
-    }
+    .contract-alert strong { color: #6f5100; }
 
     .preview-box {
       display: grid;
@@ -769,12 +491,7 @@
       flex: 0 0 auto;
     }
 
-    .file-row {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
+    .file-row { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
 
     .total-preview {
       display: flex;
@@ -787,19 +504,9 @@
       background: linear-gradient(135deg, rgba(66, 133, 244, 0.10), rgba(52, 168, 83, 0.10));
     }
 
-    .total-preview .amount {
-      color: var(--blue);
-      font-size: 1.7rem;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-    }
+    .total-preview .amount { color: var(--blue); font-size: 1.7rem; font-weight: 900; letter-spacing: -0.04em; }
 
-    .footer {
-      margin: 22px 0 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
+    .footer { margin: 22px 0 0; text-align: center; color: var(--muted); font-size: 0.82rem; }
 
     .toast {
       position: fixed;
@@ -818,10 +525,7 @@
       transition: 0.2s ease;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateY(0); }
 
     .security-note {
       padding: 14px;
@@ -833,79 +537,23 @@
       line-height: 1.55;
     }
 
-    .github-panel {
-      margin-top: 18px;
-      padding: 16px;
-      border-radius: 22px;
-      border: 1px solid var(--border);
-      background: #f8fafd;
-    }
-
     @media (max-width: 1120px) {
-      .topbar {
-        position: static;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .tabs {
-        justify-content: flex-start;
-      }
-
-      .grid-4,
-      .grid-3,
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .form-row,
-      .form-row.two,
-      .form-row.three {
-        grid-template-columns: 1fr;
-      }
-
-      .pie-layout {
-        grid-template-columns: 1fr;
-        justify-items: center;
-      }
+      .topbar { position: static; flex-direction: column; align-items: flex-start; }
+      .tabs { justify-content: flex-start; }
+      .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .form-row, .form-row.two, .form-row.three { grid-template-columns: 1fr; }
+      .pie-layout { grid-template-columns: 1fr; justify-items: center; }
     }
 
     @media (max-width: 680px) {
-      .container {
-        padding: 14px;
-      }
-
-      .topbar,
-      .card,
-      .login-card {
-        border-radius: 20px;
-      }
-
-      .brand h1 {
-        white-space: normal;
-      }
-
-      .tab-btn {
-        flex: 1 1 auto;
-      }
-
-      .item {
-        grid-template-columns: 1fr;
-      }
-
-      .actions,
-      .form-actions {
-        justify-content: flex-start;
-      }
-
-      .contract-alert,
-      .total-preview {
-        grid-template-columns: 1fr;
-      }
-
-      .dashboard-filter .field {
-        min-width: 100%;
-      }
+      .container { padding: 14px; }
+      .topbar, .card, .login-card { border-radius: 20px; }
+      .brand h1 { white-space: normal; }
+      .tab-btn { flex: 1 1 auto; }
+      .item { grid-template-columns: 1fr; }
+      .actions, .form-actions { justify-content: flex-start; }
+      .contract-alert, .total-preview { grid-template-columns: 1fr; }
+      .dashboard-filter .field { min-width: 100%; }
     }
   </style>
 </head>
@@ -944,7 +592,7 @@
         <form id="githubLoginConfigForm">
           <div class="form-row two">
             <div class="field">
-              <label for="loginGithubOwner">Usuário/Organização</label>
+              <label for="loginGithubOwner">Usuário/Organização do GitHub</label>
               <input id="loginGithubOwner" type="text" placeholder="Ex.: leandropickler">
             </div>
 
@@ -997,27 +645,14 @@
       </div>
 
       <nav class="tabs">
-        <button class="tab-btn active" data-tab="dashboard">
-          <i class="fa-solid fa-chart-pie"></i> Dashboard
-        </button>
-        <button class="tab-btn" data-tab="apartments">
-          <i class="fa-solid fa-building"></i> Imóveis
-        </button>
-        <button class="tab-btn" data-tab="expenses">
-          <i class="fa-solid fa-receipt"></i> Despesas
-        </button>
-        <button class="tab-btn" data-tab="entries">
-          <i class="fa-solid fa-file-invoice-dollar"></i> Lançamentos
-        </button>
-        <button class="tab-btn" data-tab="settings">
-          <i class="fa-solid fa-gear"></i> Configurações
-        </button>
-        <button class="btn btn-light" id="reloadGithubBtn">
-          <i class="fa-solid fa-rotate"></i> Atualizar
-        </button>
-        <button class="btn btn-danger" id="logoutBtn">
-          <i class="fa-solid fa-right-from-bracket"></i> Sair
-        </button>
+        <button class="tab-btn active" data-tab="dashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
+        <button class="tab-btn" data-tab="apartments"><i class="fa-solid fa-building"></i> Imóveis</button>
+        <button class="tab-btn" data-tab="expenses"><i class="fa-solid fa-receipt"></i> Despesas</button>
+        <button class="tab-btn" data-tab="entries"><i class="fa-solid fa-file-invoice-dollar"></i> Lançamentos</button>
+        <button class="tab-btn" data-tab="history"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</button>
+        <button class="tab-btn" data-tab="settings"><i class="fa-solid fa-gear"></i> Configurações</button>
+        <button class="btn btn-light" id="reloadGithubBtn"><i class="fa-solid fa-rotate"></i> Atualizar</button>
+        <button class="btn btn-danger" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
       </nav>
     </header>
 
@@ -1120,9 +755,7 @@
               <div class="profit-value" id="netProfitValue">R$ 0,00</div>
             </div>
 
-            <div class="reference" id="profitReference">
-              R$ 0,00 - R$ 0,00 = R$ 0,00
-            </div>
+            <div class="reference" id="profitReference">R$ 0,00 - R$ 0,00 = R$ 0,00</div>
           </article>
         </div>
 
@@ -1141,8 +774,8 @@
       <section id="page-apartments" class="page">
         <div class="section-title">
           <div>
-            <h2>Gestão de imóveis e ficha dos moradores</h2>
-            <p>Todos os dados cadastrais podem ser editados a qualquer momento.</p>
+            <h2>Gestão de imóveis e moradores</h2>
+            <p>Ao liberar um apartamento, o morador atual vai para o histórico e o imóvel fica livre para novo cadastro.</p>
           </div>
         </div>
 
@@ -1196,7 +829,7 @@
               </div>
             </div>
 
-            <h3>Ficha cadastral do inquilino</h3>
+            <h3>Ficha cadastral do morador atual</h3>
 
             <div class="form-row">
               <div class="field">
@@ -1210,25 +843,25 @@
               </div>
 
               <div class="field">
-                <label for="tenantPhone">Telefone *</label>
-                <input id="tenantPhone" type="text" placeholder="(48) 99999-9999" required>
+                <label for="tenantPhone">Telefone</label>
+                <input id="tenantPhone" type="text" placeholder="(48) 99999-9999">
               </div>
 
               <div class="field">
-                <label for="tenantBirth">Data de Nascimento *</label>
-                <input id="tenantBirth" type="date" required>
+                <label for="tenantBirth">Data de Nascimento</label>
+                <input id="tenantBirth" type="date">
               </div>
             </div>
 
             <div class="form-row two">
               <div class="field">
-                <label for="emergencyName">Contato de Emergência - Nome *</label>
-                <input id="emergencyName" type="text" placeholder="Nome do contato" required>
+                <label for="emergencyName">Contato de Emergência - Nome</label>
+                <input id="emergencyName" type="text" placeholder="Nome do contato">
               </div>
 
               <div class="field">
-                <label for="emergencyPhone">Contato de Emergência - Telefone *</label>
-                <input id="emergencyPhone" type="text" placeholder="(48) 99999-9999" required>
+                <label for="emergencyPhone">Contato de Emergência - Telefone</label>
+                <input id="emergencyPhone" type="text" placeholder="(48) 99999-9999">
               </div>
             </div>
 
@@ -1238,7 +871,7 @@
               </button>
 
               <button class="btn btn-primary" type="submit">
-                <i class="fa-solid fa-floppy-disk"></i> Salvar imóvel e morador
+                <i class="fa-solid fa-floppy-disk"></i> Salvar apartamento/morador
               </button>
             </div>
           </form>
@@ -1247,7 +880,7 @@
         <div class="section-title">
           <div>
             <h2>Imóveis cadastrados</h2>
-            <p>Edite dados do imóvel, morador e contrato sempre que necessário.</p>
+            <p>Use “Liberar apto” quando o contrato acabar e outra pessoa for entrar no imóvel.</p>
           </div>
         </div>
 
@@ -1387,12 +1020,23 @@
 
         <div class="section-title">
           <div>
-            <h2>Histórico por apartamento</h2>
-            <p>Todos os lançamentos anteriores podem ser editados ou removidos.</p>
+            <h2>Histórico financeiro por apartamento</h2>
+            <p>Os lançamentos guardam uma cópia do nome do morador do momento do lançamento.</p>
           </div>
         </div>
 
         <div id="entriesList"></div>
+      </section>
+
+      <section id="page-history" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Histórico de contratos e moradores</h2>
+            <p>Moradores antigos ficam aqui quando o apartamento é liberado para novo contrato.</p>
+          </div>
+        </div>
+
+        <div id="contractHistoryList"></div>
       </section>
 
       <section id="page-settings" class="page">
@@ -1441,13 +1085,13 @@
 
         <article class="card">
           <div class="security-note">
-            <strong>Atenção:</strong> o token GitHub é salvo somente neste navegador. Não publique token dentro do código. Se o repositório for público, o arquivo JSON também poderá ser acessado publicamente.
+            <strong>Atenção:</strong> o token GitHub é salvo somente neste navegador. Não publique token dentro do código.
           </div>
 
           <form id="githubConfigForm" style="margin-top:16px;">
             <div class="form-row two">
               <div class="field">
-                <label for="githubOwner">Usuário/Organização</label>
+                <label for="githubOwner">Usuário/Organização do GitHub</label>
                 <input id="githubOwner" type="text" placeholder="Ex.: leandropickler">
               </div>
 
@@ -1503,7 +1147,7 @@
 
         <article class="card">
           <div class="security-note">
-            <strong>Aviso de segurança:</strong> este login é local no front-end. As senhas são salvas como hash SHA-256 no arquivo JSON. Para segurança corporativa real, o ideal seria backend ou autenticação externa.
+            <strong>Aviso de segurança:</strong> este login é local no front-end. As senhas são salvas como hash SHA-256 no arquivo JSON.
           </div>
 
           <form id="userForm" style="margin-top:16px;">
@@ -1576,7 +1220,7 @@
     </main>
 
     <p class="footer">
-      Residencial Beatriz • GitHub Pages + GitHub JSON Storage • HTML5/CSS3/JS Vanilla
+      Residencial Beatriz • GitHub Pages + GitHub JSON Storage • Histórico de contratos integrado
     </p>
   </div>
 
@@ -1606,6 +1250,15 @@
         }
       };
 
+      const EMPTY_TENANT = {
+        name: "",
+        cpf: "",
+        phone: "",
+        birth: "",
+        emergencyName: "",
+        emergencyPhone: ""
+      };
+
       let state = clone(DEFAULT_STATE);
       let githubConfig = loadGithubConfig();
       let loggedUser = null;
@@ -1621,17 +1274,87 @@
         return JSON.parse(JSON.stringify(obj));
       }
 
-      function normalizeState(input) {
-        const source = input && typeof input === "object" ? input : {};
+      function normalizeTenant(tenant) {
+        return { ...EMPTY_TENANT, ...(tenant || {}) };
+      }
+
+      function normalizeApartment(apartment) {
+        const apt = apartment && typeof apartment === "object" ? apartment : {};
+        const tenant = normalizeTenant(apt.tenant);
+        const hasTenant = Boolean((tenant.name || "").trim());
 
         return {
+          id: apt.id || uid("apartment"),
+          number: apt.number || "",
+          description: apt.description || "",
+          photo: apt.photo || "",
+          baseRent: toNumber(apt.baseRent),
+          contractStart: apt.contractStart || "",
+          contractEnd: apt.contractEnd || "",
+          tenant,
+          status: apt.status || (hasTenant ? "occupied" : "free"),
+          contractHistory: Array.isArray(apt.contractHistory) ? apt.contractHistory.map(normalizeHistoryItem) : []
+        };
+      }
+
+      function normalizeHistoryItem(item) {
+        const source = item && typeof item === "object" ? item : {};
+
+        return {
+          id: source.id || uid("history"),
+          apartmentId: source.apartmentId || "",
+          apartmentNumber: source.apartmentNumber || source.apartamento || "",
+          tenant: normalizeTenant(source.tenant || {
+            name: source.nome || "",
+            cpf: source.cpf || "",
+            phone: source.telefone || "",
+            birth: source.birth || "",
+            emergencyName: source.emergencyName || "",
+            emergencyPhone: source.emergencyPhone || ""
+          }),
+          contractStart: source.contractStart || source.inicioContrato || "",
+          contractEnd: source.contractEnd || source.fimContrato || "",
+          baseRent: toNumber(source.baseRent ?? source.valorAluguelMensal),
+          endedAt: source.endedAt || "",
+          reason: source.reason || source.observacao || ""
+        };
+      }
+
+      function normalizeEntry(entry) {
+        const source = entry && typeof entry === "object" ? entry : {};
+        const apt = source.apartmentId ? getApartment(source.apartmentId) : null;
+
+        return {
+          id: source.id || uid("entry"),
+          apartmentId: source.apartmentId || "",
+          apartmentNumber: source.apartmentNumber || (apt ? apt.number : ""),
+          tenantName: source.tenantName || source.tenantSnapshot?.name || (apt ? apt.tenant.name : ""),
+          tenantCpf: source.tenantCpf || source.tenantSnapshot?.cpf || (apt ? apt.tenant.cpf : ""),
+          month: source.month || "",
+          rent: toNumber(source.rent),
+          kwhValue: toNumber(source.kwhValue),
+          kwhConsumed: toNumber(source.kwhConsumed),
+          cosip: toNumber(source.cosip)
+        };
+      }
+
+      function normalizeState(input) {
+        const source = input && typeof input === "object" ? input : {};
+        const normalized = {
           settings: { ...DEFAULT_STATE.settings, ...(source.settings || {}) },
           users: Array.isArray(source.users) ? source.users : [],
-          apartments: Array.isArray(source.apartments) ? source.apartments : [],
+          apartments: Array.isArray(source.apartments) ? source.apartments.map(normalizeApartment) : [],
           expenses: Array.isArray(source.expenses) ? source.expenses : [],
-          entries: Array.isArray(source.entries) ? source.entries : [],
+          entries: [],
           meta: { ...DEFAULT_STATE.meta, ...(source.meta || {}) }
         };
+
+        const previousState = state;
+        state = normalized;
+        normalized.entries = Array.isArray(source.entries) ? source.entries.map(normalizeEntry) : [];
+        state = previousState;
+
+        return normalized;
       }
 
       function loadGithubConfig() {
@@ -1697,10 +1420,7 @@
       }
 
       function encodedGithubPath() {
-        return githubConfig.path
-          .split("/")
-          .map(part => encodeURIComponent(part))
-          .join("/");
+        return githubConfig.path.split("/").map(part => encodeURIComponent(part)).join("/");
       }
 
       function githubApiUrl() {
@@ -1726,14 +1446,9 @@
           headers.Authorization = `Bearer ${githubConfig.token}`;
         }
 
-        const response = await fetch(url, {
-          ...options,
-          headers
-        });
+        const response = await fetch(url, { ...options, headers });
 
-        if (response.status === 404) {
-          return null;
-        }
+        if (response.status === 404) return null;
 
         if (!response.ok) {
           const text = await response.text();
@@ -1790,9 +1505,7 @@
           saveLocalCache();
           updateSyncStatus("ok", "Dados carregados do GitHub");
 
-          if (showMessage) {
-            toast("Dados carregados do GitHub.");
-          }
+          if (showMessage) toast("Dados carregados do GitHub.");
 
           renderAll();
         } catch (error) {
@@ -1806,6 +1519,8 @@
       }
 
       async function saveStateToGithub(message = "") {
+        state = normalizeState(state);
+
         if (isSaving) {
           toast("Já existe um salvamento em andamento.");
           return;
@@ -1825,12 +1540,8 @@
 
           let currentSha = null;
 
-          try {
-            const currentFile = await githubRequest(`${githubApiUrl()}?ref=${encodeURIComponent(githubConfig.branch)}`);
-            currentSha = currentFile ? currentFile.sha : null;
-          } catch (error) {
-            console.warn("Arquivo ainda não existe ou não foi possível obter SHA.", error);
-          }
+          const currentFile = await githubRequest(`${githubApiUrl()}?ref=${encodeURIComponent(githubConfig.branch)}`);
+          currentSha = currentFile ? currentFile.sha : null;
 
           state.meta = {
             updatedAt: new Date().toISOString(),
@@ -1843,15 +1554,11 @@
             branch: githubConfig.branch
           };
 
-          if (currentSha) {
-            payload.sha = currentSha;
-          }
+          if (currentSha) payload.sha = currentSha;
 
           await githubRequest(githubApiUrl(), {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
           });
 
@@ -1859,9 +1566,7 @@
           updateSyncStatus("ok", "Salvo no GitHub");
           renderAll();
 
-          if (message) {
-            toast(message);
-          }
+          if (message) toast(message);
         } catch (error) {
           console.error(error);
           saveLocalCache();
@@ -1929,10 +1634,7 @@
       }
 
       function uid(prefix) {
-        if (window.crypto && crypto.randomUUID) {
-          return `${prefix}_${crypto.randomUUID()}`;
-        }
-
+        if (window.crypto && crypto.randomUUID) return `${prefix}_${crypto.randomUUID()}`;
         return `${prefix}_${Date.now()}_${Math.random().toString(16).slice(2)}`;
       }
 
@@ -1972,9 +1674,7 @@
         const defaultUser = await createUser("residencial", "beatrizpickler");
         state.users.push(defaultUser);
 
-        if (shouldSave) {
-          await save("Usuário padrão criado.");
-        }
+        if (shouldSave) await save("Usuário padrão criado.");
       }
 
       function toNumber(value) {
@@ -2005,21 +1705,15 @@
 
       function parseDate(iso) {
         if (!iso) return null;
-
         const [year, month, day] = iso.split("-").map(Number);
-
         if (!year || !month || !day) return null;
-
         return new Date(year, month - 1, day);
       }
 
       function parseMonth(yyyyMm) {
         if (!yyyyMm || !yyyyMm.includes("-")) return null;
-
         const [year, month] = yyyyMm.split("-").map(Number);
-
         if (!year || !month) return null;
-
         return new Date(year, month - 1, 1);
       }
 
@@ -2035,55 +1729,36 @@
         const base = parseDate(iso) || new Date();
         const originalDay = base.getDate();
         const result = new Date(base.getFullYear(), base.getMonth() + months, originalDay);
-
-        if (result.getDate() !== originalDay) {
-          result.setDate(0);
-        }
-
+        if (result.getDate() !== originalDay) result.setDate(0);
         return isoDate(result);
       }
 
       function formatDate(iso) {
         const date = parseDate(iso);
-
         if (!date) return "-";
-
         return new Intl.DateTimeFormat("pt-BR").format(date);
       }
 
       function monthName(yyyyMm) {
         const date = parseMonth(yyyyMm);
-
         if (!date) return "-";
-
-        return new Intl.DateTimeFormat("pt-BR", {
-          month: "long",
-          year: "numeric"
-        }).format(date);
+        return new Intl.DateTimeFormat("pt-BR", { month: "long", year: "numeric" }).format(date);
       }
 
       function readImage(file, callback) {
         if (!file) return;
-
         const reader = new FileReader();
-
         reader.onload = () => callback(String(reader.result || ""));
         reader.onerror = () => toast("Não foi possível carregar a imagem.");
-
         reader.readAsDataURL(file);
       }
 
       function toast(message) {
         const el = $("#toast");
-
         el.textContent = message;
         el.classList.add("show");
-
         clearTimeout(toast.timer);
-
-        toast.timer = setTimeout(() => {
-          el.classList.remove("show");
-        }, 3200);
+        toast.timer = setTimeout(() => el.classList.remove("show"), 3200);
       }
 
       function getApartment(id) {
@@ -2092,12 +1767,8 @@
 
       function apartmentName(id) {
         const apartment = getApartment(id);
-
-        if (!apartment) {
-          return "Unidade removida";
-        }
-
-        return `${apartment.number} — ${apartment.tenant.name}`;
+        if (!apartment) return "Unidade removida";
+        return `${apartment.number}${apartment.tenant?.name ? " — " + apartment.tenant.name : ""}`;
       }
 
       function energyTotal(entry) {
@@ -2132,19 +1803,11 @@
         const period = state.settings.dashboardPeriod || "currentYear";
 
         if (period === "last6") {
-          return {
-            start: new Date(now.getFullYear(), now.getMonth() - 5, 1),
-            end: new Date(now.getFullYear(), now.getMonth() + 1, 1),
-            label: "Últimos 6 meses"
-          };
+          return { start: new Date(now.getFullYear(), now.getMonth() - 5, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 6 meses" };
         }
 
         if (period === "last2") {
-          return {
-            start: new Date(now.getFullYear(), now.getMonth() - 23, 1),
-            end: new Date(now.getFullYear(), now.getMonth() + 1, 1),
-            label: "Últimos 2 anos"
-          };
+          return { start: new Date(now.getFullYear(), now.getMonth() - 23, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 2 anos" };
         }
 
         return {
@@ -2157,9 +1820,7 @@
       function isMonthInsideSelectedPeriod(yyyyMm) {
         const date = parseMonth(yyyyMm);
         const range = getPeriodRange();
-
         if (!date) return false;
-
         return date >= range.start && date < range.end;
       }
 
@@ -2178,26 +1839,20 @@
 
       function setLoggedInView(user) {
         loggedUser = user;
-
         $("#loginScreen").classList.add("hidden");
         $("#appShell").classList.remove("hidden");
-
         renderAll();
         showTab("dashboard");
-
         $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login}`;
       }
 
       function setLoggedOutView() {
         loggedUser = null;
-
         $("#appShell").classList.add("hidden");
         $("#loginScreen").classList.remove("hidden");
-
         $("#loginUser").value = "";
         $("#loginPassword").value = "";
         $("#loginUser").focus();
-
         renderBrand();
         fillGithubConfigForms();
         updateSyncStatus();
@@ -2205,7 +1860,6 @@
 
       async function handleLogin(event) {
         event.preventDefault();
-
         const login = $("#loginUser").value.trim();
         const password = $("#loginPassword").value;
 
@@ -2235,19 +1889,19 @@
       }
 
       function renderAll() {
+        state = normalizeState(state);
         renderBrand();
         fillGithubConfigForms();
         updateSyncStatus();
 
-        if (!loggedUser) {
-          return;
-        }
+        if (!loggedUser) return;
 
         renderDashboard();
         renderApartmentOptions();
         renderApartments();
         renderExpenses();
         renderEntries();
+        renderContractHistory();
         renderSettings();
         renderUsers();
         updateEntryPreview();
@@ -2255,23 +1909,13 @@
 
       function renderBrand() {
         const name = state.settings.appName || "Residencial Beatriz";
-
         document.title = name;
 
         $("#brandTitle").textContent = name;
         $("#loginTitle").textContent = name;
 
-        const initials = name
-          .split(/\s+/)
-          .filter(Boolean)
-          .slice(0, 2)
-          .map(word => word[0])
-          .join("")
-          .toUpperCase() || "RB";
-
-        const logoHtml = state.settings.logo
-          ? `<img src="${state.settings.logo}" alt="Logo">`
-          : initials;
+        const initials = name.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join("").toUpperCase() || "RB";
+        const logoHtml = state.settings.logo ? `<img src="${state.settings.logo}" alt="Logo">` : initials;
 
         $("#brandLogo").innerHTML = logoHtml;
         $("#loginLogo").innerHTML = logoHtml;
@@ -2285,19 +1929,13 @@
 
         periodSelect.value = state.settings.dashboardPeriod || "currentYear";
 
-        if (!years.includes(Number(state.settings.dashboardYear))) {
-          state.settings.dashboardYear = currentYear;
-        }
+        if (!years.includes(Number(state.settings.dashboardYear))) state.settings.dashboardYear = currentYear;
 
-        yearSelect.innerHTML = years.map(year => `
-          <option value="${year}">${year}</option>
-        `).join("");
-
+        yearSelect.innerHTML = years.map(year => `<option value="${year}">${year}</option>`).join("");
         yearSelect.value = String(state.settings.dashboardYear || currentYear);
         yearSelect.disabled = periodSelect.value !== "currentYear";
 
         const range = getPeriodRange();
-
         $("#periodBadge").innerHTML = `<i class="fa-solid fa-calendar-days"></i>${escapeHtml(range.label)}`;
       }
 
@@ -2322,23 +1960,17 @@
         ]);
 
         const profitEl = $("#netProfitValue");
-
         profitEl.textContent = money(f.net);
         profitEl.classList.toggle("negative", f.net < 0);
 
-        $("#profitReference").textContent =
-          `${money(f.gross)} - ${money(f.expenses)} = ${money(f.net)}`;
+        $("#profitReference").textContent = `${money(f.gross)} - ${money(f.expenses)} = ${money(f.net)}`;
 
         renderContractAlerts();
       }
 
       function renderPie(target, slices) {
         const el = $(target);
-        const normalized = slices.map(slice => ({
-          ...slice,
-          value: Math.max(0, toNumber(slice.value))
-        }));
-
+        const normalized = slices.map(slice => ({ ...slice, value: Math.max(0, toNumber(slice.value)) }));
         const total = normalized.reduce((sum, slice) => sum + slice.value, 0);
 
         if (total <= 0) {
@@ -2358,13 +1990,10 @@
         }
 
         let start = 0;
-
         const gradient = normalized.map(slice => {
           const degrees = (slice.value / total) * 360;
           const stop = `${slice.color} ${start.toFixed(2)}deg ${(start + degrees).toFixed(2)}deg`;
-
           start += degrees;
-
           return stop;
         }).join(", ");
 
@@ -2372,11 +2001,9 @@
           <div class="pie" style="background: conic-gradient(${gradient});">
             <div class="pie-center">${money(total)}</div>
           </div>
-
           <div class="legend">
             ${normalized.map(slice => {
               const percent = total ? (slice.value / total) * 100 : 0;
-
               return `
                 <div class="legend-item">
                   <span class="legend-dot" style="background:${slice.color}"></span>
@@ -2396,10 +2023,8 @@
         const firstAfterNext = new Date(now.getFullYear(), now.getMonth() + 2, 1);
 
         const alerts = state.apartments
-          .map(apartment => ({
-            ...apartment,
-            currentEnd: apartment.contractEnd || addMonths(apartment.contractStart, 6)
-          }))
+          .filter(apartment => apartment.status !== "free" && apartment.tenant?.name)
+          .map(apartment => ({ ...apartment, currentEnd: apartment.contractEnd || addMonths(apartment.contractStart, 6) }))
           .filter(apartment => {
             const end = parseDate(apartment.currentEnd);
             return end && end >= firstNextMonth && end < firstAfterNext;
@@ -2421,11 +2046,8 @@
           <div class="contract-alert">
             <div>
               <strong>${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</strong>
-              <div class="mini muted">
-                Vencimento: ${formatDate(apartment.currentEnd)} • Telefone: ${escapeHtml(apartment.tenant.phone)}
-              </div>
+              <div class="mini muted">Vencimento: ${formatDate(apartment.currentEnd)} • Telefone: ${escapeHtml(apartment.tenant.phone || "-")}</div>
             </div>
-
             <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
               <i class="fa-solid fa-rotate-right"></i> Renovar por mais 6 meses
             </button>
@@ -2437,32 +2059,27 @@
         const entrySelect = $("#entryApartmentId");
         const expenseSelect = $("#expenseApartmentId");
 
-        const sorted = [...state.apartments].sort((a, b) =>
-          String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true })
-        );
+        const sorted = [...state.apartments].sort((a, b) => String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true }));
 
-        const options = sorted.map(apartment => `
-          <option value="${apartment.id}">${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</option>
-        `).join("");
+        const occupiedOptions = sorted
+          .filter(apartment => apartment.status !== "free" && apartment.tenant?.name)
+          .map(apartment => `<option value="${apartment.id}">${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</option>`)
+          .join("");
+
+        const allOptions = sorted
+          .map(apartment => `<option value="${apartment.id}">${escapeHtml(apartment.number)}${apartment.tenant?.name ? " — " + escapeHtml(apartment.tenant.name) : " — Livre"}</option>`)
+          .join("");
 
         const entryCurrent = entrySelect.value;
         const expenseCurrent = expenseSelect.value;
 
-        entrySelect.innerHTML = sorted.length
-          ? `<option value="">Selecione...</option>${options}`
-          : `<option value="">Cadastre um imóvel primeiro</option>`;
+        entrySelect.innerHTML = occupiedOptions ? `<option value="">Selecione...</option>${occupiedOptions}` : `<option value="">Cadastre ou ocupe um imóvel primeiro</option>`;
+        expenseSelect.innerHTML = `<option value="">Despesa global do proprietário</option>${allOptions}`;
 
-        expenseSelect.innerHTML = `<option value="">Despesa global do proprietário</option>${options}`;
+        entrySelect.disabled = !occupiedOptions;
 
-        entrySelect.disabled = !sorted.length;
-
-        if (sorted.some(apartment => apartment.id === entryCurrent)) {
-          entrySelect.value = entryCurrent;
-        }
-
-        if (sorted.some(apartment => apartment.id === expenseCurrent)) {
-          expenseSelect.value = expenseCurrent;
-        }
+        if (sorted.some(apartment => apartment.id === entryCurrent)) entrySelect.value = entryCurrent;
+        if (sorted.some(apartment => apartment.id === expenseCurrent)) expenseSelect.value = expenseCurrent;
       }
 
       function renderApartments() {
@@ -2479,11 +2096,10 @@
           return;
         }
 
-        const sorted = [...state.apartments].sort((a, b) =>
-          String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true })
-        );
+        const sorted = [...state.apartments].sort((a, b) => String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true }));
 
         el.innerHTML = sorted.map(apartment => {
+          const isFree = apartment.status === "free" || !apartment.tenant?.name;
           const photo = apartment.photo
             ? `<img src="${apartment.photo}" alt="Foto do imóvel">`
             : `<span>${escapeHtml(String(apartment.number || "AP").slice(0, 3).toUpperCase())}</span>`;
@@ -2491,37 +2107,44 @@
           return `
             <div class="item">
               <div class="photo">${photo}</div>
-
               <div>
-                <h3>${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</h3>
-
+                <h3>${escapeHtml(apartment.number)} ${isFree ? '<span class="pill green">Livre</span>' : `— ${escapeHtml(apartment.tenant.name)}`}</h3>
                 <div class="meta">
-                  <span class="pill blue"><i class="fa-solid fa-money-bill-wave"></i> Aluguel: ${money(apartment.baseRent)}</span>
-                  <span class="pill green"><i class="fa-solid fa-calendar-day"></i> Início: ${formatDate(apartment.contractStart)}</span>
-                  <span class="pill yellow"><i class="fa-solid fa-calendar-check"></i> Vence: ${formatDate(apartment.contractEnd)}</span>
-                  <span class="pill"><i class="fa-solid fa-id-card"></i> CPF: ${escapeHtml(apartment.tenant.cpf)}</span>
-                  <span class="pill"><i class="fa-solid fa-phone"></i> ${escapeHtml(apartment.tenant.phone)}</span>
+                  <span class="pill blue"><i class="fa-solid fa-money-bill-wave"></i> Aluguel base: ${money(apartment.baseRent)}</span>
+                  ${isFree ? `
+                    <span class="pill green"><i class="fa-solid fa-door-open"></i> Disponível para novo morador</span>
+                  ` : `
+                    <span class="pill green"><i class="fa-solid fa-calendar-day"></i> Início: ${formatDate(apartment.contractStart)}</span>
+                    <span class="pill yellow"><i class="fa-solid fa-calendar-check"></i> Vence: ${formatDate(apartment.contractEnd)}</span>
+                    <span class="pill"><i class="fa-solid fa-id-card"></i> CPF: ${escapeHtml(apartment.tenant.cpf || "-")}</span>
+                    <span class="pill"><i class="fa-solid fa-phone"></i> ${escapeHtml(apartment.tenant.phone || "-")}</span>
+                  `}
+                  <span class="pill"><i class="fa-solid fa-clock-rotate-left"></i> Histórico: ${(apartment.contractHistory || []).length}</span>
                 </div>
-
                 <p class="mini muted" style="margin:8px 0 0;">
-                  <strong>Nascimento:</strong> ${formatDate(apartment.tenant.birth)}
-                  • <strong>Emergência:</strong> ${escapeHtml(apartment.tenant.emergencyName)} - ${escapeHtml(apartment.tenant.emergencyPhone)}
+                  ${isFree ? "Sem morador atual. Clique em Editar/Novo morador para cadastrar o próximo contrato." : `
+                    <strong>Nascimento:</strong> ${formatDate(apartment.tenant.birth)}
+                    • <strong>Emergência:</strong> ${escapeHtml(apartment.tenant.emergencyName || "-")} - ${escapeHtml(apartment.tenant.emergencyPhone || "-")}
+                  `}
                 </p>
-
-                <p class="mini muted" style="margin:6px 0 0;">
-                  ${escapeHtml(apartment.description || "Sem descrição cadastrada.")}
-                </p>
+                <p class="mini muted" style="margin:6px 0 0;">${escapeHtml(apartment.description || "Sem descrição cadastrada.")}</p>
               </div>
-
               <div class="actions">
-                <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
-                  <i class="fa-solid fa-rotate-right"></i> Renovar
-                </button>
-
+                ${isFree ? `
+                  <button class="btn btn-success btn-sm" data-action="newTenantApartment" data-id="${apartment.id}">
+                    <i class="fa-solid fa-user-plus"></i> Novo morador
+                  </button>
+                ` : `
+                  <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
+                    <i class="fa-solid fa-rotate-right"></i> Renovar
+                  </button>
+                  <button class="btn btn-danger btn-sm" data-action="vacateApartment" data-id="${apartment.id}">
+                    <i class="fa-solid fa-door-open"></i> Liberar apto
+                  </button>
+                `}
                 <button class="btn btn-light btn-sm" data-action="editApartment" data-id="${apartment.id}">
                   <i class="fa-solid fa-pen"></i> Editar
                 </button>
-
                 <button class="btn btn-danger btn-sm" data-action="deleteApartment" data-id="${apartment.id}">
                   <i class="fa-solid fa-trash"></i> Remover
                 </button>
@@ -2567,11 +2190,7 @@
                 ${sorted.map(expense => `
                   <tr>
                     <td>${monthName(expense.month)}</td>
-                    <td>
-                      <span class="pill ${expense.type === "IPTU" ? "blue" : expense.type === "Internet" ? "green" : "yellow"}">
-                        ${escapeHtml(expense.type)}
-                      </span>
-                    </td>
+                    <td><span class="pill ${expense.type === "IPTU" ? "blue" : expense.type === "Internet" ? "green" : "yellow"}">${escapeHtml(expense.type)}</span></td>
                     <td>${expense.apartmentId ? escapeHtml(apartmentName(expense.apartmentId)) : "Global"}</td>
                     <td>${escapeHtml(expense.description || "-")}</td>
                     <td><strong>${money(expense.amount)}</strong></td>
@@ -2607,66 +2226,139 @@
           return;
         }
 
-        const apartments = [...state.apartments].sort((a, b) =>
-          String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true })
+        const sortedEntries = [...state.entries].sort((a, b) =>
+          `${a.apartmentNumber || apartmentName(a.apartmentId)}-${b.month}`.localeCompare(`${b.apartmentNumber || apartmentName(b.apartmentId)}-${a.month}`)
         );
 
-        const groupedHtml = apartments.map(apartment => {
-          const entries = state.entries
-            .filter(entry => entry.apartmentId === apartment.id)
-            .sort((a, b) => String(b.month).localeCompare(String(a.month)));
-
-          if (!entries.length) return "";
-
-          return `
-            <article class="card" style="margin-bottom:18px;">
-              <h3 style="margin:0 0 12px;">
-                <i class="fa-solid fa-building"></i>
-                ${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}
-              </h3>
-
-              <div class="table-wrap">
-                <table>
-                  <thead>
+        el.innerHTML = `
+          <article class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Apartamento</th>
+                    <th>Morador do lançamento</th>
+                    <th>Mês/Ano</th>
+                    <th>Aluguel</th>
+                    <th>Valor kWh</th>
+                    <th>kWh</th>
+                    <th>Luz + COSIP</th>
+                    <th>Total</th>
+                    <th style="text-align:right;">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${sortedEntries.map(entry => `
                     <tr>
-                      <th>Mês/Ano</th>
-                      <th>Aluguel</th>
-                      <th>Valor kWh</th>
-                      <th>kWh Consumido</th>
-                      <th>Luz + COSIP</th>
-                      <th>Total Inquilino</th>
-                      <th style="text-align:right;">Ações</th>
+                      <td>${escapeHtml(entry.apartmentNumber || getApartment(entry.apartmentId)?.number || "Unidade removida")}</td>
+                      <td>${escapeHtml(entry.tenantName || getApartment(entry.apartmentId)?.tenant?.name || "-")}</td>
+                      <td>${monthName(entry.month)}</td>
+                      <td>${money(entry.rent)}</td>
+                      <td>${money(entry.kwhValue)}</td>
+                      <td>${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh</td>
+                      <td>${money(energyTotal(entry))}</td>
+                      <td><strong>${money(entryTotal(entry))}</strong></td>
+                      <td>
+                        <div class="td-actions">
+                          <button class="btn btn-light btn-sm" data-action="editEntry" data-id="${entry.id}">
+                            <i class="fa-solid fa-pen"></i> Editar
+                          </button>
+                          <button class="btn btn-danger btn-sm" data-action="deleteEntry" data-id="${entry.id}">
+                            <i class="fa-solid fa-trash"></i> Remover
+                          </button>
+                        </div>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    ${entries.map(entry => `
-                      <tr>
-                        <td>${monthName(entry.month)}</td>
-                        <td>${money(entry.rent)}</td>
-                        <td>${money(entry.kwhValue)}</td>
-                        <td>${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh</td>
-                        <td>${money(energyTotal(entry))}</td>
-                        <td><strong>${money(entryTotal(entry))}</strong></td>
-                        <td>
-                          <div class="td-actions">
-                            <button class="btn btn-light btn-sm" data-action="editEntry" data-id="${entry.id}">
-                              <i class="fa-solid fa-pen"></i> Editar
-                            </button>
-                            <button class="btn btn-danger btn-sm" data-action="deleteEntry" data-id="${entry.id}">
-                              <i class="fa-solid fa-trash"></i> Remover
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    `).join("")}
-                  </tbody>
-                </table>
-              </div>
-            </article>
-          `;
-        }).join("");
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </article>
+        `;
+      }
 
-        el.innerHTML = groupedHtml;
+      function renderContractHistory() {
+        const el = $("#contractHistoryList");
+
+        const rows = [];
+
+        state.apartments.forEach(apartment => {
+          if (apartment.status !== "free" && apartment.tenant?.name) {
+            rows.push({
+              apartmentNumber: apartment.number,
+              tenant: apartment.tenant,
+              contractStart: apartment.contractStart,
+              contractEnd: apartment.contractEnd,
+              baseRent: apartment.baseRent,
+              status: "Atual",
+              endedAt: "",
+              reason: ""
+            });
+          }
+
+          (apartment.contractHistory || []).forEach(item => {
+            rows.push({
+              apartmentNumber: item.apartmentNumber || apartment.number,
+              tenant: normalizeTenant(item.tenant),
+              contractStart: item.contractStart,
+              contractEnd: item.contractEnd,
+              baseRent: item.baseRent,
+              status: "Histórico",
+              endedAt: item.endedAt,
+              reason: item.reason
+            });
+          });
+        });
+
+        rows.sort((a, b) => String(b.contractStart).localeCompare(String(a.contractStart)));
+
+        if (!rows.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              <strong>Nenhum histórico de contrato.</strong>
+              <div class="mini">Quando você liberar um apartamento, o morador antigo aparecerá aqui.</div>
+            </div>
+          `;
+          return;
+        }
+
+        el.innerHTML = `
+          <article class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Apartamento</th>
+                    <th>Morador</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th>Início</th>
+                    <th>Encerramento</th>
+                    <th>Valor mensal</th>
+                    <th>Registrado em</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rows.map(row => `
+                    <tr>
+                      <td><span class="pill ${row.status === "Atual" ? "green" : "yellow"}">${row.status}</span></td>
+                      <td>${escapeHtml(row.apartmentNumber)}</td>
+                      <td><strong>${escapeHtml(row.tenant.name || "-")}</strong></td>
+                      <td>${escapeHtml(row.tenant.cpf || "-")}</td>
+                      <td>${escapeHtml(row.tenant.phone || "-")}</td>
+                      <td>${formatDate(row.contractStart)}</td>
+                      <td>${formatDate(row.contractEnd)}</td>
+                      <td>${money(row.baseRent)}</td>
+                      <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </article>
+        `;
       }
 
       function renderSettings() {
@@ -2679,12 +2371,7 @@
         const el = $("#usersList");
 
         if (!state.users.length) {
-          el.innerHTML = `
-            <div class="empty">
-              <i class="fa-solid fa-user-shield"></i>
-              <strong>Nenhum usuário cadastrado.</strong>
-            </div>
-          `;
+          el.innerHTML = `<div class="empty"><i class="fa-solid fa-user-shield"></i><strong>Nenhum usuário cadastrado.</strong></div>`;
           return;
         }
 
@@ -2724,15 +2411,11 @@
       }
 
       function renderApartmentPhotoPreview() {
-        $("#apartmentPhotoPreview").innerHTML = tempApartmentPhoto
-          ? `<img src="${tempApartmentPhoto}" alt="Prévia da foto">`
-          : "Foto";
+        $("#apartmentPhotoPreview").innerHTML = tempApartmentPhoto ? `<img src="${tempApartmentPhoto}" alt="Prévia da foto">` : "Foto";
       }
 
       function renderLogoPreview() {
-        $("#appLogoPreview").innerHTML = tempAppLogo
-          ? `<img src="${tempAppLogo}" alt="Prévia da logo">`
-          : "Logo";
+        $("#appLogoPreview").innerHTML = tempAppLogo ? `<img src="${tempAppLogo}" alt="Prévia da logo">` : "Logo";
       }
 
       function clearApartmentForm() {
@@ -2743,14 +2426,12 @@
         $("#contractEnd").value = "";
         $("#apartmentDescription").value = "";
         $("#apartmentPhoto").value = "";
-
         $("#tenantName").value = "";
         $("#tenantCpf").value = "";
         $("#tenantPhone").value = "";
         $("#tenantBirth").value = "";
         $("#emergencyName").value = "";
         $("#emergencyPhone").value = "";
-
         tempApartmentPhoto = "";
         renderApartmentPhotoPreview();
       }
@@ -2788,23 +2469,30 @@
         const kwhValue = toNumber($("#entryKwhValue")?.value);
         const kwhConsumed = toNumber($("#entryKwhConsumed")?.value);
         const cosip = toNumber($("#entryCosip")?.value);
-
         const luz = kwhValue * kwhConsumed;
         const total = rent + luz + cosip;
 
         $("#entryTotalPreview").textContent = money(total);
-        $("#entryFormula").textContent =
-          `${money(rent)} + (${kwhConsumed.toLocaleString("pt-BR")} kWh × ${money(kwhValue)}) + ${money(cosip)} = ${money(total)}`;
+        $("#entryFormula").textContent = `${money(rent)} + (${kwhConsumed.toLocaleString("pt-BR")} kWh × ${money(kwhValue)}) + ${money(cosip)} = ${money(total)}`;
       }
 
       function showTab(name) {
-        $$(".tab-btn").forEach(button => {
-          button.classList.toggle("active", button.dataset.tab === name);
-        });
+        $$(".tab-btn").forEach(button => button.classList.toggle("active", button.dataset.tab === name));
+        $$(".page").forEach(page => page.classList.toggle("active", page.id === `page-${name}`));
+      }
 
-        $$(".page").forEach(page => {
-          page.classList.toggle("active", page.id === `page-${name}`);
-        });
+      function currentContractSnapshot(apartment, reason = "") {
+        return {
+          id: uid("history"),
+          apartmentId: apartment.id,
+          apartmentNumber: apartment.number,
+          tenant: normalizeTenant(apartment.tenant),
+          contractStart: apartment.contractStart,
+          contractEnd: apartment.contractEnd,
+          baseRent: toNumber(apartment.baseRent),
+          endedAt: new Date().toISOString(),
+          reason
+        };
       }
 
       async function saveApartmentForm(event) {
@@ -2817,21 +2505,19 @@
         const tenantName = $("#tenantName").value.trim();
 
         if (!number || !contractStart || !contractEnd || !tenantName) {
-          toast("Preencha os campos obrigatórios.");
+          toast("Preencha ID do apto, início, vencimento e nome do morador.");
           return;
         }
 
-        const duplicate = state.apartments.some(apartment =>
-          apartment.id !== id &&
-          apartment.number.toLowerCase() === number.toLowerCase()
-        );
-
+        const duplicate = state.apartments.some(apartment => apartment.id !== id && apartment.number.toLowerCase() === number.toLowerCase());
         if (duplicate) {
           toast("Já existe um apartamento com esse ID/Número.");
           return;
         }
 
-        const apartment = {
+        const existing = id ? getApartment(id) : null;
+
+        const nextApartment = {
           id: id || uid("apartment"),
           number,
           description: $("#apartmentDescription").value.trim(),
@@ -2839,6 +2525,7 @@
           baseRent: toNumber($("#baseRent").value),
           contractStart,
           contractEnd,
+          status: "occupied",
           tenant: {
             name: tenantName,
             cpf: $("#tenantCpf").value.trim(),
@@ -2846,34 +2533,37 @@
             birth: $("#tenantBirth").value,
             emergencyName: $("#emergencyName").value.trim(),
             emergencyPhone: $("#emergencyPhone").value.trim()
-          }
+          },
+          contractHistory: existing?.contractHistory || []
         };
 
-        const requiredTenantFields = [
-          apartment.tenant.name,
-          apartment.tenant.cpf,
-          apartment.tenant.phone,
-          apartment.tenant.birth,
-          apartment.tenant.emergencyName,
-          apartment.tenant.emergencyPhone
-        ];
-
-        if (requiredTenantFields.some(field => !field)) {
-          toast("Preencha todos os campos obrigatórios da ficha do morador.");
-          return;
-        }
-
-        if (apartment.baseRent < 0) {
+        if (nextApartment.baseRent < 0) {
           toast("O valor base do aluguel não pode ser negativo.");
           return;
         }
 
-        if (id) {
-          state.apartments = state.apartments.map(item => item.id === id ? apartment : item);
-          await save("Imóvel e ficha do morador atualizados.");
+        if (existing) {
+          const changedTenant = existing.tenant?.name && existing.status !== "free" &&
+            (
+              existing.tenant.name.trim().toLowerCase() !== nextApartment.tenant.name.trim().toLowerCase() ||
+              existing.tenant.cpf.trim() !== nextApartment.tenant.cpf.trim()
+            );
+
+          if (changedTenant) {
+            const confirmed = confirm("Você alterou o morador principal deste apartamento. Deseja enviar o morador anterior para o histórico?");
+            if (confirmed) {
+              nextApartment.contractHistory = [
+                ...(existing.contractHistory || []),
+                currentContractSnapshot(existing, "Substituição manual do morador")
+              ];
+            }
+          }
+
+          state.apartments = state.apartments.map(item => item.id === id ? nextApartment : item);
+          await save("Apartamento e morador atualizados.");
         } else {
-          state.apartments.push(apartment);
-          await save("Imóvel e morador cadastrados.");
+          state.apartments.push(nextApartment);
+          await save("Apartamento e morador cadastrados.");
         }
 
         clearApartmentForm();
@@ -2881,16 +2571,14 @@
 
       function editApartment(id) {
         const apartment = getApartment(id);
-
         if (!apartment) return;
 
         $("#apartmentEditId").value = apartment.id;
         $("#apartmentNumber").value = apartment.number || "";
         $("#baseRent").value = apartment.baseRent ?? "";
         $("#contractStart").value = apartment.contractStart || "";
-        $("#contractEnd").value = apartment.contractEnd || addMonths(apartment.contractStart, 6);
+        $("#contractEnd").value = apartment.contractEnd || (apartment.contractStart ? addMonths(apartment.contractStart, 6) : "");
         $("#apartmentDescription").value = apartment.description || "";
-
         $("#tenantName").value = apartment.tenant?.name || "";
         $("#tenantCpf").value = apartment.tenant?.cpf || "";
         $("#tenantPhone").value = apartment.tenant?.phone || "";
@@ -2905,11 +2593,59 @@
         $("#apartmentForm").scrollIntoView({ behavior: "smooth", block: "center" });
       }
 
+      function newTenantApartment(id) {
+        const apartment = getApartment(id);
+        if (!apartment) return;
+
+        $("#apartmentEditId").value = apartment.id;
+        $("#apartmentNumber").value = apartment.number || "";
+        $("#baseRent").value = apartment.baseRent ?? "";
+        $("#contractStart").value = "";
+        $("#contractEnd").value = "";
+        $("#apartmentDescription").value = apartment.description || "";
+        $("#tenantName").value = "";
+        $("#tenantCpf").value = "";
+        $("#tenantPhone").value = "";
+        $("#tenantBirth").value = "";
+        $("#emergencyName").value = "";
+        $("#emergencyPhone").value = "";
+
+        tempApartmentPhoto = apartment.photo || "";
+        renderApartmentPhotoPreview();
+
+        showTab("apartments");
+        $("#apartmentForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function vacateApartment(id) {
+        const apartment = getApartment(id);
+        if (!apartment) return;
+
+        if (apartment.status === "free" || !apartment.tenant?.name) {
+          toast("Este apartamento já está livre.");
+          return;
+        }
+
+        if (!confirm(`Liberar ${apartment.number}? O morador atual será enviado para o histórico e o apartamento ficará livre para novo cadastro.`)) return;
+
+        apartment.contractHistory = [
+          ...(apartment.contractHistory || []),
+          currentContractSnapshot(apartment, "Apartamento liberado para novo contrato")
+        ];
+
+        apartment.status = "free";
+        apartment.tenant = clone(EMPTY_TENANT);
+        apartment.contractStart = "";
+        apartment.contractEnd = "";
+
+        await save("Apartamento liberado. Morador anterior enviado para o histórico.");
+      }
+
       async function deleteApartment(id) {
         const hasEntries = state.entries.some(entry => entry.apartmentId === id);
         const hasExpenses = state.expenses.some(expense => expense.apartmentId === id);
 
-        let message = "Remover este imóvel e a ficha do morador?";
+        let message = "Remover este imóvel, morador atual e histórico de contratos?";
 
         if (hasEntries || hasExpenses) {
           message = "Este imóvel possui lançamentos ou despesas vinculadas. Ao remover, os lançamentos serão removidos e as despesas vinculadas ficarão como globais. Deseja continuar?";
@@ -2919,17 +2655,19 @@
 
         state.apartments = state.apartments.filter(apartment => apartment.id !== id);
         state.entries = state.entries.filter(entry => entry.apartmentId !== id);
-        state.expenses = state.expenses.map(expense =>
-          expense.apartmentId === id ? { ...expense, apartmentId: "" } : expense
-        );
+        state.expenses = state.expenses.map(expense => expense.apartmentId === id ? { ...expense, apartmentId: "" } : expense);
 
         await save("Imóvel removido.");
       }
 
       async function renewApartment(id) {
         const apartment = getApartment(id);
-
         if (!apartment) return;
+
+        if (apartment.status === "free" || !apartment.tenant?.name) {
+          toast("Apartamento livre não possui contrato para renovar.");
+          return;
+        }
 
         const currentEnd = apartment.contractEnd || addMonths(apartment.contractStart, 6);
         apartment.contractEnd = addMonths(currentEnd, 6);
@@ -2969,7 +2707,6 @@
 
       function editExpense(id) {
         const expense = state.expenses.find(item => item.id === id);
-
         if (!expense) return;
 
         $("#expenseEditId").value = expense.id;
@@ -2985,9 +2722,7 @@
 
       async function deleteExpense(id) {
         if (!confirm("Remover esta despesa?")) return;
-
         state.expenses = state.expenses.filter(expense => expense.id !== id);
-
         await save("Despesa removida.");
       }
 
@@ -2996,15 +2731,19 @@
 
         const id = $("#entryEditId").value;
         const apartmentId = $("#entryApartmentId").value;
+        const apartment = getApartment(apartmentId);
 
-        if (!apartmentId) {
-          toast("Selecione um apartamento.");
+        if (!apartmentId || !apartment) {
+          toast("Selecione um apartamento ocupado.");
           return;
         }
 
         const entry = {
           id: id || uid("entry"),
           apartmentId,
+          apartmentNumber: apartment.number,
+          tenantName: apartment.tenant?.name || "",
+          tenantCpf: apartment.tenant?.cpf || "",
           month: $("#entryMonth").value,
           rent: toNumber($("#entryRent").value),
           kwhValue: toNumber($("#entryKwhValue").value),
@@ -3018,6 +2757,12 @@
         }
 
         if (id) {
+          const existing = state.entries.find(item => item.id === id);
+          if (existing && existing.tenantName) {
+            entry.tenantName = existing.tenantName;
+            entry.tenantCpf = existing.tenantCpf || entry.tenantCpf;
+            entry.apartmentNumber = existing.apartmentNumber || entry.apartmentNumber;
+          }
           state.entries = state.entries.map(item => item.id === id ? entry : item);
           await save("Lançamento atualizado.");
         } else {
@@ -3030,7 +2775,6 @@
 
       function editEntry(id) {
         const entry = state.entries.find(item => item.id === id);
-
         if (!entry) return;
 
         $("#entryEditId").value = entry.id;
@@ -3050,18 +2794,14 @@
 
       async function deleteEntry(id) {
         if (!confirm("Remover este lançamento mensal?")) return;
-
         state.entries = state.entries.filter(entry => entry.id !== id);
-
         await save("Lançamento removido.");
       }
 
       async function saveSettingsForm(event) {
         event.preventDefault();
-
         state.settings.appName = $("#appName").value.trim() || "Residencial Beatriz";
         state.settings.logo = tempAppLogo || "";
-
         await save("Configurações salvas.");
       }
 
@@ -3078,11 +2818,7 @@
           return;
         }
 
-        const duplicate = state.users.some(user =>
-          user.id !== id &&
-          user.login.toLowerCase() === login.toLowerCase()
-        );
-
+        const duplicate = state.users.some(user => user.id !== id && user.login.toLowerCase() === login.toLowerCase());
         if (duplicate) {
           toast("Já existe um usuário com esse login.");
           return;
@@ -3107,7 +2843,6 @@
 
         if (id) {
           const user = state.users.find(item => item.id === id);
-
           if (!user) return;
 
           user.login = login;
@@ -3134,7 +2869,6 @@
 
       function editUser(id) {
         const user = state.users.find(item => item.id === id);
-
         if (!user) return;
 
         $("#userEditId").value = user.id;
@@ -3160,27 +2894,21 @@
         if (!confirm("Remover este usuário de acesso?")) return;
 
         state.users = state.users.filter(user => user.id !== id);
-
         await save("Usuário removido.");
       }
 
       function exportBackup() {
-        const blob = new Blob([JSON.stringify(state, null, 2)], {
-          type: "application/json"
-        });
-
+        const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
 
         link.href = url;
         link.download = `backup-residencial-beatriz-${new Date().toISOString().slice(0, 10)}.json`;
-
         document.body.appendChild(link);
         link.click();
         link.remove();
 
         URL.revokeObjectURL(url);
-
         toast("Backup exportado.");
       }
 
@@ -3193,12 +2921,7 @@
           try {
             const imported = JSON.parse(String(reader.result || "{}"));
 
-            if (
-              !imported ||
-              !Array.isArray(imported.apartments) ||
-              !Array.isArray(imported.expenses) ||
-              !Array.isArray(imported.entries)
-            ) {
+            if (!imported || !Array.isArray(imported.apartments) || !Array.isArray(imported.expenses) || !Array.isArray(imported.entries)) {
               throw new Error("Backup inválido");
             }
 
@@ -3208,7 +2931,6 @@
             }
 
             state = normalizeState(imported);
-
             await seedDefaultUserIfNeeded(false);
             await save("Backup importado e salvo no GitHub.");
           } catch (error) {
@@ -3223,9 +2945,7 @@
       }
 
       async function resetData() {
-        if (!confirm("Deseja apagar todos os dados do sistema? Esta ação não pode ser desfeita.")) {
-          return;
-        }
+        if (!confirm("Deseja apagar todos os dados do sistema? Esta ação não pode ser desfeita.")) return;
 
         state = clone(DEFAULT_STATE);
         await seedDefaultUserIfNeeded(false);
@@ -3257,16 +2977,8 @@
           return false;
         }
 
-        saveGithubConfig({
-          owner,
-          repo,
-          branch,
-          path,
-          token: token || githubConfig.token
-        });
-
+        saveGithubConfig({ owner, repo, branch, path, token: token || githubConfig.token });
         document.getElementById(tokenId).value = "";
-
         toast("Configuração GitHub salva neste navegador.");
         return true;
       }
@@ -3281,7 +2993,6 @@
 
         document.addEventListener("click", async event => {
           const button = event.target.closest("[data-action]");
-
           if (!button) return;
 
           const action = button.dataset.action;
@@ -3289,6 +3000,8 @@
 
           const actions = {
             editApartment,
+            newTenantApartment,
+            vacateApartment,
             deleteApartment,
             renewApartment,
             editExpense,
@@ -3299,18 +3012,12 @@
             deleteUser
           };
 
-          if (actions[action]) {
-            await actions[action](id);
-          }
+          if (actions[action]) await actions[action](id);
         });
 
         $("#dashboardPeriod").addEventListener("change", async event => {
           state.settings.dashboardPeriod = event.target.value;
-
-          if (event.target.value === "currentYear" && !state.settings.dashboardYear) {
-            state.settings.dashboardYear = new Date().getFullYear();
-          }
-
+          if (event.target.value === "currentYear" && !state.settings.dashboardYear) state.settings.dashboardYear = new Date().getFullYear();
           await save("Filtro do dashboard salvo.");
         });
 
@@ -3325,12 +3032,7 @@
 
         $("#contractStart").addEventListener("change", () => {
           const start = $("#contractStart").value;
-
-          if (start) {
-            $("#contractEnd").value = addMonths(start, 6);
-          } else {
-            $("#contractEnd").value = "";
-          }
+          $("#contractEnd").value = start ? addMonths(start, 6) : "";
         });
 
         $("#apartmentPhoto").addEventListener("change", event => {
@@ -3354,20 +3056,13 @@
 
         $("#entryApartmentId").addEventListener("change", event => {
           const apartment = getApartment(event.target.value);
-
-          if (apartment && !$("#entryEditId").value && !manualEntryRent) {
-            $("#entryRent").value = apartment.baseRent;
-          }
-
+          if (apartment && !$("#entryEditId").value && !manualEntryRent) $("#entryRent").value = apartment.baseRent;
           updateEntryPreview();
         });
 
         ["#entryRent", "#entryKwhValue", "#entryKwhConsumed", "#entryCosip"].forEach(selector => {
           $(selector).addEventListener("input", () => {
-            if (selector === "#entryRent") {
-              manualEntryRent = true;
-            }
-
+            if (selector === "#entryRent") manualEntryRent = true;
             updateEntryPreview();
           });
         });
@@ -3421,7 +3116,6 @@
 
       async function init() {
         bindEvents();
-
         fillGithubConfigForms();
 
         if (hasGithubBaseConfig()) {
@@ -3431,13 +3125,8 @@
           await seedDefaultUserIfNeeded(false);
         }
 
-        if (!state.settings.dashboardPeriod) {
-          state.settings.dashboardPeriod = "currentYear";
-        }
-
-        if (!state.settings.dashboardYear) {
-          state.settings.dashboardYear = new Date().getFullYear();
-        }
+        if (!state.settings.dashboardPeriod) state.settings.dashboardPeriod = "currentYear";
+        if (!state.settings.dashboardYear) state.settings.dashboardYear = new Date().getFullYear();
 
         clearExpenseForm();
         clearEntryForm();
