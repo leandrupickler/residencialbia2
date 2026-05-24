@@ -1079,7 +1079,7 @@
           <form id="entryForm">
             <input type="hidden" id="entryEditId">
 
-            <div class="form-row three">
+            <div class="form-row">
               <div class="field">
                 <label for="entryApartmentId">Apartamento *</label>
                 <select id="entryApartmentId" required></select>
@@ -1093,6 +1093,15 @@
               <div class="field">
                 <label for="entryRent">Valor Aluguel *</label>
                 <input id="entryRent" type="number" min="0" step="0.01" required>
+              </div>
+
+              <div class="field">
+                <label for="entryEnergyMode">Cálculo de energia *</label>
+                <select id="entryEnergyMode" required>
+                  <option value="withKwh">Com cálculo de kWh</option>
+                  <option value="noKwh">Sem cálculo de kWh</option>
+                </select>
+                <span class="mini muted">Use “sem cálculo” quando o morador tiver relógio próprio.</span>
               </div>
             </div>
 
@@ -1167,7 +1176,7 @@
         <div class="section-title">
           <div>
             <h2>Histórico de contratos e moradores</h2>
-            <p>Moradores antigos ficam aqui quando o apartamento é liberado para novo contrato.</p>
+            <p>Contratos agrupados por apartamento, do mais antigo para o mais novo. Contratos em andamento aparecem como Contrato Ativo.</p>
           </div>
         </div>
 
@@ -1476,6 +1485,11 @@
           tenantCpf: source.tenantCpf || source.tenantSnapshot?.cpf || (apt ? apt.tenant.cpf : ""),
           month: source.month || "",
           rent: toNumber(source.rent),
+          energyMode: source.energyMode || source.kwhMode || (
+            toNumber(source.kwhValue) > 0 || previousReading > 0 || currentReading > 0 || calculatedConsumed > 0 || toNumber(source.cosip) > 0
+              ? "withKwh"
+              : "noKwh"
+          ),
           kwhValue: toNumber(source.kwhValue),
           kwhPrevious: previousReading,
           kwhCurrent: currentReading,
@@ -1920,6 +1934,7 @@
       function getLastKwhEntry(apartmentId, beforeMonth = "", excludeEntryId = "") {
         const entries = state.entries
           .filter(entry => entry.apartmentId === apartmentId && entry.id !== excludeEntryId)
+          .filter(entry => (entry.energyMode || "withKwh") !== "noKwh")
           .filter(entry => toNumber(entry.kwhCurrent) > 0)
           .filter(entry => !beforeMonth || String(entry.month || "") < String(beforeMonth))
           .sort((a, b) => String(b.month || "").localeCompare(String(a.month || "")));
@@ -1933,6 +1948,11 @@
       }
 
       function updatePreviousReadingFromHistory(force = false) {
+        if (($("#entryEnergyMode")?.value || "withKwh") === "noKwh") {
+          updateEntryPreview();
+          return;
+        }
+
         const entryId = $("#entryEditId")?.value || "";
         const apartmentId = $("#entryApartmentId")?.value || "";
         const month = $("#entryMonth")?.value || "";
@@ -1966,10 +1986,12 @@
       }
 
       function energyOnly(entry) {
+        if ((entry.energyMode || "withKwh") === "noKwh") return 0;
         return toNumber(entry.kwhValue) * toNumber(entry.kwhConsumed);
       }
 
       function energyTotal(entry) {
+        if ((entry.energyMode || "withKwh") === "noKwh") return 0;
         return energyOnly(entry) + toNumber(entry.cosip);
       }
 
@@ -2480,6 +2502,7 @@
                     <th>Morador do lançamento</th>
                     <th>Mês/Ano</th>
                     <th>Aluguel</th>
+                    <th>Energia</th>
                     <th>Valor kWh</th>
                     <th>Leitura anterior</th>
                     <th>Leitura atual</th>
@@ -2496,10 +2519,11 @@
                       <td>${escapeHtml(entry.tenantName || getApartment(entry.apartmentId)?.tenant?.name || "-")}</td>
                       <td>${monthName(entry.month)}</td>
                       <td>${money(entry.rent)}</td>
-                      <td>${money(entry.kwhValue)}</td>
-                      <td>${toNumber(entry.kwhPrevious).toLocaleString("pt-BR")} kWh</td>
-                      <td>${toNumber(entry.kwhCurrent).toLocaleString("pt-BR")} kWh</td>
-                      <td>${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh</td>
+                      <td><span class="pill ${(entry.energyMode || "withKwh") === "noKwh" ? "green" : "blue"}">${(entry.energyMode || "withKwh") === "noKwh" ? "Sem kWh" : "Com kWh"}</span></td>
+                      <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : money(entry.kwhValue)}</td>
+                      <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhPrevious).toLocaleString("pt-BR") + " kWh"}</td>
+                      <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhCurrent).toLocaleString("pt-BR") + " kWh"}</td>
+                      <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhConsumed).toLocaleString("pt-BR") + " kWh"}</td>
                       <td>${money(energyTotal(entry))}</td>
                       <td><strong>${money(entryTotal(entry))}</strong></td>
                       <td>
@@ -2524,21 +2548,12 @@
       function renderContractHistory() {
         const el = $("#contractHistoryList");
 
-        const rows = [];
+        const apartments = [...state.apartments].sort((a, b) =>
+          String(a.number || "").localeCompare(String(b.number || ""), "pt-BR", { numeric: true })
+        );
 
-        state.apartments.forEach(apartment => {
-          if (apartment.status !== "free" && apartment.tenant?.name) {
-            rows.push({
-              apartmentNumber: apartment.number,
-              tenant: apartment.tenant,
-              contractStart: apartment.contractStart,
-              contractEnd: apartment.contractEnd,
-              baseRent: apartment.baseRent,
-              status: "Atual",
-              endedAt: "",
-              reason: ""
-            });
-          }
+        const groups = apartments.map(apartment => {
+          const rows = [];
 
           (apartment.contractHistory || []).forEach(item => {
             rows.push({
@@ -2552,11 +2567,26 @@
               reason: item.reason
             });
           });
-        });
 
-        rows.sort((a, b) => String(b.contractStart).localeCompare(String(a.contractStart)));
+          if (apartment.status !== "free" && apartment.tenant?.name) {
+            rows.push({
+              apartmentNumber: apartment.number,
+              tenant: apartment.tenant,
+              contractStart: apartment.contractStart,
+              contractEnd: apartment.contractEnd,
+              baseRent: apartment.baseRent,
+              status: "Contrato Ativo",
+              endedAt: "",
+              reason: ""
+            });
+          }
 
-        if (!rows.length) {
+          rows.sort((a, b) => String(a.contractStart || "").localeCompare(String(b.contractStart || "")));
+
+          return { apartment, rows };
+        }).filter(group => group.rows.length > 0);
+
+        if (!groups.length) {
           el.innerHTML = `
             <div class="empty">
               <i class="fa-solid fa-clock-rotate-left"></i>
@@ -2567,36 +2597,29 @@
           return;
         }
 
-        const currentYear = String(new Date().getFullYear());
-        const grouped = rows.reduce((acc, row) => {
-          const year = row.contractStart ? String(row.contractStart).slice(0, 4) : "Sem ano";
-          if (!acc[year]) acc[year] = [];
-          acc[year].push(row);
-          return acc;
-        }, {});
-
-        const years = Object.keys(grouped).sort((a, b) => {
-          if (a === "Sem ano") return 1;
-          if (b === "Sem ano") return -1;
-          return Number(b) - Number(a);
-        });
-
-        el.innerHTML = years.map((year, index) => {
-          const yearRows = grouped[year];
-          const yearTotal = yearRows.reduce((sum, row) => sum + toNumber(row.baseRent), 0);
-          const shouldOpen = year === currentYear || index === 0;
+        el.innerHTML = groups.map((group, index) => {
+          const apartment = group.apartment;
+          const rows = group.rows;
+          const active = rows.find(row => row.status === "Contrato Ativo");
+          const shouldOpen = Boolean(active) || index === 0;
+          const firstDate = rows[0]?.contractStart ? formatDate(rows[0].contractStart) : "-";
+          const lastDate = rows[rows.length - 1]?.contractEnd ? formatDate(rows[rows.length - 1].contractEnd) : "-";
 
           return `
             <details class="history-year" ${shouldOpen ? "open" : ""}>
               <summary>
-                <span><i class="fa-solid fa-calendar-days"></i> Ano ${escapeHtml(year)}</span>
-                <span class="history-count">${yearRows.length} contrato(s) • ${money(yearTotal)}/mês em registros</span>
+                <span><i class="fa-solid fa-building"></i> ${escapeHtml(apartment.number || "Apartamento")}</span>
+                <span class="history-count">
+                  ${rows.length} contrato(s) • ${firstDate} até ${lastDate}
+                  ${active ? " • Contrato ativo" : ""}
+                </span>
               </summary>
 
               <div class="table-wrap">
                 <table>
                   <thead>
                     <tr>
+                      <th>Ordem</th>
                       <th>Status</th>
                       <th>Apartamento</th>
                       <th>Morador</th>
@@ -2609,9 +2632,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    ${yearRows.map(row => `
+                    ${rows.map((row, rowIndex) => `
                       <tr>
-                        <td><span class="pill ${row.status === "Atual" ? "green" : "yellow"}">${row.status}</span></td>
+                        <td>${rowIndex + 1}</td>
+                        <td><span class="pill ${row.status === "Contrato Ativo" ? "green" : "yellow"}">${row.status}</span></td>
                         <td>${escapeHtml(row.apartmentNumber)}</td>
                         <td><strong>${escapeHtml(row.tenant.name || "-")}</strong></td>
                         <td>${escapeHtml(row.tenant.cpf || "-")}</td>
@@ -2719,6 +2743,7 @@
         $("#entryApartmentId").value = "";
         $("#entryMonth").value = currentMonthValue();
         $("#entryRent").value = "";
+        $("#entryEnergyMode").value = "withKwh";
         $("#entryKwhValue").value = "";
         $("#entryKwhPrevious").value = "";
         $("#entryKwhCurrent").value = "";
@@ -2739,24 +2764,54 @@
         $("#accessPasswordConfirm").value = "";
       }
 
+      function toggleEntryEnergyMode() {
+        const mode = $("#entryEnergyMode")?.value || "withKwh";
+        const disabled = mode === "noKwh";
+        const ids = ["entryKwhValue", "entryKwhPrevious", "entryKwhCurrent", "entryKwhConsumed", "entryCosip"];
+
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.disabled = disabled;
+          if (disabled) el.value = id === "entryKwhConsumed" ? "0" : "";
+        });
+
+        if ($("#entryEnergyAmount") && disabled) $("#entryEnergyAmount").value = money(0);
+
+        if ($("#entryLastReadingInfo")) {
+          $("#entryLastReadingInfo").textContent = disabled
+            ? "Cálculo de kWh desativado para este lançamento. Use quando o morador tiver relógio próprio."
+            : "Selecione o apartamento e o mês para buscar automaticamente a última leitura salva.";
+        }
+      }
+
       function updateEntryPreview() {
         const rent = toNumber($("#entryRent")?.value);
-        const kwhValue = toNumber($("#entryKwhValue")?.value);
-        const previousReading = toNumber($("#entryKwhPrevious")?.value);
-        const currentReading = toNumber($("#entryKwhCurrent")?.value);
-        const kwhConsumed = Math.max(0, currentReading - previousReading);
-        const cosip = toNumber($("#entryCosip")?.value);
-        const energyAmount = kwhValue * kwhConsumed;
+        const mode = $("#entryEnergyMode")?.value || "withKwh";
+        const isNoKwh = mode === "noKwh";
+        const kwhValue = isNoKwh ? 0 : toNumber($("#entryKwhValue")?.value);
+        const previousReading = isNoKwh ? 0 : toNumber($("#entryKwhPrevious")?.value);
+        const currentReading = isNoKwh ? 0 : toNumber($("#entryKwhCurrent")?.value);
+        const kwhConsumed = isNoKwh ? 0 : Math.max(0, currentReading - previousReading);
+        const cosip = isNoKwh ? 0 : toNumber($("#entryCosip")?.value);
+        const energyAmount = isNoKwh ? 0 : kwhValue * kwhConsumed;
         const totalEnergyWithCosip = energyAmount + cosip;
         const total = rent + totalEnergyWithCosip;
+
+        toggleEntryEnergyMode();
 
         if ($("#entryKwhConsumed")) $("#entryKwhConsumed").value = kwhConsumed ? String(Number(kwhConsumed.toFixed(2))) : "0";
         if ($("#entryEnergyAmount")) $("#entryEnergyAmount").value = money(energyAmount);
 
         $("#entryTotalPreview").textContent = money(total);
 
-        if (currentReading < previousReading) {
+        if (!isNoKwh && currentReading < previousReading) {
           $("#entryFormula").textContent = "A leitura atual não pode ser menor que a leitura anterior. Confira os valores informados.";
+          return;
+        }
+
+        if (isNoKwh) {
+          $("#entryFormula").textContent = `Sem cálculo de kWh neste lançamento | Energia: ${money(0)} | COSIP: ${money(0)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
           return;
         }
 
@@ -3025,9 +3080,12 @@
           return;
         }
 
-        const previousReading = toNumber($("#entryKwhPrevious").value);
-        const currentReading = toNumber($("#entryKwhCurrent").value);
-        const kwhConsumed = Math.max(0, currentReading - previousReading);
+        const energyMode = $("#entryEnergyMode").value || "withKwh";
+        const noKwh = energyMode === "noKwh";
+
+        const previousReading = noKwh ? 0 : toNumber($("#entryKwhPrevious").value);
+        const currentReading = noKwh ? 0 : toNumber($("#entryKwhCurrent").value);
+        const kwhConsumed = noKwh ? 0 : Math.max(0, currentReading - previousReading);
 
         const entry = {
           id: id || uid("entry"),
@@ -3037,19 +3095,25 @@
           tenantCpf: apartment.tenant?.cpf || "",
           month: $("#entryMonth").value,
           rent: toNumber($("#entryRent").value),
-          kwhValue: toNumber($("#entryKwhValue").value),
+          energyMode,
+          kwhValue: noKwh ? 0 : toNumber($("#entryKwhValue").value),
           kwhPrevious: previousReading,
           kwhCurrent: currentReading,
           kwhConsumed,
-          cosip: toNumber($("#entryCosip").value)
+          cosip: noKwh ? 0 : toNumber($("#entryCosip").value)
         };
 
-        if (!entry.month || entry.rent < 0 || entry.kwhValue < 0 || entry.kwhPrevious < 0 || entry.kwhCurrent < 0 || entry.cosip < 0) {
-          toast("Preencha corretamente todos os valores do lançamento.");
+        if (!entry.month || entry.rent < 0) {
+          toast("Preencha corretamente o mês e o valor do aluguel.");
           return;
         }
 
-        if (entry.kwhCurrent < entry.kwhPrevious) {
+        if (!noKwh && (entry.kwhValue < 0 || entry.kwhPrevious < 0 || entry.kwhCurrent < 0 || entry.cosip < 0)) {
+          toast("Preencha corretamente os valores de energia.");
+          return;
+        }
+
+        if (!noKwh && entry.kwhCurrent < entry.kwhPrevious) {
           toast("A leitura atual não pode ser menor que a leitura anterior.");
           return;
         }
@@ -3079,6 +3143,7 @@
         $("#entryApartmentId").value = entry.apartmentId;
         $("#entryMonth").value = entry.month;
         $("#entryRent").value = entry.rent;
+        $("#entryEnergyMode").value = entry.energyMode || "withKwh";
         $("#entryKwhValue").value = entry.kwhValue;
         $("#entryKwhPrevious").value = entry.kwhPrevious || "";
         $("#entryKwhCurrent").value = entry.kwhCurrent || "";
@@ -3755,12 +3820,21 @@
         $("#entryApartmentId").addEventListener("change", event => {
           const apartment = getApartment(event.target.value);
           if (apartment && !$("#entryEditId").value && !manualEntryRent) $("#entryRent").value = apartment.baseRent;
-          updatePreviousReadingFromHistory(true);
+          if (($("#entryEnergyMode")?.value || "withKwh") === "withKwh") updatePreviousReadingFromHistory(true);
+          updateEntryPreview();
         });
 
         $("#entryMonth").addEventListener("change", () => {
           if (!$("#entryEditId").value) updatePreviousReadingFromHistory(true);
           updateEntryPreview();
+        });
+
+        $("#entryEnergyMode").addEventListener("change", () => {
+          if ($("#entryEnergyMode").value === "withKwh") {
+            updatePreviousReadingFromHistory(true);
+          } else {
+            updateEntryPreview();
+          }
         });
 
         ["#entryRent", "#entryKwhValue", "#entryKwhPrevious", "#entryKwhCurrent", "#entryCosip"].forEach(selector => {
