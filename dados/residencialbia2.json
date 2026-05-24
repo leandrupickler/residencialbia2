@@ -16,13 +16,14 @@
   ],
   "apartments": [
     {
-      "id": "apartment_apto01_jaron_2025_12_10",
+      "id": "apartment_apto01",
       "number": "Apto 01",
-      "description": "Apartamento importado do contrato de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
+      "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
       "baseRent": 1300,
       "contractStart": "2025-12-10",
       "contractEnd": "2026-06-10",
+      "status": "occupied",
       "tenant": {
         "name": "JARON GREGORI CAVALCANTE QUIRINO",
         "cpf": "122.805.159-38",
@@ -30,24 +31,365 @@
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
-      }
+      },
+      "contractHistory": [
+        {
+          "id": "history_apto01_marcos_2025_04_10",
+          "apartmentId": "apartment_apto01",
+          "apartmentNumber": "Apto 01",
+          "tenant": {
+            "name": "MARCOS AURELIO SOARES",
+            "cpf": "016.960.059-90",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-04-10",
+          "contractEnd": "2025-10-10",
+          "baseRent": 1300,
+          "endedAt": "2025-10-10T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        }
+      ]
     },
     {
-      "id": "apartment_apto02_leandro_2025_04_10",
+      "id": "apartment_apto02",
       "number": "Apto 02",
       "description": "Apartamento importado do contrato de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado no Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
       "baseRent": 1300,
-      "contractStart": "2025-04-10",
-      "contractEnd": "2025-10-10",
+      "contractStart": "",
+      "contractEnd": "",
+      "status": "free",
       "tenant": {
-        "name": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
-        "cpf": "804.173.530-49",
+        "name": "",
+        "cpf": "",
         "phone": "",
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
-      }
+      },
+      "contractHistory": [
+        {
+          "id": "history_apto02_leandro_2025_04_10",
+          "apartmentId": "apartment_apto02",
+          "apartmentNumber": "Apto 02",
+          "tenant": {
+            "name": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
+            "cpf": "804.173.530-49",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-04-10",
+          "contractEnd": "2025-10-10",
+          "baseRent": 1300,
+          "endedAt": "2025-10-10T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        }
+      ]
+    },
+    {
+      "id": "apartment_apto03",
+      "number": "Apto 03",
+      "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
+      "photo": "",
+      "baseRent": 1300,
+      "contractStart": "2025-12-10",
+      "contractEnd": "2026-06-10",
+      "status": "occupied",
+      "tenant": {
+        "name": "KARINE KAUSS RODRIGUES",
+        "cpf": "018.491.050-14",
+        "phone": "",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      },
+      "contractHistory": [
+        {
+          "id": "history_apto03_ashely_2025_04_10",
+          "apartmentId": "apartment_apto03",
+          "apartmentNumber": "Apto 03",
+          "tenant": {
+            "name": "ASHELY ORLANDO JORDAN",
+            "cpf": "156.206.969-10",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-04-10",
+          "contractEnd": "2025-10-10",
+          "baseRent": 1300,
+          "endedAt": "2025-10-10T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        }
+      ]
+    },
+    {
+      "id": "apartment_apto04",
+      "number": "Apto 04",
+      "description": "Apartamento importado dos contratos e termos de vistoria. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
+      "photo": "",
+      "baseRent": 1300,
+      "contractStart": "2026-01-16",
+      "contractEnd": "2026-07-10",
+      "status": "occupied",
+      "tenant": {
+        "name": "ISMAEL ROSENDO DA SILVA",
+        "cpf": "949.247.832-34",
+        "phone": "(92) 98202-1989",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      },
+      "contractHistory": [
+        {
+          "id": "history_apto04_erica_2025_04_09",
+          "apartmentId": "apartment_apto04",
+          "apartmentNumber": "Apto 04",
+          "tenant": {
+            "name": "ERICA CRISTINA SANTOS CUNHA",
+            "cpf": "609.013.783-99",
+            "phone": "(99) 97400-9883",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-04-09",
+          "contractEnd": "2025-10-09",
+          "baseRent": 1300,
+          "endedAt": "2025-10-09T12:00:00.000Z",
+          "reason": "Termo de vistoria/contrato anterior importado."
+        },
+        {
+          "id": "history_apto04_evelle_2025_07_10",
+          "apartmentId": "apartment_apto04",
+          "apartmentNumber": "Apto 04",
+          "tenant": {
+            "name": "EVELLE SOARES GUIMARÃES",
+            "cpf": "187.197.347-35",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-07-10",
+          "contractEnd": "2026-01-10",
+          "baseRent": 1300,
+          "endedAt": "2026-01-10T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        }
+      ]
+    },
+    {
+      "id": "apartment_apto05",
+      "number": "Apto 05",
+      "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado no Bairro Caminho Novo, Palhoça/SC.",
+      "photo": "",
+      "baseRent": 1300,
+      "contractStart": "",
+      "contractEnd": "",
+      "status": "free",
+      "tenant": {
+        "name": "",
+        "cpf": "",
+        "phone": "",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      },
+      "contractHistory": [
+        {
+          "id": "history_apto05_caroline_2025_04_06",
+          "apartmentId": "apartment_apto05",
+          "apartmentNumber": "Apto 05",
+          "tenant": {
+            "name": "CAROLINE BETTANZOS GONCALVES",
+            "cpf": "057.008.770-82",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-04-06",
+          "contractEnd": "2025-10-06",
+          "baseRent": 1300,
+          "endedAt": "2025-10-06T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        },
+        {
+          "id": "history_apto05_arthur_2025_09_10",
+          "apartmentId": "apartment_apto05",
+          "apartmentNumber": "Apto 05",
+          "tenant": {
+            "name": "ARTHUR SILVA CAVALCANTE",
+            "cpf": "066.901.982-86",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-09-10",
+          "contractEnd": "2026-03-10",
+          "baseRent": 1300,
+          "endedAt": "2026-03-10T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        }
+      ]
+    },
+    {
+      "id": "apartment_apto06",
+      "number": "Apto 06",
+      "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC. Contrato atual possui duas moradoras: ALIDA THASY NASCIMENTO COSTA e KETLEN CRISTINA BARBOSA OLIVEIRA.",
+      "photo": "",
+      "baseRent": 1300,
+      "contractStart": "2026-03-15",
+      "contractEnd": "2026-09-15",
+      "status": "occupied",
+      "tenant": {
+        "name": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
+        "cpf": "032.356.472-01 / 055.898.932-24",
+        "phone": "(91) 98460-5654 / (91) 98440-2936",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      },
+      "contractHistory": [
+        {
+          "id": "history_apto06_allyson_2025_10_10",
+          "apartmentId": "apartment_apto06",
+          "apartmentNumber": "Apto 06",
+          "tenant": {
+            "name": "ALLYSON DE OLIVEIRA BARBOSA",
+            "cpf": "019.227.782-06",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-10-10",
+          "contractEnd": "2026-04-10",
+          "baseRent": 1300,
+          "endedAt": "2026-04-10T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        }
+      ]
+    },
+    {
+      "id": "apartment_apto07",
+      "number": "Apto 07",
+      "description": "Apartamento importado dos contratos e termos de vistoria. Imóvel tipo kitnet situado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
+      "photo": "",
+      "baseRent": 1300,
+      "contractStart": "",
+      "contractEnd": "",
+      "status": "free",
+      "tenant": {
+        "name": "",
+        "cpf": "",
+        "phone": "",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      },
+      "contractHistory": [
+        {
+          "id": "history_apto07_matheus_2025_05_16",
+          "apartmentId": "apartment_apto07",
+          "apartmentNumber": "Apto 07",
+          "tenant": {
+            "name": "MATHEUS DE SOUSA PEREIRA",
+            "cpf": "053.365.502-13",
+            "phone": "(68) 99961-0184",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-05-16",
+          "contractEnd": "2025-11-10",
+          "baseRent": 1300,
+          "endedAt": "2025-11-10T12:00:00.000Z",
+          "reason": "Termo de vistoria/contrato anterior importado."
+        },
+        {
+          "id": "history_apto07_ricardo_2025_08_10",
+          "apartmentId": "apartment_apto07",
+          "apartmentNumber": "Apto 07",
+          "tenant": {
+            "name": "RICARDO IACHITZKI JUNIOR",
+            "cpf": "822.941.789-04",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-08-10",
+          "contractEnd": "2026-02-16",
+          "baseRent": 1300,
+          "endedAt": "2026-02-16T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        }
+      ]
+    },
+    {
+      "id": "apartment_apto08",
+      "number": "Apto 08",
+      "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado no Bairro Caminho Novo, Palhoça/SC.",
+      "photo": "",
+      "baseRent": 1300,
+      "contractStart": "",
+      "contractEnd": "",
+      "status": "free",
+      "tenant": {
+        "name": "",
+        "cpf": "",
+        "phone": "",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      },
+      "contractHistory": [
+        {
+          "id": "history_apto08_marks_2025_04_10",
+          "apartmentId": "apartment_apto08",
+          "apartmentNumber": "Apto 08",
+          "tenant": {
+            "name": "MARKS PAUL SANTIAGO MENDEZ GUZMAN",
+            "cpf": "050.647.168-34",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-04-10",
+          "contractEnd": "2025-10-10",
+          "baseRent": 1300,
+          "endedAt": "2025-10-10T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        },
+        {
+          "id": "history_apto08_luiz_2025_08_14",
+          "apartmentId": "apartment_apto08",
+          "apartmentNumber": "Apto 08",
+          "tenant": {
+            "name": "LUIZ PEREIRA DE SOUSA",
+            "cpf": "772.410.121-49",
+            "phone": "",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-08-14",
+          "contractEnd": "2026-02-10",
+          "baseRent": 1300,
+          "endedAt": "2026-02-10T12:00:00.000Z",
+          "reason": "Contrato anterior importado."
+        }
+      ]
     }
   ],
   "expenses": [
