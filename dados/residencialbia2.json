@@ -536,6 +536,30 @@
       "apartmentId": "",
       "amount": 400,
       "description": ""
+    },
+    {
+      "id": "expense_e0f16c7f-242b-475d-b901-1563d26d6f03",
+      "month": "2026-05",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 379.58,
+      "description": ""
+    },
+    {
+      "id": "expense_12f6d699-12cd-4ed3-a77c-41b31cf82ebf",
+      "month": "2026-03",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 379.58,
+      "description": ""
+    },
+    {
+      "id": "expense_1b86ba75-4ca6-4104-a309-eaba20107358",
+      "month": "2026-03",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 379.58,
+      "description": ""
     }
   ],
   "entries": [
@@ -1843,7 +1867,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T03:54:57.287Z",
+    "updatedAt": "2026-05-24T03:56:34.600Z",
     "updatedBy": "residencial"
   }
 }
