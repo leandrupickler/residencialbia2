@@ -576,6 +576,14 @@
       "apartmentId": "",
       "amount": 461.26,
       "description": ""
+    },
+    {
+      "id": "expense_dc890d87-d885-44ec-a555-4f98266438c5",
+      "month": "2025-12",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 295.31,
+      "description": ""
     }
   ],
   "entries": [
@@ -1883,7 +1891,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T03:57:50.359Z",
+    "updatedAt": "2026-05-24T03:58:58.444Z",
     "updatedBy": "residencial"
   }
 }
