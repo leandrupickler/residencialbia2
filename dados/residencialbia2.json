@@ -23,7 +23,6 @@
       "baseRent": 1300,
       "contractStart": "2025-12-10",
       "contractEnd": "2026-06-10",
-      "status": "occupied",
       "tenant": {
         "name": "JARON GREGORI CAVALCANTE QUIRINO",
         "cpf": "122.805.159-38",
@@ -32,6 +31,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto01_marcos_2025_04_10",
@@ -61,7 +61,6 @@
       "baseRent": 1300,
       "contractStart": "",
       "contractEnd": "",
-      "status": "free",
       "tenant": {
         "name": "",
         "cpf": "",
@@ -70,6 +69,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto02_leandro_2025_04_10",
@@ -99,7 +99,6 @@
       "baseRent": 1300,
       "contractStart": "2025-12-10",
       "contractEnd": "2026-06-10",
-      "status": "occupied",
       "tenant": {
         "name": "KARINE KAUSS RODRIGUES",
         "cpf": "018.491.050-14",
@@ -108,6 +107,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto03_ashely_2025_04_10",
@@ -137,7 +137,6 @@
       "baseRent": 1300,
       "contractStart": "2026-01-16",
       "contractEnd": "2026-07-10",
-      "status": "occupied",
       "tenant": {
         "name": "ISMAEL ROSENDO DA SILVA",
         "cpf": "949.247.832-34",
@@ -146,6 +145,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto04_erica_2025_04_09",
@@ -193,7 +193,6 @@
       "baseRent": 1300,
       "contractStart": "",
       "contractEnd": "",
-      "status": "free",
       "tenant": {
         "name": "",
         "cpf": "",
@@ -202,6 +201,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto05_caroline_2025_04_06",
@@ -249,7 +249,6 @@
       "baseRent": 1300,
       "contractStart": "2026-03-15",
       "contractEnd": "2026-09-15",
-      "status": "occupied",
       "tenant": {
         "name": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
         "cpf": "032.356.472-01 / 055.898.932-24",
@@ -258,6 +257,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto06_allyson_2025_10_10",
@@ -287,7 +287,6 @@
       "baseRent": 1300,
       "contractStart": "",
       "contractEnd": "",
-      "status": "free",
       "tenant": {
         "name": "",
         "cpf": "",
@@ -296,6 +295,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto07_matheus_2025_05_16",
@@ -343,7 +343,6 @@
       "baseRent": 1300,
       "contractStart": "",
       "contractEnd": "",
-      "status": "free",
       "tenant": {
         "name": "",
         "cpf": "",
@@ -352,6 +351,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto08_marks_2025_04_10",
@@ -511,7 +511,7 @@
       "type": "Internet",
       "apartmentId": "",
       "amount": 129,
-      "description": ""
+      "description": "Internet mensal importada automaticamente."
     },
     {
       "id": "expense_internet_2026_04",
@@ -543,8 +543,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_05",
@@ -558,8 +557,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_06",
@@ -573,8 +571,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_07",
@@ -588,8 +585,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_08",
@@ -603,8 +599,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_09",
@@ -618,8 +613,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2025_12",
@@ -633,8 +627,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_01",
@@ -648,8 +641,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_02",
@@ -663,8 +655,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_03",
@@ -678,8 +669,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_04",
@@ -693,8 +683,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_05",
@@ -708,8 +697,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_04",
@@ -723,8 +711,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_05",
@@ -738,8 +725,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_06",
@@ -753,8 +739,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_07",
@@ -768,8 +753,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_08",
@@ -783,8 +767,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_09",
@@ -798,8 +781,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_04",
@@ -813,8 +795,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_05",
@@ -828,8 +809,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_06",
@@ -843,8 +823,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_07",
@@ -858,8 +837,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_08",
@@ -873,8 +851,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_09",
@@ -888,8 +865,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2025_12",
@@ -903,8 +879,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_01",
@@ -918,8 +893,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_02",
@@ -933,8 +907,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_03",
@@ -948,8 +921,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_04",
@@ -963,8 +935,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_05",
@@ -978,8 +949,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_04",
@@ -993,8 +963,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_05",
@@ -1008,8 +977,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_06",
@@ -1023,8 +991,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_07",
@@ -1038,8 +1005,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_07",
@@ -1053,8 +1019,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_08",
@@ -1068,8 +1033,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_08",
@@ -1083,8 +1047,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_09",
@@ -1098,8 +1061,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_09",
@@ -1113,8 +1075,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_10",
@@ -1128,8 +1089,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_11",
@@ -1143,8 +1103,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_12",
@@ -1158,8 +1117,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_01",
@@ -1173,8 +1131,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_02",
@@ -1188,8 +1145,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_03",
@@ -1203,8 +1159,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_04",
@@ -1218,8 +1173,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_05",
@@ -1233,8 +1187,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_04",
@@ -1248,8 +1201,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_05",
@@ -1263,8 +1215,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_06",
@@ -1278,8 +1229,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_07",
@@ -1293,8 +1243,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_08",
@@ -1308,8 +1257,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2025_09",
@@ -1323,8 +1271,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_09",
@@ -1338,8 +1285,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2025_10",
@@ -1353,8 +1299,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2025_11",
@@ -1368,8 +1313,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2025_12",
@@ -1383,8 +1327,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2026_01",
@@ -1398,8 +1341,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2026_02",
@@ -1413,8 +1355,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2025_10",
@@ -1428,8 +1369,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2025_11",
@@ -1443,8 +1383,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2025_12",
@@ -1458,8 +1397,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2026_01",
@@ -1473,8 +1411,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2026_02",
@@ -1488,8 +1425,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_alida_thasy_nascimento_costa___ketlen_cristina_barbosa_oliveira_2026_03",
@@ -1503,8 +1439,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2026_03",
@@ -1518,8 +1453,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_alida_thasy_nascimento_costa___ketlen_cristina_barbosa_oliveira_2026_04",
@@ -1533,8 +1467,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_06_alida_thasy_nascimento_costa___ketlen_cristina_barbosa_oliveira_2026_05",
@@ -1548,8 +1481,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (morador atual). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_05",
@@ -1563,8 +1495,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_06",
@@ -1578,8 +1509,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_07",
@@ -1593,8 +1523,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_08",
@@ -1608,8 +1537,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_08",
@@ -1623,8 +1551,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_09",
@@ -1638,8 +1565,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_09",
@@ -1653,8 +1579,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_10",
@@ -1668,8 +1593,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_10",
@@ -1683,8 +1607,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_11",
@@ -1698,8 +1621,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_12",
@@ -1713,8 +1635,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2026_01",
@@ -1728,8 +1649,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2026_02",
@@ -1743,8 +1663,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_04",
@@ -1758,8 +1677,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_05",
@@ -1773,8 +1691,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_06",
@@ -1788,8 +1705,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_07",
@@ -1803,8 +1719,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_08",
@@ -1818,8 +1733,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_08",
@@ -1833,8 +1747,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_09",
@@ -1848,8 +1761,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_09",
@@ -1863,8 +1775,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_10",
@@ -1878,8 +1789,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_11",
@@ -1893,8 +1803,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_12",
@@ -1908,8 +1817,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2026_01",
@@ -1923,12 +1831,11 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel mensal importado automaticamente do contrato (histórico). Energia/COSIP não informados."
+      "cosip": 0
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T03:30:00.000Z",
+    "updatedAt": "2026-05-24T03:37:29.378Z",
     "updatedBy": "residencial"
   }
 }
