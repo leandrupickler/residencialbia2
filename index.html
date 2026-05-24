@@ -962,7 +962,7 @@
 
             <div class="field">
               <label for="loginGithubPath">Arquivo de dados</label>
-              <input id="loginGithubPath" type="text" value="dados/residencial-beatriz.json">
+              <input id="loginGithubPath" type="text" value="dados/residencialbia2.json">
             </div>
           </div>
 
@@ -1469,7 +1469,7 @@
 
               <div class="field">
                 <label for="githubPath">Arquivo de dados</label>
-                <input id="githubPath" type="text" value="dados/residencial-beatriz.json">
+                <input id="githubPath" type="text" value="dados/residencialbia2.json">
               </div>
             </div>
 
@@ -1647,7 +1647,7 @@
               owner: "",
               repo: "",
               branch: "main",
-              path: "dados/residencial-beatriz.json",
+              path: "dados/residencialbia2.json",
               token: ""
             };
           }
@@ -1656,7 +1656,7 @@
             owner: "",
             repo: "",
             branch: "main",
-            path: "dados/residencial-beatriz.json",
+            path: "dados/residencialbia.json",
             token: "",
             ...JSON.parse(raw)
           };
@@ -1665,7 +1665,7 @@
             owner: "",
             repo: "",
             branch: "main",
-            path: "dados/residencial-beatriz.json",
+            path: "dados/residencialbia.json",
             token: ""
           };
         }
@@ -1676,7 +1676,7 @@
           owner: String(config.owner || "").trim(),
           repo: String(config.repo || "").trim(),
           branch: String(config.branch || "main").trim(),
-          path: String(config.path || "dados/residencial-beatriz.json").trim(),
+          path: String(config.path || "dados/residencialbia.json").trim(),
           token: String(config.token || githubConfig.token || "").trim()
         };
 
@@ -3300,7 +3300,7 @@
         const owner = $(`#${prefix}GithubOwner`).value.trim();
         const repo = $(`#${prefix}GithubRepo`).value.trim();
         const branch = $(`#${prefix}GithubBranch`).value.trim() || "main";
-        const path = $(`#${prefix}GithubPath`).value.trim() || "dados/residencial-beatriz.json";
+        const path = $(`#${prefix}GithubPath`).value.trim() || "dados/residencialbia2.json";
         const token = $(`#${prefix}GithubToken`).value.trim();
 
         if (!owner || !repo || !branch || !path) {
