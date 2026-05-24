@@ -1,0 +1,33 @@
+{
+  "settings": {
+    "appName": "Residencial Beatriz",
+    "logo": "",
+    "dashboardPeriod": "currentYear",
+    "dashboardYear": 2026
+  },
+  "users": [
+    {
+      "id": "user_169b216d-6778-49ae-b931-31b95c2c81f6",
+      "login": "residencial",
+      "salt": "70d060fb52feb917526f9e7847979035",
+      "passwordHash": "53812c116857753f68e7e4b1c0bc9848bd3d94a12a7c83da9ddd3d2ab2b2f650",
+      "createdAt": "2026-05-24T01:59:02.135Z"
+    }
+  ],
+  "apartments": [],
+  "expenses": [
+    {
+      "id": "expense_479f545b-4d20-4796-bff4-3605df647202",
+      "month": "2026-05",
+      "type": "Internet",
+      "apartmentId": "",
+      "amount": 129,
+      "description": ""
+    }
+  ],
+  "entries": [],
+  "meta": {
+    "updatedAt": "2026-05-24T02:03:39.842Z",
+    "updatedBy": "residencial"
+  }
+}
