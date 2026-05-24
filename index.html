@@ -710,7 +710,7 @@
             </div>
             <div>
               <div class="stat-value" id="expenseValue">R$ 0,00</div>
-              <p class="stat-note">IPTU + Internet + Manutenção.</p>
+              <p class="stat-note">Água + Internet + IPTU + Manutenção.</p>
             </div>
           </article>
 
@@ -908,8 +908,9 @@
               <div class="field">
                 <label for="expenseType">Tipo *</label>
                 <select id="expenseType" required>
-                  <option value="IPTU">IPTU</option>
+                  <option value="Água">Água</option>
                   <option value="Internet">Internet</option>
+                  <option value="IPTU">IPTU</option>
                   <option value="Manutenção Extra">Manutenção Extra</option>
                 </select>
               </div>
@@ -927,7 +928,7 @@
 
             <div class="field">
               <label for="expenseDescription">Descrição</label>
-              <input id="expenseDescription" type="text" placeholder="Ex.: IPTU, internet, pintura, manutenção elétrica...">
+              <input id="expenseDescription" type="text" placeholder="Ex.: água, internet, IPTU, pintura, manutenção elétrica...">
             </div>
 
             <div class="form-actions">
@@ -2248,13 +2249,13 @@
             <div class="empty">
               <i class="fa-solid fa-receipt"></i>
               <strong>Nenhuma despesa cadastrada.</strong>
-              <div class="mini">Cadastre IPTU, Internet ou Manutenção para calcular o lucro líquido real.</div>
+              <div class="mini">Cadastre Água, Internet, IPTU ou Manutenção para calcular o lucro líquido real.</div>
             </div>
           `;
           return;
         }
 
-        const sorted = [...state.expenses].sort((a, b) => String(b.month).localeCompare(String(a.month)));
+        const sorted = [...state.expenses].sort((a, b) => String(b.month).localeCompare(String(a.month)) || String(a.type).localeCompare(String(b.type), "pt-BR"));
 
         el.innerHTML = `
           <div class="table-wrap">
@@ -2273,7 +2274,7 @@
                 ${sorted.map(expense => `
                   <tr>
                     <td>${monthName(expense.month)}</td>
-                    <td><span class="pill ${expense.type === "IPTU" ? "blue" : expense.type === "Internet" ? "green" : "yellow"}">${escapeHtml(expense.type)}</span></td>
+                    <td><span class="pill ${expense.type === "Água" ? "blue" : expense.type === "Internet" ? "green" : expense.type === "IPTU" ? "red" : "yellow"}">${escapeHtml(expense.type)}</span></td>
                     <td>${expense.apartmentId ? escapeHtml(apartmentName(expense.apartmentId)) : "Global"}</td>
                     <td>${escapeHtml(expense.description || "-")}</td>
                     <td><strong>${money(expense.amount)}</strong></td>
@@ -2526,7 +2527,7 @@
       function clearExpenseForm() {
         $("#expenseEditId").value = "";
         $("#expenseMonth").value = currentMonthValue();
-        $("#expenseType").value = "IPTU";
+        $("#expenseType").value = "Água";
         $("#expenseApartmentId").value = "";
         $("#expenseAmount").value = "";
         $("#expenseDescription").value = "";
