@@ -956,7 +956,7 @@
         <div class="section-title">
           <div>
             <h2>Lançamentos mensais dos inquilinos</h2>
-            <p>Cálculo automático: Aluguel + (kWh consumido × Valor kWh) + COSIP.</p>
+            <p>Cálculo automático por leitura acumulada: leitura atual − leitura anterior = kWh consumido.</p>
           </div>
         </div>
 
@@ -988,20 +988,40 @@
               </div>
 
               <div class="field">
-                <label for="entryKwhConsumed">kWh consumido *</label>
-                <input id="entryKwhConsumed" type="number" min="0" step="0.01" placeholder="Ex.: 120" required>
+                <label for="entryKwhPrevious">Leitura anterior acumulada *</label>
+                <input id="entryKwhPrevious" type="number" min="0" step="0.01" placeholder="Ex.: 1540" required>
+                <span class="mini muted" id="entryLastReadingInfo">Selecione o apartamento e o mês para buscar automaticamente a última leitura salva.</span>
+              </div>
+
+              <div class="field">
+                <label for="entryKwhCurrent">Leitura atual acumulada *</label>
+                <input id="entryKwhCurrent" type="number" min="0" step="0.01" placeholder="Ex.: 1660" required>
+              </div>
+            </div>
+
+            <div class="form-row three">
+              <div class="field">
+                <label for="entryKwhConsumed">kWh consumido no mês</label>
+                <input id="entryKwhConsumed" type="number" min="0" step="0.01" readonly>
+                <span class="mini muted">Calculado automaticamente pela diferença das leituras.</span>
               </div>
 
               <div class="field">
                 <label for="entryCosip">COSIP *</label>
                 <input id="entryCosip" type="number" min="0" step="0.01" placeholder="0,00" required>
               </div>
+
+              <div class="field">
+                <label>Valor da energia pelo kWh</label>
+                <input id="entryEnergyAmount" type="text" readonly value="R$ 0,00">
+                <span class="mini muted">kWh consumido × valor kWh. A COSIP aparece no resumo abaixo.</span>
+              </div>
             </div>
 
             <div class="total-preview">
               <div>
                 <strong>Total a cobrar do inquilino</strong>
-                <p class="mini muted" id="entryFormula">Aluguel + Luz + COSIP</p>
+                <p class="mini muted" id="entryFormula">Energia + COSIP + Aluguel = Total a cobrar</p>
               </div>
               <div class="amount" id="entryTotalPreview">R$ 0,00</div>
             </div>
@@ -1323,6 +1343,15 @@
       function normalizeEntry(entry) {
         const source = entry && typeof entry === "object" ? entry : {};
         const apt = source.apartmentId ? getApartment(source.apartmentId) : null;
+        const legacyConsumed = toNumber(source.kwhConsumed);
+        const previousReading = toNumber(source.kwhPrevious ?? source.kwhReadingPrevious ?? source.previousReading ?? 0);
+        const currentReadingRaw = source.kwhCurrent ?? source.kwhReadingCurrent ?? source.currentReading;
+        const currentReading = currentReadingRaw === undefined || currentReadingRaw === null || currentReadingRaw === ""
+          ? (previousReading > 0 && legacyConsumed > 0 ? previousReading + legacyConsumed : 0)
+          : toNumber(currentReadingRaw);
+        const calculatedConsumed = currentReading > 0 || previousReading > 0
+          ? Math.max(0, currentReading - previousReading)
+          : legacyConsumed;
 
         return {
           id: source.id || uid("entry"),
@@ -1333,7 +1362,9 @@
           month: source.month || "",
           rent: toNumber(source.rent),
           kwhValue: toNumber(source.kwhValue),
-          kwhConsumed: toNumber(source.kwhConsumed),
+          kwhPrevious: previousReading,
+          kwhCurrent: currentReading,
+          kwhConsumed: calculatedConsumed,
           cosip: toNumber(source.cosip)
         };
       }
@@ -1771,8 +1802,60 @@
         return `${apartment.number}${apartment.tenant?.name ? " — " + apartment.tenant.name : ""}`;
       }
 
+      function getLastKwhEntry(apartmentId, beforeMonth = "", excludeEntryId = "") {
+        const entries = state.entries
+          .filter(entry => entry.apartmentId === apartmentId && entry.id !== excludeEntryId)
+          .filter(entry => toNumber(entry.kwhCurrent) > 0)
+          .filter(entry => !beforeMonth || String(entry.month || "") < String(beforeMonth))
+          .sort((a, b) => String(b.month || "").localeCompare(String(a.month || "")));
+
+        return entries.length ? entries[0] : null;
+      }
+
+      function getLastKwhReading(apartmentId, beforeMonth = "", excludeEntryId = "") {
+        const lastEntry = getLastKwhEntry(apartmentId, beforeMonth, excludeEntryId);
+        return lastEntry ? toNumber(lastEntry.kwhCurrent) : 0;
+      }
+
+      function updatePreviousReadingFromHistory(force = false) {
+        const entryId = $("#entryEditId")?.value || "";
+        const apartmentId = $("#entryApartmentId")?.value || "";
+        const month = $("#entryMonth")?.value || "";
+        const previousInput = $("#entryKwhPrevious");
+        const infoEl = $("#entryLastReadingInfo");
+
+        if (!previousInput) return;
+
+        if (!apartmentId) {
+          if (infoEl) infoEl.textContent = "Selecione o apartamento para buscar a leitura anterior automaticamente.";
+          updateEntryPreview();
+          return;
+        }
+
+        const lastEntry = getLastKwhEntry(apartmentId, month, entryId);
+        const lastReading = lastEntry ? toNumber(lastEntry.kwhCurrent) : 0;
+
+        if (force || !previousInput.value) {
+          previousInput.value = lastEntry ? String(lastReading) : "";
+        }
+
+        if (infoEl) {
+          if (lastEntry) {
+            infoEl.textContent = `Leitura anterior preenchida automaticamente: ${lastReading.toLocaleString("pt-BR")} kWh, registrada em ${monthName(lastEntry.month)}.`;
+          } else {
+            infoEl.textContent = "Nenhuma leitura anterior encontrada para este apartamento. Informe a leitura inicial manualmente.";
+          }
+        }
+
+        updateEntryPreview();
+      }
+
+      function energyOnly(entry) {
+        return toNumber(entry.kwhValue) * toNumber(entry.kwhConsumed);
+      }
+
       function energyTotal(entry) {
-        return toNumber(entry.kwhValue) * toNumber(entry.kwhConsumed) + toNumber(entry.cosip);
+        return energyOnly(entry) + toNumber(entry.cosip);
       }
 
       function entryTotal(entry) {
@@ -2241,7 +2324,9 @@
                     <th>Mês/Ano</th>
                     <th>Aluguel</th>
                     <th>Valor kWh</th>
-                    <th>kWh</th>
+                    <th>Leitura anterior</th>
+                    <th>Leitura atual</th>
+                    <th>Consumo</th>
                     <th>Luz + COSIP</th>
                     <th>Total</th>
                     <th style="text-align:right;">Ações</th>
@@ -2255,6 +2340,8 @@
                       <td>${monthName(entry.month)}</td>
                       <td>${money(entry.rent)}</td>
                       <td>${money(entry.kwhValue)}</td>
+                      <td>${toNumber(entry.kwhPrevious).toLocaleString("pt-BR")} kWh</td>
+                      <td>${toNumber(entry.kwhCurrent).toLocaleString("pt-BR")} kWh</td>
                       <td>${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh</td>
                       <td>${money(energyTotal(entry))}</td>
                       <td><strong>${money(entryTotal(entry))}</strong></td>
@@ -2451,8 +2538,14 @@
         $("#entryMonth").value = currentMonthValue();
         $("#entryRent").value = "";
         $("#entryKwhValue").value = "";
+        $("#entryKwhPrevious").value = "";
+        $("#entryKwhCurrent").value = "";
         $("#entryKwhConsumed").value = "";
         $("#entryCosip").value = "";
+        $("#entryEnergyAmount").value = money(0);
+        if ($("#entryLastReadingInfo")) {
+          $("#entryLastReadingInfo").textContent = "Selecione o apartamento e o mês para buscar automaticamente a última leitura salva.";
+        }
         manualEntryRent = false;
         updateEntryPreview();
       }
@@ -2467,13 +2560,25 @@
       function updateEntryPreview() {
         const rent = toNumber($("#entryRent")?.value);
         const kwhValue = toNumber($("#entryKwhValue")?.value);
-        const kwhConsumed = toNumber($("#entryKwhConsumed")?.value);
+        const previousReading = toNumber($("#entryKwhPrevious")?.value);
+        const currentReading = toNumber($("#entryKwhCurrent")?.value);
+        const kwhConsumed = Math.max(0, currentReading - previousReading);
         const cosip = toNumber($("#entryCosip")?.value);
-        const luz = kwhValue * kwhConsumed;
-        const total = rent + luz + cosip;
+        const energyAmount = kwhValue * kwhConsumed;
+        const totalEnergyWithCosip = energyAmount + cosip;
+        const total = rent + totalEnergyWithCosip;
+
+        if ($("#entryKwhConsumed")) $("#entryKwhConsumed").value = kwhConsumed ? String(Number(kwhConsumed.toFixed(2))) : "0";
+        if ($("#entryEnergyAmount")) $("#entryEnergyAmount").value = money(energyAmount);
 
         $("#entryTotalPreview").textContent = money(total);
-        $("#entryFormula").textContent = `${money(rent)} + (${kwhConsumed.toLocaleString("pt-BR")} kWh × ${money(kwhValue)}) + ${money(cosip)} = ${money(total)}`;
+
+        if (currentReading < previousReading) {
+          $("#entryFormula").textContent = "A leitura atual não pode ser menor que a leitura anterior. Confira os valores informados.";
+          return;
+        }
+
+        $("#entryFormula").textContent = `Consumo: ${currentReading.toLocaleString("pt-BR")} - ${previousReading.toLocaleString("pt-BR")} = ${kwhConsumed.toLocaleString("pt-BR")} kWh | Energia: ${money(energyAmount)} + COSIP: ${money(cosip)} = ${money(totalEnergyWithCosip)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
       }
 
       function showTab(name) {
@@ -2738,6 +2843,10 @@
           return;
         }
 
+        const previousReading = toNumber($("#entryKwhPrevious").value);
+        const currentReading = toNumber($("#entryKwhCurrent").value);
+        const kwhConsumed = Math.max(0, currentReading - previousReading);
+
         const entry = {
           id: id || uid("entry"),
           apartmentId,
@@ -2747,12 +2856,19 @@
           month: $("#entryMonth").value,
           rent: toNumber($("#entryRent").value),
           kwhValue: toNumber($("#entryKwhValue").value),
-          kwhConsumed: toNumber($("#entryKwhConsumed").value),
+          kwhPrevious: previousReading,
+          kwhCurrent: currentReading,
+          kwhConsumed,
           cosip: toNumber($("#entryCosip").value)
         };
 
-        if (!entry.month || entry.rent < 0 || entry.kwhValue < 0 || entry.kwhConsumed < 0 || entry.cosip < 0) {
+        if (!entry.month || entry.rent < 0 || entry.kwhValue < 0 || entry.kwhPrevious < 0 || entry.kwhCurrent < 0 || entry.cosip < 0) {
           toast("Preencha corretamente todos os valores do lançamento.");
+          return;
+        }
+
+        if (entry.kwhCurrent < entry.kwhPrevious) {
+          toast("A leitura atual não pode ser menor que a leitura anterior.");
           return;
         }
 
@@ -2782,6 +2898,8 @@
         $("#entryMonth").value = entry.month;
         $("#entryRent").value = entry.rent;
         $("#entryKwhValue").value = entry.kwhValue;
+        $("#entryKwhPrevious").value = entry.kwhPrevious || "";
+        $("#entryKwhCurrent").value = entry.kwhCurrent || "";
         $("#entryKwhConsumed").value = entry.kwhConsumed;
         $("#entryCosip").value = entry.cosip;
 
@@ -3057,10 +3175,15 @@
         $("#entryApartmentId").addEventListener("change", event => {
           const apartment = getApartment(event.target.value);
           if (apartment && !$("#entryEditId").value && !manualEntryRent) $("#entryRent").value = apartment.baseRent;
+          updatePreviousReadingFromHistory(true);
+        });
+
+        $("#entryMonth").addEventListener("change", () => {
+          if (!$("#entryEditId").value) updatePreviousReadingFromHistory(true);
           updateEntryPreview();
         });
 
-        ["#entryRent", "#entryKwhValue", "#entryKwhConsumed", "#entryCosip"].forEach(selector => {
+        ["#entryRent", "#entryKwhValue", "#entryKwhPrevious", "#entryKwhCurrent", "#entryCosip"].forEach(selector => {
           $(selector).addEventListener("input", () => {
             if (selector === "#entryRent") manualEntryRent = true;
             updateEntryPreview();
