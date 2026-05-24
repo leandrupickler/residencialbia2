@@ -191,12 +191,12 @@
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado no Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
       "baseRent": 1300,
-      "contractStart": "2026-01-16",
-      "contractEnd": "2026-07-16",
+      "contractStart": "2026-03-10",
+      "contractEnd": "2026-09-10",
       "tenant": {
-        "name": "Ismael Rosendo da Silva",
-        "cpf": "94924783234",
-        "phone": "92982021989",
+        "name": "Arthur Silva Cavalcante",
+        "cpf": "06690198286",
+        "phone": "",
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
@@ -1891,7 +1891,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T17:40:27.766Z",
+    "updatedAt": "2026-05-24T17:43:27.115Z",
     "updatedBy": "residencial"
   }
 }
