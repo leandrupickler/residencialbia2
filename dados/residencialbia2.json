@@ -2030,10 +2030,70 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0
+    },
+    {
+      "id": "entry_a9c42f18-582a-47d4-ab2b-5452dc379222",
+      "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
+      "apartmentNumber": "Casa Eldorado",
+      "tenantName": "Wanilson Da Silva Teixeira",
+      "tenantCpf": "00902224239",
+      "month": "2026-03",
+      "rent": 1250,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0
+    },
+    {
+      "id": "entry_69a77ff3-f854-488b-a785-ad02d1f29c0c",
+      "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
+      "apartmentNumber": "Casa Eldorado",
+      "tenantName": "Wanilson Da Silva Teixeira",
+      "tenantCpf": "00902224239",
+      "month": "2026-04",
+      "rent": 1250,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0
+    },
+    {
+      "id": "entry_be4ad383-5739-41e1-8070-f7f6b4e762ed",
+      "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
+      "apartmentNumber": "Casa Eldorado",
+      "tenantName": "Wanilson Da Silva Teixeira",
+      "tenantCpf": "00902224239",
+      "month": "2026-04",
+      "rent": 1250,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0
+    },
+    {
+      "id": "entry_2207511d-8ca6-47fc-8149-b4dabff9630d",
+      "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
+      "apartmentNumber": "Casa Eldorado",
+      "tenantName": "Wanilson Da Silva Teixeira",
+      "tenantCpf": "00902224239",
+      "month": "2026-01",
+      "rent": 1250,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T18:10:21.852Z",
+    "updatedAt": "2026-05-24T18:12:11.786Z",
     "updatedBy": "residencial"
   }
 }
