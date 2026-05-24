@@ -285,17 +285,17 @@
       "description": "Apartamento importado dos contratos e termos de vistoria. Imóvel tipo kitnet situado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
       "baseRent": 1300,
-      "contractStart": "",
-      "contractEnd": "",
+      "contractStart": "2026-04-16",
+      "contractEnd": "2026-10-16",
       "tenant": {
-        "name": "",
-        "cpf": "",
+        "name": "Ricardo Iachitzki Junior",
+        "cpf": "82294178904",
         "phone": "",
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
       },
-      "status": "free",
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto07_matheus_2025_05_16",
@@ -1891,7 +1891,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T17:43:27.115Z",
+    "updatedAt": "2026-05-24T17:45:39.208Z",
     "updatedBy": "residencial"
   }
 }
