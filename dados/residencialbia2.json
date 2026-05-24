@@ -2015,10 +2015,25 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0
+    },
+    {
+      "id": "entry_9971a6b0-e011-40f5-95ec-40863a2e9f7c",
+      "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
+      "apartmentNumber": "Casa Eldorado",
+      "tenantName": "Wanilson Da Silva Teixeira",
+      "tenantCpf": "00902224239",
+      "month": "2026-02",
+      "rent": 1250,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T18:10:07.186Z",
+    "updatedAt": "2026-05-24T18:10:21.852Z",
     "updatedBy": "residencial"
   }
 }
