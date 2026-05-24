@@ -196,7 +196,7 @@
       "tenant": {
         "name": "Arthur Silva Cavalcante",
         "cpf": "06690198286",
-        "phone": "",
+        "phone": "48988614064",
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
@@ -1891,7 +1891,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T17:50:40.279Z",
+    "updatedAt": "2026-05-24T17:51:24.613Z",
     "updatedBy": "residencial"
   }
 }
