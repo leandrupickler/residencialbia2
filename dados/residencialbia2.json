@@ -751,6 +751,14 @@
       "apartmentId": "",
       "amount": 461.26,
       "description": ""
+    },
+    {
+      "id": "expense_29320ac2-6dfb-440e-9320-572525ca94ef",
+      "month": "2026-05",
+      "type": "IPTU",
+      "apartmentId": "",
+      "amount": 1200,
+      "description": ""
     }
   ],
   "entries": [
@@ -2237,8 +2245,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado do contrato vencido 10/02/2025 a 10/08/2025."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_03",
@@ -2253,8 +2260,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado do contrato vencido 10/02/2025 a 10/08/2025."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_04",
@@ -2269,8 +2275,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado do contrato vencido 10/02/2025 a 10/08/2025."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_05",
@@ -2285,8 +2290,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado do contrato vencido 10/02/2025 a 10/08/2025."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_06",
@@ -2301,8 +2305,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado do contrato vencido 10/02/2025 a 10/08/2025."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_07",
@@ -2317,8 +2320,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado do contrato vencido 10/02/2025 a 10/08/2025."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_08",
@@ -2333,8 +2335,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado para complementar o contrato atual com o mesmo morador."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_09",
@@ -2349,8 +2350,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado para complementar o contrato atual com o mesmo morador."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_10",
@@ -2365,8 +2365,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado para complementar o contrato atual com o mesmo morador."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_11",
@@ -2381,8 +2380,7 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado para complementar o contrato atual com o mesmo morador."
+      "cosip": 0
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_12",
@@ -2397,12 +2395,11 @@
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
-      "cosip": 0,
-      "description": "Aluguel Casa Eldorado importado para complementar o contrato atual com o mesmo morador."
+      "cosip": 0
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T12:30:00.000Z",
+    "updatedAt": "2026-05-24T18:59:06.358Z",
     "updatedBy": "residencial"
   }
 }
