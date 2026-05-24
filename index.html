@@ -721,6 +721,7 @@
               <option value="last6">Últimos 6 Meses</option>
               <option value="currentYear">Último Ano (Padrão/Corrente)</option>
               <option value="last2">Últimos 2 Anos</option>
+              <option value="all">Todo o Período</option>
             </select>
           </div>
 
@@ -1165,7 +1166,23 @@
         <div class="section-title">
           <div>
             <h2>Histórico financeiro por apartamento</h2>
-            <p>Os lançamentos guardam uma cópia do nome do morador do momento do lançamento.</p>
+            <p>Por padrão, mostra os lançamentos do contrato atual. Use o filtro para ver dados antigos.</p>
+          </div>
+        </div>
+
+        <div class="dashboard-filter">
+          <div class="field">
+            <label for="entriesHistoryFilter">Filtro dos lançamentos</label>
+            <select id="entriesHistoryFilter">
+              <option value="current">Somente contrato atual</option>
+              <option value="history">Somente contratos anteriores</option>
+              <option value="all">Todos os lançamentos</option>
+            </select>
+          </div>
+
+          <div class="filter-badge" id="entriesFilterBadge">
+            <i class="fa-solid fa-filter"></i>
+            Contrato atual
           </div>
         </div>
 
@@ -2030,6 +2047,14 @@
           return { start: new Date(now.getFullYear(), now.getMonth() - 23, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 2 anos" };
         }
 
+        if (period === "all") {
+          return {
+            start: new Date(1900, 0, 1),
+            end: new Date(2999, 11, 31),
+            label: "Todo o período"
+          };
+        }
+
         return {
           start: new Date(selectedYear, 0, 1),
           end: new Date(selectedYear + 1, 0, 1),
@@ -2184,8 +2209,14 @@
 
         if (!years.includes(Number(state.settings.dashboardYear))) state.settings.dashboardYear = currentYear;
 
-        yearSelect.innerHTML = years.map(year => `<option value="${year}">${year}</option>`).join("");
-        yearSelect.value = String(state.settings.dashboardYear || currentYear);
+        yearSelect.innerHTML = `<option value="all">Todo o período</option>` + years.map(year => `<option value="${year}">${year}</option>`).join("");
+
+        if (periodSelect.value === "all") {
+          yearSelect.value = "all";
+        } else {
+          yearSelect.value = String(state.settings.dashboardYear || currentYear);
+        }
+
         yearSelect.disabled = periodSelect.value !== "currentYear";
 
         const range = getPeriodRange();
@@ -2474,75 +2505,185 @@
         `;
       }
 
+      function getEntriesFilterMode() {
+        return state.settings.entriesHistoryFilter || "current";
+      }
+
+      function isEntryFromCurrentContract(entry) {
+        const apartment = getApartment(entry.apartmentId);
+
+        if (!apartment || apartment.status === "free" || !apartment.tenant?.name) {
+          return false;
+        }
+
+        const entryCpf = String(entry.tenantCpf || "").trim();
+        const currentCpf = String(apartment.tenant?.cpf || "").trim();
+        const entryName = String(entry.tenantName || "").trim().toLowerCase();
+        const currentName = String(apartment.tenant?.name || "").trim().toLowerCase();
+
+        if (entryCpf && currentCpf && entryCpf === currentCpf) {
+          return true;
+        }
+
+        if (entryName && currentName && entryName === currentName) {
+          return true;
+        }
+
+        const start = apartment.contractStart ? apartment.contractStart.slice(0, 7) : "";
+        const end = apartment.contractEnd ? apartment.contractEnd.slice(0, 7) : "";
+
+        if (start && end && entry.month >= start && entry.month <= end) {
+          return true;
+        }
+
+        return false;
+      }
+
+      function filterEntriesByMode(entries) {
+        const mode = getEntriesFilterMode();
+
+        if (mode === "all") {
+          return entries;
+        }
+
+        if (mode === "history") {
+          return entries.filter(entry => !isEntryFromCurrentContract(entry));
+        }
+
+        return entries.filter(isEntryFromCurrentContract);
+      }
+
+      function renderEntriesFilterControls() {
+        const select = $("#entriesHistoryFilter");
+        const badge = $("#entriesFilterBadge");
+
+        if (!select || !badge) return;
+
+        const mode = getEntriesFilterMode();
+        select.value = mode;
+
+        const labels = {
+          current: "Somente contrato atual",
+          history: "Somente contratos anteriores",
+          all: "Todos os lançamentos"
+        };
+
+        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${labels[mode] || labels.current}`;
+      }
+
       function renderEntries() {
         const el = $("#entriesList");
 
-        if (!state.entries.length) {
+        renderEntriesFilterControls();
+
+        const filteredEntries = filterEntriesByMode(state.entries);
+
+        if (!filteredEntries.length) {
+          const mode = getEntriesFilterMode();
+          const emptyText = mode === "current"
+            ? "Nenhum lançamento encontrado para contratos atuais."
+            : mode === "history"
+              ? "Nenhum lançamento antigo encontrado."
+              : "Nenhum lançamento mensal cadastrado.";
+
           el.innerHTML = `
             <div class="empty">
               <i class="fa-solid fa-file-invoice-dollar"></i>
-              <strong>Nenhum lançamento mensal cadastrado.</strong>
-              <div class="mini">Cadastre aluguel, kWh, consumo e COSIP para gerar o histórico.</div>
+              <strong>${emptyText}</strong>
+              <div class="mini">Use o filtro acima para alternar entre contrato atual, contratos anteriores ou todos os lançamentos.</div>
             </div>
           `;
           return;
         }
 
-        const sortedEntries = [...state.entries].sort((a, b) =>
-          `${a.apartmentNumber || apartmentName(a.apartmentId)}-${b.month}`.localeCompare(`${b.apartmentNumber || apartmentName(b.apartmentId)}-${a.month}`)
+        const grouped = filteredEntries.reduce((acc, entry) => {
+          const key = entry.apartmentId || entry.apartmentNumber || "sem_apartamento";
+
+          if (!acc[key]) {
+            const apartment = getApartment(entry.apartmentId);
+            acc[key] = {
+              apartment,
+              apartmentLabel: entry.apartmentNumber || apartment?.number || "Unidade removida",
+              entries: []
+            };
+          }
+
+          acc[key].entries.push(entry);
+          return acc;
+        }, {});
+
+        const groups = Object.values(grouped).sort((a, b) =>
+          String(a.apartmentLabel).localeCompare(String(b.apartmentLabel), "pt-BR", { numeric: true })
         );
 
-        el.innerHTML = `
-          <article class="card">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Apartamento</th>
-                    <th>Morador do lançamento</th>
-                    <th>Mês/Ano</th>
-                    <th>Aluguel</th>
-                    <th>Energia</th>
-                    <th>Valor kWh</th>
-                    <th>Leitura anterior</th>
-                    <th>Leitura atual</th>
-                    <th>Consumo</th>
-                    <th>Luz + COSIP</th>
-                    <th>Total</th>
-                    <th style="text-align:right;">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${sortedEntries.map(entry => `
+        el.innerHTML = groups.map((group, index) => {
+          const entries = group.entries.sort((a, b) => String(b.month).localeCompare(String(a.month)));
+          const total = entries.reduce((sum, entry) => sum + entryTotal(entry), 0);
+          const rentTotal = entries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
+          const energyTotalValue = entries.reduce((sum, entry) => sum + energyTotal(entry), 0);
+          const currentTenant = group.apartment?.tenant?.name || "";
+          const activeInfo = currentTenant ? ` • Atual: ${escapeHtml(currentTenant)}` : "";
+          const shouldOpen = index === 0;
+
+          return `
+            <details class="history-year" ${shouldOpen ? "open" : ""}>
+              <summary>
+                <span><i class="fa-solid fa-building"></i> ${escapeHtml(group.apartmentLabel)}</span>
+                <span class="history-count">${entries.length} lançamento(s) • Total ${money(total)}${activeInfo}</span>
+              </summary>
+
+              <div class="reference" style="border-radius:0; border-left:0; border-right:0;">
+                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Total: ${money(total)}
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
                     <tr>
-                      <td>${escapeHtml(entry.apartmentNumber || getApartment(entry.apartmentId)?.number || "Unidade removida")}</td>
-                      <td>${escapeHtml(entry.tenantName || getApartment(entry.apartmentId)?.tenant?.name || "-")}</td>
-                      <td>${monthName(entry.month)}</td>
-                      <td>${money(entry.rent)}</td>
-                      <td><span class="pill ${(entry.energyMode || "withKwh") === "noKwh" ? "green" : "blue"}">${(entry.energyMode || "withKwh") === "noKwh" ? "Sem kWh" : "Com kWh"}</span></td>
-                      <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : money(entry.kwhValue)}</td>
-                      <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhPrevious).toLocaleString("pt-BR") + " kWh"}</td>
-                      <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhCurrent).toLocaleString("pt-BR") + " kWh"}</td>
-                      <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhConsumed).toLocaleString("pt-BR") + " kWh"}</td>
-                      <td>${money(energyTotal(entry))}</td>
-                      <td><strong>${money(entryTotal(entry))}</strong></td>
-                      <td>
-                        <div class="td-actions">
-                          <button class="btn btn-light btn-sm" data-action="editEntry" data-id="${entry.id}">
-                            <i class="fa-solid fa-pen"></i> Editar
-                          </button>
-                          <button class="btn btn-danger btn-sm" data-action="deleteEntry" data-id="${entry.id}">
-                            <i class="fa-solid fa-trash"></i> Remover
-                          </button>
-                        </div>
-                      </td>
+                      <th>Morador do lançamento</th>
+                      <th>Mês/Ano</th>
+                      <th>Aluguel</th>
+                      <th>Energia</th>
+                      <th>Valor kWh</th>
+                      <th>Leitura anterior</th>
+                      <th>Leitura atual</th>
+                      <th>Consumo</th>
+                      <th>Luz + COSIP</th>
+                      <th>Total</th>
+                      <th style="text-align:right;">Ações</th>
                     </tr>
-                  `).join("")}
-                </tbody>
-              </table>
-            </div>
-          </article>
-        `;
+                  </thead>
+                  <tbody>
+                    ${entries.map(entry => `
+                      <tr>
+                        <td>${escapeHtml(entry.tenantName || getApartment(entry.apartmentId)?.tenant?.name || "-")}</td>
+                        <td>${monthName(entry.month)}</td>
+                        <td>${money(entry.rent)}</td>
+                        <td><span class="pill ${(entry.energyMode || "withKwh") === "noKwh" ? "green" : "blue"}">${(entry.energyMode || "withKwh") === "noKwh" ? "Sem kWh" : "Com kWh"}</span></td>
+                        <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : money(entry.kwhValue)}</td>
+                        <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhPrevious).toLocaleString("pt-BR") + " kWh"}</td>
+                        <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhCurrent).toLocaleString("pt-BR") + " kWh"}</td>
+                        <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhConsumed).toLocaleString("pt-BR") + " kWh"}</td>
+                        <td>${money(energyTotal(entry))}</td>
+                        <td><strong>${money(entryTotal(entry))}</strong></td>
+                        <td>
+                          <div class="td-actions">
+                            <button class="btn btn-light btn-sm" data-action="editEntry" data-id="${entry.id}">
+                              <i class="fa-solid fa-pen"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-sm" data-action="deleteEntry" data-id="${entry.id}">
+                              <i class="fa-solid fa-trash"></i> Remover
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          `;
+        }).join("");
       }
 
       function renderContractHistory() {
@@ -3785,6 +3926,12 @@
         });
 
         $("#dashboardYear").addEventListener("change", async event => {
+          if (event.target.value === "all") {
+            state.settings.dashboardPeriod = "all";
+            await save("Todo o período selecionado.");
+            return;
+          }
+
           state.settings.dashboardYear = Number(event.target.value);
           state.settings.dashboardPeriod = "currentYear";
           await save("Ano histórico selecionado.");
@@ -3816,6 +3963,11 @@
 
         $("#entryForm").addEventListener("submit", saveEntryForm);
         $("#clearEntryBtn").addEventListener("click", clearEntryForm);
+
+        $("#entriesHistoryFilter").addEventListener("change", async event => {
+          state.settings.entriesHistoryFilter = event.target.value;
+          await save("Filtro do histórico financeiro salvo.");
+        });
 
         $("#entryApartmentId").addEventListener("change", event => {
           const apartment = getApartment(event.target.value);
@@ -3904,6 +4056,7 @@
 
         if (!state.settings.dashboardPeriod) state.settings.dashboardPeriod = "currentYear";
         if (!state.settings.dashboardYear) state.settings.dashboardYear = new Date().getFullYear();
+        if (!state.settings.entriesHistoryFilter) state.settings.entriesHistoryFilter = "current";
 
         clearExpenseForm();
         clearEntryForm();
