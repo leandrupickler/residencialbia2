@@ -737,6 +737,59 @@
           </article>
         </div>
 
+        <div class="section-title">
+          <div>
+            <h2>Detalhamento das despesas</h2>
+            <p>Separação automática por Água, Internet, IPTU e Despesas Extras no período selecionado.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesa com Água</span>
+              <span class="icon"><i class="fa-solid fa-droplet"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="waterExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como Água.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesa com Internet</span>
+              <span class="icon green"><i class="fa-solid fa-wifi"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="internetExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como Internet.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesa com IPTU</span>
+              <span class="icon red"><i class="fa-solid fa-file-invoice"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="iptuExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como IPTU.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesas Extras</span>
+              <span class="icon yellow"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="maintenanceExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Manutenção e despesas extras.</p>
+            </div>
+          </article>
+        </div>
+
         <div class="grid grid-3" style="margin-top:18px;">
           <article class="card chart-card">
             <h3><i class="fa-solid fa-chart-pie"></i> Faturamento Bruto vs Despesas</h3>
@@ -1912,13 +1965,44 @@
         const filteredEntries = state.entries.filter(entry => isMonthInsideSelectedPeriod(entry.month));
         const filteredExpenses = state.expenses.filter(expense => isMonthInsideSelectedPeriod(expense.month));
 
+        const normalizeExpenseType = value => String(value || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase();
+
+        const sumExpenseByType = (...types) => {
+          const normalizedTypes = types.map(normalizeExpenseType);
+          return filteredExpenses.reduce((sum, expense) => {
+            return normalizedTypes.includes(normalizeExpenseType(expense.type))
+              ? sum + toNumber(expense.amount)
+              : sum;
+          }, 0);
+        };
+
         const gross = filteredEntries.reduce((sum, entry) => sum + entryTotal(entry), 0);
         const rent = filteredEntries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
         const energy = filteredEntries.reduce((sum, entry) => sum + energyTotal(entry), 0);
+
+        const waterExpenses = sumExpenseByType("Água", "Agua");
+        const internetExpenses = sumExpenseByType("Internet");
+        const iptuExpenses = sumExpenseByType("IPTU");
+        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra");
+
         const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
         const net = gross - expenses;
 
-        return { gross, rent, energy, expenses, net };
+        return {
+          gross,
+          rent,
+          energy,
+          expenses,
+          net,
+          waterExpenses,
+          internetExpenses,
+          iptuExpenses,
+          maintenanceExpenses
+        };
       }
 
       function setLoggedInView(user) {
@@ -2032,6 +2116,11 @@
         $("#expenseValue").textContent = money(f.expenses);
         $("#rentValue").textContent = money(f.rent);
         $("#energyValue").textContent = money(f.energy);
+
+        $("#waterExpenseValue").textContent = money(f.waterExpenses);
+        $("#internetExpenseValue").textContent = money(f.internetExpenses);
+        $("#iptuExpenseValue").textContent = money(f.iptuExpenses);
+        $("#maintenanceExpenseValue").textContent = money(f.maintenanceExpenses);
 
         renderPie("#pieCashFlow", [
           { label: "Faturamento Bruto", value: f.gross, color: "#4285F4" },
