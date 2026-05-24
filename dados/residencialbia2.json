@@ -2,7 +2,7 @@
   "settings": {
     "appName": "Residencial Beatriz",
     "logo": "",
-    "dashboardPeriod": "currentYear",
+    "dashboardPeriod": "last2",
     "dashboardYear": 2026
   },
   "users": [
@@ -23,7 +23,6 @@
       "baseRent": 1300,
       "contractStart": "2025-12-10",
       "contractEnd": "2026-06-10",
-      "status": "occupied",
       "tenant": {
         "name": "JARON GREGORI CAVALCANTE QUIRINO",
         "cpf": "122.805.159-38",
@@ -32,6 +31,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto01_marcos_2025_04_10",
@@ -61,7 +61,6 @@
       "baseRent": 1300,
       "contractStart": "",
       "contractEnd": "",
-      "status": "free",
       "tenant": {
         "name": "",
         "cpf": "",
@@ -70,6 +69,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto02_leandro_2025_04_10",
@@ -99,7 +99,6 @@
       "baseRent": 1300,
       "contractStart": "2025-12-10",
       "contractEnd": "2026-06-10",
-      "status": "occupied",
       "tenant": {
         "name": "KARINE KAUSS RODRIGUES",
         "cpf": "018.491.050-14",
@@ -108,6 +107,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto03_ashely_2025_04_10",
@@ -137,7 +137,6 @@
       "baseRent": 1300,
       "contractStart": "2026-01-16",
       "contractEnd": "2026-07-10",
-      "status": "occupied",
       "tenant": {
         "name": "ISMAEL ROSENDO DA SILVA",
         "cpf": "949.247.832-34",
@@ -146,6 +145,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto04_erica_2025_04_09",
@@ -193,7 +193,6 @@
       "baseRent": 1300,
       "contractStart": "",
       "contractEnd": "",
-      "status": "free",
       "tenant": {
         "name": "",
         "cpf": "",
@@ -202,6 +201,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto05_caroline_2025_04_06",
@@ -249,7 +249,6 @@
       "baseRent": 1300,
       "contractStart": "2026-03-15",
       "contractEnd": "2026-09-15",
-      "status": "occupied",
       "tenant": {
         "name": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
         "cpf": "032.356.472-01 / 055.898.932-24",
@@ -258,6 +257,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto06_allyson_2025_10_10",
@@ -287,7 +287,6 @@
       "baseRent": 1300,
       "contractStart": "",
       "contractEnd": "",
-      "status": "free",
       "tenant": {
         "name": "",
         "cpf": "",
@@ -296,6 +295,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto07_matheus_2025_05_16",
@@ -343,7 +343,6 @@
       "baseRent": 1300,
       "contractStart": "",
       "contractEnd": "",
-      "status": "free",
       "tenant": {
         "name": "",
         "cpf": "",
@@ -352,6 +351,7 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto08_marks_2025_04_10",
@@ -412,7 +412,7 @@
   ],
   "entries": [],
   "meta": {
-    "updatedAt": "2026-05-24T02:06:45.063Z",
+    "updatedAt": "2026-05-24T03:20:51.493Z",
     "updatedBy": "residencial"
   }
 }
