@@ -4,7 +4,7 @@
     "logo": "",
     "dashboardPeriod": "currentYear",
     "dashboardYear": 2026,
-    "entriesHistoryFilter": "all"
+    "entriesHistoryFilter": "current"
   },
   "users": [
     {
@@ -2033,21 +2033,6 @@
       "cosip": 0
     },
     {
-      "id": "entry_a9c42f18-582a-47d4-ab2b-5452dc379222",
-      "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
-      "apartmentNumber": "Casa Eldorado",
-      "tenantName": "Wanilson Da Silva Teixeira",
-      "tenantCpf": "00902224239",
-      "month": "2026-03",
-      "rent": 1250,
-      "energyMode": "noKwh",
-      "kwhValue": 0,
-      "kwhPrevious": 0,
-      "kwhCurrent": 0,
-      "kwhConsumed": 0,
-      "cosip": 0
-    },
-    {
       "id": "entry_be4ad383-5739-41e1-8070-f7f6b4e762ed",
       "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
       "apartmentNumber": "Casa Eldorado",
@@ -2094,7 +2079,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T18:26:04.124Z",
+    "updatedAt": "2026-05-24T18:27:06.494Z",
     "updatedBy": "residencial"
   }
 }
