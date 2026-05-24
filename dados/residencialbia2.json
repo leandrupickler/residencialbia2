@@ -390,6 +390,25 @@
           "reason": "Contrato anterior importado."
         }
       ]
+    },
+    {
+      "id": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
+      "number": "Casa Eldorado",
+      "description": "",
+      "photo": "",
+      "baseRent": 1250,
+      "contractStart": "2025-08-10",
+      "contractEnd": "2026-02-10",
+      "tenant": {
+        "name": "Wanilson Da Silva Teixeira",
+        "cpf": "00902224239",
+        "phone": "48988599699",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      },
+      "status": "occupied",
+      "contractHistory": []
     }
   ],
   "expenses": [
@@ -1891,7 +1910,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T17:52:25.751Z",
+    "updatedAt": "2026-05-24T17:55:35.731Z",
     "updatedBy": "residencial"
   }
 }
