@@ -441,12 +441,28 @@
       "description": "Internet mensal importada automaticamente."
     },
     {
+      "id": "expense_seguro_do_imovel_2025_02",
+      "month": "2025-02",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
       "id": "expense_internet_2025_03",
       "month": "2025-03",
       "type": "Internet",
       "apartmentId": "",
       "amount": 129,
       "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2025_03",
+      "month": "2025-03",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
     },
     {
       "id": "expense_internet_2025_04",
@@ -457,12 +473,28 @@
       "description": "Internet mensal importada automaticamente."
     },
     {
+      "id": "expense_seguro_do_imovel_2025_04",
+      "month": "2025-04",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
       "id": "expense_internet_2025_05",
       "month": "2025-05",
       "type": "Internet",
       "apartmentId": "",
       "amount": 129,
       "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2025_05",
+      "month": "2025-05",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
     },
     {
       "id": "expense_internet_2025_06",
@@ -473,12 +505,28 @@
       "description": "Internet mensal importada automaticamente."
     },
     {
+      "id": "expense_seguro_do_imovel_2025_06",
+      "month": "2025-06",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
       "id": "expense_internet_2025_07",
       "month": "2025-07",
       "type": "Internet",
       "apartmentId": "",
       "amount": 129,
       "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2025_07",
+      "month": "2025-07",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
     },
     {
       "id": "expense_internet_2025_08",
@@ -489,12 +537,28 @@
       "description": "Internet mensal importada automaticamente."
     },
     {
+      "id": "expense_seguro_do_imovel_2025_08",
+      "month": "2025-08",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
       "id": "expense_internet_2025_09",
       "month": "2025-09",
       "type": "Internet",
       "apartmentId": "",
       "amount": 129,
       "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2025_09",
+      "month": "2025-09",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
     },
     {
       "id": "expense_internet_2025_10",
@@ -505,12 +569,28 @@
       "description": "Internet mensal importada automaticamente."
     },
     {
+      "id": "expense_seguro_do_imovel_2025_10",
+      "month": "2025-10",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
       "id": "expense_internet_2025_11",
       "month": "2025-11",
       "type": "Internet",
       "apartmentId": "",
       "amount": 129,
       "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2025_11",
+      "month": "2025-11",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
     },
     {
       "id": "expense_internet_2025_12",
@@ -521,6 +601,22 @@
       "description": "Internet mensal importada automaticamente."
     },
     {
+      "id": "expense_seguro_do_imovel_2025_12",
+      "month": "2025-12",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
+      "id": "expense_dc890d87-d885-44ec-a555-4f98266438c5",
+      "month": "2025-12",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 295.31,
+      "description": ""
+    },
+    {
       "id": "expense_internet_2026_01",
       "month": "2026-01",
       "type": "Internet",
@@ -529,36 +625,12 @@
       "description": "Internet mensal importada automaticamente."
     },
     {
-      "id": "expense_internet_2026_02",
-      "month": "2026-02",
-      "type": "Internet",
+      "id": "expense_seguro_do_imovel_2026_01",
+      "month": "2026-01",
+      "type": "Seguro do Imóvel",
       "apartmentId": "",
-      "amount": 129,
-      "description": "Internet mensal importada automaticamente."
-    },
-    {
-      "id": "expense_ba588317-4243-4deb-8f2c-91af2bb4089f",
-      "month": "2026-03",
-      "type": "Internet",
-      "apartmentId": "",
-      "amount": 129,
-      "description": "Internet mensal importada automaticamente."
-    },
-    {
-      "id": "expense_internet_2026_04",
-      "month": "2026-04",
-      "type": "Internet",
-      "apartmentId": "",
-      "amount": 129,
-      "description": "Internet mensal importada automaticamente."
-    },
-    {
-      "id": "expense_479f545b-4d20-4796-bff4-3605df647202",
-      "month": "2026-05",
-      "type": "Internet",
-      "apartmentId": "",
-      "amount": 129,
-      "description": "Internet mensal importada automaticamente."
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
     },
     {
       "id": "expense_d15f45f9-c753-40cb-a831-167c6cf688ec",
@@ -569,6 +641,22 @@
       "description": ""
     },
     {
+      "id": "expense_internet_2026_02",
+      "month": "2026-02",
+      "type": "Internet",
+      "apartmentId": "",
+      "amount": 129,
+      "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2026_02",
+      "month": "2026-02",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
       "id": "expense_ee3e28cb-658b-4412-b90c-35962a4b168e",
       "month": "2026-02",
       "type": "Água",
@@ -577,12 +665,20 @@
       "description": ""
     },
     {
-      "id": "expense_e0f16c7f-242b-475d-b901-1563d26d6f03",
-      "month": "2026-05",
-      "type": "Água",
+      "id": "expense_ba588317-4243-4deb-8f2c-91af2bb4089f",
+      "month": "2026-03",
+      "type": "Internet",
       "apartmentId": "",
-      "amount": 379.58,
-      "description": ""
+      "amount": 129,
+      "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2026_03",
+      "month": "2026-03",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
     },
     {
       "id": "expense_12f6d699-12cd-4ed3-a77c-41b31cf82ebf",
@@ -601,6 +697,22 @@
       "description": ""
     },
     {
+      "id": "expense_internet_2026_04",
+      "month": "2026-04",
+      "type": "Internet",
+      "apartmentId": "",
+      "amount": 129,
+      "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2026_04",
+      "month": "2026-04",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
       "id": "expense_36d9359f-a87d-4ae6-be7b-53738d4ebe88",
       "month": "2026-04",
       "type": "Água",
@@ -609,19 +721,35 @@
       "description": ""
     },
     {
+      "id": "expense_479f545b-4d20-4796-bff4-3605df647202",
+      "month": "2026-05",
+      "type": "Internet",
+      "apartmentId": "",
+      "amount": 129,
+      "description": "Internet mensal importada automaticamente."
+    },
+    {
+      "id": "expense_seguro_do_imovel_2026_05",
+      "month": "2026-05",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": "Seguro do imóvel mensal desde 10/02/2025."
+    },
+    {
+      "id": "expense_e0f16c7f-242b-475d-b901-1563d26d6f03",
+      "month": "2026-05",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 379.58,
+      "description": ""
+    },
+    {
       "id": "expense_fb114395-cb35-42a7-a0da-f42240dba3de",
       "month": "2026-05",
       "type": "Água",
       "apartmentId": "",
       "amount": 461.26,
-      "description": ""
-    },
-    {
-      "id": "expense_dc890d87-d885-44ec-a555-4f98266438c5",
-      "month": "2025-12",
-      "type": "Água",
-      "apartmentId": "",
-      "amount": 295.31,
       "description": ""
     }
   ],
@@ -2274,7 +2402,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T12:00:00.000Z",
+    "updatedAt": "2026-05-24T12:30:00.000Z",
     "updatedBy": "residencial"
   }
 }
