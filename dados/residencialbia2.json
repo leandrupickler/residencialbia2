@@ -527,7 +527,7 @@
       "type": "Internet",
       "apartmentId": "",
       "amount": 129,
-      "description": ""
+      "description": "Internet mensal importada automaticamente."
     }
   ],
   "entries": [
@@ -1835,7 +1835,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T03:37:29.378Z",
+    "updatedAt": "2026-05-24T03:38:03.324Z",
     "updatedBy": "residencial"
   }
 }
