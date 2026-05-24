@@ -102,7 +102,7 @@
       "tenant": {
         "name": "KARINE KAUSS RODRIGUES",
         "cpf": "018.491.050-14",
-        "phone": "",
+        "phone": "54991920795",
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
@@ -1891,7 +1891,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T17:48:54.790Z",
+    "updatedAt": "2026-05-24T17:50:40.279Z",
     "updatedBy": "residencial"
   }
 }
