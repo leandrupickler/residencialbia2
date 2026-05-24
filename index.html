@@ -537,6 +537,55 @@
       line-height: 1.55;
     }
 
+    .history-year {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .history-year summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 18px;
+      background: #f8fafd;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .history-year summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .history-year summary::after {
+      content: "\f078";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      transition: transform 0.18s ease;
+      color: var(--muted);
+    }
+
+    .history-year[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .history-year .table-wrap {
+      border: none;
+      border-top: 1px solid var(--border);
+      border-radius: 0;
+    }
+
+    .history-count {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
     @media (max-width: 1120px) {
       .topbar { position: static; flex-direction: column; align-items: flex-start; }
       .tabs { justify-content: flex-start; }
@@ -710,7 +759,7 @@
             </div>
             <div>
               <div class="stat-value" id="expenseValue">R$ 0,00</div>
-              <p class="stat-note">Água + Internet + IPTU + Manutenção.</p>
+              <p class="stat-note">Água + Internet + IPTU + Manutenção + Seguro.</p>
             </div>
           </article>
 
@@ -786,6 +835,17 @@
             <div>
               <div class="stat-value" id="maintenanceExpenseValue">R$ 0,00</div>
               <p class="stat-note">Manutenção e despesas extras.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Seguro do Imóvel</span>
+              <span class="icon"><i class="fa-solid fa-shield-halved"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="insuranceExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como Seguro.</p>
             </div>
           </article>
         </div>
@@ -965,6 +1025,7 @@
                   <option value="Internet">Internet</option>
                   <option value="IPTU">IPTU</option>
                   <option value="Manutenção Extra">Manutenção Extra</option>
+                  <option value="Seguro do Imóvel">Seguro do Imóvel</option>
                 </select>
               </div>
 
@@ -981,7 +1042,7 @@
 
             <div class="field">
               <label for="expenseDescription">Descrição</label>
-              <input id="expenseDescription" type="text" placeholder="Ex.: água, internet, IPTU, pintura, manutenção elétrica...">
+              <input id="expenseDescription" type="text" placeholder="Ex.: água, internet, IPTU, seguro do imóvel, pintura, manutenção elétrica...">
             </div>
 
             <div class="form-actions">
@@ -1988,6 +2049,7 @@
         const internetExpenses = sumExpenseByType("Internet");
         const iptuExpenses = sumExpenseByType("IPTU");
         const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra");
+        const insuranceExpenses = sumExpenseByType("Seguro do Imóvel", "Seguro do Imovel", "Seguro Imóvel", "Seguro Imovel", "Seguro");
 
         const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
         const net = gross - expenses;
@@ -2001,7 +2063,8 @@
           waterExpenses,
           internetExpenses,
           iptuExpenses,
-          maintenanceExpenses
+          maintenanceExpenses,
+          insuranceExpenses
         };
       }
 
@@ -2121,6 +2184,7 @@
         $("#internetExpenseValue").textContent = money(f.internetExpenses);
         $("#iptuExpenseValue").textContent = money(f.iptuExpenses);
         $("#maintenanceExpenseValue").textContent = money(f.maintenanceExpenses);
+        $("#insuranceExpenseValue").textContent = money(f.insuranceExpenses);
 
         renderPie("#pieCashFlow", [
           { label: "Faturamento Bruto", value: f.gross, color: "#4285F4" },
@@ -2308,6 +2372,9 @@
                     <i class="fa-solid fa-user-plus"></i> Novo morador
                   </button>
                 ` : `
+                  <button class="btn btn-primary btn-sm" data-action="downloadContract" data-id="${apartment.id}">
+                    <i class="fa-solid fa-file-arrow-down"></i> Baixar Contrato de Locação
+                  </button>
                   <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
                     <i class="fa-solid fa-rotate-right"></i> Renovar
                   </button>
@@ -2338,7 +2405,7 @@
             <div class="empty">
               <i class="fa-solid fa-receipt"></i>
               <strong>Nenhuma despesa cadastrada.</strong>
-              <div class="mini">Cadastre Água, Internet, IPTU ou Manutenção para calcular o lucro líquido real.</div>
+              <div class="mini">Cadastre Água, Internet, IPTU, Manutenção ou Seguro do Imóvel para calcular o lucro líquido real.</div>
             </div>
           `;
           return;
@@ -2363,7 +2430,7 @@
                 ${sorted.map(expense => `
                   <tr>
                     <td>${monthName(expense.month)}</td>
-                    <td><span class="pill ${expense.type === "Água" ? "blue" : expense.type === "Internet" ? "green" : expense.type === "IPTU" ? "red" : "yellow"}">${escapeHtml(expense.type)}</span></td>
+                    <td><span class="pill ${expense.type === "Água" ? "blue" : expense.type === "Internet" ? "green" : expense.type === "IPTU" ? "red" : expense.type === "Seguro do Imóvel" ? "blue" : "yellow"}">${escapeHtml(expense.type)}</span></td>
                     <td>${expense.apartmentId ? escapeHtml(apartmentName(expense.apartmentId)) : "Global"}</td>
                     <td>${escapeHtml(expense.description || "-")}</td>
                     <td><strong>${money(expense.amount)}</strong></td>
@@ -2500,42 +2567,67 @@
           return;
         }
 
-        el.innerHTML = `
-          <article class="card">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Status</th>
-                    <th>Apartamento</th>
-                    <th>Morador</th>
-                    <th>CPF</th>
-                    <th>Telefone</th>
-                    <th>Início</th>
-                    <th>Encerramento</th>
-                    <th>Valor mensal</th>
-                    <th>Registrado em</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${rows.map(row => `
+        const currentYear = String(new Date().getFullYear());
+        const grouped = rows.reduce((acc, row) => {
+          const year = row.contractStart ? String(row.contractStart).slice(0, 4) : "Sem ano";
+          if (!acc[year]) acc[year] = [];
+          acc[year].push(row);
+          return acc;
+        }, {});
+
+        const years = Object.keys(grouped).sort((a, b) => {
+          if (a === "Sem ano") return 1;
+          if (b === "Sem ano") return -1;
+          return Number(b) - Number(a);
+        });
+
+        el.innerHTML = years.map((year, index) => {
+          const yearRows = grouped[year];
+          const yearTotal = yearRows.reduce((sum, row) => sum + toNumber(row.baseRent), 0);
+          const shouldOpen = year === currentYear || index === 0;
+
+          return `
+            <details class="history-year" ${shouldOpen ? "open" : ""}>
+              <summary>
+                <span><i class="fa-solid fa-calendar-days"></i> Ano ${escapeHtml(year)}</span>
+                <span class="history-count">${yearRows.length} contrato(s) • ${money(yearTotal)}/mês em registros</span>
+              </summary>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
                     <tr>
-                      <td><span class="pill ${row.status === "Atual" ? "green" : "yellow"}">${row.status}</span></td>
-                      <td>${escapeHtml(row.apartmentNumber)}</td>
-                      <td><strong>${escapeHtml(row.tenant.name || "-")}</strong></td>
-                      <td>${escapeHtml(row.tenant.cpf || "-")}</td>
-                      <td>${escapeHtml(row.tenant.phone || "-")}</td>
-                      <td>${formatDate(row.contractStart)}</td>
-                      <td>${formatDate(row.contractEnd)}</td>
-                      <td>${money(row.baseRent)}</td>
-                      <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
+                      <th>Status</th>
+                      <th>Apartamento</th>
+                      <th>Morador</th>
+                      <th>CPF</th>
+                      <th>Telefone</th>
+                      <th>Início</th>
+                      <th>Encerramento</th>
+                      <th>Valor mensal</th>
+                      <th>Registrado em</th>
                     </tr>
-                  `).join("")}
-                </tbody>
-              </table>
-            </div>
-          </article>
-        `;
+                  </thead>
+                  <tbody>
+                    ${yearRows.map(row => `
+                      <tr>
+                        <td><span class="pill ${row.status === "Atual" ? "green" : "yellow"}">${row.status}</span></td>
+                        <td>${escapeHtml(row.apartmentNumber)}</td>
+                        <td><strong>${escapeHtml(row.tenant.name || "-")}</strong></td>
+                        <td>${escapeHtml(row.tenant.cpf || "-")}</td>
+                        <td>${escapeHtml(row.tenant.phone || "-")}</td>
+                        <td>${formatDate(row.contractStart)}</td>
+                        <td>${formatDate(row.contractEnd)}</td>
+                        <td>${money(row.baseRent)}</td>
+                        <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          `;
+        }).join("");
       }
 
       function renderSettings() {
@@ -3191,6 +3283,403 @@
         return true;
       }
 
+
+      function formatCpf(value) {
+        const digits = String(value || "").replace(/\D/g, "");
+        if (digits.length !== 11) return value || "________________";
+        return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
+      }
+
+      function formatDateLong(iso) {
+        const date = parseDate(iso);
+        if (!date) return "____ de __________________ de ______";
+        return new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "long", year: "numeric" }).format(date);
+      }
+
+      function rentValueInWords(value) {
+        const n = Math.round(toNumber(value));
+        const known = {
+          1000: "mil reais",
+          1100: "mil e cem reais",
+          1200: "mil e duzentos reais",
+          1250: "mil duzentos e cinquenta reais",
+          1300: "mil e trezentos reais",
+          1350: "mil trezentos e cinquenta reais",
+          1400: "mil e quatrocentos reais",
+          1500: "mil e quinhentos reais",
+          1600: "mil e seiscentos reais",
+          1700: "mil e setecentos reais",
+          1800: "mil e oitocentos reais",
+          1900: "mil e novecentos reais",
+          2000: "dois mil reais"
+        };
+        return known[n] || `${n.toLocaleString("pt-BR")} reais`;
+      }
+
+      function sanitizeFileName(value) {
+        return String(value || "contrato")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-zA-Z0-9-_]+/g, "_")
+          .replace(/_+/g, "_")
+          .replace(/^_|_$/g, "")
+          .toLowerCase();
+      }
+
+      function buildRentalContractHtml(apartment) {
+        const tenant = normalizeTenant(apartment.tenant);
+        const startDate = apartment.contractStart || isoDate(new Date());
+        const endDate = apartment.contractEnd || addMonths(startDate, 6);
+        const rent = toNumber(apartment.baseRent);
+        const rentText = rentValueInWords(rent);
+        const todayText = formatDateLong(isoDate(new Date()));
+        const tenantName = tenant.name || "________________________________";
+        const tenantCpf = formatCpf(tenant.cpf);
+        const tenantPhone = tenant.phone || "________________";
+
+        const rawApartmentNumber = String(apartment.number || "Apartamento").trim();
+        const apartmentDigits = rawApartmentNumber.match(/\d+/)?.[0] || rawApartmentNumber;
+        const apartmentContractLabel = apartmentDigits
+          ? `APARTAMENTO n ${apartmentDigits.padStart(2, "0")}`
+          : rawApartmentNumber.toUpperCase();
+
+        const propertyDescription = apartment.description || "Imóvel residencial situado no Residencial Beatriz, localizado na rua Albino Dias n 170, no Bairro Caminho Novo, Cidade Palhoça/SC.";
+        const logoHtml = state.settings.logo
+          ? `<img src="${state.settings.logo}" alt="Residencial Beatriz" style="max-height:80px;max-width:170px;object-fit:contain;">`
+          : `<div style="width:82px;height:82px;border-radius:22px;background:#4285F4;color:white;display:grid;place-items:center;font-weight:800;font-size:26px;margin:0 auto;">RB</div>`;
+
+        return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Contrato de Locação - ${escapeHtml(rawApartmentNumber)}</title>
+  <style>
+    @page { size: A4 portrait; margin: 20mm 18mm; }
+
+    html, body {
+      background: #f1f3f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+      font-size: 11.5pt;
+      line-height: 1.55;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20mm 18mm;
+      box-sizing: border-box;
+      box-shadow: 0 12px 38px rgba(0,0,0,.16);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 15pt;
+      line-height: 1.3;
+      margin: 12px 0 22px;
+      text-transform: uppercase;
+      letter-spacing: .2px;
+    }
+
+    h2 {
+      font-size: 12pt;
+      line-height: 1.35;
+      margin: 20px 0 14px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    p {
+      margin: 0 0 11px;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .opening {
+      margin-bottom: 18px;
+    }
+
+    .clause {
+      margin-top: 18px;
+      margin-bottom: 16px;
+      padding-top: 2px;
+      page-break-inside: avoid;
+    }
+
+    .subclause {
+      margin-top: 8px;
+      margin-left: 14px;
+      margin-bottom: 11px;
+    }
+
+    .contract-spacer {
+      height: 8px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .center { text-align: center; }
+
+    .signatures {
+      margin-top: 52px;
+      display: block;
+      page-break-inside: avoid;
+    }
+
+    .signature-gap-large {
+      height: 128px;
+    }
+
+    .signature-gap-locador-locatario {
+      height: 256px;
+    }
+
+    .signature-gap-locatario-testemunhas {
+      height: 352px;
+    }
+
+    .line {
+      border-top: 1px solid #111;
+      padding-top: 7px;
+      text-align: center;
+      min-height: 42px;
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      margin-top: 0;
+    }
+
+    .checklist {
+      border: 1px solid #111;
+      padding: 12px;
+      margin: 14px 0 18px;
+      page-break-inside: avoid;
+    }
+
+    .small {
+      font-size: 9.5pt;
+      color: #333;
+    }
+
+    .print-btn {
+      position: fixed;
+      right: 16px;
+      top: 16px;
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 999px;
+      background: #4285F4;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,.18);
+      font-weight: 700;
+      z-index: 20;
+    }
+
+    @media print {
+      html, body {
+        background: #fff;
+      }
+
+      .page {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .print-btn {
+        display: none;
+      }
+
+      body {
+        font-size: 11pt;
+        line-height: 1.5;
+      }
+
+      .clause {
+        margin-top: 16px;
+        margin-bottom: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn" onclick="window.print()">Imprimir / Salvar em PDF</button>
+
+  <main class="page">
+  <div class="header">
+    ${logoHtml}
+  </div>
+
+  <h1>Contrato de Locação com Prazo Determinado de 6 Meses</h1>
+
+  <p class="opening">Fazem entre si, <strong>LEANDRO PICKLER</strong>, brasileiro, casado, inscrito no RG n. 4.183.420 expedida pela SSP/SC e portador do CPF sob o n. <strong>050.158.229-01</strong>, residente e domiciliado na Prefeito Otávio Zacchi, Bairro Centro, na Cidade de Palhoça/SC, doravante denominado <strong>LOCADOR</strong>; de outro lado <strong>${escapeHtml(tenantName)}</strong>, brasileiro(a), inscrito(a) no CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número de telefone <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado(a) <strong>LOCATÁRIO(A)</strong>, firmam o presente <strong>CONTRATO DE LOCAÇÃO</strong>.</p>
+
+  <h2>Das Cláusulas do Contrato</h2>
+
+  <p class="clause"><strong>CLÁUSULA PRIMEIRA:</strong> O LOCADOR oferta em locação um <strong>${escapeHtml(apartmentContractLabel)}</strong> de sua propriedade, contendo 1 (um) quarto, 1 (uma) sala, 1 (uma) cozinha, 1 (uma) área de serviço e 1 (um) banheiro. O imóvel é localizado na rua Albino Dias n 170, no Bairro Caminho Novo, Cidade Palhoça/SC.</p>
+
+  <p class="clause"><strong>CLÁUSULA SEGUNDA:</strong> O prazo da locação é de 06 meses, iniciando no dia <strong>${formatDateLong(startDate)}</strong> e terminando no dia <strong>${formatDateLong(endDate)}</strong>;</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Terminado o prazo inicialmente convencionado e não havendo qualquer manifestação das partes, a locação será prorrogada por prazo determinado de 06 meses, desde que exista anuência do Locador quanto ao valor a ser pago correspondente ao aluguel, passível de reajuste.</p>
+
+  <p class="subclause"><strong>§ 2º.</strong> Caso não haja manifestação das partes para prorrogação, o contrato será automaticamente encerrado na data final do prazo acordado, salvo novo acordo entre as partes.</p>
+
+  <p class="clause"><strong>CLÁUSULA TERCEIRA:</strong> O aluguel mensal convencionado é de <strong>${money(rent)}</strong> (${escapeHtml(rentText)}) nos 6 meses consecutivos, a serem pagos pelo LOCATÁRIO sempre de forma adiantada, ou seja, primeiro paga o aluguel para ter direito à utilização do imóvel no mês corrente, sendo ajustado o pagamento até o dia 10 do mês subsequente ao vencido, a ser pago diretamente ao LOCADOR.</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Será de responsabilidade dos LOCATÁRIOS os pagamentos de luz e todas as demais despesas ordinárias referentes à conservação do imóvel legalmente permitidas por lei.</p>
+
+  <p class="clause"><strong>CLÁUSULA QUARTA:</strong> Caso não haja o pagamento até o prazo convencionado no contrato, incidirá multa de 10% sobre o valor do aluguel, mais juros de mora de 1% e correção monetária apuradas no período.</p>
+
+  <p class="subclause"><strong>Parágrafo único:</strong> Caberão aos LOCATÁRIOS as penalidades decorrentes dos atrasos nos pagamentos da luz.</p>
+
+  <p class="clause"><strong>CLÁUSULA QUINTA:</strong> O imóvel locado destina-se, exclusivamente, para fins residenciais e no máximo para 2 (duas) pessoas, sendo vedada outra destinação, transferência ou sublocação, total ou parcial, sem o consentimento expresso do LOCADOR.</p>
+
+  <p class="clause"><strong>CLÁUSULA SEXTA:</strong> Os LOCATÁRIOS declaram ter recebido o imóvel em perfeitas condições de habitabilidade e reparado em toda sua extensão.</p>
+
+  <p class="clause"><strong>CLÁUSULA SÉTIMA:</strong> Os LOCATÁRIOS obrigam-se a manter o imóvel locado sempre limpo e restituí-lo, finda a locação, nas mesmas e perfeitas condições de habitabilidade recebidas, correndo exclusivamente por sua conta todos os reparos tendentes à conservação do imóvel, das suas dependências, instalações e utensílios nele existentes, inclusive os consertos e reparos que se fizerem necessários, bem como as multas que der causa, por inobservância de quaisquer leis, decretos e regulamentos.</p>
+
+  <p class="clause"><strong>CLÁUSULA OITAVA:</strong> Os LOCATÁRIOS obrigam-se a respeitar, além das posturas municipais e as de saúde, ficando responsáveis pelas multas a que derem causa.</p>
+
+  <p class="clause"><strong>CLÁUSULA NONA:</strong> O LOCADOR poderá dar como rescindido o presente contrato de locação de pleno direito, independentemente de qualquer interpelação judicial, sem que assista aos LOCATÁRIOS direito a qualquer indenização ou reclamação, a exemplo: a) Em caso do não pagamento pontual do aluguel e encargos ou a falta do exato cumprimento de qualquer das obrigações; b) Em caso de sinistro ou desapropriação; c) Dar destinação diversa do que consta no contrato; d) Sublocar o imóvel sem autorização expressa do LOCADOR; e) Infringir qualquer das cláusulas do presente contrato.</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Uma vez tendo o LOCATÁRIO dado motivo à rescisão do contrato de locação, pagará este uma multa de 20% do valor devedor do contrato.</p>
+
+  <p class="subclause"><strong>§ 2º.</strong> Incorrerá na mesma multa do parágrafo acima se os LOCATÁRIOS decidirem rescindir o contrato dentro do prazo mínimo convencionado no contrato de locação.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA:</strong> O LOCADOR não se responsabiliza por eventuais danos sofridos pelos LOCATÁRIOS em caso de acidentes, incêndio, enchentes ocasionados por caso fortuito ou de força maior.</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Os locatários deverão comunicar ao locador, imediatamente, qualquer dano significativo no imóvel, para que este possa tomar as medidas necessárias.</p>
+
+  <p class="subclause"><strong>§ 2º.</strong> Fica expressamente proibido aos LOCATÁRIOS fazer qualquer furo nas paredes, tetos ou pisos do imóvel, sob pena de multa no valor de R$ 100,00 (cem reais) por furo, além da responsabilidade pelos danos causados, caso ocorra o rompimento de canos ou sistemas hidráulicos, elétricos ou de qualquer outra instalação do imóvel.</p>
+
+  <p class="subclause"><strong>Parágrafo único:</strong> O LOCATÁRIO se compromete a comunicar imediatamente ao LOCADOR qualquer dano ou risco de dano relacionado a furos ou modificações nas instalações do imóvel, sob pena de arcar com os custos de reparação e a multa mencionada.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA PRIMEIRA:</strong> Não poderão os LOCATÁRIOS escusar-se ao pagamento de quaisquer diferenças de aluguel, taxas, despesas de que estiverem obrigados nos termos da lei e do presente instrumento, sob a alegação de que o pagamento não lhe foi exigido na época fixada neste contrato de locação.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA SEGUNDA:</strong> Quaisquer tolerâncias ou concessões do LOCADOR não constituirão precedente invocável e não terão a virtude de alterar as obrigações que lhe são impostas neste instrumento.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA TERCEIRA:</strong> Caso ocorra o atraso no pagamento do aluguel, o contrato dar-se-á como findo, ensejando na execução deste contrato e possibilitando a ação de despejo.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA QUARTA:</strong> Os prazos e as obrigações dos LOCATÁRIOS vencerão independentemente de interpelação, notificação ou aviso, judicial ou extrajudicial.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA QUINTA:</strong> O vencimento do aluguel pago, após 15 dias, conferirá o direito do LOCADOR em ingressar com ação de despejo para desocupação do imóvel, sendo que a não propositura desta ação logo após o vencimento não caracterizará a moratória prevista no inciso I do artigo 838 do Código Civil Brasileiro.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA SEXTA:</strong> Em caso de morte dos LOCATÁRIOS, rescinde-se automaticamente o atual contrato, podendo o familiar ou cônjuge assumir o presente termo nas mesmas condições que os LOCATÁRIOS, desde que firmado novo termo de compromisso.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA SÉTIMA:</strong> Em caso de abandono do imóvel por mais de trinta dias ininterruptos, sem o devido aviso ao LOCADOR, os LOCATÁRIOS expressamente autorizam o proprietário a imitir-se na posse novamente, para que se evitem danos.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA OITAVA:</strong> Os locatários declaram que estão cientes que o objeto deste contrato é destinado somente à moradia das partes dispostas neste instrumento contratual.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA NONA:</strong> O contrato é regido pela lei nº 8.245/91 e Código Civil Brasileiro, no que couber, devendo os problemas que surgirem serem resolvidos baseados nos dois diplomas legais.</p>
+
+  <p class="clause"><strong>CLÁUSULA VIGÉSIMA:</strong> Os contratantes elegem o Foro da Comarca de Palhoça/SC, por mais privilegiado que possa ser qualquer outro, para dirimir quaisquer dúvidas surgidas do presente contrato.</p>
+
+  <p class="clause"><strong>CLÁUSULA VIGÉSIMA PRIMEIRA: DOS VALORES A SEREM COBRADOS NO ATO DA ENTRADA</strong></p>
+
+  <p class="subclause">No ato da entrada, os LOCATÁRIOS se comprometem a pagar ao LOCADOR os seguintes valores:</p>
+
+  <p class="subclause">I. <strong>${money(rent)}</strong> (${escapeHtml(rentText)}) referentes ao aluguel do primeiro mês;</p>
+
+  <p class="subclause">II. <strong>R$ 600,00</strong> (seiscentos reais) para despesas com pintura ao final da locação.</p>
+
+  <p class="clause"><strong>CLÁUSULA VIGÉSIMA SEGUNDA:</strong> Checklist de Entrada do Imóvel.</p>
+
+  <p class="clause"><strong>CLÁUSULA VIGÉSIMA TERCEIRA:</strong> No ato da entrega das chaves do imóvel, será realizada uma inspeção para verificar as condições do apartamento, conforme o Check List de Entrada abaixo. Ambas as partes, locador e locatário, deverão assinar o documento para confirmar o estado do imóvel na data de início da locação.</p>
+
+  <div class="checklist">
+    <p><strong>Declaração do Locatário:</strong></p>
+    <p>Eu, <strong>${escapeHtml(tenantName)}</strong>, abaixo assinado, confirmo que o imóvel foi inspecionado e que as condições de uso foram verificadas e estão de acordo com o que foi acordado no termo de vistoria.</p>
+    <p>Assinatura do Locatário: _______________________ Data: ____/____/______</p>
+    <p>Assinatura do Locador: _______________________ Data: ____/____/______</p>
+  </div>
+
+  <p style="margin-top:24px;">E por estarem justos e contratados, as partes firmam o presente contrato em duas vias de igual conteúdo e teor para que surjam seus legais e jurídicos efeitos na presença de testemunhas, que igualmente assinam.</p>
+
+  <p class="center" style="margin-top:26px;">Palhoça/SC, ${todayText}.</p>
+
+  <div class="signatures">
+    <div class="line">
+      <strong>LOCADOR</strong><br>
+      LEANDRO PICKLER<br>
+      CPF n. 050.158.229-01
+    </div>
+
+    <div class="signature-gap-locador-locatario"></div>
+
+    <div class="line">
+      <strong>LOCATÁRIO(A)</strong><br>
+      ${escapeHtml(tenantName)}<br>
+      CPF n. ${escapeHtml(tenantCpf)}
+    </div>
+
+    <div class="signature-gap-locatario-testemunhas"></div>
+
+    <div class="two">
+      <div class="line">
+        <strong>TESTEMUNHA</strong><br>
+        DEBORA APARECIDA KIRCHNER PICKLER<br>
+        CPF n. 047.833.189-48
+      </div>
+
+      <div class="line">
+        <strong>TESTEMUNHA</strong><br>
+        Nome: _______________________________<br>
+        CPF: ________________________________
+      </div>
+    </div>
+  </div>
+
+  <p class="small center" style="margin-top:24px;">Documento gerado automaticamente pelo sistema Residencial Beatriz.</p>
+  </main>
+</body>
+</html>`;
+      }
+
+      function downloadContract(id) {
+        const apartment = getApartment(id);
+
+        if (!apartment) {
+          toast("Apartamento não localizado.");
+          return;
+        }
+
+        if (apartment.status === "free" || !apartment.tenant?.name) {
+          toast("Apartamento livre não possui morador atual para gerar contrato.");
+          return;
+        }
+
+        const contractHtml = buildRentalContractHtml(apartment);
+        const blob = new Blob([contractHtml], { type: "text/html;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const fileName = `contrato_locacao_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.html`;
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+
+        toast("Contrato de locação gerado. Abra o HTML baixado e use imprimir/salvar em PDF.");
+      }
+
       function bindEvents() {
         $("#loginForm").addEventListener("submit", handleLogin);
         $("#logoutBtn").addEventListener("click", logout);
@@ -3212,6 +3701,7 @@
             vacateApartment,
             deleteApartment,
             renewApartment,
+            downloadContract,
             editExpense,
             deleteExpense,
             editEntry,
