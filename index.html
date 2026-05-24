@@ -65,8 +65,8 @@
     }
 
     .login-card {
-      width: min(620px, 100%);
-      background: rgba(255, 255, 255, 0.92);
+      width: min(660px, 100%);
+      background: rgba(255, 255, 255, 0.94);
       border: 1px solid rgba(255, 255, 255, 0.72);
       border-radius: 32px;
       box-shadow: var(--shadow);
@@ -915,7 +915,7 @@
     <article class="login-card">
       <div class="login-logo" id="loginLogo">RB</div>
       <h1 id="loginTitle">Residencial Beatriz</h1>
-      <p>Entre para acessar o painel de gestão.</p>
+      <p>Acesso restrito aos usuários autorizados.</p>
 
       <div class="sync-badge warn" id="loginSyncStatus">
         <i class="fa-brands fa-github"></i>
@@ -925,12 +925,12 @@
       <form id="loginForm" style="margin-top:18px;">
         <div class="field">
           <label for="loginUser">Usuário</label>
-          <input id="loginUser" type="text" autocomplete="username" placeholder="residencial" required>
+          <input id="loginUser" type="text" autocomplete="username" required>
         </div>
 
         <div class="field">
           <label for="loginPassword">Senha</label>
-          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Digite sua senha" required>
+          <input id="loginPassword" type="password" autocomplete="current-password" required>
         </div>
 
         <button class="btn btn-primary" type="submit" style="width:100%; margin-top:8px;">
@@ -950,7 +950,7 @@
 
             <div class="field">
               <label for="loginGithubRepo">Repositório</label>
-              <input id="loginGithubRepo" type="text" placeholder="Ex.: residencial-beatriz">
+              <input id="loginGithubRepo" type="text" value="residencialbia2">
             </div>
           </div>
 
@@ -983,10 +983,6 @@
           </div>
         </form>
       </div>
-
-      <p class="mini muted" style="margin-top:18px;">
-        Acesso restrito aos usuários autorizados.
-      </p>
     </article>
   </section>
 
@@ -1457,7 +1453,7 @@
 
               <div class="field">
                 <label for="githubRepo">Repositório</label>
-                <input id="githubRepo" type="text" placeholder="Ex.: residencial-beatriz">
+                <input id="githubRepo" type="text" value="residencialbia2">
               </div>
             </div>
 
@@ -1590,8 +1586,8 @@
     (() => {
       "use strict";
 
-      const CONFIG_KEY = "residencial_beatriz_github_config_v1";
-      const CACHE_KEY = "residencial_beatriz_cache_v1";
+      const CONFIG_KEY = "residencial_bia2_github_config_v2";
+      const CACHE_KEY = "residencial_bia2_cache_v2";
 
       const DEFAULT_STATE = {
         settings: {
@@ -1645,7 +1641,7 @@
           if (!raw) {
             return {
               owner: "",
-              repo: "",
+              repo: "residencialbia2",
               branch: "main",
               path: "dados/residencialbia2.json",
               token: ""
@@ -1654,18 +1650,18 @@
 
           return {
             owner: "",
-            repo: "",
+            repo: "residencialbia2",
             branch: "main",
-            path: "dados/residencialbia.json",
+            path: "dados/residencialbia2.json",
             token: "",
             ...JSON.parse(raw)
           };
         } catch {
           return {
             owner: "",
-            repo: "",
+            repo: "residencialbia2",
             branch: "main",
-            path: "dados/residencialbia.json",
+            path: "dados/residencialbia2.json",
             token: ""
           };
         }
@@ -1674,9 +1670,9 @@
       function saveGithubConfig(config) {
         githubConfig = {
           owner: String(config.owner || "").trim(),
-          repo: String(config.repo || "").trim(),
+          repo: String(config.repo || "residencialbia2").trim(),
           branch: String(config.branch || "main").trim(),
-          path: String(config.path || "dados/residencialbia.json").trim(),
+          path: String(config.path || "dados/residencialbia2.json").trim(),
           token: String(config.token || githubConfig.token || "").trim()
         };
 
@@ -1804,7 +1800,7 @@
           state = loadLocalCache();
           await seedDefaultUserIfNeeded(false);
           updateSyncStatus("error", "Erro ao carregar GitHub");
-          if (showMessage) toast("Erro ao carregar do GitHub. Usando cache local.");
+          if (showMessage) toast("Erro ao carregar do GitHub. Verifique o console/F12.");
           renderAll();
         }
       }
@@ -1870,7 +1866,7 @@
           console.error(error);
           saveLocalCache();
           updateSyncStatus("error", "Erro ao salvar");
-          toast("Erro ao salvar no GitHub. Verifique token, permissões e repositório.");
+          toast("Erro ao salvar no GitHub. Verifique token, permissão e caminho do JSON.");
         } finally {
           isSaving = false;
         }
@@ -1926,9 +1922,7 @@
           if (el) el.value = githubConfig[key] || "";
         });
 
-        const tokenFields = ["githubToken", "loginGithubToken"];
-
-        tokenFields.forEach(id => {
+        ["githubToken", "loginGithubToken"].forEach(id => {
           const el = document.getElementById(id);
           if (el) el.value = "";
         });
@@ -2672,58 +2666,7 @@
           `;
         }).join("");
 
-        const orphanEntries = state.entries
-          .filter(entry => !getApartment(entry.apartmentId))
-          .sort((a, b) => String(b.month).localeCompare(String(a.month)));
-
-        const orphanHtml = orphanEntries.length ? `
-          <article class="card" style="margin-bottom:18px;">
-            <h3 style="margin:0 0 12px;">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-              Lançamentos sem unidade vinculada
-            </h3>
-
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Mês/Ano</th>
-                    <th>Aluguel</th>
-                    <th>Valor kWh</th>
-                    <th>kWh Consumido</th>
-                    <th>Luz + COSIP</th>
-                    <th>Total</th>
-                    <th style="text-align:right;">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${orphanEntries.map(entry => `
-                    <tr>
-                      <td>${monthName(entry.month)}</td>
-                      <td>${money(entry.rent)}</td>
-                      <td>${money(entry.kwhValue)}</td>
-                      <td>${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh</td>
-                      <td>${money(energyTotal(entry))}</td>
-                      <td><strong>${money(entryTotal(entry))}</strong></td>
-                      <td>
-                        <div class="td-actions">
-                          <button class="btn btn-light btn-sm" data-action="editEntry" data-id="${entry.id}">
-                            <i class="fa-solid fa-pen"></i> Editar
-                          </button>
-                          <button class="btn btn-danger btn-sm" data-action="deleteEntry" data-id="${entry.id}">
-                            <i class="fa-solid fa-trash"></i> Remover
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  `).join("")}
-                </tbody>
-              </table>
-            </div>
-          </article>
-        ` : "";
-
-        el.innerHTML = groupedHtml + orphanHtml;
+        el.innerHTML = groupedHtml;
       }
 
       function renderSettings() {
@@ -3297,11 +3240,17 @@
       }
 
       function saveGithubForm(prefix = "") {
-        const owner = $(`#${prefix}GithubOwner`).value.trim();
-        const repo = $(`#${prefix}GithubRepo`).value.trim();
-        const branch = $(`#${prefix}GithubBranch`).value.trim() || "main";
-        const path = $(`#${prefix}GithubPath`).value.trim() || "dados/residencialbia2.json";
-        const token = $(`#${prefix}GithubToken`).value.trim();
+        const ownerId = prefix ? `${prefix}GithubOwner` : "githubOwner";
+        const repoId = prefix ? `${prefix}GithubRepo` : "githubRepo";
+        const branchId = prefix ? `${prefix}GithubBranch` : "githubBranch";
+        const pathId = prefix ? `${prefix}GithubPath` : "githubPath";
+        const tokenId = prefix ? `${prefix}GithubToken` : "githubToken";
+
+        const owner = document.getElementById(ownerId).value.trim();
+        const repo = document.getElementById(repoId).value.trim() || "residencialbia2";
+        const branch = document.getElementById(branchId).value.trim() || "main";
+        const path = document.getElementById(pathId).value.trim() || "dados/residencialbia2.json";
+        const token = document.getElementById(tokenId).value.trim();
 
         if (!owner || !repo || !branch || !path) {
           toast("Preencha usuário/organização, repositório, branch e caminho do arquivo.");
@@ -3315,6 +3264,8 @@
           path,
           token: token || githubConfig.token
         });
+
+        document.getElementById(tokenId).value = "";
 
         toast("Configuração GitHub salva neste navegador.");
         return true;
