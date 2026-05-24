@@ -14,7 +14,42 @@
       "createdAt": "2026-05-24T01:59:02.135Z"
     }
   ],
-  "apartments": [],
+  "apartments": [
+    {
+      "id": "apartment_apto01_jaron_2025_12_10",
+      "number": "Apto 01",
+      "description": "Apartamento importado do contrato de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
+      "photo": "",
+      "baseRent": 1300,
+      "contractStart": "2025-12-10",
+      "contractEnd": "2026-06-10",
+      "tenant": {
+        "name": "JARON GREGORI CAVALCANTE QUIRINO",
+        "cpf": "122.805.159-38",
+        "phone": "",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      }
+    },
+    {
+      "id": "apartment_apto02_leandro_2025_04_10",
+      "number": "Apto 02",
+      "description": "Apartamento importado do contrato de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado no Bairro Caminho Novo, Palhoça/SC.",
+      "photo": "",
+      "baseRent": 1300,
+      "contractStart": "2025-04-10",
+      "contractEnd": "2025-10-10",
+      "tenant": {
+        "name": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
+        "cpf": "804.173.530-49",
+        "phone": "",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      }
+    }
+  ],
   "expenses": [
     {
       "id": "expense_479f545b-4d20-4796-bff4-3605df647202",
