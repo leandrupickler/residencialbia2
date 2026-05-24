@@ -1065,6 +1065,37 @@
           </div>
         </div>
 
+        <div class="dashboard-filter">
+          <div class="field">
+            <label for="expensesYearFilter">Filtro por ano</label>
+            <select id="expensesYearFilter">
+              <option value="all">Todos os anos</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="expensesTypeFilter">Filtro por tipo</label>
+            <select id="expensesTypeFilter">
+              <option value="all">Todos os tipos</option>
+              <option value="Água">Água</option>
+              <option value="Internet">Internet</option>
+              <option value="IPTU">IPTU</option>
+              <option value="Manutenção Extra">Manutenção Extra</option>
+              <option value="Seguro do Imóvel">Seguro do Imóvel</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="expensesSearchFilter">Buscar</label>
+            <input id="expensesSearchFilter" type="search" placeholder="Buscar por descrição, unidade, tipo ou mês...">
+          </div>
+
+          <div class="filter-badge" id="expensesFilterBadge">
+            <i class="fa-solid fa-filter"></i>
+            Todos os anos
+          </div>
+        </div>
+
         <div id="expensesList"></div>
       </section>
 
@@ -2447,11 +2478,97 @@
         }).join("");
       }
 
+      function getExpenseYear(expense) {
+        return expense.month ? String(expense.month).slice(0, 4) : "Sem ano";
+      }
+
+      function getExpenseTypeClass(type) {
+        if (type === "Água") return "blue";
+        if (type === "Internet") return "green";
+        if (type === "IPTU") return "red";
+        if (type === "Seguro do Imóvel") return "blue";
+        return "yellow";
+      }
+
+      function renderExpenseFilterControls() {
+        const yearSelect = $("#expensesYearFilter");
+        const typeSelect = $("#expensesTypeFilter");
+        const searchInput = $("#expensesSearchFilter");
+        const badge = $("#expensesFilterBadge");
+
+        if (!yearSelect || !typeSelect || !searchInput || !badge) return;
+
+        const selectedYear = yearSelect.value || "all";
+        const selectedType = typeSelect.value || "all";
+
+        const years = Array.from(new Set(
+          state.expenses
+            .map(getExpenseYear)
+            .filter(Boolean)
+        )).sort((a, b) => {
+          if (a === "Sem ano") return 1;
+          if (b === "Sem ano") return -1;
+          return Number(b) - Number(a);
+        });
+
+        yearSelect.innerHTML = `<option value="all">Todos os anos</option>` +
+          years.map(year => `<option value="${escapeHtml(year)}">${escapeHtml(year)}</option>`).join("");
+
+        if (selectedYear !== "all" && years.includes(selectedYear)) {
+          yearSelect.value = selectedYear;
+        } else {
+          yearSelect.value = "all";
+        }
+
+        typeSelect.value = selectedType;
+        if (!typeSelect.value) typeSelect.value = "all";
+
+        const parts = [];
+        parts.push(yearSelect.value === "all" ? "Todos os anos" : `Ano ${yearSelect.value}`);
+        parts.push(typeSelect.value === "all" ? "Todos os tipos" : typeSelect.value);
+
+        if (searchInput.value.trim()) {
+          parts.push(`Busca: ${searchInput.value.trim()}`);
+        }
+
+        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${escapeHtml(parts.join(" • "))}`;
+      }
+
+      function getFilteredExpenses() {
+        const year = $("#expensesYearFilter")?.value || "all";
+        const type = $("#expensesTypeFilter")?.value || "all";
+        const search = ($("#expensesSearchFilter")?.value || "").trim().toLowerCase();
+
+        return state.expenses.filter(expense => {
+          const expenseYear = getExpenseYear(expense);
+          const unit = expense.apartmentId ? apartmentName(expense.apartmentId) : "Global";
+          const searchable = [
+            expense.month,
+            monthName(expense.month),
+            expense.type,
+            unit,
+            expense.description,
+            String(expense.amount || "")
+          ].join(" ").toLowerCase();
+
+          const yearMatches = year === "all" || expenseYear === year;
+          const typeMatches = type === "all" || expense.type === type;
+          const searchMatches = !search || searchable.includes(search);
+
+          return yearMatches && typeMatches && searchMatches;
+        });
+      }
+
       function renderExpenses() {
         const el = $("#expensesList");
         const total = state.expenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
 
-        $("#expensesSummary").textContent = `Total interno geral: ${money(total)}`;
+        renderExpenseFilterControls();
+
+        const filtered = getFilteredExpenses();
+        const filteredTotal = filtered.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+
+        $("#expensesSummary").textContent = `Total interno geral: ${money(total)} | Total filtrado: ${money(filteredTotal)}`;
 
         if (!state.expenses.length) {
           el.innerHTML = `
@@ -2464,45 +2581,84 @@
           return;
         }
 
-        const sorted = [...state.expenses].sort((a, b) => String(b.month).localeCompare(String(a.month)) || String(a.type).localeCompare(String(b.type), "pt-BR"));
+        if (!filtered.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <strong>Nenhuma despesa encontrada com o filtro atual.</strong>
+              <div class="mini">Altere o ano, o tipo ou o texto de busca para visualizar outros registros.</div>
+            </div>
+          `;
+          return;
+        }
 
-        el.innerHTML = `
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Mês/Ano</th>
-                  <th>Tipo</th>
-                  <th>Unidade</th>
-                  <th>Descrição</th>
-                  <th>Valor</th>
-                  <th style="text-align:right;">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${sorted.map(expense => `
-                  <tr>
-                    <td>${monthName(expense.month)}</td>
-                    <td><span class="pill ${expense.type === "Água" ? "blue" : expense.type === "Internet" ? "green" : expense.type === "IPTU" ? "red" : expense.type === "Seguro do Imóvel" ? "blue" : "yellow"}">${escapeHtml(expense.type)}</span></td>
-                    <td>${expense.apartmentId ? escapeHtml(apartmentName(expense.apartmentId)) : "Global"}</td>
-                    <td>${escapeHtml(expense.description || "-")}</td>
-                    <td><strong>${money(expense.amount)}</strong></td>
-                    <td>
-                      <div class="td-actions">
-                        <button class="btn btn-light btn-sm" data-action="editExpense" data-id="${expense.id}">
-                          <i class="fa-solid fa-pen"></i> Editar
-                        </button>
-                        <button class="btn btn-danger btn-sm" data-action="deleteExpense" data-id="${expense.id}">
-                          <i class="fa-solid fa-trash"></i> Remover
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
-          </div>
-        `;
+        const grouped = filtered.reduce((acc, expense) => {
+          const year = getExpenseYear(expense);
+          if (!acc[year]) acc[year] = [];
+          acc[year].push(expense);
+          return acc;
+        }, {});
+
+        const years = Object.keys(grouped).sort((a, b) => {
+          if (a === "Sem ano") return 1;
+          if (b === "Sem ano") return -1;
+          return Number(b) - Number(a);
+        });
+
+        el.innerHTML = years.map((year, index) => {
+          const expenses = grouped[year].sort((a, b) =>
+            String(b.month).localeCompare(String(a.month)) ||
+            String(a.type).localeCompare(String(b.type), "pt-BR")
+          );
+
+          const yearTotal = expenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+          const shouldOpen = ($("#expensesYearFilter")?.value || "all") !== "all" || index === 0;
+
+          return `
+            <details class="history-year" ${shouldOpen ? "open" : ""}>
+              <summary>
+                <span><i class="fa-solid fa-calendar-days"></i> Ano ${escapeHtml(year)}</span>
+                <span class="history-count">${expenses.length} despesa(s) • Total ${money(yearTotal)}</span>
+              </summary>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Mês/Ano</th>
+                      <th>Tipo</th>
+                      <th>Unidade</th>
+                      <th>Descrição</th>
+                      <th>Valor</th>
+                      <th style="text-align:right;">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${expenses.map(expense => `
+                      <tr>
+                        <td>${monthName(expense.month)}</td>
+                        <td><span class="pill ${getExpenseTypeClass(expense.type)}">${escapeHtml(expense.type)}</span></td>
+                        <td>${expense.apartmentId ? escapeHtml(apartmentName(expense.apartmentId)) : "Global"}</td>
+                        <td>${escapeHtml(expense.description || "-")}</td>
+                        <td><strong>${money(expense.amount)}</strong></td>
+                        <td>
+                          <div class="td-actions">
+                            <button class="btn btn-light btn-sm" data-action="editExpense" data-id="${expense.id}">
+                              <i class="fa-solid fa-pen"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-sm" data-action="deleteExpense" data-id="${expense.id}">
+                              <i class="fa-solid fa-trash"></i> Remover
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          `;
+        }).join("");
       }
 
       function getEntriesFilterMode() {
@@ -3960,6 +4116,15 @@
 
         $("#expenseForm").addEventListener("submit", saveExpenseForm);
         $("#clearExpenseBtn").addEventListener("click", clearExpenseForm);
+
+        ["#expensesYearFilter", "#expensesTypeFilter"].forEach(selector => {
+          const el = $(selector);
+          if (el) el.addEventListener("change", renderExpenses);
+        });
+
+        if ($("#expensesSearchFilter")) {
+          $("#expensesSearchFilter").addEventListener("input", renderExpenses);
+        }
 
         $("#entryForm").addEventListener("submit", saveEntryForm);
         $("#clearEntryBtn").addEventListener("click", clearEntryForm);
