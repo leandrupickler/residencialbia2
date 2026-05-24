@@ -4,7 +4,7 @@
     "logo": "",
     "dashboardPeriod": "all",
     "dashboardYear": 2026,
-    "entriesHistoryFilter": "current"
+    "entriesHistoryFilter": "all"
   },
   "users": [
     {
@@ -2399,7 +2399,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-24T19:08:09.353Z",
+    "updatedAt": "2026-05-24T19:09:06.104Z",
     "updatedBy": "residencial"
   }
 }
