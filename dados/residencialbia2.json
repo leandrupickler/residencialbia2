@@ -1043,21 +1043,6 @@
       "cosip": 24.37
     },
     {
-      "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2026_05",
-      "apartmentId": "apartment_apto02",
-      "apartmentNumber": "Apto 02",
-      "tenantName": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
-      "tenantCpf": "804.173.530-49",
-      "month": "2026-05",
-      "rent": 1300,
-      "energyMode": "withKwh",
-      "kwhValue": 0.84,
-      "kwhPrevious": 1431.3,
-      "kwhCurrent": 1550,
-      "kwhConsumed": 118.70000000000005,
-      "cosip": 19.55125
-    },
-    {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_04",
       "apartmentId": "apartment_apto03",
       "apartmentNumber": "Apto 03",
@@ -2649,7 +2634,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T12:55:47.632Z",
+    "updatedAt": "2026-05-26T12:57:01.557Z",
     "updatedBy": "residencial"
   }
 }
