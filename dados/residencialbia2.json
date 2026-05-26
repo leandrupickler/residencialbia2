@@ -2,7 +2,7 @@
   "settings": {
     "appName": "Residencial Beatriz",
     "logo": "",
-    "dashboardPeriod": "last2",
+    "dashboardPeriod": "last6",
     "dashboardYear": 2026,
     "entriesHistoryFilter": "current"
   },
@@ -2574,7 +2574,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T03:03:10.495Z",
+    "updatedAt": "2026-05-26T12:25:46.585Z",
     "updatedBy": "residencial"
   }
 }
