@@ -938,21 +938,6 @@
       "cosip": 24.37
     },
     {
-      "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_05",
-      "apartmentId": "apartment_apto01",
-      "apartmentNumber": "Apto 01",
-      "tenantName": "JARON GREGORI CAVALCANTE QUIRINO",
-      "tenantCpf": "122.805.159-38",
-      "month": "2026-05",
-      "rent": 1300,
-      "energyMode": "withKwh",
-      "kwhValue": 0.84,
-      "kwhPrevious": 905.3,
-      "kwhCurrent": 986.3,
-      "kwhConsumed": 81,
-      "cosip": 19.55125
-    },
-    {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_04",
       "apartmentId": "apartment_apto02",
       "apartmentNumber": "Apto 02",
@@ -2664,7 +2649,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T12:54:38.602Z",
+    "updatedAt": "2026-05-26T12:55:47.632Z",
     "updatedBy": "residencial"
   }
 }
