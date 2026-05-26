@@ -195,7 +195,7 @@
       "contractStart": "2026-03-10",
       "contractEnd": "2026-09-10",
       "tenant": {
-        "name": "Arthur Silva Cavalcante",
+        "name": "ARTHUR SILVA CAVALCANTE",
         "cpf": "06690198286",
         "phone": "48988614064",
         "birth": "",
@@ -2487,7 +2487,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T02:29:20.555Z",
+    "updatedAt": "2026-05-26T02:30:25.305Z",
     "updatedBy": "residencial"
   }
 }
