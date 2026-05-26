@@ -307,8 +307,8 @@
       "contractStart": "2026-04-16",
       "contractEnd": "2026-10-16",
       "tenant": {
-        "name": "Ricardo Iachitzki Junior",
-        "cpf": "82294178904",
+        "name": "RICARDO IACHITZKI JUNIOR",
+        "cpf": "822.9417.89-04",
         "phone": "48988307838",
         "birth": "",
         "emergencyName": "",
@@ -351,6 +351,24 @@
           "baseRent": 1300,
           "endedAt": "2026-02-16T12:00:00.000Z",
           "reason": "Contrato anterior importado."
+        },
+        {
+          "id": "history_bd2d47a5-f133-4740-874a-4cb146891a4f",
+          "apartmentId": "apartment_apto07",
+          "apartmentNumber": "Apto 07",
+          "tenant": {
+            "name": "Ricardo Iachitzki Junior",
+            "cpf": "82294178904",
+            "phone": "48988307838",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2026-04-16",
+          "contractEnd": "2026-10-16",
+          "baseRent": 1300,
+          "endedAt": "2026-05-26T02:29:09.319Z",
+          "reason": "Substituição manual do morador"
         }
       ]
     },
@@ -2469,7 +2487,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T02:28:12.307Z",
+    "updatedAt": "2026-05-26T02:29:20.555Z",
     "updatedBy": "residencial"
   }
 }
