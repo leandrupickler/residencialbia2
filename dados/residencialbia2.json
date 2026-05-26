@@ -2616,10 +2616,25 @@
       "kwhCurrent": 1694.7,
       "kwhConsumed": 144.70000000000005,
       "cosip": 28
+    },
+    {
+      "id": "entry_061c7301-0941-4677-8061-600ec5751c4f",
+      "apartmentId": "apartment_apto04",
+      "apartmentNumber": "Apto 04",
+      "tenantName": "ISMAEL ROSENDO DA SILVA",
+      "tenantCpf": "949.247.832-34",
+      "month": "2026-05",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.89,
+      "kwhPrevious": 963.69,
+      "kwhCurrent": 1055.08,
+      "kwhConsumed": 91.38999999999987,
+      "cosip": 28
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T12:43:18.430Z",
+    "updatedAt": "2026-05-26T12:46:14.099Z",
     "updatedBy": "residencial"
   }
 }
