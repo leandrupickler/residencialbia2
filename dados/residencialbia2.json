@@ -1853,21 +1853,6 @@
       "cosip": 24.37
     },
     {
-      "id": "entry_apto_06_alida_thasy_nascimento_costa___ketlen_cristina_barbosa_oliveira_2026_05",
-      "apartmentId": "apartment_apto06",
-      "apartmentNumber": "Apto 06",
-      "tenantName": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
-      "tenantCpf": "032.356.472-01 / 055.898.932-24",
-      "month": "2026-05",
-      "rent": 1300,
-      "energyMode": "withKwh",
-      "kwhValue": 0.84,
-      "kwhPrevious": 784.6,
-      "kwhCurrent": 897,
-      "kwhConsumed": 112.39999999999998,
-      "cosip": 19.55125
-    },
-    {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_05",
       "apartmentId": "apartment_apto07",
       "apartmentNumber": "Apto 07",
@@ -2661,10 +2646,25 @@
       "kwhCurrent": 1009.1,
       "kwhConsumed": 112.10000000000002,
       "cosip": 28
+    },
+    {
+      "id": "entry_12d35b30-2cb4-4fe5-95d3-764a4f6972cf",
+      "apartmentId": "apartment_apto07",
+      "apartmentNumber": "Apto 07",
+      "tenantName": "RICARDO IACHITZKI JUNIOR",
+      "tenantCpf": "822.941.789-04",
+      "month": "2026-05",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.89,
+      "kwhPrevious": 1006.3,
+      "kwhCurrent": 1082.3,
+      "kwhConsumed": 76,
+      "cosip": 28
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T12:52:49.131Z",
+    "updatedAt": "2026-05-26T12:54:38.602Z",
     "updatedBy": "residencial"
   }
 }
