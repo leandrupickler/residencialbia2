@@ -2,7 +2,7 @@
   "settings": {
     "appName": "Residencial Beatriz",
     "logo": "",
-    "dashboardPeriod": "last6",
+    "dashboardPeriod": "all",
     "dashboardYear": 2026,
     "entriesHistoryFilter": "current"
   },
@@ -797,7 +797,7 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.79741,
-      "kwhPrevious": 0.0,
+      "kwhPrevious": 0,
       "kwhCurrent": 51.3,
       "kwhConsumed": 51.3,
       "cosip": 7.582222
@@ -812,9 +812,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 103.0,
-      "kwhConsumed": 103.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 103,
+      "kwhConsumed": 103,
       "cosip": 19.222222
     },
     {
@@ -827,9 +827,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 86.0,
-      "kwhConsumed": 86.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 86,
+      "kwhConsumed": 86,
       "cosip": 16.888889
     },
     {
@@ -843,8 +843,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.82,
       "kwhPrevious": 240.3,
-      "kwhCurrent": 301.0,
-      "kwhConsumed": 60.7,
+      "kwhCurrent": 301,
+      "kwhConsumed": 60.69999999999999,
       "cosip": 14.714444
     },
     {
@@ -857,9 +857,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.77,
-      "kwhPrevious": 301.0,
-      "kwhCurrent": 352.0,
-      "kwhConsumed": 51.0,
+      "kwhPrevious": 301,
+      "kwhCurrent": 352,
+      "kwhConsumed": 51,
       "cosip": 16.566667
     },
     {
@@ -874,7 +874,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 526.2,
       "kwhCurrent": 698.9,
-      "kwhConsumed": 172.7,
+      "kwhConsumed": 172.69999999999993,
       "cosip": 21.668889
     },
     {
@@ -889,7 +889,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 698.9,
       "kwhCurrent": 708.7,
-      "kwhConsumed": 9.8,
+      "kwhConsumed": 9.800000000000068,
       "cosip": 19.111111
     },
     {
@@ -904,7 +904,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 708.7,
       "kwhCurrent": 772.3,
-      "kwhConsumed": 63.6,
+      "kwhConsumed": 63.59999999999991,
       "cosip": 21.666667
     },
     {
@@ -919,7 +919,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 772.3,
       "kwhCurrent": 831.2,
-      "kwhConsumed": 58.9,
+      "kwhConsumed": 58.90000000000009,
       "cosip": 27.2325
     },
     {
@@ -934,7 +934,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 831.2,
       "kwhCurrent": 905.3,
-      "kwhConsumed": 74.1,
+      "kwhConsumed": 74.09999999999991,
       "cosip": 24.37
     },
     {
@@ -949,7 +949,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 905.3,
       "kwhCurrent": 986.3,
-      "kwhConsumed": 81.0,
+      "kwhConsumed": 81,
       "cosip": 19.55125
     },
     {
@@ -977,9 +977,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.79741,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 15.0,
-      "kwhConsumed": 15.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 15,
+      "kwhConsumed": 15,
       "cosip": 7.582222
     },
     {
@@ -992,9 +992,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 143.0,
-      "kwhConsumed": 143.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 143,
+      "kwhConsumed": 143,
       "cosip": 19.222222
     },
     {
@@ -1007,9 +1007,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 108.0,
-      "kwhConsumed": 108.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 108,
+      "kwhConsumed": 108,
       "cosip": 16.888889
     },
     {
@@ -1022,9 +1022,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.82,
-      "kwhPrevious": 266.0,
-      "kwhCurrent": 394.0,
-      "kwhConsumed": 128.0,
+      "kwhPrevious": 266,
+      "kwhCurrent": 394,
+      "kwhConsumed": 128,
       "cosip": 14.714444
     },
     {
@@ -1037,9 +1037,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.77,
-      "kwhPrevious": 394.0,
-      "kwhCurrent": 504.0,
-      "kwhConsumed": 110.0,
+      "kwhPrevious": 394,
+      "kwhCurrent": 504,
+      "kwhConsumed": 110,
       "cosip": 16.566667
     },
     {
@@ -1068,8 +1068,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.84,
       "kwhPrevious": 1431.3,
-      "kwhCurrent": 1550.0,
-      "kwhConsumed": 118.7,
+      "kwhCurrent": 1550,
+      "kwhConsumed": 118.70000000000005,
       "cosip": 19.55125
     },
     {
@@ -1097,7 +1097,7 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.79741,
-      "kwhPrevious": 0.0,
+      "kwhPrevious": 0,
       "kwhCurrent": 32.8,
       "kwhConsumed": 32.8,
       "cosip": 7.582222
@@ -1112,9 +1112,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 228.0,
-      "kwhConsumed": 228.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 228,
+      "kwhConsumed": 228,
       "cosip": 19.222222
     },
     {
@@ -1127,9 +1127,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 68.0,
-      "kwhConsumed": 68.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 68,
+      "kwhConsumed": 68,
       "cosip": 16.888889
     },
     {
@@ -1144,7 +1144,7 @@
       "kwhValue": 0.82,
       "kwhPrevious": 328.8,
       "kwhCurrent": 460.4,
-      "kwhConsumed": 131.6,
+      "kwhConsumed": 131.59999999999997,
       "cosip": 14.714444
     },
     {
@@ -1158,8 +1158,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.77,
       "kwhPrevious": 460.4,
-      "kwhCurrent": 530.0,
-      "kwhConsumed": 69.6,
+      "kwhCurrent": 530,
+      "kwhConsumed": 69.60000000000002,
       "cosip": 16.566667
     },
     {
@@ -1174,7 +1174,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 752.5,
       "kwhCurrent": 762.3,
-      "kwhConsumed": 9.8,
+      "kwhConsumed": 9.799999999999955,
       "cosip": 21.668889
     },
     {
@@ -1189,7 +1189,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 762.3,
       "kwhCurrent": 820.6,
-      "kwhConsumed": 58.3,
+      "kwhConsumed": 58.30000000000007,
       "cosip": 19.111111
     },
     {
@@ -1204,7 +1204,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 820.6,
       "kwhCurrent": 967.9,
-      "kwhConsumed": 147.3,
+      "kwhConsumed": 147.29999999999995,
       "cosip": 21.666667
     },
     {
@@ -1218,8 +1218,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.89,
       "kwhPrevious": 967.9,
-      "kwhCurrent": 1148.0,
-      "kwhConsumed": 180.1,
+      "kwhCurrent": 1148,
+      "kwhConsumed": 180.10000000000002,
       "cosip": 27.2325
     },
     {
@@ -1232,9 +1232,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.85,
-      "kwhPrevious": 1148.0,
+      "kwhPrevious": 1148,
       "kwhCurrent": 1296.3,
-      "kwhConsumed": 148.3,
+      "kwhConsumed": 148.29999999999995,
       "cosip": 24.37
     },
     {
@@ -1249,7 +1249,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 1296.3,
       "kwhCurrent": 1419.5,
-      "kwhConsumed": 123.2,
+      "kwhConsumed": 123.20000000000005,
       "cosip": 19.55125
     },
     {
@@ -1277,7 +1277,7 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.79741,
-      "kwhPrevious": 0.0,
+      "kwhPrevious": 0,
       "kwhCurrent": 45.07,
       "kwhConsumed": 45.07,
       "cosip": 7.582222
@@ -1292,9 +1292,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 101.0,
-      "kwhConsumed": 101.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 101,
+      "kwhConsumed": 101,
       "cosip": 19.222222
     },
     {
@@ -1322,7 +1322,7 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
+      "kwhPrevious": 0,
       "kwhCurrent": 61.3,
       "kwhConsumed": 61.3,
       "cosip": 16.888889
@@ -1383,8 +1383,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.77,
       "kwhPrevious": 245.21,
-      "kwhCurrent": 330.0,
-      "kwhConsumed": 84.79,
+      "kwhCurrent": 330,
+      "kwhConsumed": 84.78999999999999,
       "cosip": 16.566667
     },
     {
@@ -1397,7 +1397,7 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.78,
-      "kwhPrevious": 330.0,
+      "kwhPrevious": 330,
       "kwhCurrent": 405.75,
       "kwhConsumed": 75.75,
       "cosip": 16.566667
@@ -1429,7 +1429,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 475.32,
       "kwhCurrent": 509.32,
-      "kwhConsumed": 34.0,
+      "kwhConsumed": 34,
       "cosip": 21.668889
     },
     {
@@ -1444,7 +1444,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 509.32,
       "kwhCurrent": 698.53,
-      "kwhConsumed": 189.21,
+      "kwhConsumed": 189.20999999999998,
       "cosip": 19.111111
     },
     {
@@ -1459,7 +1459,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 698.53,
       "kwhCurrent": 707.3,
-      "kwhConsumed": 8.77,
+      "kwhConsumed": 8.769999999999982,
       "cosip": 21.666667
     },
     {
@@ -1489,7 +1489,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 780.43,
       "kwhCurrent": 876.21,
-      "kwhConsumed": 95.78,
+      "kwhConsumed": 95.78000000000009,
       "cosip": 24.37
     },
     {
@@ -1504,7 +1504,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 876.21,
       "kwhCurrent": 963.69,
-      "kwhConsumed": 87.48,
+      "kwhConsumed": 87.48000000000002,
       "cosip": 19.55125
     },
     {
@@ -1532,7 +1532,7 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.79741,
-      "kwhPrevious": 0.0,
+      "kwhPrevious": 0,
       "kwhCurrent": 51.23,
       "kwhConsumed": 51.23,
       "cosip": 7.582222
@@ -1547,9 +1547,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 72.0,
-      "kwhConsumed": 72.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 72,
+      "kwhConsumed": 72,
       "cosip": 19.222222
     },
     {
@@ -1562,9 +1562,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 65.0,
-      "kwhConsumed": 65.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 65,
+      "kwhConsumed": 65,
       "cosip": 16.888889
     },
     {
@@ -1578,8 +1578,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.82,
       "kwhPrevious": 188.23,
-      "kwhCurrent": 270.0,
-      "kwhConsumed": 81.77,
+      "kwhCurrent": 270,
+      "kwhConsumed": 81.77000000000001,
       "cosip": 14.714444
     },
     {
@@ -1592,9 +1592,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.77,
-      "kwhPrevious": 270.0,
-      "kwhCurrent": 319.0,
-      "kwhConsumed": 49.0,
+      "kwhPrevious": 270,
+      "kwhCurrent": 319,
+      "kwhConsumed": 49,
       "cosip": 16.566667
     },
     {
@@ -1622,9 +1622,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.78,
-      "kwhPrevious": 319.0,
+      "kwhPrevious": 319,
       "kwhCurrent": 373.26,
-      "kwhConsumed": 54.26,
+      "kwhConsumed": 54.25999999999999,
       "cosip": 16.566667
     },
     {
@@ -1654,7 +1654,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 507.64,
       "kwhCurrent": 612.06,
-      "kwhConsumed": 104.42,
+      "kwhConsumed": 104.41999999999996,
       "cosip": 21.668889
     },
     {
@@ -1669,7 +1669,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 612.06,
       "kwhCurrent": 746.64,
-      "kwhConsumed": 134.58,
+      "kwhConsumed": 134.58000000000004,
       "cosip": 19.111111
     },
     {
@@ -1684,7 +1684,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 746.64,
       "kwhCurrent": 898.98,
-      "kwhConsumed": 152.34,
+      "kwhConsumed": 152.34000000000003,
       "cosip": 21.666667
     },
     {
@@ -1699,7 +1699,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 898.98,
       "kwhCurrent": 1057.66,
-      "kwhConsumed": 158.68,
+      "kwhConsumed": 158.68000000000006,
       "cosip": 27.2325
     },
     {
@@ -1714,7 +1714,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 1057.66,
       "kwhCurrent": 1229.49,
-      "kwhConsumed": 171.83,
+      "kwhConsumed": 171.82999999999993,
       "cosip": 24.37
     },
     {
@@ -1729,7 +1729,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 1229.49,
       "kwhCurrent": 1435.34,
-      "kwhConsumed": 205.85,
+      "kwhConsumed": 205.8499999999999,
       "cosip": 19.55125
     },
     {
@@ -1742,9 +1742,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.78,
-      "kwhPrevious": 399.0,
+      "kwhPrevious": 399,
       "kwhCurrent": 445.7,
-      "kwhConsumed": 46.7,
+      "kwhConsumed": 46.69999999999999,
       "cosip": 16.566667
     },
     {
@@ -1759,7 +1759,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 445.7,
       "kwhCurrent": 488.6,
-      "kwhConsumed": 42.9,
+      "kwhConsumed": 42.900000000000034,
       "cosip": 16.566667
     },
     {
@@ -1774,7 +1774,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 488.6,
       "kwhCurrent": 555.8,
-      "kwhConsumed": 67.2,
+      "kwhConsumed": 67.19999999999993,
       "cosip": 21.668889
     },
     {
@@ -1789,7 +1789,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 555.8,
       "kwhCurrent": 631.2,
-      "kwhConsumed": 75.4,
+      "kwhConsumed": 75.40000000000009,
       "cosip": 19.111111
     },
     {
@@ -1804,7 +1804,7 @@
       "kwhValue": 0.79,
       "kwhPrevious": 631.2,
       "kwhCurrent": 696.9,
-      "kwhConsumed": 65.7,
+      "kwhConsumed": 65.69999999999993,
       "cosip": 21.666667
     },
     {
@@ -1849,7 +1849,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 778.4,
       "kwhCurrent": 784.6,
-      "kwhConsumed": 6.2,
+      "kwhConsumed": 6.2000000000000455,
       "cosip": 24.37
     },
     {
@@ -1863,8 +1863,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.84,
       "kwhPrevious": 784.6,
-      "kwhCurrent": 897.0,
-      "kwhConsumed": 112.4,
+      "kwhCurrent": 897,
+      "kwhConsumed": 112.39999999999998,
       "cosip": 19.55125
     },
     {
@@ -1877,7 +1877,7 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.79741,
-      "kwhPrevious": 0.0,
+      "kwhPrevious": 0,
       "kwhCurrent": 1.1,
       "kwhConsumed": 1.1,
       "cosip": 7.582222
@@ -1892,9 +1892,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 43.0,
-      "kwhConsumed": 43.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 43,
+      "kwhConsumed": 43,
       "cosip": 19.222222
     },
     {
@@ -1907,9 +1907,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 120.0,
-      "kwhConsumed": 120.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 120,
+      "kwhConsumed": 120,
       "cosip": 16.888889
     },
     {
@@ -1968,7 +1968,7 @@
       "energyMode": "withKwh",
       "kwhValue": 0.77,
       "kwhPrevious": 323.5,
-      "kwhCurrent": 363.0,
+      "kwhCurrent": 363,
       "kwhConsumed": 39.5,
       "cosip": 16.566667
     },
@@ -1997,9 +1997,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.78,
-      "kwhPrevious": 363.0,
+      "kwhPrevious": 363,
       "kwhCurrent": 447.6,
-      "kwhConsumed": 84.6,
+      "kwhConsumed": 84.60000000000002,
       "cosip": 16.566667
     },
     {
@@ -2014,7 +2014,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 447.6,
       "kwhCurrent": 506.9,
-      "kwhConsumed": 59.3,
+      "kwhConsumed": 59.299999999999955,
       "cosip": 16.566667
     },
     {
@@ -2028,8 +2028,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.78,
       "kwhPrevious": 506.9,
-      "kwhCurrent": 579.0,
-      "kwhConsumed": 72.1,
+      "kwhCurrent": 579,
+      "kwhConsumed": 72.10000000000002,
       "cosip": 21.668889
     },
     {
@@ -2042,9 +2042,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.78,
-      "kwhPrevious": 579.0,
+      "kwhPrevious": 579,
       "kwhCurrent": 658.1,
-      "kwhConsumed": 79.1,
+      "kwhConsumed": 79.10000000000002,
       "cosip": 19.111111
     },
     {
@@ -2074,7 +2074,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 828.4,
       "kwhCurrent": 923.6,
-      "kwhConsumed": 95.2,
+      "kwhConsumed": 95.20000000000005,
       "cosip": 24.37
     },
     {
@@ -2089,7 +2089,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 923.6,
       "kwhCurrent": 1006.3,
-      "kwhConsumed": 82.7,
+      "kwhConsumed": 82.69999999999993,
       "cosip": 19.55125
     },
     {
@@ -2117,7 +2117,7 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.79741,
-      "kwhPrevious": 0.0,
+      "kwhPrevious": 0,
       "kwhCurrent": 24.6,
       "kwhConsumed": 24.6,
       "cosip": 7.582222
@@ -2132,9 +2132,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 80.0,
-      "kwhConsumed": 80.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 80,
+      "kwhConsumed": 80,
       "cosip": 19.222222
     },
     {
@@ -2147,9 +2147,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.81,
-      "kwhPrevious": 0.0,
-      "kwhCurrent": 68.0,
-      "kwhConsumed": 68.0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 68,
+      "kwhConsumed": 68,
       "cosip": 16.888889
     },
     {
@@ -2164,7 +2164,7 @@
       "kwhValue": 0.82,
       "kwhPrevious": 172.6,
       "kwhCurrent": 272.6,
-      "kwhConsumed": 100.0,
+      "kwhConsumed": 100.00000000000003,
       "cosip": 14.714444
     },
     {
@@ -2194,7 +2194,7 @@
       "kwhValue": 0.77,
       "kwhPrevious": 272.6,
       "kwhCurrent": 297.9,
-      "kwhConsumed": 25.3,
+      "kwhConsumed": 25.299999999999955,
       "cosip": 16.566667
     },
     {
@@ -2224,7 +2224,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 297.9,
       "kwhCurrent": 395.3,
-      "kwhConsumed": 97.4,
+      "kwhConsumed": 97.40000000000003,
       "cosip": 16.566667
     },
     {
@@ -2254,7 +2254,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 510.8,
       "kwhCurrent": 590.2,
-      "kwhConsumed": 79.4,
+      "kwhConsumed": 79.40000000000003,
       "cosip": 21.668889
     },
     {
@@ -2269,7 +2269,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 590.2,
       "kwhCurrent": 685.9,
-      "kwhConsumed": 95.7,
+      "kwhConsumed": 95.69999999999993,
       "cosip": 19.111111
     },
     {
@@ -2283,8 +2283,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.89,
       "kwhPrevious": 685.9,
-      "kwhCurrent": 777.0,
-      "kwhConsumed": 91.1,
+      "kwhCurrent": 777,
+      "kwhConsumed": 91.10000000000002,
       "cosip": 21.666667
     },
     {
@@ -2297,9 +2297,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.89,
-      "kwhPrevious": 777.0,
+      "kwhPrevious": 777,
       "kwhCurrent": 869.6,
-      "kwhConsumed": 92.6,
+      "kwhConsumed": 92.60000000000002,
       "cosip": 27.2325
     },
     {
@@ -2314,7 +2314,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 869.6,
       "kwhCurrent": 981.9,
-      "kwhConsumed": 112.3,
+      "kwhConsumed": 112.29999999999995,
       "cosip": 24.37
     },
     {
@@ -2329,7 +2329,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 981.9,
       "kwhCurrent": 1073.9,
-      "kwhConsumed": 92.0,
+      "kwhConsumed": 92.00000000000011,
       "cosip": 19.55125
     },
     {
@@ -2574,7 +2574,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T13:30:00.000Z",
+    "updatedAt": "2026-05-26T13:33:28.609Z",
     "updatedBy": "residencial"
   }
 }
