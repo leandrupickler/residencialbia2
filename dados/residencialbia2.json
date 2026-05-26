@@ -381,7 +381,7 @@
       "contractStart": "2025-08-14",
       "contractEnd": "2026-08-14",
       "tenant": {
-        "name": "Luiz Pereira de Sousa",
+        "name": "LUIZ PEREIRA DE SOUSA",
         "cpf": "77241012149",
         "phone": "48984619223",
         "birth": "",
@@ -2487,7 +2487,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T02:30:25.305Z",
+    "updatedAt": "2026-05-26T02:31:52.778Z",
     "updatedBy": "residencial"
   }
 }
