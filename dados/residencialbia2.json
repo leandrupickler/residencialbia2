@@ -2396,10 +2396,25 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0
+    },
+    {
+      "id": "entry_a317e6ae-e4a5-4f14-948f-a0af467a4941",
+      "apartmentId": "apartment_apto02",
+      "apartmentNumber": "Apto 02",
+      "tenantName": "Leandro Luis de Araujo Oliveira",
+      "tenantCpf": "804173530",
+      "month": "2026-05",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.78,
+      "kwhPrevious": 902,
+      "kwhCurrent": 1056,
+      "kwhConsumed": 154,
+      "cosip": 21.67
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-25T15:47:29.729Z",
+    "updatedAt": "2026-05-26T01:59:11.989Z",
     "updatedBy": "residencial"
   }
 }
