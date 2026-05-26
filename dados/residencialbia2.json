@@ -1760,21 +1760,6 @@
       "cosip": 24.37
     },
     {
-      "id": "entry_apto_06_alida_thasy_nascimento_costa___ketlen_cristina_barbosa_oliveira_2026_05",
-      "apartmentId": "apartment_apto06",
-      "apartmentNumber": "Apto 06",
-      "tenantName": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
-      "tenantCpf": "032.356.472-01 / 055.898.932-24",
-      "month": "2026-05",
-      "rent": 1300,
-      "energyMode": "noKwh",
-      "kwhValue": 0,
-      "kwhPrevious": 0,
-      "kwhCurrent": 0,
-      "kwhConsumed": 0,
-      "cosip": 0
-    },
-    {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_05",
       "apartmentId": "apartment_apto07",
       "apartmentNumber": "Apto 07",
@@ -2451,7 +2436,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T02:25:50.676Z",
+    "updatedAt": "2026-05-26T02:26:53.521Z",
     "updatedBy": "residencial"
   }
 }
