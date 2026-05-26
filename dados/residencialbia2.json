@@ -23,7 +23,7 @@
       "photo": "",
       "baseRent": 1300,
       "contractStart": "2025-12-10",
-      "contractEnd": "2026-06-10",
+      "contractEnd": "2026-12-10",
       "tenant": {
         "name": "JARON GREGORI CAVALCANTE QUIRINO",
         "cpf": "122.805.159-38",
@@ -2574,7 +2574,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T02:52:05.416Z",
+    "updatedAt": "2026-05-26T02:53:52.834Z",
     "updatedBy": "residencial"
   }
 }
