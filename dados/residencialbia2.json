@@ -2646,10 +2646,25 @@
       "kwhCurrent": 1632.68,
       "kwhConsumed": 197.34000000000015,
       "cosip": 28
+    },
+    {
+      "id": "entry_720e13ad-9375-492a-95c4-331bae8f5217",
+      "apartmentId": "apartment_apto06",
+      "apartmentNumber": "Apto 06",
+      "tenantName": "KETLEN CRISTINA BARBOSA OLIVEIRA",
+      "tenantCpf": "055.898.932-24",
+      "month": "2026-05",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.89,
+      "kwhPrevious": 897,
+      "kwhCurrent": 1009.1,
+      "kwhConsumed": 112.10000000000002,
+      "cosip": 28
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T12:48:19.996Z",
+    "updatedAt": "2026-05-26T12:52:49.131Z",
     "updatedBy": "residencial"
   }
 }
