@@ -2528,21 +2528,6 @@
       "cosip": 0
     },
     {
-      "id": "entry_94d4f6a5-0cd8-4b25-ad6c-fd06f2de121a",
-      "apartmentId": "apartment_apto03",
-      "apartmentNumber": "Apto 03",
-      "tenantName": "KARINE KAUSS RODRIGUES",
-      "tenantCpf": "018.491.050-14",
-      "month": "2026-06",
-      "rent": 0,
-      "energyMode": "withKwh",
-      "kwhValue": 0.89,
-      "kwhPrevious": 1419.5,
-      "kwhCurrent": 1553.1,
-      "kwhConsumed": 133.5999999999999,
-      "cosip": 28
-    },
-    {
       "id": "entry_904bb555-b726-4c17-824c-04e9416e9600",
       "apartmentId": "apartment_apto01",
       "apartmentNumber": "Apto 01",
@@ -2634,7 +2619,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T12:57:01.557Z",
+    "updatedAt": "2026-05-26T12:58:23.945Z",
     "updatedBy": "residencial"
   }
 }
