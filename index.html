@@ -1,0 +1,4315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Residencial Beatriz</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --blue: #4285F4;
+      --red: #EA4335;
+      --yellow: #FBBC05;
+      --green: #34A853;
+      --bg: #f6f8fc;
+      --card: #ffffff;
+      --text: #202124;
+      --muted: #5f6368;
+      --border: #e8eaed;
+      --shadow: 0 8px 28px rgba(60, 64, 67, 0.12), 0 1px 4px rgba(60, 64, 67, 0.10);
+      --shadow-soft: 0 4px 18px rgba(60, 64, 67, 0.10);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(66, 133, 244, 0.14), transparent 34%),
+        radial-gradient(circle at top right, rgba(52, 168, 83, 0.12), transparent 32%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Poppins", "Roboto", Arial, sans-serif;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { border: none; cursor: pointer; }
+    .hidden { display: none !important; }
+
+    .login-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: min(700px, 100%);
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 30px;
+      backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before, .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--blue), var(--red), var(--yellow), var(--green));
+    }
+
+    .login-logo {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 18px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      box-shadow: 0 14px 28px rgba(66, 133, 244, 0.25);
+      overflow: hidden;
+    }
+
+    .login-logo img, .brand-logo img, .preview-box img, .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .login-card h1 { margin: 0; text-align: center; font-size: 1.7rem; }
+    .login-card > p { text-align: center; color: var(--muted); margin: 8px 0 22px; }
+
+    .container {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+
+    .brand-logo {
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      overflow: hidden;
+      color: #fff;
+      font-weight: 800;
+      font-size: 22px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      box-shadow: 0 12px 24px rgba(66, 133, 244, 0.26);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.2vw, 1.9rem);
+      line-height: 1.05;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand p { margin: 5px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+    .tabs { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+
+    .tab-btn, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      transition: 0.18s ease;
+      text-decoration: none;
+    }
+
+    .tab-btn:hover, .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-soft); }
+
+    .tab-btn.active {
+      color: #fff;
+      background: var(--blue);
+      border-color: var(--blue);
+      box-shadow: 0 8px 18px rgba(66, 133, 244, 0.28);
+    }
+
+    .btn-primary { color: #fff; background: var(--blue); border-color: var(--blue); }
+    .btn-success { color: #fff; background: var(--green); border-color: var(--green); }
+    .btn-danger { color: #fff; background: var(--red); border-color: var(--red); }
+    .btn-warning { color: #2b2100; background: var(--yellow); border-color: var(--yellow); }
+    .btn-light { color: var(--muted); background: #f8fafd; }
+    .btn-sm { min-height: 34px; padding: 8px 12px; font-size: 0.84rem; }
+
+    main { margin-top: 22px; }
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.18s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 14px;
+      margin: 24px 0 14px;
+    }
+
+    .section-title h2 { margin: 0; font-size: 1.28rem; }
+    .section-title p { margin: 5px 0 0; color: var(--muted); }
+
+    .grid { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(232, 234, 237, 0.9);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-filter, .github-panel {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .github-panel { display: block; margin-top: 18px; background: #f8fafd; }
+    .dashboard-filter .field { min-width: 240px; }
+
+    .filter-badge, .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(66, 133, 244, 0.10);
+      color: var(--blue);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .sync-badge.ok { background: rgba(52, 168, 83, 0.12); color: var(--green); }
+    .sync-badge.warn { background: rgba(251, 188, 5, 0.18); color: #8a6500; }
+    .sync-badge.error { background: rgba(234, 67, 53, 0.12); color: var(--red); }
+
+    .stat-card { min-height: 128px; display: flex; flex-direction: column; justify-content: space-between; }
+    .stat-head { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(66, 133, 244, 0.12);
+      color: var(--blue);
+      flex: 0 0 auto;
+    }
+
+    .icon.red { background: rgba(234, 67, 53, 0.12); color: var(--red); }
+    .icon.yellow { background: rgba(251, 188, 5, 0.18); color: #8a6500; }
+    .icon.green { background: rgba(52, 168, 83, 0.12); color: var(--green); }
+
+    .stat-value {
+      margin-top: 16px;
+      font-size: clamp(1.35rem, 2.8vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .stat-note { margin: 5px 0 0; color: var(--muted); font-size: 0.84rem; }
+    .chart-card h3, .profit-card h3 { margin: 0 0 14px; font-size: 1.05rem; }
+
+    .pie-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      align-items: center;
+      gap: 18px;
+      min-height: 220px;
+    }
+
+    .pie {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 0 1px rgba(60, 64, 67, 0.08), 0 16px 30px rgba(60, 64, 67, 0.12);
+    }
+
+    .pie-center {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid var(--border);
+      font-weight: 800;
+      font-size: 0.86rem;
+    }
+
+    .pie-empty {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      text-align: center;
+      background: repeating-linear-gradient(45deg, #eef1f6, #eef1f6 8px, #f8fafd 8px, #f8fafd 16px);
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .legend { display: grid; gap: 10px; width: 100%; }
+
+    .legend-item {
+      display: grid;
+      grid-template-columns: 14px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .legend-dot { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 0 3px rgba(0,0,0,0.03); }
+    .legend strong { color: var(--text); }
+
+    .profit-card {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(145deg, #fff, #f7fbff);
+    }
+
+    .profit-value {
+      margin: 10px 0;
+      color: var(--green);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: -0.06em;
+    }
+
+    .profit-value.negative { color: var(--red); }
+
+    .reference {
+      padding: 14px;
+      border-radius: 16px;
+      background: #f1f4f9;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    form { display: grid; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .form-row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .form-row.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .field { display: grid; gap: 6px; }
+    label { color: #3c4043; font-size: 0.86rem; font-weight: 700; }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      outline: none;
+      background: #fff;
+      color: var(--text);
+      transition: 0.18s ease;
+    }
+
+    textarea { min-height: 86px; resize: vertical; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.12);
+    }
+
+    .form-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 2px; }
+    .muted { color: var(--muted); }
+    .mini { font-size: 0.82rem; }
+
+    .list { display: grid; gap: 14px; }
+
+    .item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 3px 14px rgba(60, 64, 67, 0.07);
+    }
+
+    .photo {
+      width: 74px;
+      height: 74px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: var(--blue);
+      background: linear-gradient(135deg, rgba(66, 133, 244, 0.18), rgba(52, 168, 83, 0.18));
+      font-weight: 900;
+    }
+
+    .item h3 { margin: 0; font-size: 1rem; font-weight: 800; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 7px; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #f1f4f9;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .pill.blue { background: rgba(66, 133, 244, 0.12); color: var(--blue); }
+    .pill.red { background: rgba(234, 67, 53, 0.12); color: var(--red); }
+    .pill.yellow { background: rgba(251, 188, 5, 0.18); color: #8a6500; }
+    .pill.green { background: rgba(52, 168, 83, 0.12); color: var(--green); }
+
+    .actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+
+    .table-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--border); background: #fff; }
+    table { width: 100%; min-width: 980px; border-collapse: collapse; }
+    th, td { padding: 13px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
+
+    th {
+      background: #f8fafd;
+      color: #3c4043;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    .td-actions { display: flex; justify-content: flex-end; gap: 8px; min-width: 190px; }
+
+    .empty {
+      padding: 28px;
+      border: 1px dashed #cfd5df;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.72);
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty i { display: block; margin-bottom: 10px; color: var(--blue); font-size: 2rem; }
+
+    .alert-list { display: grid; gap: 10px; }
+
+    .contract-alert {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(251, 188, 5, 0.34);
+      background: rgba(251, 188, 5, 0.13);
+    }
+
+    .contract-alert strong { color: #6f5100; }
+
+    .preview-box {
+      display: grid;
+      place-items: center;
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      border: 1px dashed #cfd5df;
+      background: #f1f4f9;
+      overflow: hidden;
+      color: var(--muted);
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+
+    .file-row { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+
+    .total-preview {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(66, 133, 244, 0.16);
+      background: linear-gradient(135deg, rgba(66, 133, 244, 0.10), rgba(52, 168, 83, 0.10));
+    }
+
+    .total-preview .amount { color: var(--blue); font-size: 1.7rem; font-weight: 900; letter-spacing: -0.04em; }
+
+    .footer { margin: 22px 0 0; text-align: center; color: var(--muted); font-size: 0.82rem; }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 999;
+      max-width: min(480px, calc(100vw - 48px));
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: #202124;
+      color: #fff;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: 0.2s ease;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    .security-note {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(234, 67, 53, 0.18);
+      background: rgba(234, 67, 53, 0.07);
+      color: #7a2019;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .history-year {
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .history-year summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 18px;
+      background: #f8fafd;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .history-year summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .history-year summary::after {
+      content: "\f078";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      transition: transform 0.18s ease;
+      color: var(--muted);
+    }
+
+    .history-year[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .history-year .table-wrap {
+      border: none;
+      border-top: 1px solid var(--border);
+      border-radius: 0;
+    }
+
+    .history-count {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    @media (max-width: 1120px) {
+      .topbar { position: static; flex-direction: column; align-items: flex-start; }
+      .tabs { justify-content: flex-start; }
+      .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .form-row, .form-row.two, .form-row.three { grid-template-columns: 1fr; }
+      .pie-layout { grid-template-columns: 1fr; justify-items: center; }
+    }
+
+    @media (max-width: 680px) {
+      .container { padding: 14px; }
+      .topbar, .card, .login-card { border-radius: 20px; }
+      .brand h1 { white-space: normal; }
+      .tab-btn { flex: 1 1 auto; }
+      .item { grid-template-columns: 1fr; }
+      .actions, .form-actions { justify-content: flex-start; }
+      .contract-alert, .total-preview { grid-template-columns: 1fr; }
+      .dashboard-filter .field { min-width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <section id="loginScreen" class="login-screen">
+    <article class="login-card">
+      <div class="login-logo" id="loginLogo">RB</div>
+      <h1 id="loginTitle">Residencial Beatriz</h1>
+      <p>Acesso restrito aos usuários autorizados.</p>
+
+      <div class="sync-badge warn" id="loginSyncStatus">
+        <i class="fa-brands fa-github"></i>
+        GitHub não configurado
+      </div>
+
+      <form id="loginForm" style="margin-top:18px;">
+        <div class="field">
+          <label for="loginUser">Usuário</label>
+          <input id="loginUser" type="text" autocomplete="username" required>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Senha</label>
+          <input id="loginPassword" type="password" autocomplete="current-password" required>
+        </div>
+
+        <button class="btn btn-primary" type="submit" style="width:100%; margin-top:8px;">
+          <i class="fa-solid fa-right-to-bracket"></i> Entrar
+        </button>
+      </form>
+
+      <div class="github-panel">
+        <h3 style="margin:0 0 10px;"><i class="fa-brands fa-github"></i> Conexão GitHub</h3>
+
+        <form id="githubLoginConfigForm">
+          <div class="form-row two">
+            <div class="field">
+              <label for="loginGithubOwner">Usuário/Organização do GitHub</label>
+              <input id="loginGithubOwner" type="text" placeholder="Ex.: leandropickler">
+            </div>
+
+            <div class="field">
+              <label for="loginGithubRepo">Repositório</label>
+              <input id="loginGithubRepo" type="text" value="residencialbia2">
+            </div>
+          </div>
+
+          <div class="form-row two">
+            <div class="field">
+              <label for="loginGithubBranch">Branch</label>
+              <input id="loginGithubBranch" type="text" value="main">
+            </div>
+
+            <div class="field">
+              <label for="loginGithubPath">Arquivo de dados</label>
+              <input id="loginGithubPath" type="text" value="dados/residencialbia2.json">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="loginGithubToken">Token GitHub</label>
+            <input id="loginGithubToken" type="password" placeholder="Cole aqui o Fine-grained Personal Access Token">
+            <span class="mini muted">O token fica salvo somente neste navegador. Não coloque o token dentro do código.</span>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">
+              <i class="fa-solid fa-floppy-disk"></i> Salvar conexão
+            </button>
+
+            <button class="btn btn-light" type="button" id="loginLoadGithubBtn">
+              <i class="fa-solid fa-cloud-arrow-down"></i> Carregar dados
+            </button>
+          </div>
+        </form>
+      </div>
+    </article>
+  </section>
+
+  <div id="appShell" class="container hidden">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo" id="brandLogo">RB</div>
+        <div>
+          <h1 id="brandTitle">Residencial Beatriz</h1>
+          <p id="currentUserInfo">Gestão de imóveis, moradores, contratos, despesas e cobranças</p>
+        </div>
+      </div>
+
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="dashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</button>
+        <button class="tab-btn" data-tab="apartments"><i class="fa-solid fa-building"></i> Imóveis</button>
+        <button class="tab-btn" data-tab="expenses"><i class="fa-solid fa-receipt"></i> Despesas</button>
+        <button class="tab-btn" data-tab="entries"><i class="fa-solid fa-file-invoice-dollar"></i> Lançamentos</button>
+        <button class="tab-btn" data-tab="history"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</button>
+        <button class="tab-btn" data-tab="settings"><i class="fa-solid fa-gear"></i> Configurações</button>
+        <button class="btn btn-light" id="reloadGithubBtn"><i class="fa-solid fa-rotate"></i> Atualizar</button>
+        <button class="btn btn-danger" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="page-dashboard" class="page active">
+        <div class="section-title">
+          <div>
+            <h2>Painel financeiro</h2>
+            <p>Resumo automático com filtro temporal e dados salvos no GitHub.</p>
+          </div>
+        </div>
+
+        <div class="dashboard-filter">
+          <div class="field">
+            <label for="dashboardPeriod">Seletor de Período</label>
+            <select id="dashboardPeriod">
+              <option value="last6">Últimos 6 Meses</option>
+              <option value="currentYear">Último Ano (Padrão/Corrente)</option>
+              <option value="last2">Últimos 2 Anos</option>
+              <option value="all">Todo o Período</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="dashboardYear">Histórico por Ano</label>
+            <select id="dashboardYear"></select>
+          </div>
+
+          <div class="filter-badge" id="periodBadge">
+            <i class="fa-solid fa-calendar-days"></i>
+            Ano corrente
+          </div>
+
+          <div class="sync-badge" id="syncStatusBadge">
+            <i class="fa-brands fa-github"></i>
+            Aguardando sincronização
+          </div>
+        </div>
+
+        <div class="grid grid-3" style="margin-top:18px;">
+          <article class="card chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Faturamento Bruto vs Despesas</h3>
+            <div id="pieCashFlow" class="pie-layout"></div>
+          </article>
+
+          <article class="card chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Proporção de Ganhos</h3>
+            <div id="pieRevenueDivision" class="pie-layout"></div>
+          </article>
+
+          <article class="card profit-card">
+            <div>
+              <h3><i class="fa-solid fa-trophy"></i> Lucro Líquido Real</h3>
+              <p class="muted mini">Despesas do proprietário não são cobradas do inquilino.</p>
+              <div class="profit-value" id="netProfitValue">R$ 0,00</div>
+            </div>
+
+            <div class="reference" id="profitReference">R$ 0,00 - R$ 0,00 = R$ 0,00</div>
+          </article>
+        </div>
+
+        <div class="section-title">
+          <div>
+            <h2>Detalhamento das despesas</h2>
+            <p>Separação automática por Água, Internet, IPTU e Despesas Extras no período selecionado.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesa com Água</span>
+              <span class="icon"><i class="fa-solid fa-droplet"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="waterExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como Água.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesa com Internet</span>
+              <span class="icon green"><i class="fa-solid fa-wifi"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="internetExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como Internet.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesa com IPTU</span>
+              <span class="icon red"><i class="fa-solid fa-file-invoice"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="iptuExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como IPTU.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesas Extras</span>
+              <span class="icon yellow"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="maintenanceExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Manutenção e despesas extras.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Seguro do Imóvel</span>
+              <span class="icon"><i class="fa-solid fa-shield-halved"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="insuranceExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como Seguro.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid grid-4" style="margin-top:18px;">
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Faturamento bruto</span>
+              <span class="icon"><i class="fa-solid fa-sack-dollar"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="grossValue">R$ 0,00</div>
+              <p class="stat-note">Aluguel + Luz + COSIP no período.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesas administrativas</span>
+              <span class="icon red"><i class="fa-solid fa-arrow-trend-down"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="expenseValue">R$ 0,00</div>
+              <p class="stat-note">Água + Internet + IPTU + Manutenção + Seguro.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Aluguel recebido</span>
+              <span class="icon yellow"><i class="fa-solid fa-key"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="rentValue">R$ 0,00</div>
+              <p class="stat-note">Somente valor de aluguel.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Luz/COSIP recebida</span>
+              <span class="icon green"><i class="fa-solid fa-bolt"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="energyValue">R$ 0,00</div>
+              <p class="stat-note">kWh + COSIP.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="section-title">
+          <div>
+            <h2>Alertas de contratos</h2>
+            <p>Contratos que vencem no mês seguinte, considerando ciclo de 6 meses.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div id="contractAlerts" class="alert-list"></div>
+        </article>
+      </section>
+
+      <section id="page-apartments" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Gestão de imóveis e moradores</h2>
+            <p>Ao liberar um apartamento, o morador atual vai para o histórico e o imóvel fica livre para novo cadastro.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <form id="apartmentForm">
+            <input type="hidden" id="apartmentEditId">
+
+            <h3>Dados do apartamento</h3>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="apartmentNumber">ID/Número do Apto *</label>
+                <input id="apartmentNumber" type="text" placeholder="Ex.: Apto 01" required>
+              </div>
+
+              <div class="field">
+                <label for="baseRent">Valor Base do Aluguel *</label>
+                <input id="baseRent" type="number" min="0" step="0.01" placeholder="0,00" required>
+              </div>
+
+              <div class="field">
+                <label for="contractStart">Início do Contrato *</label>
+                <input id="contractStart" type="date" required>
+              </div>
+
+              <div class="field">
+                <label for="contractEnd">Vencimento do Contrato</label>
+                <input id="contractEnd" type="date" required>
+                <span class="mini muted">Calculado para 6 meses, mas pode ser ajustado.</span>
+              </div>
+            </div>
+
+            <div class="form-row two">
+              <div class="field">
+                <label for="apartmentDescription">Descrição do Imóvel</label>
+                <textarea id="apartmentDescription" placeholder="Ex.: quarto, cozinha, banheiro, garagem, observações..."></textarea>
+              </div>
+
+              <div class="file-row">
+                <div class="preview-box" id="apartmentPhotoPreview">Foto</div>
+
+                <div class="field" style="flex:1; min-width:260px;">
+                  <label for="apartmentPhoto">Foto do imóvel</label>
+                  <input id="apartmentPhoto" type="file" accept="image/*">
+                  <span class="mini muted">A imagem será convertida em Base64 e salva no GitHub.</span>
+                </div>
+
+                <button class="btn btn-light" type="button" id="removeApartmentPhotoBtn">
+                  <i class="fa-solid fa-ban"></i> Remover foto
+                </button>
+              </div>
+            </div>
+
+            <h3>Ficha cadastral do morador atual</h3>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="tenantName">Nome Completo *</label>
+                <input id="tenantName" type="text" placeholder="Nome completo" required>
+              </div>
+
+              <div class="field">
+                <label for="tenantCpf">CPF *</label>
+                <input id="tenantCpf" type="text" placeholder="000.000.000-00" required>
+              </div>
+
+              <div class="field">
+                <label for="tenantPhone">Telefone</label>
+                <input id="tenantPhone" type="text" placeholder="(48) 99999-9999">
+              </div>
+
+              <div class="field">
+                <label for="tenantBirth">Data de Nascimento</label>
+                <input id="tenantBirth" type="date">
+              </div>
+            </div>
+
+            <div class="form-row two">
+              <div class="field">
+                <label for="emergencyName">Contato de Emergência - Nome</label>
+                <input id="emergencyName" type="text" placeholder="Nome do contato">
+              </div>
+
+              <div class="field">
+                <label for="emergencyPhone">Contato de Emergência - Telefone</label>
+                <input id="emergencyPhone" type="text" placeholder="(48) 99999-9999">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-light" type="button" id="clearApartmentBtn">
+                <i class="fa-solid fa-eraser"></i> Limpar
+              </button>
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar apartamento/morador
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Imóveis cadastrados</h2>
+            <p>Use “Liberar apto” quando o contrato acabar e outra pessoa for entrar no imóvel.</p>
+          </div>
+        </div>
+
+        <div id="apartmentsList" class="list"></div>
+      </section>
+
+      <section id="page-expenses" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Despesas do proprietário</h2>
+            <p>Não alteram o valor cobrado do inquilino. Apenas deduzem no lucro líquido do dashboard.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <form id="expenseForm">
+            <input type="hidden" id="expenseEditId">
+
+            <div class="form-row">
+              <div class="field">
+                <label for="expenseMonth">Mês/Ano *</label>
+                <input id="expenseMonth" type="month" required>
+              </div>
+
+              <div class="field">
+                <label for="expenseType">Tipo *</label>
+                <select id="expenseType" required>
+                  <option value="Água">Água</option>
+                  <option value="Internet">Internet</option>
+                  <option value="IPTU">IPTU</option>
+                  <option value="Manutenção Extra">Manutenção Extra</option>
+                  <option value="Seguro do Imóvel">Seguro do Imóvel</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="expenseApartmentId">Unidade</label>
+                <select id="expenseApartmentId"></select>
+              </div>
+
+              <div class="field">
+                <label for="expenseAmount">Valor *</label>
+                <input id="expenseAmount" type="number" min="0" step="0.01" placeholder="0,00" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="expenseDescription">Descrição</label>
+              <input id="expenseDescription" type="text" placeholder="Ex.: água, internet, IPTU, seguro do imóvel, pintura, manutenção elétrica...">
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-light" type="button" id="clearExpenseBtn">
+                <i class="fa-solid fa-eraser"></i> Limpar
+              </button>
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar despesa
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Histórico de despesas</h2>
+            <p id="expensesSummary">Total interno geral: R$ 0,00</p>
+          </div>
+        </div>
+
+        <div class="dashboard-filter">
+          <div class="field">
+            <label for="expensesYearFilter">Filtro por ano</label>
+            <select id="expensesYearFilter">
+              <option value="all">Todos os anos</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="expensesTypeFilter">Filtro por tipo</label>
+            <select id="expensesTypeFilter">
+              <option value="all">Todos os tipos</option>
+              <option value="Água">Água</option>
+              <option value="Internet">Internet</option>
+              <option value="IPTU">IPTU</option>
+              <option value="Manutenção Extra">Manutenção Extra</option>
+              <option value="Seguro do Imóvel">Seguro do Imóvel</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="expensesSearchFilter">Buscar</label>
+            <input id="expensesSearchFilter" type="search" placeholder="Buscar por descrição, unidade, tipo ou mês...">
+          </div>
+
+          <div class="filter-badge" id="expensesFilterBadge">
+            <i class="fa-solid fa-filter"></i>
+            Todos os anos
+          </div>
+        </div>
+
+        <div id="expensesList"></div>
+      </section>
+
+      <section id="page-entries" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Lançamentos mensais dos inquilinos</h2>
+            <p>Cálculo automático por leitura acumulada: leitura atual − leitura anterior = kWh consumido.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <form id="entryForm">
+            <input type="hidden" id="entryEditId">
+
+            <div class="form-row">
+              <div class="field">
+                <label for="entryApartmentId">Apartamento *</label>
+                <select id="entryApartmentId" required></select>
+              </div>
+
+              <div class="field">
+                <label for="entryMonth">Mês/Ano *</label>
+                <input id="entryMonth" type="month" required>
+              </div>
+
+              <div class="field">
+                <label for="entryRent">Valor Aluguel *</label>
+                <input id="entryRent" type="number" min="0" step="0.01" required>
+              </div>
+
+              <div class="field">
+                <label for="entryEnergyMode">Cálculo de energia *</label>
+                <select id="entryEnergyMode" required>
+                  <option value="withKwh">Com cálculo de kWh</option>
+                  <option value="noKwh">Sem cálculo de kWh</option>
+                </select>
+                <span class="mini muted">Use “sem cálculo” quando o morador tiver relógio próprio.</span>
+              </div>
+            </div>
+
+            <div class="form-row three">
+              <div class="field">
+                <label for="entryKwhValue">Valor kWh *</label>
+                <input id="entryKwhValue" type="number" min="0" step="0.0001" placeholder="Ex.: 0.9500" required>
+              </div>
+
+              <div class="field">
+                <label for="entryKwhPrevious">Leitura anterior acumulada *</label>
+                <input id="entryKwhPrevious" type="number" min="0" step="0.01" placeholder="Ex.: 1540" required>
+                <span class="mini muted" id="entryLastReadingInfo">Selecione o apartamento e o mês para buscar automaticamente a última leitura salva.</span>
+              </div>
+
+              <div class="field">
+                <label for="entryKwhCurrent">Leitura atual acumulada *</label>
+                <input id="entryKwhCurrent" type="number" min="0" step="0.01" placeholder="Ex.: 1660" required>
+              </div>
+            </div>
+
+            <div class="form-row three">
+              <div class="field">
+                <label for="entryKwhConsumed">kWh consumido no mês</label>
+                <input id="entryKwhConsumed" type="number" min="0" step="0.01" readonly>
+                <span class="mini muted">Calculado automaticamente pela diferença das leituras.</span>
+              </div>
+
+              <div class="field">
+                <label for="entryCosip">COSIP *</label>
+                <input id="entryCosip" type="number" min="0" step="0.01" placeholder="0,00" required>
+              </div>
+
+              <div class="field">
+                <label>Valor da energia pelo kWh</label>
+                <input id="entryEnergyAmount" type="text" readonly value="R$ 0,00">
+                <span class="mini muted">kWh consumido × valor kWh. A COSIP aparece no resumo abaixo.</span>
+              </div>
+            </div>
+
+            <div class="total-preview">
+              <div>
+                <strong>Total a cobrar do inquilino</strong>
+                <p class="mini muted" id="entryFormula">Energia + COSIP + Aluguel = Total a cobrar</p>
+              </div>
+              <div class="amount" id="entryTotalPreview">R$ 0,00</div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-light" type="button" id="clearEntryBtn">
+                <i class="fa-solid fa-eraser"></i> Limpar
+              </button>
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar lançamento
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Histórico financeiro por apartamento</h2>
+            <p>Por padrão, mostra os lançamentos do contrato atual. Use o filtro para ver dados antigos.</p>
+          </div>
+        </div>
+
+        <div class="dashboard-filter">
+          <div class="field">
+            <label for="entriesHistoryFilter">Filtro dos lançamentos</label>
+            <select id="entriesHistoryFilter">
+              <option value="current">Somente contrato atual</option>
+              <option value="history">Somente contratos anteriores</option>
+              <option value="all">Todos os lançamentos</option>
+            </select>
+          </div>
+
+          <div class="filter-badge" id="entriesFilterBadge">
+            <i class="fa-solid fa-filter"></i>
+            Contrato atual
+          </div>
+        </div>
+
+        <div id="entriesList"></div>
+      </section>
+
+      <section id="page-history" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Histórico de contratos e moradores</h2>
+            <p>Contratos agrupados por apartamento, do mais antigo para o mais novo. Contratos em andamento aparecem como Contrato Ativo.</p>
+          </div>
+        </div>
+
+        <div id="contractHistoryList"></div>
+      </section>
+
+      <section id="page-settings" class="page">
+        <div class="section-title">
+          <div>
+            <h2>Configurações</h2>
+            <p>Personalize o aplicativo, gerencie acessos e configure a sincronização com GitHub.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <form id="settingsForm">
+            <div class="field">
+              <label for="appName">Nome do App *</label>
+              <input id="appName" type="text" required>
+            </div>
+
+            <div class="file-row">
+              <div class="preview-box" id="appLogoPreview">Logo</div>
+
+              <div class="field" style="flex:1; min-width:260px;">
+                <label for="appLogo">Upload da Logo</label>
+                <input id="appLogo" type="file" accept="image/*">
+                <span class="mini muted">A logo será convertida em Base64 e salva no arquivo JSON do GitHub.</span>
+              </div>
+
+              <button class="btn btn-light" type="button" id="removeLogoBtn">
+                <i class="fa-solid fa-ban"></i> Remover logo
+              </button>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i> Salvar configurações
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Configuração GitHub</h2>
+            <p>Os dados serão salvos em um arquivo JSON dentro do seu repositório.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="security-note">
+            <strong>Atenção:</strong> o token GitHub é salvo somente neste navegador. Não publique token dentro do código.
+          </div>
+
+          <form id="githubConfigForm" style="margin-top:16px;">
+            <div class="form-row two">
+              <div class="field">
+                <label for="githubOwner">Usuário/Organização do GitHub</label>
+                <input id="githubOwner" type="text" placeholder="Ex.: leandropickler">
+              </div>
+
+              <div class="field">
+                <label for="githubRepo">Repositório</label>
+                <input id="githubRepo" type="text" value="residencialbia2">
+              </div>
+            </div>
+
+            <div class="form-row two">
+              <div class="field">
+                <label for="githubBranch">Branch</label>
+                <input id="githubBranch" type="text" value="main">
+              </div>
+
+              <div class="field">
+                <label for="githubPath">Arquivo de dados</label>
+                <input id="githubPath" type="text" value="dados/residencialbia2.json">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="githubToken">Token GitHub</label>
+              <input id="githubToken" type="password" placeholder="Cole aqui o Fine-grained Personal Access Token">
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-brands fa-github"></i> Salvar conexão
+              </button>
+
+              <button class="btn btn-light" type="button" id="loadGithubBtn">
+                <i class="fa-solid fa-cloud-arrow-down"></i> Carregar do GitHub
+              </button>
+
+              <button class="btn btn-success" type="button" id="forceSaveGithubBtn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Enviar dados atuais
+              </button>
+
+              <button class="btn btn-danger" type="button" id="removeGithubTokenBtn">
+                <i class="fa-solid fa-ban"></i> Remover token
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Configurações de acesso</h2>
+            <p>Adicione, edite ou remova usuários que podem acessar o sistema.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="security-note">
+            <strong>Aviso de segurança:</strong> este login é local no front-end. As senhas são salvas como hash SHA-256 no arquivo JSON.
+          </div>
+
+          <form id="userForm" style="margin-top:16px;">
+            <input type="hidden" id="userEditId">
+
+            <div class="form-row three">
+              <div class="field">
+                <label for="accessLogin">Login *</label>
+                <input id="accessLogin" type="text" placeholder="Ex.: admin" required>
+              </div>
+
+              <div class="field">
+                <label for="accessPassword">Senha *</label>
+                <input id="accessPassword" type="password" placeholder="Senha">
+                <span class="mini muted">Ao editar, deixe em branco para manter a senha atual.</span>
+              </div>
+
+              <div class="field">
+                <label for="accessPasswordConfirm">Confirmar Senha *</label>
+                <input id="accessPasswordConfirm" type="password" placeholder="Confirme a senha">
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-light" type="button" id="clearUserBtn">
+                <i class="fa-solid fa-eraser"></i> Limpar
+              </button>
+
+              <button class="btn btn-primary" type="submit">
+                <i class="fa-solid fa-user-shield"></i> Salvar usuário
+              </button>
+            </div>
+          </form>
+        </article>
+
+        <div class="section-title">
+          <div>
+            <h2>Usuários cadastrados</h2>
+            <p>O usuário padrão pode ser editado após o primeiro acesso.</p>
+          </div>
+        </div>
+
+        <div id="usersList"></div>
+
+        <div class="section-title">
+          <div>
+            <h2>Backup local</h2>
+            <p>Além do GitHub, você pode exportar uma cópia local em JSON.</p>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="form-actions" style="justify-content:flex-start;">
+            <button class="btn btn-success" id="exportBtn">
+              <i class="fa-solid fa-file-export"></i> Exportar backup JSON
+            </button>
+
+            <label class="btn btn-warning" for="importInput">
+              <i class="fa-solid fa-file-import"></i> Importar backup JSON
+            </label>
+
+            <input id="importInput" type="file" accept="application/json" style="display:none;">
+
+            <button class="btn btn-danger" id="resetBtn">
+              <i class="fa-solid fa-trash"></i> Apagar dados locais e GitHub
+            </button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <p class="footer">
+      Residencial Beatriz • GitHub Pages + GitHub JSON Storage • Histórico de contratos integrado
+    </p>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const CONFIG_KEY = "residencial_bia2_github_config_v2";
+      const CACHE_KEY = "residencial_bia2_cache_v2";
+
+      const DEFAULT_STATE = {
+        settings: {
+          appName: "Residencial Beatriz",
+          logo: "",
+          dashboardPeriod: "currentYear",
+          dashboardYear: new Date().getFullYear()
+        },
+        users: [],
+        apartments: [],
+        expenses: [],
+        entries: [],
+        meta: {
+          updatedAt: "",
+          updatedBy: ""
+        }
+      };
+
+      const EMPTY_TENANT = {
+        name: "",
+        cpf: "",
+        phone: "",
+        birth: "",
+        emergencyName: "",
+        emergencyPhone: ""
+      };
+
+      let state = clone(DEFAULT_STATE);
+      let githubConfig = loadGithubConfig();
+      let loggedUser = null;
+      let tempApartmentPhoto = "";
+      let tempAppLogo = "";
+      let manualEntryRent = false;
+      let isSaving = false;
+      let pendingSaveRequest = false;
+      let pendingSaveMessage = "";
+      const SAVE_QUEUE_DELAY_MS = 3200;
+      const SAVE_RETRY_DELAYS_MS = [0, 2500, 6000, 11000];
+
+      const $ = selector => document.querySelector(selector);
+      const $$ = selector => Array.from(document.querySelectorAll(selector));
+
+      function clone(obj) {
+        return JSON.parse(JSON.stringify(obj));
+      }
+
+      function normalizeTenant(tenant) {
+        return { ...EMPTY_TENANT, ...(tenant || {}) };
+      }
+
+      function normalizeApartment(apartment) {
+        const apt = apartment && typeof apartment === "object" ? apartment : {};
+        const tenant = normalizeTenant(apt.tenant);
+        const hasTenant = Boolean((tenant.name || "").trim());
+
+        return {
+          id: apt.id || uid("apartment"),
+          number: apt.number || "",
+          description: apt.description || "",
+          photo: apt.photo || "",
+          baseRent: toNumber(apt.baseRent),
+          contractStart: apt.contractStart || "",
+          contractEnd: apt.contractEnd || "",
+          tenant,
+          status: apt.status || (hasTenant ? "occupied" : "free"),
+          contractHistory: Array.isArray(apt.contractHistory) ? apt.contractHistory.map(normalizeHistoryItem) : []
+        };
+      }
+
+      function normalizeHistoryItem(item) {
+        const source = item && typeof item === "object" ? item : {};
+
+        return {
+          id: source.id || uid("history"),
+          apartmentId: source.apartmentId || "",
+          apartmentNumber: source.apartmentNumber || source.apartamento || "",
+          tenant: normalizeTenant(source.tenant || {
+            name: source.nome || "",
+            cpf: source.cpf || "",
+            phone: source.telefone || "",
+            birth: source.birth || "",
+            emergencyName: source.emergencyName || "",
+            emergencyPhone: source.emergencyPhone || ""
+          }),
+          contractStart: source.contractStart || source.inicioContrato || "",
+          contractEnd: source.contractEnd || source.fimContrato || "",
+          baseRent: toNumber(source.baseRent ?? source.valorAluguelMensal),
+          endedAt: source.endedAt || "",
+          reason: source.reason || source.observacao || ""
+        };
+      }
+
+      function normalizeEntry(entry) {
+        const source = entry && typeof entry === "object" ? entry : {};
+        const apt = source.apartmentId ? getApartment(source.apartmentId) : null;
+        const legacyConsumed = toNumber(source.kwhConsumed);
+        const previousReading = toNumber(source.kwhPrevious ?? source.kwhReadingPrevious ?? source.previousReading ?? 0);
+        const currentReadingRaw = source.kwhCurrent ?? source.kwhReadingCurrent ?? source.currentReading;
+        const currentReading = currentReadingRaw === undefined || currentReadingRaw === null || currentReadingRaw === ""
+          ? (previousReading > 0 && legacyConsumed > 0 ? previousReading + legacyConsumed : 0)
+          : toNumber(currentReadingRaw);
+        const calculatedConsumed = currentReading > 0 || previousReading > 0
+          ? Math.max(0, currentReading - previousReading)
+          : legacyConsumed;
+
+        return {
+          id: source.id || uid("entry"),
+          apartmentId: source.apartmentId || "",
+          apartmentNumber: source.apartmentNumber || (apt ? apt.number : ""),
+          tenantName: source.tenantName || source.tenantSnapshot?.name || (apt ? apt.tenant.name : ""),
+          tenantCpf: source.tenantCpf || source.tenantSnapshot?.cpf || (apt ? apt.tenant.cpf : ""),
+          month: source.month || "",
+          rent: toNumber(source.rent),
+          energyMode: source.energyMode || source.kwhMode || (
+            toNumber(source.kwhValue) > 0 || previousReading > 0 || currentReading > 0 || calculatedConsumed > 0 || toNumber(source.cosip) > 0
+              ? "withKwh"
+              : "noKwh"
+          ),
+          kwhValue: toNumber(source.kwhValue),
+          kwhPrevious: previousReading,
+          kwhCurrent: currentReading,
+          kwhConsumed: calculatedConsumed,
+          cosip: toNumber(source.cosip)
+        };
+      }
+
+      function normalizeState(input) {
+        const source = input && typeof input === "object" ? input : {};
+        const normalized = {
+          settings: { ...DEFAULT_STATE.settings, ...(source.settings || {}) },
+          users: Array.isArray(source.users) ? source.users : [],
+          apartments: Array.isArray(source.apartments) ? source.apartments.map(normalizeApartment) : [],
+          expenses: Array.isArray(source.expenses) ? source.expenses : [],
+          entries: [],
+          meta: { ...DEFAULT_STATE.meta, ...(source.meta || {}) }
+        };
+
+        const previousState = state;
+        state = normalized;
+        normalized.entries = Array.isArray(source.entries) ? source.entries.map(normalizeEntry) : [];
+        state = previousState;
+
+        return normalized;
+      }
+
+      function loadGithubConfig() {
+        try {
+          const raw = localStorage.getItem(CONFIG_KEY);
+
+          if (!raw) {
+            return {
+              owner: "",
+              repo: "residencialbia2",
+              branch: "main",
+              path: "dados/residencialbia2.json",
+              token: ""
+            };
+          }
+
+          return {
+            owner: "",
+            repo: "residencialbia2",
+            branch: "main",
+            path: "dados/residencialbia2.json",
+            token: "",
+            ...JSON.parse(raw)
+          };
+        } catch {
+          return {
+            owner: "",
+            repo: "residencialbia2",
+            branch: "main",
+            path: "dados/residencialbia2.json",
+            token: ""
+          };
+        }
+      }
+
+      function saveGithubConfig(config) {
+        githubConfig = {
+          owner: String(config.owner || "").trim(),
+          repo: String(config.repo || "residencialbia2").trim(),
+          branch: String(config.branch || "main").trim(),
+          path: String(config.path || "dados/residencialbia2.json").trim(),
+          token: String(config.token || githubConfig.token || "").trim()
+        };
+
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(githubConfig));
+        fillGithubConfigForms();
+        updateSyncStatus();
+      }
+
+      function removeGithubToken() {
+        githubConfig.token = "";
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(githubConfig));
+        fillGithubConfigForms();
+        updateSyncStatus();
+      }
+
+      function hasGithubBaseConfig() {
+        return Boolean(githubConfig.owner && githubConfig.repo && githubConfig.branch && githubConfig.path);
+      }
+
+      function hasGithubWriteConfig() {
+        return hasGithubBaseConfig() && Boolean(githubConfig.token);
+      }
+
+      function encodedGithubPath() {
+        return githubConfig.path.split("/").map(part => encodeURIComponent(part)).join("/");
+      }
+
+      function githubApiUrl() {
+        return `https://api.github.com/repos/${encodeURIComponent(githubConfig.owner)}/${encodeURIComponent(githubConfig.repo)}/contents/${encodedGithubPath()}`;
+      }
+
+      function utf8ToBase64(text) {
+        return btoa(unescape(encodeURIComponent(text)));
+      }
+
+      function base64ToUtf8(base64) {
+        return decodeURIComponent(escape(atob(base64)));
+      }
+
+      async function githubRequest(url, options = {}) {
+        const headers = {
+          "Accept": "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+          ...(options.headers || {})
+        };
+
+        if (githubConfig.token) {
+          headers.Authorization = `Bearer ${githubConfig.token}`;
+        }
+
+        const response = await fetch(url, { ...options, headers });
+
+        if (response.status === 404) return null;
+
+        if (!response.ok) {
+          const text = await response.text();
+          const error = new Error(`GitHub ${response.status}: ${text}`);
+          error.status = response.status;
+          error.body = text;
+          throw error;
+        }
+
+        return response.json();
+      }
+
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+      function isRetryableGithubSaveError(error) {
+        const status = Number(error?.status || 0);
+        const body = String(error?.body || error?.message || "").toLowerCase();
+
+        if (status === 409 || status === 422 || status === 429) return true;
+
+        if (status === 403) {
+          return body.includes("secondary rate") ||
+            body.includes("abuse") ||
+            body.includes("try again later") ||
+            body.includes("rate limit");
+        }
+
+        return false;
+      }
+
+      function saveLocalCache() {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(state));
+      }
+
+      function loadLocalCache() {
+        try {
+          const raw = localStorage.getItem(CACHE_KEY);
+          return raw ? normalizeState(JSON.parse(raw)) : clone(DEFAULT_STATE);
+        } catch {
+          return clone(DEFAULT_STATE);
+        }
+      }
+
+      async function loadStateFromGithub(showMessage = true) {
+        if (!hasGithubBaseConfig()) {
+          state = loadLocalCache();
+          await seedDefaultUserIfNeeded(false);
+          updateSyncStatus("warn", "Configure o GitHub");
+          if (showMessage) toast("Configure usuário, repositório, branch e arquivo de dados.");
+          renderAll();
+          return;
+        }
+
+        try {
+          updateSyncStatus("warn", "Carregando do GitHub...");
+
+          const url = `${githubApiUrl()}?ref=${encodeURIComponent(githubConfig.branch)}`;
+          const file = await githubRequest(url);
+
+          if (!file || !file.content) {
+            state = clone(DEFAULT_STATE);
+            await seedDefaultUserIfNeeded(false);
+            saveLocalCache();
+            updateSyncStatus("warn", "Arquivo JSON ainda não existe");
+            if (showMessage) toast("Arquivo JSON não encontrado. Ao salvar, ele será criado no GitHub.");
+            renderAll();
+            return;
+          }
+
+          const jsonText = base64ToUtf8(file.content.replace(/\n/g, ""));
+          state = normalizeState(JSON.parse(jsonText));
+
+          await seedDefaultUserIfNeeded(false);
+
+          saveLocalCache();
+          updateSyncStatus("ok", "Dados carregados do GitHub");
+
+          if (showMessage) toast("Dados carregados do GitHub.");
+
+          renderAll();
+        } catch (error) {
+          console.error(error);
+          state = loadLocalCache();
+          await seedDefaultUserIfNeeded(false);
+          updateSyncStatus("error", "Erro ao carregar GitHub");
+          if (showMessage) toast("Erro ao carregar do GitHub. Verifique o console/F12.");
+          renderAll();
+        }
+      }
+
+      async function putStateToGithubWithRetry(message = "") {
+        let lastError = null;
+
+        for (let attempt = 0; attempt < SAVE_RETRY_DELAYS_MS.length; attempt++) {
+          const delay = SAVE_RETRY_DELAYS_MS[attempt];
+
+          if (delay > 0) {
+            updateSyncStatus("warn", `Aguardando GitHub... tentativa ${attempt + 1}`);
+            await sleep(delay);
+          }
+
+          try {
+            const currentFile = await githubRequest(`${githubApiUrl()}?ref=${encodeURIComponent(githubConfig.branch)}&t=${Date.now()}`);
+            const currentSha = currentFile ? currentFile.sha : null;
+
+            state.meta = {
+              updatedAt: new Date().toISOString(),
+              updatedBy: loggedUser ? loggedUser.login : "sistema"
+            };
+
+            const payload = {
+              message: `Atualiza dados do Residencial Beatriz - ${new Date().toLocaleString("pt-BR")}`,
+              content: utf8ToBase64(JSON.stringify(state, null, 2)),
+              branch: githubConfig.branch
+            };
+
+            if (currentSha) payload.sha = currentSha;
+
+            await githubRequest(githubApiUrl(), {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+
+            return;
+          } catch (error) {
+            lastError = error;
+
+            if (!isRetryableGithubSaveError(error) || attempt === SAVE_RETRY_DELAYS_MS.length - 1) {
+              throw error;
+            }
+
+            console.warn("Nova tentativa de salvamento no GitHub após conflito/limite temporário:", error);
+          }
+        }
+
+        throw lastError;
+      }
+
+      async function saveStateToGithub(message = "") {
+        state = normalizeState(state);
+
+        if (isSaving) {
+          pendingSaveRequest = true;
+          if (message) pendingSaveMessage = message;
+
+          saveLocalCache();
+          renderAll();
+          updateSyncStatus("warn", "Salvamento em fila...");
+          toast("Alteração registrada. Vou salvar assim que o GitHub liberar.");
+          return;
+        }
+
+        if (!hasGithubWriteConfig()) {
+          saveLocalCache();
+          renderAll();
+          updateSyncStatus("warn", "Sem token para salvar");
+          toast("Configure o token do GitHub para salvar online.");
+          return;
+        }
+
+        try {
+          isSaving = true;
+          updateSyncStatus("warn", "Salvando no GitHub...");
+
+          await putStateToGithubWithRetry(message);
+
+          saveLocalCache();
+          updateSyncStatus("ok", "Salvo no GitHub");
+          renderAll();
+
+          if (message) toast(message);
+        } catch (error) {
+          console.error(error);
+          saveLocalCache();
+          renderAll();
+
+          if (isRetryableGithubSaveError(error)) {
+            updateSyncStatus("warn", "GitHub ocupado. Tente novamente em alguns segundos.");
+            toast("GitHub ainda está processando o salvamento anterior. Os dados ficaram no cache local.");
+          } else {
+            updateSyncStatus("error", "Erro ao salvar");
+            toast("Erro ao salvar no GitHub. Verifique token, permissão e caminho do JSON.");
+          }
+        } finally {
+          isSaving = false;
+
+          if (pendingSaveRequest) {
+            const nextMessage = pendingSaveMessage || "Alterações salvas.";
+            pendingSaveRequest = false;
+            pendingSaveMessage = "";
+
+            updateSyncStatus("warn", "Processando alteração pendente...");
+            await sleep(SAVE_QUEUE_DELAY_MS);
+            await saveStateToGithub(nextMessage);
+          }
+        }
+      }
+
+      async function save(message) {
+        await saveStateToGithub(message);
+      }
+
+      function updateSyncStatus(type = "", text = "") {
+        const configured = hasGithubBaseConfig();
+        const writable = hasGithubWriteConfig();
+
+        let statusType = type;
+        let statusText = text;
+
+        if (!statusText) {
+          if (!configured) {
+            statusType = "warn";
+            statusText = "GitHub não configurado";
+          } else if (!writable) {
+            statusType = "warn";
+            statusText = "GitHub configurado sem token";
+          } else {
+            statusType = "ok";
+            statusText = "GitHub conectado";
+          }
+        }
+
+        ["syncStatusBadge", "loginSyncStatus"].forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+
+          el.className = `sync-badge ${statusType || ""}`;
+          el.innerHTML = `<i class="fa-brands fa-github"></i>${escapeHtml(statusText)}`;
+        });
+      }
+
+      function fillGithubConfigForms() {
+        const mappings = [
+          ["githubOwner", "owner"],
+          ["githubRepo", "repo"],
+          ["githubBranch", "branch"],
+          ["githubPath", "path"],
+          ["loginGithubOwner", "owner"],
+          ["loginGithubRepo", "repo"],
+          ["loginGithubBranch", "branch"],
+          ["loginGithubPath", "path"]
+        ];
+
+        mappings.forEach(([id, key]) => {
+          const el = document.getElementById(id);
+          if (el) el.value = githubConfig[key] || "";
+        });
+
+        ["githubToken", "loginGithubToken"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = "";
+        });
+      }
+
+      function uid(prefix) {
+        if (window.crypto && crypto.randomUUID) return `${prefix}_${crypto.randomUUID()}`;
+        return `${prefix}_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+      }
+
+      function randomSalt() {
+        const array = new Uint8Array(16);
+        crypto.getRandomValues(array);
+        return Array.from(array).map(byte => byte.toString(16).padStart(2, "0")).join("");
+      }
+
+      async function sha256(text) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+        const hash = await crypto.subtle.digest("SHA-256", data);
+        return Array.from(new Uint8Array(hash)).map(byte => byte.toString(16).padStart(2, "0")).join("");
+      }
+
+      async function hashPassword(password, salt) {
+        return sha256(`${salt}:${password}`);
+      }
+
+      async function createUser(login, password) {
+        const salt = randomSalt();
+        const passwordHash = await hashPassword(password, salt);
+
+        return {
+          id: uid("user"),
+          login: login.trim(),
+          salt,
+          passwordHash,
+          createdAt: new Date().toISOString()
+        };
+      }
+
+      async function seedDefaultUserIfNeeded(shouldSave = false) {
+        if (state.users.length > 0) return;
+
+        const defaultUser = await createUser("residencial", "beatrizpickler");
+        state.users.push(defaultUser);
+
+        if (shouldSave) await save("Usuário padrão criado.");
+      }
+
+      function toNumber(value) {
+        const number = Number(value);
+        return Number.isFinite(number) ? number : 0;
+      }
+
+      function money(value) {
+        return new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL"
+        }).format(toNumber(value));
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function currentMonthValue() {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+      }
+
+      function parseDate(iso) {
+        if (!iso) return null;
+        const [year, month, day] = iso.split("-").map(Number);
+        if (!year || !month || !day) return null;
+        return new Date(year, month - 1, day);
+      }
+
+      function parseMonth(yyyyMm) {
+        if (!yyyyMm || !yyyyMm.includes("-")) return null;
+        const [year, month] = yyyyMm.split("-").map(Number);
+        if (!year || !month) return null;
+        return new Date(year, month - 1, 1);
+      }
+
+      function isoDate(date) {
+        return [
+          date.getFullYear(),
+          String(date.getMonth() + 1).padStart(2, "0"),
+          String(date.getDate()).padStart(2, "0")
+        ].join("-");
+      }
+
+      function addMonths(iso, months) {
+        const base = parseDate(iso) || new Date();
+        const originalDay = base.getDate();
+        const result = new Date(base.getFullYear(), base.getMonth() + months, originalDay);
+        if (result.getDate() !== originalDay) result.setDate(0);
+        return isoDate(result);
+      }
+
+      function formatDate(iso) {
+        const date = parseDate(iso);
+        if (!date) return "-";
+        return new Intl.DateTimeFormat("pt-BR").format(date);
+      }
+
+      function monthName(yyyyMm) {
+        const date = parseMonth(yyyyMm);
+        if (!date) return "-";
+        return new Intl.DateTimeFormat("pt-BR", { month: "long", year: "numeric" }).format(date);
+      }
+
+      function readImage(file, callback) {
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => callback(String(reader.result || ""));
+        reader.onerror = () => toast("Não foi possível carregar a imagem.");
+        reader.readAsDataURL(file);
+      }
+
+      function toast(message) {
+        const el = $("#toast");
+        el.textContent = message;
+        el.classList.add("show");
+        clearTimeout(toast.timer);
+        toast.timer = setTimeout(() => el.classList.remove("show"), 3200);
+      }
+
+      function getApartment(id) {
+        return state.apartments.find(apartment => apartment.id === id);
+      }
+
+      function apartmentName(id) {
+        const apartment = getApartment(id);
+        if (!apartment) return "Unidade removida";
+        return `${apartment.number}${apartment.tenant?.name ? " — " + apartment.tenant.name : ""}`;
+      }
+
+      function getLastKwhEntry(apartmentId, beforeMonth = "", excludeEntryId = "") {
+        const entries = state.entries
+          .filter(entry => entry.apartmentId === apartmentId && entry.id !== excludeEntryId)
+          .filter(entry => (entry.energyMode || "withKwh") !== "noKwh")
+          .filter(entry => toNumber(entry.kwhCurrent) > 0)
+          .filter(entry => !beforeMonth || String(entry.month || "") < String(beforeMonth))
+          .sort((a, b) => String(b.month || "").localeCompare(String(a.month || "")));
+
+        return entries.length ? entries[0] : null;
+      }
+
+      function getLastKwhReading(apartmentId, beforeMonth = "", excludeEntryId = "") {
+        const lastEntry = getLastKwhEntry(apartmentId, beforeMonth, excludeEntryId);
+        return lastEntry ? toNumber(lastEntry.kwhCurrent) : 0;
+      }
+
+      function updatePreviousReadingFromHistory(force = false) {
+        if (($("#entryEnergyMode")?.value || "withKwh") === "noKwh") {
+          updateEntryPreview();
+          return;
+        }
+
+        const entryId = $("#entryEditId")?.value || "";
+        const apartmentId = $("#entryApartmentId")?.value || "";
+        const month = $("#entryMonth")?.value || "";
+        const previousInput = $("#entryKwhPrevious");
+        const infoEl = $("#entryLastReadingInfo");
+
+        if (!previousInput) return;
+
+        if (!apartmentId) {
+          if (infoEl) infoEl.textContent = "Selecione o apartamento para buscar a leitura anterior automaticamente.";
+          updateEntryPreview();
+          return;
+        }
+
+        const lastEntry = getLastKwhEntry(apartmentId, month, entryId);
+        const lastReading = lastEntry ? toNumber(lastEntry.kwhCurrent) : 0;
+
+        if (force || !previousInput.value) {
+          previousInput.value = lastEntry ? String(lastReading) : "";
+        }
+
+        if (infoEl) {
+          if (lastEntry) {
+            infoEl.textContent = `Leitura anterior preenchida automaticamente: ${lastReading.toLocaleString("pt-BR")} kWh, registrada em ${monthName(lastEntry.month)}.`;
+          } else {
+            infoEl.textContent = "Nenhuma leitura anterior encontrada para este apartamento. Informe a leitura inicial manualmente.";
+          }
+        }
+
+        updateEntryPreview();
+      }
+
+      function energyOnly(entry) {
+        if ((entry.energyMode || "withKwh") === "noKwh") return 0;
+        return toNumber(entry.kwhValue) * toNumber(entry.kwhConsumed);
+      }
+
+      function energyTotal(entry) {
+        if ((entry.energyMode || "withKwh") === "noKwh") return 0;
+        return energyOnly(entry) + toNumber(entry.cosip);
+      }
+
+      function entryTotal(entry) {
+        return toNumber(entry.rent) + energyTotal(entry);
+      }
+
+      function availableYears() {
+        const currentYear = new Date().getFullYear();
+        const years = new Set([currentYear]);
+
+        state.entries.forEach(entry => {
+          const date = parseMonth(entry.month);
+          if (date) years.add(date.getFullYear());
+        });
+
+        state.expenses.forEach(expense => {
+          const date = parseMonth(expense.month);
+          if (date) years.add(date.getFullYear());
+        });
+
+        return Array.from(years).sort((a, b) => b - a);
+      }
+
+      function getPeriodRange() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const selectedYear = Number(state.settings.dashboardYear || currentYear);
+        const period = state.settings.dashboardPeriod || "currentYear";
+
+        if (period === "last6") {
+          return { start: new Date(now.getFullYear(), now.getMonth() - 5, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 6 meses" };
+        }
+
+        if (period === "last2") {
+          return { start: new Date(now.getFullYear(), now.getMonth() - 23, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 2 anos" };
+        }
+
+        if (period === "all") {
+          return {
+            start: new Date(1900, 0, 1),
+            end: new Date(2999, 11, 31),
+            label: "Todo o período"
+          };
+        }
+
+        return {
+          start: new Date(selectedYear, 0, 1),
+          end: new Date(selectedYear + 1, 0, 1),
+          label: selectedYear === currentYear ? `Ano corrente: ${selectedYear}` : `Arquivo histórico: ${selectedYear}`
+        };
+      }
+
+      function isMonthInsideSelectedPeriod(yyyyMm) {
+        const date = parseMonth(yyyyMm);
+        const range = getPeriodRange();
+        if (!date) return false;
+        return date >= range.start && date < range.end;
+      }
+
+      function getFinancials() {
+        const filteredEntries = state.entries.filter(entry => isMonthInsideSelectedPeriod(entry.month));
+        const filteredExpenses = state.expenses.filter(expense => isMonthInsideSelectedPeriod(expense.month));
+
+        const normalizeExpenseType = value => String(value || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase();
+
+        const sumExpenseByType = (...types) => {
+          const normalizedTypes = types.map(normalizeExpenseType);
+          return filteredExpenses.reduce((sum, expense) => {
+            return normalizedTypes.includes(normalizeExpenseType(expense.type))
+              ? sum + toNumber(expense.amount)
+              : sum;
+          }, 0);
+        };
+
+        const gross = filteredEntries.reduce((sum, entry) => sum + entryTotal(entry), 0);
+        const rent = filteredEntries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
+        const energy = filteredEntries.reduce((sum, entry) => sum + energyTotal(entry), 0);
+
+        const waterExpenses = sumExpenseByType("Água", "Agua");
+        const internetExpenses = sumExpenseByType("Internet");
+        const iptuExpenses = sumExpenseByType("IPTU");
+        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra");
+        const insuranceExpenses = sumExpenseByType("Seguro do Imóvel", "Seguro do Imovel", "Seguro Imóvel", "Seguro Imovel", "Seguro");
+
+        const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+        const net = gross - expenses;
+
+        return {
+          gross,
+          rent,
+          energy,
+          expenses,
+          net,
+          waterExpenses,
+          internetExpenses,
+          iptuExpenses,
+          maintenanceExpenses,
+          insuranceExpenses
+        };
+      }
+
+      function setLoggedInView(user) {
+        loggedUser = user;
+        $("#loginScreen").classList.add("hidden");
+        $("#appShell").classList.remove("hidden");
+        renderAll();
+        showTab("dashboard");
+        $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login}`;
+      }
+
+      function setLoggedOutView() {
+        loggedUser = null;
+        $("#appShell").classList.add("hidden");
+        $("#loginScreen").classList.remove("hidden");
+        $("#loginUser").value = "";
+        $("#loginPassword").value = "";
+        $("#loginUser").focus();
+        renderBrand();
+        fillGithubConfigForms();
+        updateSyncStatus();
+      }
+
+      async function handleLogin(event) {
+        event.preventDefault();
+        const login = $("#loginUser").value.trim();
+        const password = $("#loginPassword").value;
+
+        await seedDefaultUserIfNeeded(false);
+
+        const user = state.users.find(item => item.login.toLowerCase() === login.toLowerCase());
+
+        if (!user) {
+          toast("Usuário ou senha inválidos.");
+          return;
+        }
+
+        const candidateHash = await hashPassword(password, user.salt);
+
+        if (candidateHash !== user.passwordHash) {
+          toast("Usuário ou senha inválidos.");
+          return;
+        }
+
+        setLoggedInView(user);
+        toast("Login realizado com sucesso.");
+      }
+
+      function logout() {
+        setLoggedOutView();
+        toast("Você saiu do sistema.");
+      }
+
+      function renderAll() {
+        state = normalizeState(state);
+        renderBrand();
+        fillGithubConfigForms();
+        updateSyncStatus();
+
+        if (!loggedUser) return;
+
+        renderDashboard();
+        renderApartmentOptions();
+        renderApartments();
+        renderExpenses();
+        renderEntries();
+        renderContractHistory();
+        renderSettings();
+        renderUsers();
+        updateEntryPreview();
+      }
+
+      function renderBrand() {
+        const name = state.settings.appName || "Residencial Beatriz";
+        document.title = name;
+
+        $("#brandTitle").textContent = name;
+        $("#loginTitle").textContent = name;
+
+        const initials = name.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join("").toUpperCase() || "RB";
+        const logoHtml = state.settings.logo ? `<img src="${state.settings.logo}" alt="Logo">` : initials;
+
+        $("#brandLogo").innerHTML = logoHtml;
+        $("#loginLogo").innerHTML = logoHtml;
+      }
+
+      function renderDashboardControls() {
+        const periodSelect = $("#dashboardPeriod");
+        const yearSelect = $("#dashboardYear");
+        const years = availableYears();
+        const currentYear = new Date().getFullYear();
+
+        periodSelect.value = state.settings.dashboardPeriod || "currentYear";
+
+        if (!years.includes(Number(state.settings.dashboardYear))) state.settings.dashboardYear = currentYear;
+
+        yearSelect.innerHTML = `<option value="all">Todo o período</option>` + years.map(year => `<option value="${year}">${year}</option>`).join("");
+
+        if (periodSelect.value === "all") {
+          yearSelect.value = "all";
+        } else {
+          yearSelect.value = String(state.settings.dashboardYear || currentYear);
+        }
+
+        yearSelect.disabled = periodSelect.value !== "currentYear";
+
+        const range = getPeriodRange();
+        $("#periodBadge").innerHTML = `<i class="fa-solid fa-calendar-days"></i>${escapeHtml(range.label)}`;
+      }
+
+      function renderDashboard() {
+        renderDashboardControls();
+
+        const f = getFinancials();
+
+        $("#grossValue").textContent = money(f.gross);
+        $("#expenseValue").textContent = money(f.expenses);
+        $("#rentValue").textContent = money(f.rent);
+        $("#energyValue").textContent = money(f.energy);
+
+        $("#waterExpenseValue").textContent = money(f.waterExpenses);
+        $("#internetExpenseValue").textContent = money(f.internetExpenses);
+        $("#iptuExpenseValue").textContent = money(f.iptuExpenses);
+        $("#maintenanceExpenseValue").textContent = money(f.maintenanceExpenses);
+        $("#insuranceExpenseValue").textContent = money(f.insuranceExpenses);
+
+        renderPie("#pieCashFlow", [
+          { label: "Faturamento Bruto", value: f.gross, color: "#4285F4" },
+          { label: "Despesas Administrativas", value: f.expenses, color: "#EA4335" }
+        ]);
+
+        renderPie("#pieRevenueDivision", [
+          { label: "Aluguel Total", value: f.rent, color: "#FBBC05" },
+          { label: "Luz/COSIP Total", value: f.energy, color: "#34A853" }
+        ]);
+
+        const profitEl = $("#netProfitValue");
+        profitEl.textContent = money(f.net);
+        profitEl.classList.toggle("negative", f.net < 0);
+
+        $("#profitReference").textContent = `${money(f.gross)} - ${money(f.expenses)} = ${money(f.net)}`;
+
+        renderContractAlerts();
+      }
+
+      function renderPie(target, slices) {
+        const el = $(target);
+        const normalized = slices.map(slice => ({ ...slice, value: Math.max(0, toNumber(slice.value)) }));
+        const total = normalized.reduce((sum, slice) => sum + slice.value, 0);
+
+        if (total <= 0) {
+          el.innerHTML = `
+            <div class="pie-empty">Sem dados para exibir</div>
+            <div class="legend">
+              ${normalized.map(slice => `
+                <div class="legend-item">
+                  <span class="legend-dot" style="background:${slice.color}"></span>
+                  <span>${escapeHtml(slice.label)}</span>
+                  <strong>${money(0)}</strong>
+                </div>
+              `).join("")}
+            </div>
+          `;
+          return;
+        }
+
+        let start = 0;
+        const gradient = normalized.map(slice => {
+          const degrees = (slice.value / total) * 360;
+          const stop = `${slice.color} ${start.toFixed(2)}deg ${(start + degrees).toFixed(2)}deg`;
+          start += degrees;
+          return stop;
+        }).join(", ");
+
+        el.innerHTML = `
+          <div class="pie" style="background: conic-gradient(${gradient});">
+            <div class="pie-center">${money(total)}</div>
+          </div>
+          <div class="legend">
+            ${normalized.map(slice => {
+              const percent = total ? (slice.value / total) * 100 : 0;
+              return `
+                <div class="legend-item">
+                  <span class="legend-dot" style="background:${slice.color}"></span>
+                  <span>${escapeHtml(slice.label)} <span class="mini">(${percent.toFixed(1)}%)</span></span>
+                  <strong>${money(slice.value)}</strong>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      function renderContractAlerts() {
+        const el = $("#contractAlerts");
+        const now = new Date();
+        const firstNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+        const firstAfterNext = new Date(now.getFullYear(), now.getMonth() + 2, 1);
+
+        const alerts = state.apartments
+          .filter(apartment => apartment.status !== "free" && apartment.tenant?.name)
+          .map(apartment => ({ ...apartment, currentEnd: apartment.contractEnd || addMonths(apartment.contractStart, 6) }))
+          .filter(apartment => {
+            const end = parseDate(apartment.currentEnd);
+            return end && end >= firstNextMonth && end < firstAfterNext;
+          })
+          .sort((a, b) => String(a.currentEnd).localeCompare(String(b.currentEnd)));
+
+        if (!alerts.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-circle-check"></i>
+              <strong>Nenhum contrato vence no mês seguinte.</strong>
+              <div class="mini">Quando algum contrato estiver próximo do vencimento, aparecerá aqui.</div>
+            </div>
+          `;
+          return;
+        }
+
+        el.innerHTML = alerts.map(apartment => `
+          <div class="contract-alert">
+            <div>
+              <strong>${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</strong>
+              <div class="mini muted">Vencimento: ${formatDate(apartment.currentEnd)} • Telefone: ${escapeHtml(apartment.tenant.phone || "-")}</div>
+            </div>
+            <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
+              <i class="fa-solid fa-rotate-right"></i> Renovar por mais 6 meses
+            </button>
+          </div>
+        `).join("");
+      }
+
+      function renderApartmentOptions() {
+        const entrySelect = $("#entryApartmentId");
+        const expenseSelect = $("#expenseApartmentId");
+
+        const sorted = [...state.apartments].sort((a, b) => String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true }));
+
+        const occupiedOptions = sorted
+          .filter(apartment => apartment.status !== "free" && apartment.tenant?.name)
+          .map(apartment => `<option value="${apartment.id}">${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</option>`)
+          .join("");
+
+        const allOptions = sorted
+          .map(apartment => `<option value="${apartment.id}">${escapeHtml(apartment.number)}${apartment.tenant?.name ? " — " + escapeHtml(apartment.tenant.name) : " — Livre"}</option>`)
+          .join("");
+
+        const entryCurrent = entrySelect.value;
+        const expenseCurrent = expenseSelect.value;
+
+        entrySelect.innerHTML = occupiedOptions ? `<option value="">Selecione...</option>${occupiedOptions}` : `<option value="">Cadastre ou ocupe um imóvel primeiro</option>`;
+        expenseSelect.innerHTML = `<option value="">Despesa global do proprietário</option>${allOptions}`;
+
+        entrySelect.disabled = !occupiedOptions;
+
+        if (sorted.some(apartment => apartment.id === entryCurrent)) entrySelect.value = entryCurrent;
+        if (sorted.some(apartment => apartment.id === expenseCurrent)) expenseSelect.value = expenseCurrent;
+      }
+
+      function renderApartments() {
+        const el = $("#apartmentsList");
+
+        if (!state.apartments.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-building"></i>
+              <strong>Nenhum imóvel cadastrado.</strong>
+              <div class="mini">Cadastre o primeiro apartamento para liberar lançamentos mensais.</div>
+            </div>
+          `;
+          return;
+        }
+
+        const sorted = [...state.apartments].sort((a, b) => String(a.number).localeCompare(String(b.number), "pt-BR", { numeric: true }));
+
+        el.innerHTML = sorted.map(apartment => {
+          const isFree = apartment.status === "free" || !apartment.tenant?.name;
+          const photo = apartment.photo
+            ? `<img src="${apartment.photo}" alt="Foto do imóvel">`
+            : `<span>${escapeHtml(String(apartment.number || "AP").slice(0, 3).toUpperCase())}</span>`;
+
+          return `
+            <div class="item">
+              <div class="photo">${photo}</div>
+              <div>
+                <h3>${escapeHtml(apartment.number)} ${isFree ? '<span class="pill green">Livre</span>' : `— ${escapeHtml(apartment.tenant.name)}`}</h3>
+                <div class="meta">
+                  <span class="pill blue"><i class="fa-solid fa-money-bill-wave"></i> Aluguel base: ${money(apartment.baseRent)}</span>
+                  ${isFree ? `
+                    <span class="pill green"><i class="fa-solid fa-door-open"></i> Disponível para novo morador</span>
+                  ` : `
+                    <span class="pill green"><i class="fa-solid fa-calendar-day"></i> Início: ${formatDate(apartment.contractStart)}</span>
+                    <span class="pill yellow"><i class="fa-solid fa-calendar-check"></i> Vence: ${formatDate(apartment.contractEnd)}</span>
+                    <span class="pill"><i class="fa-solid fa-id-card"></i> CPF: ${escapeHtml(apartment.tenant.cpf || "-")}</span>
+                    <span class="pill"><i class="fa-solid fa-phone"></i> ${escapeHtml(apartment.tenant.phone || "-")}</span>
+                  `}
+                  <span class="pill"><i class="fa-solid fa-clock-rotate-left"></i> Histórico: ${(apartment.contractHistory || []).length}</span>
+                </div>
+                <p class="mini muted" style="margin:8px 0 0;">
+                  ${isFree ? "Sem morador atual. Clique em Editar/Novo morador para cadastrar o próximo contrato." : `
+                    <strong>Nascimento:</strong> ${formatDate(apartment.tenant.birth)}
+                    • <strong>Emergência:</strong> ${escapeHtml(apartment.tenant.emergencyName || "-")} - ${escapeHtml(apartment.tenant.emergencyPhone || "-")}
+                  `}
+                </p>
+                <p class="mini muted" style="margin:6px 0 0;">${escapeHtml(apartment.description || "Sem descrição cadastrada.")}</p>
+              </div>
+              <div class="actions">
+                ${isFree ? `
+                  <button class="btn btn-success btn-sm" data-action="newTenantApartment" data-id="${apartment.id}">
+                    <i class="fa-solid fa-user-plus"></i> Novo morador
+                  </button>
+                ` : `
+                  <button class="btn btn-primary btn-sm" data-action="downloadContract" data-id="${apartment.id}">
+                    <i class="fa-solid fa-file-arrow-down"></i> Baixar Contrato de Locação
+                  </button>
+                  <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
+                    <i class="fa-solid fa-rotate-right"></i> Renovar
+                  </button>
+                  <button class="btn btn-danger btn-sm" data-action="vacateApartment" data-id="${apartment.id}">
+                    <i class="fa-solid fa-door-open"></i> Liberar apto
+                  </button>
+                `}
+                <button class="btn btn-light btn-sm" data-action="editApartment" data-id="${apartment.id}">
+                  <i class="fa-solid fa-pen"></i> Editar
+                </button>
+                <button class="btn btn-danger btn-sm" data-action="deleteApartment" data-id="${apartment.id}">
+                  <i class="fa-solid fa-trash"></i> Remover
+                </button>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function getExpenseYear(expense) {
+        return expense.month ? String(expense.month).slice(0, 4) : "Sem ano";
+      }
+
+      function getExpenseTypeClass(type) {
+        if (type === "Água") return "blue";
+        if (type === "Internet") return "green";
+        if (type === "IPTU") return "red";
+        if (type === "Seguro do Imóvel") return "blue";
+        return "yellow";
+      }
+
+      function renderExpenseFilterControls() {
+        const yearSelect = $("#expensesYearFilter");
+        const typeSelect = $("#expensesTypeFilter");
+        const searchInput = $("#expensesSearchFilter");
+        const badge = $("#expensesFilterBadge");
+
+        if (!yearSelect || !typeSelect || !searchInput || !badge) return;
+
+        const selectedYear = yearSelect.value || "all";
+        const selectedType = typeSelect.value || "all";
+
+        const years = Array.from(new Set(
+          state.expenses
+            .map(getExpenseYear)
+            .filter(Boolean)
+        )).sort((a, b) => {
+          if (a === "Sem ano") return 1;
+          if (b === "Sem ano") return -1;
+          return Number(b) - Number(a);
+        });
+
+        yearSelect.innerHTML = `<option value="all">Todos os anos</option>` +
+          years.map(year => `<option value="${escapeHtml(year)}">${escapeHtml(year)}</option>`).join("");
+
+        if (selectedYear !== "all" && years.includes(selectedYear)) {
+          yearSelect.value = selectedYear;
+        } else {
+          yearSelect.value = "all";
+        }
+
+        typeSelect.value = selectedType;
+        if (!typeSelect.value) typeSelect.value = "all";
+
+        const parts = [];
+        parts.push(yearSelect.value === "all" ? "Todos os anos" : `Ano ${yearSelect.value}`);
+        parts.push(typeSelect.value === "all" ? "Todos os tipos" : typeSelect.value);
+
+        if (searchInput.value.trim()) {
+          parts.push(`Busca: ${searchInput.value.trim()}`);
+        }
+
+        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${escapeHtml(parts.join(" • "))}`;
+      }
+
+      function getFilteredExpenses() {
+        const year = $("#expensesYearFilter")?.value || "all";
+        const type = $("#expensesTypeFilter")?.value || "all";
+        const search = ($("#expensesSearchFilter")?.value || "").trim().toLowerCase();
+
+        return state.expenses.filter(expense => {
+          const expenseYear = getExpenseYear(expense);
+          const unit = expense.apartmentId ? apartmentName(expense.apartmentId) : "Global";
+          const searchable = [
+            expense.month,
+            monthName(expense.month),
+            expense.type,
+            unit,
+            expense.description,
+            String(expense.amount || "")
+          ].join(" ").toLowerCase();
+
+          const yearMatches = year === "all" || expenseYear === year;
+          const typeMatches = type === "all" || expense.type === type;
+          const searchMatches = !search || searchable.includes(search);
+
+          return yearMatches && typeMatches && searchMatches;
+        });
+      }
+
+      function renderExpenses() {
+        const el = $("#expensesList");
+        const total = state.expenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+
+        renderExpenseFilterControls();
+
+        const filtered = getFilteredExpenses();
+        const filteredTotal = filtered.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+
+        $("#expensesSummary").textContent = `Total interno geral: ${money(total)} | Total filtrado: ${money(filteredTotal)}`;
+
+        if (!state.expenses.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-receipt"></i>
+              <strong>Nenhuma despesa cadastrada.</strong>
+              <div class="mini">Cadastre Água, Internet, IPTU, Manutenção ou Seguro do Imóvel para calcular o lucro líquido real.</div>
+            </div>
+          `;
+          return;
+        }
+
+        if (!filtered.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <strong>Nenhuma despesa encontrada com o filtro atual.</strong>
+              <div class="mini">Altere o ano, o tipo ou o texto de busca para visualizar outros registros.</div>
+            </div>
+          `;
+          return;
+        }
+
+        const grouped = filtered.reduce((acc, expense) => {
+          const year = getExpenseYear(expense);
+          if (!acc[year]) acc[year] = [];
+          acc[year].push(expense);
+          return acc;
+        }, {});
+
+        const years = Object.keys(grouped).sort((a, b) => {
+          if (a === "Sem ano") return 1;
+          if (b === "Sem ano") return -1;
+          return Number(b) - Number(a);
+        });
+
+        el.innerHTML = years.map((year, index) => {
+          const expenses = grouped[year].sort((a, b) =>
+            String(b.month).localeCompare(String(a.month)) ||
+            String(a.type).localeCompare(String(b.type), "pt-BR")
+          );
+
+          const yearTotal = expenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+          const shouldOpen = ($("#expensesYearFilter")?.value || "all") !== "all" || index === 0;
+
+          return `
+            <details class="history-year" ${shouldOpen ? "open" : ""}>
+              <summary>
+                <span><i class="fa-solid fa-calendar-days"></i> Ano ${escapeHtml(year)}</span>
+                <span class="history-count">${expenses.length} despesa(s) • Total ${money(yearTotal)}</span>
+              </summary>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Mês/Ano</th>
+                      <th>Tipo</th>
+                      <th>Unidade</th>
+                      <th>Descrição</th>
+                      <th>Valor</th>
+                      <th style="text-align:right;">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${expenses.map(expense => `
+                      <tr>
+                        <td>${monthName(expense.month)}</td>
+                        <td><span class="pill ${getExpenseTypeClass(expense.type)}">${escapeHtml(expense.type)}</span></td>
+                        <td>${expense.apartmentId ? escapeHtml(apartmentName(expense.apartmentId)) : "Global"}</td>
+                        <td>${escapeHtml(expense.description || "-")}</td>
+                        <td><strong>${money(expense.amount)}</strong></td>
+                        <td>
+                          <div class="td-actions">
+                            <button class="btn btn-light btn-sm" data-action="editExpense" data-id="${expense.id}">
+                              <i class="fa-solid fa-pen"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-sm" data-action="deleteExpense" data-id="${expense.id}">
+                              <i class="fa-solid fa-trash"></i> Remover
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          `;
+        }).join("");
+      }
+
+      function getEntriesFilterMode() {
+        return state.settings.entriesHistoryFilter || "current";
+      }
+
+      function isEntryFromCurrentContract(entry) {
+        const apartment = getApartment(entry.apartmentId);
+
+        if (!apartment || apartment.status === "free" || !apartment.tenant?.name) {
+          return false;
+        }
+
+        const entryCpf = String(entry.tenantCpf || "").trim();
+        const currentCpf = String(apartment.tenant?.cpf || "").trim();
+        const entryName = String(entry.tenantName || "").trim().toLowerCase();
+        const currentName = String(apartment.tenant?.name || "").trim().toLowerCase();
+
+        if (entryCpf && currentCpf && entryCpf === currentCpf) {
+          return true;
+        }
+
+        if (entryName && currentName && entryName === currentName) {
+          return true;
+        }
+
+        const start = apartment.contractStart ? apartment.contractStart.slice(0, 7) : "";
+        const end = apartment.contractEnd ? apartment.contractEnd.slice(0, 7) : "";
+
+        if (start && end && entry.month >= start && entry.month <= end) {
+          return true;
+        }
+
+        return false;
+      }
+
+      function filterEntriesByMode(entries) {
+        const mode = getEntriesFilterMode();
+
+        if (mode === "all") {
+          return entries;
+        }
+
+        if (mode === "history") {
+          return entries.filter(entry => !isEntryFromCurrentContract(entry));
+        }
+
+        return entries.filter(isEntryFromCurrentContract);
+      }
+
+      function renderEntriesFilterControls() {
+        const select = $("#entriesHistoryFilter");
+        const badge = $("#entriesFilterBadge");
+
+        if (!select || !badge) return;
+
+        const mode = getEntriesFilterMode();
+        select.value = mode;
+
+        const labels = {
+          current: "Somente contrato atual",
+          history: "Somente contratos anteriores",
+          all: "Todos os lançamentos"
+        };
+
+        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${labels[mode] || labels.current}`;
+      }
+
+      function renderEntries() {
+        const el = $("#entriesList");
+
+        renderEntriesFilterControls();
+
+        const filteredEntries = filterEntriesByMode(state.entries);
+
+        if (!filteredEntries.length) {
+          const mode = getEntriesFilterMode();
+          const emptyText = mode === "current"
+            ? "Nenhum lançamento encontrado para contratos atuais."
+            : mode === "history"
+              ? "Nenhum lançamento antigo encontrado."
+              : "Nenhum lançamento mensal cadastrado.";
+
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-file-invoice-dollar"></i>
+              <strong>${emptyText}</strong>
+              <div class="mini">Use o filtro acima para alternar entre contrato atual, contratos anteriores ou todos os lançamentos.</div>
+            </div>
+          `;
+          return;
+        }
+
+        const grouped = filteredEntries.reduce((acc, entry) => {
+          const key = entry.apartmentId || entry.apartmentNumber || "sem_apartamento";
+
+          if (!acc[key]) {
+            const apartment = getApartment(entry.apartmentId);
+            acc[key] = {
+              apartment,
+              apartmentLabel: entry.apartmentNumber || apartment?.number || "Unidade removida",
+              entries: []
+            };
+          }
+
+          acc[key].entries.push(entry);
+          return acc;
+        }, {});
+
+        const groups = Object.values(grouped).sort((a, b) =>
+          String(a.apartmentLabel).localeCompare(String(b.apartmentLabel), "pt-BR", { numeric: true })
+        );
+
+        el.innerHTML = groups.map((group, index) => {
+          const entries = group.entries.sort((a, b) => String(b.month).localeCompare(String(a.month)));
+          const total = entries.reduce((sum, entry) => sum + entryTotal(entry), 0);
+          const rentTotal = entries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
+          const energyTotalValue = entries.reduce((sum, entry) => sum + energyTotal(entry), 0);
+          const currentTenant = group.apartment?.tenant?.name || "";
+          const activeInfo = currentTenant ? ` • Atual: ${escapeHtml(currentTenant)}` : "";
+          const shouldOpen = index === 0;
+
+          return `
+            <details class="history-year" ${shouldOpen ? "open" : ""}>
+              <summary>
+                <span><i class="fa-solid fa-building"></i> ${escapeHtml(group.apartmentLabel)}</span>
+                <span class="history-count">${entries.length} lançamento(s) • Total ${money(total)}${activeInfo}</span>
+              </summary>
+
+              <div class="reference" style="border-radius:0; border-left:0; border-right:0;">
+                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Total: ${money(total)}
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Morador do lançamento</th>
+                      <th>Mês/Ano</th>
+                      <th>Aluguel</th>
+                      <th>Energia</th>
+                      <th>Valor kWh</th>
+                      <th>Leitura anterior</th>
+                      <th>Leitura atual</th>
+                      <th>Consumo</th>
+                      <th>Luz + COSIP</th>
+                      <th>Total</th>
+                      <th style="text-align:right;">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${entries.map(entry => `
+                      <tr>
+                        <td>${escapeHtml(entry.tenantName || getApartment(entry.apartmentId)?.tenant?.name || "-")}</td>
+                        <td>${monthName(entry.month)}</td>
+                        <td>${money(entry.rent)}</td>
+                        <td><span class="pill ${(entry.energyMode || "withKwh") === "noKwh" ? "green" : "blue"}">${(entry.energyMode || "withKwh") === "noKwh" ? "Sem kWh" : "Com kWh"}</span></td>
+                        <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : money(entry.kwhValue)}</td>
+                        <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhPrevious).toLocaleString("pt-BR") + " kWh"}</td>
+                        <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhCurrent).toLocaleString("pt-BR") + " kWh"}</td>
+                        <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhConsumed).toLocaleString("pt-BR") + " kWh"}</td>
+                        <td>${money(energyTotal(entry))}</td>
+                        <td><strong>${money(entryTotal(entry))}</strong></td>
+                        <td>
+                          <div class="td-actions">
+                            <button class="btn btn-light btn-sm" data-action="editEntry" data-id="${entry.id}">
+                              <i class="fa-solid fa-pen"></i> Editar
+                            </button>
+                            <button class="btn btn-danger btn-sm" data-action="deleteEntry" data-id="${entry.id}">
+                              <i class="fa-solid fa-trash"></i> Remover
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          `;
+        }).join("");
+      }
+
+      function renderContractHistory() {
+        const el = $("#contractHistoryList");
+
+        const apartments = [...state.apartments].sort((a, b) =>
+          String(a.number || "").localeCompare(String(b.number || ""), "pt-BR", { numeric: true })
+        );
+
+        const groups = apartments.map(apartment => {
+          const rows = [];
+
+          (apartment.contractHistory || []).forEach(item => {
+            rows.push({
+              apartmentNumber: item.apartmentNumber || apartment.number,
+              tenant: normalizeTenant(item.tenant),
+              contractStart: item.contractStart,
+              contractEnd: item.contractEnd,
+              baseRent: item.baseRent,
+              status: "Histórico",
+              endedAt: item.endedAt,
+              reason: item.reason
+            });
+          });
+
+          if (apartment.status !== "free" && apartment.tenant?.name) {
+            rows.push({
+              apartmentNumber: apartment.number,
+              tenant: apartment.tenant,
+              contractStart: apartment.contractStart,
+              contractEnd: apartment.contractEnd,
+              baseRent: apartment.baseRent,
+              status: "Contrato Ativo",
+              endedAt: "",
+              reason: ""
+            });
+          }
+
+          rows.sort((a, b) => String(a.contractStart || "").localeCompare(String(b.contractStart || "")));
+
+          return { apartment, rows };
+        }).filter(group => group.rows.length > 0);
+
+        if (!groups.length) {
+          el.innerHTML = `
+            <div class="empty">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+              <strong>Nenhum histórico de contrato.</strong>
+              <div class="mini">Quando você liberar um apartamento, o morador antigo aparecerá aqui.</div>
+            </div>
+          `;
+          return;
+        }
+
+        el.innerHTML = groups.map((group, index) => {
+          const apartment = group.apartment;
+          const rows = group.rows;
+          const active = rows.find(row => row.status === "Contrato Ativo");
+          const shouldOpen = Boolean(active) || index === 0;
+          const firstDate = rows[0]?.contractStart ? formatDate(rows[0].contractStart) : "-";
+          const lastDate = rows[rows.length - 1]?.contractEnd ? formatDate(rows[rows.length - 1].contractEnd) : "-";
+
+          return `
+            <details class="history-year" ${shouldOpen ? "open" : ""}>
+              <summary>
+                <span><i class="fa-solid fa-building"></i> ${escapeHtml(apartment.number || "Apartamento")}</span>
+                <span class="history-count">
+                  ${rows.length} contrato(s) • ${firstDate} até ${lastDate}
+                  ${active ? " • Contrato ativo" : ""}
+                </span>
+              </summary>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ordem</th>
+                      <th>Status</th>
+                      <th>Apartamento</th>
+                      <th>Morador</th>
+                      <th>CPF</th>
+                      <th>Telefone</th>
+                      <th>Início</th>
+                      <th>Encerramento</th>
+                      <th>Valor mensal</th>
+                      <th>Registrado em</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${rows.map((row, rowIndex) => `
+                      <tr>
+                        <td>${rowIndex + 1}</td>
+                        <td><span class="pill ${row.status === "Contrato Ativo" ? "green" : "yellow"}">${row.status}</span></td>
+                        <td>${escapeHtml(row.apartmentNumber)}</td>
+                        <td><strong>${escapeHtml(row.tenant.name || "-")}</strong></td>
+                        <td>${escapeHtml(row.tenant.cpf || "-")}</td>
+                        <td>${escapeHtml(row.tenant.phone || "-")}</td>
+                        <td>${formatDate(row.contractStart)}</td>
+                        <td>${formatDate(row.contractEnd)}</td>
+                        <td>${money(row.baseRent)}</td>
+                        <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          `;
+        }).join("");
+      }
+
+      function renderSettings() {
+        $("#appName").value = state.settings.appName || "Residencial Beatriz";
+        tempAppLogo = state.settings.logo || "";
+        renderLogoPreview();
+      }
+
+      function renderUsers() {
+        const el = $("#usersList");
+
+        if (!state.users.length) {
+          el.innerHTML = `<div class="empty"><i class="fa-solid fa-user-shield"></i><strong>Nenhum usuário cadastrado.</strong></div>`;
+          return;
+        }
+
+        el.innerHTML = `
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Login</th>
+                  <th>Criado em</th>
+                  <th>Status</th>
+                  <th style="text-align:right;">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${state.users.map(user => `
+                  <tr>
+                    <td><strong>${escapeHtml(user.login)}</strong></td>
+                    <td>${user.createdAt ? new Intl.DateTimeFormat("pt-BR").format(new Date(user.createdAt)) : "-"}</td>
+                    <td>${loggedUser && loggedUser.id === user.id ? '<span class="pill green">Usuário atual</span>' : '<span class="pill blue">Ativo</span>'}</td>
+                    <td>
+                      <div class="td-actions">
+                        <button class="btn btn-light btn-sm" data-action="editUser" data-id="${user.id}">
+                          <i class="fa-solid fa-pen"></i> Editar
+                        </button>
+                        <button class="btn btn-danger btn-sm" data-action="deleteUser" data-id="${user.id}">
+                          <i class="fa-solid fa-trash"></i> Remover
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function renderApartmentPhotoPreview() {
+        $("#apartmentPhotoPreview").innerHTML = tempApartmentPhoto ? `<img src="${tempApartmentPhoto}" alt="Prévia da foto">` : "Foto";
+      }
+
+      function renderLogoPreview() {
+        $("#appLogoPreview").innerHTML = tempAppLogo ? `<img src="${tempAppLogo}" alt="Prévia da logo">` : "Logo";
+      }
+
+      function clearApartmentForm() {
+        $("#apartmentEditId").value = "";
+        $("#apartmentNumber").value = "";
+        $("#baseRent").value = "";
+        $("#contractStart").value = "";
+        $("#contractEnd").value = "";
+        $("#apartmentDescription").value = "";
+        $("#apartmentPhoto").value = "";
+        $("#tenantName").value = "";
+        $("#tenantCpf").value = "";
+        $("#tenantPhone").value = "";
+        $("#tenantBirth").value = "";
+        $("#emergencyName").value = "";
+        $("#emergencyPhone").value = "";
+        tempApartmentPhoto = "";
+        renderApartmentPhotoPreview();
+      }
+
+      function clearExpenseForm() {
+        $("#expenseEditId").value = "";
+        $("#expenseMonth").value = currentMonthValue();
+        $("#expenseType").value = "Água";
+        $("#expenseApartmentId").value = "";
+        $("#expenseAmount").value = "";
+        $("#expenseDescription").value = "";
+      }
+
+      function clearEntryForm() {
+        $("#entryEditId").value = "";
+        $("#entryApartmentId").value = "";
+        $("#entryMonth").value = currentMonthValue();
+        $("#entryRent").value = "";
+        $("#entryEnergyMode").value = "withKwh";
+        $("#entryKwhValue").value = "";
+        $("#entryKwhPrevious").value = "";
+        $("#entryKwhCurrent").value = "";
+        $("#entryKwhConsumed").value = "";
+        $("#entryCosip").value = "";
+        $("#entryEnergyAmount").value = money(0);
+        if ($("#entryLastReadingInfo")) {
+          $("#entryLastReadingInfo").textContent = "Selecione o apartamento e o mês para buscar automaticamente a última leitura salva.";
+        }
+        manualEntryRent = false;
+        updateEntryPreview();
+      }
+
+      function clearUserForm() {
+        $("#userEditId").value = "";
+        $("#accessLogin").value = "";
+        $("#accessPassword").value = "";
+        $("#accessPasswordConfirm").value = "";
+      }
+
+      function toggleEntryEnergyMode() {
+        const mode = $("#entryEnergyMode")?.value || "withKwh";
+        const disabled = mode === "noKwh";
+        const ids = ["entryKwhValue", "entryKwhPrevious", "entryKwhCurrent", "entryKwhConsumed", "entryCosip"];
+
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.disabled = disabled;
+          if (disabled) el.value = id === "entryKwhConsumed" ? "0" : "";
+        });
+
+        if ($("#entryEnergyAmount") && disabled) $("#entryEnergyAmount").value = money(0);
+
+        if ($("#entryLastReadingInfo")) {
+          $("#entryLastReadingInfo").textContent = disabled
+            ? "Cálculo de kWh desativado para este lançamento. Use quando o morador tiver relógio próprio."
+            : "Selecione o apartamento e o mês para buscar automaticamente a última leitura salva.";
+        }
+      }
+
+      function updateEntryPreview() {
+        const rent = toNumber($("#entryRent")?.value);
+        const mode = $("#entryEnergyMode")?.value || "withKwh";
+        const isNoKwh = mode === "noKwh";
+        const kwhValue = isNoKwh ? 0 : toNumber($("#entryKwhValue")?.value);
+        const previousReading = isNoKwh ? 0 : toNumber($("#entryKwhPrevious")?.value);
+        const currentReading = isNoKwh ? 0 : toNumber($("#entryKwhCurrent")?.value);
+        const kwhConsumed = isNoKwh ? 0 : Math.max(0, currentReading - previousReading);
+        const cosip = isNoKwh ? 0 : toNumber($("#entryCosip")?.value);
+        const energyAmount = isNoKwh ? 0 : kwhValue * kwhConsumed;
+        const totalEnergyWithCosip = energyAmount + cosip;
+        const total = rent + totalEnergyWithCosip;
+
+        toggleEntryEnergyMode();
+
+        if ($("#entryKwhConsumed")) $("#entryKwhConsumed").value = kwhConsumed ? String(Number(kwhConsumed.toFixed(2))) : "0";
+        if ($("#entryEnergyAmount")) $("#entryEnergyAmount").value = money(energyAmount);
+
+        $("#entryTotalPreview").textContent = money(total);
+
+        if (!isNoKwh && currentReading < previousReading) {
+          $("#entryFormula").textContent = "A leitura atual não pode ser menor que a leitura anterior. Confira os valores informados.";
+          return;
+        }
+
+        if (isNoKwh) {
+          $("#entryFormula").textContent = `Sem cálculo de kWh neste lançamento | Energia: ${money(0)} | COSIP: ${money(0)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
+          return;
+        }
+
+        $("#entryFormula").textContent = `Consumo: ${currentReading.toLocaleString("pt-BR")} - ${previousReading.toLocaleString("pt-BR")} = ${kwhConsumed.toLocaleString("pt-BR")} kWh | Energia: ${money(energyAmount)} + COSIP: ${money(cosip)} = ${money(totalEnergyWithCosip)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
+      }
+
+      function showTab(name) {
+        $$(".tab-btn").forEach(button => button.classList.toggle("active", button.dataset.tab === name));
+        $$(".page").forEach(page => page.classList.toggle("active", page.id === `page-${name}`));
+      }
+
+      function currentContractSnapshot(apartment, reason = "") {
+        return {
+          id: uid("history"),
+          apartmentId: apartment.id,
+          apartmentNumber: apartment.number,
+          tenant: normalizeTenant(apartment.tenant),
+          contractStart: apartment.contractStart,
+          contractEnd: apartment.contractEnd,
+          baseRent: toNumber(apartment.baseRent),
+          endedAt: new Date().toISOString(),
+          reason
+        };
+      }
+
+      async function saveApartmentForm(event) {
+        event.preventDefault();
+
+        const id = $("#apartmentEditId").value;
+        const number = $("#apartmentNumber").value.trim();
+        const contractStart = $("#contractStart").value;
+        const contractEnd = $("#contractEnd").value;
+        const tenantName = $("#tenantName").value.trim();
+
+        if (!number || !contractStart || !contractEnd || !tenantName) {
+          toast("Preencha ID do apto, início, vencimento e nome do morador.");
+          return;
+        }
+
+        const duplicate = state.apartments.some(apartment => apartment.id !== id && apartment.number.toLowerCase() === number.toLowerCase());
+        if (duplicate) {
+          toast("Já existe um apartamento com esse ID/Número.");
+          return;
+        }
+
+        const existing = id ? getApartment(id) : null;
+
+        const nextApartment = {
+          id: id || uid("apartment"),
+          number,
+          description: $("#apartmentDescription").value.trim(),
+          photo: tempApartmentPhoto,
+          baseRent: toNumber($("#baseRent").value),
+          contractStart,
+          contractEnd,
+          status: "occupied",
+          tenant: {
+            name: tenantName,
+            cpf: $("#tenantCpf").value.trim(),
+            phone: $("#tenantPhone").value.trim(),
+            birth: $("#tenantBirth").value,
+            emergencyName: $("#emergencyName").value.trim(),
+            emergencyPhone: $("#emergencyPhone").value.trim()
+          },
+          contractHistory: existing?.contractHistory || []
+        };
+
+        if (nextApartment.baseRent < 0) {
+          toast("O valor base do aluguel não pode ser negativo.");
+          return;
+        }
+
+        if (existing) {
+          const changedTenant = existing.tenant?.name && existing.status !== "free" &&
+            (
+              existing.tenant.name.trim().toLowerCase() !== nextApartment.tenant.name.trim().toLowerCase() ||
+              existing.tenant.cpf.trim() !== nextApartment.tenant.cpf.trim()
+            );
+
+          if (changedTenant) {
+            const confirmed = confirm("Você alterou o morador principal deste apartamento. Deseja enviar o morador anterior para o histórico?");
+            if (confirmed) {
+              nextApartment.contractHistory = [
+                ...(existing.contractHistory || []),
+                currentContractSnapshot(existing, "Substituição manual do morador")
+              ];
+            }
+          }
+
+          state.apartments = state.apartments.map(item => item.id === id ? nextApartment : item);
+          await save("Apartamento e morador atualizados.");
+        } else {
+          state.apartments.push(nextApartment);
+          await save("Apartamento e morador cadastrados.");
+        }
+
+        clearApartmentForm();
+      }
+
+      function editApartment(id) {
+        const apartment = getApartment(id);
+        if (!apartment) return;
+
+        $("#apartmentEditId").value = apartment.id;
+        $("#apartmentNumber").value = apartment.number || "";
+        $("#baseRent").value = apartment.baseRent ?? "";
+        $("#contractStart").value = apartment.contractStart || "";
+        $("#contractEnd").value = apartment.contractEnd || (apartment.contractStart ? addMonths(apartment.contractStart, 6) : "");
+        $("#apartmentDescription").value = apartment.description || "";
+        $("#tenantName").value = apartment.tenant?.name || "";
+        $("#tenantCpf").value = apartment.tenant?.cpf || "";
+        $("#tenantPhone").value = apartment.tenant?.phone || "";
+        $("#tenantBirth").value = apartment.tenant?.birth || "";
+        $("#emergencyName").value = apartment.tenant?.emergencyName || "";
+        $("#emergencyPhone").value = apartment.tenant?.emergencyPhone || "";
+
+        tempApartmentPhoto = apartment.photo || "";
+        renderApartmentPhotoPreview();
+
+        showTab("apartments");
+        $("#apartmentForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      function newTenantApartment(id) {
+        const apartment = getApartment(id);
+        if (!apartment) return;
+
+        $("#apartmentEditId").value = apartment.id;
+        $("#apartmentNumber").value = apartment.number || "";
+        $("#baseRent").value = apartment.baseRent ?? "";
+        $("#contractStart").value = "";
+        $("#contractEnd").value = "";
+        $("#apartmentDescription").value = apartment.description || "";
+        $("#tenantName").value = "";
+        $("#tenantCpf").value = "";
+        $("#tenantPhone").value = "";
+        $("#tenantBirth").value = "";
+        $("#emergencyName").value = "";
+        $("#emergencyPhone").value = "";
+
+        tempApartmentPhoto = apartment.photo || "";
+        renderApartmentPhotoPreview();
+
+        showTab("apartments");
+        $("#apartmentForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function vacateApartment(id) {
+        const apartment = getApartment(id);
+        if (!apartment) return;
+
+        if (apartment.status === "free" || !apartment.tenant?.name) {
+          toast("Este apartamento já está livre.");
+          return;
+        }
+
+        if (!confirm(`Liberar ${apartment.number}? O morador atual será enviado para o histórico e o apartamento ficará livre para novo cadastro.`)) return;
+
+        apartment.contractHistory = [
+          ...(apartment.contractHistory || []),
+          currentContractSnapshot(apartment, "Apartamento liberado para novo contrato")
+        ];
+
+        apartment.status = "free";
+        apartment.tenant = clone(EMPTY_TENANT);
+        apartment.contractStart = "";
+        apartment.contractEnd = "";
+
+        await save("Apartamento liberado. Morador anterior enviado para o histórico.");
+      }
+
+      async function deleteApartment(id) {
+        const hasEntries = state.entries.some(entry => entry.apartmentId === id);
+        const hasExpenses = state.expenses.some(expense => expense.apartmentId === id);
+
+        let message = "Remover este imóvel, morador atual e histórico de contratos?";
+
+        if (hasEntries || hasExpenses) {
+          message = "Este imóvel possui lançamentos ou despesas vinculadas. Ao remover, os lançamentos serão removidos e as despesas vinculadas ficarão como globais. Deseja continuar?";
+        }
+
+        if (!confirm(message)) return;
+
+        state.apartments = state.apartments.filter(apartment => apartment.id !== id);
+        state.entries = state.entries.filter(entry => entry.apartmentId !== id);
+        state.expenses = state.expenses.map(expense => expense.apartmentId === id ? { ...expense, apartmentId: "" } : expense);
+
+        await save("Imóvel removido.");
+      }
+
+      async function renewApartment(id) {
+        const apartment = getApartment(id);
+        if (!apartment) return;
+
+        if (apartment.status === "free" || !apartment.tenant?.name) {
+          toast("Apartamento livre não possui contrato para renovar.");
+          return;
+        }
+
+        const currentEnd = apartment.contractEnd || addMonths(apartment.contractStart, 6);
+        apartment.contractEnd = addMonths(currentEnd, 6);
+
+        await save(`Contrato renovado até ${formatDate(apartment.contractEnd)}.`);
+      }
+
+      async function saveExpenseForm(event) {
+        event.preventDefault();
+
+        const id = $("#expenseEditId").value;
+
+        const expense = {
+          id: id || uid("expense"),
+          month: $("#expenseMonth").value,
+          type: $("#expenseType").value,
+          apartmentId: $("#expenseApartmentId").value,
+          amount: toNumber($("#expenseAmount").value),
+          description: $("#expenseDescription").value.trim()
+        };
+
+        if (!expense.month || !expense.type || expense.amount < 0) {
+          toast("Preencha corretamente os dados da despesa.");
+          return;
+        }
+
+        if (id) {
+          state.expenses = state.expenses.map(item => item.id === id ? expense : item);
+          await save("Despesa atualizada.");
+        } else {
+          state.expenses.push(expense);
+          await save("Despesa cadastrada.");
+        }
+
+        clearExpenseForm();
+      }
+
+      function editExpense(id) {
+        const expense = state.expenses.find(item => item.id === id);
+        if (!expense) return;
+
+        $("#expenseEditId").value = expense.id;
+        $("#expenseMonth").value = expense.month;
+        $("#expenseType").value = expense.type;
+        $("#expenseApartmentId").value = expense.apartmentId || "";
+        $("#expenseAmount").value = expense.amount;
+        $("#expenseDescription").value = expense.description || "";
+
+        showTab("expenses");
+        $("#expenseForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function deleteExpense(id) {
+        if (!confirm("Remover esta despesa?")) return;
+        state.expenses = state.expenses.filter(expense => expense.id !== id);
+        await save("Despesa removida.");
+      }
+
+      async function saveEntryForm(event) {
+        event.preventDefault();
+
+        const id = $("#entryEditId").value;
+        const apartmentId = $("#entryApartmentId").value;
+        const apartment = getApartment(apartmentId);
+
+        if (!apartmentId || !apartment) {
+          toast("Selecione um apartamento ocupado.");
+          return;
+        }
+
+        const energyMode = $("#entryEnergyMode").value || "withKwh";
+        const noKwh = energyMode === "noKwh";
+
+        const previousReading = noKwh ? 0 : toNumber($("#entryKwhPrevious").value);
+        const currentReading = noKwh ? 0 : toNumber($("#entryKwhCurrent").value);
+        const kwhConsumed = noKwh ? 0 : Math.max(0, currentReading - previousReading);
+
+        const entry = {
+          id: id || uid("entry"),
+          apartmentId,
+          apartmentNumber: apartment.number,
+          tenantName: apartment.tenant?.name || "",
+          tenantCpf: apartment.tenant?.cpf || "",
+          month: $("#entryMonth").value,
+          rent: toNumber($("#entryRent").value),
+          energyMode,
+          kwhValue: noKwh ? 0 : toNumber($("#entryKwhValue").value),
+          kwhPrevious: previousReading,
+          kwhCurrent: currentReading,
+          kwhConsumed,
+          cosip: noKwh ? 0 : toNumber($("#entryCosip").value)
+        };
+
+        if (!entry.month || entry.rent < 0) {
+          toast("Preencha corretamente o mês e o valor do aluguel.");
+          return;
+        }
+
+        if (!noKwh && (entry.kwhValue < 0 || entry.kwhPrevious < 0 || entry.kwhCurrent < 0 || entry.cosip < 0)) {
+          toast("Preencha corretamente os valores de energia.");
+          return;
+        }
+
+        if (!noKwh && entry.kwhCurrent < entry.kwhPrevious) {
+          toast("A leitura atual não pode ser menor que a leitura anterior.");
+          return;
+        }
+
+        if (id) {
+          const existing = state.entries.find(item => item.id === id);
+          if (existing && existing.tenantName) {
+            entry.tenantName = existing.tenantName;
+            entry.tenantCpf = existing.tenantCpf || entry.tenantCpf;
+            entry.apartmentNumber = existing.apartmentNumber || entry.apartmentNumber;
+          }
+          state.entries = state.entries.map(item => item.id === id ? entry : item);
+          await save("Lançamento atualizado.");
+        } else {
+          state.entries.push(entry);
+          await save("Lançamento cadastrado.");
+        }
+
+        clearEntryForm();
+      }
+
+      function editEntry(id) {
+        const entry = state.entries.find(item => item.id === id);
+        if (!entry) return;
+
+        $("#entryEditId").value = entry.id;
+        $("#entryApartmentId").value = entry.apartmentId;
+        $("#entryMonth").value = entry.month;
+        $("#entryRent").value = entry.rent;
+        $("#entryEnergyMode").value = entry.energyMode || "withKwh";
+        $("#entryKwhValue").value = entry.kwhValue;
+        $("#entryKwhPrevious").value = entry.kwhPrevious || "";
+        $("#entryKwhCurrent").value = entry.kwhCurrent || "";
+        $("#entryKwhConsumed").value = entry.kwhConsumed;
+        $("#entryCosip").value = entry.cosip;
+
+        manualEntryRent = true;
+        updateEntryPreview();
+
+        showTab("entries");
+        $("#entryForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function deleteEntry(id) {
+        if (!confirm("Remover este lançamento mensal?")) return;
+        state.entries = state.entries.filter(entry => entry.id !== id);
+        await save("Lançamento removido.");
+      }
+
+      async function saveSettingsForm(event) {
+        event.preventDefault();
+        state.settings.appName = $("#appName").value.trim() || "Residencial Beatriz";
+        state.settings.logo = tempAppLogo || "";
+        await save("Configurações salvas.");
+      }
+
+      async function saveUserForm(event) {
+        event.preventDefault();
+
+        const id = $("#userEditId").value;
+        const login = $("#accessLogin").value.trim();
+        const password = $("#accessPassword").value;
+        const passwordConfirm = $("#accessPasswordConfirm").value;
+
+        if (!login) {
+          toast("Informe o login do usuário.");
+          return;
+        }
+
+        const duplicate = state.users.some(user => user.id !== id && user.login.toLowerCase() === login.toLowerCase());
+        if (duplicate) {
+          toast("Já existe um usuário com esse login.");
+          return;
+        }
+
+        if (!id && !password) {
+          toast("Informe uma senha para o novo usuário.");
+          return;
+        }
+
+        if (password || passwordConfirm) {
+          if (password !== passwordConfirm) {
+            toast("As senhas não conferem.");
+            return;
+          }
+
+          if (password.length < 4) {
+            toast("A senha deve ter pelo menos 4 caracteres.");
+            return;
+          }
+        }
+
+        if (id) {
+          const user = state.users.find(item => item.id === id);
+          if (!user) return;
+
+          user.login = login;
+
+          if (password) {
+            user.salt = randomSalt();
+            user.passwordHash = await hashPassword(password, user.salt);
+          }
+
+          if (loggedUser && loggedUser.id === id) {
+            loggedUser = user;
+            $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login}`;
+          }
+
+          await save("Usuário atualizado.");
+        } else {
+          const newUser = await createUser(login, password);
+          state.users.push(newUser);
+          await save("Usuário criado.");
+        }
+
+        clearUserForm();
+      }
+
+      function editUser(id) {
+        const user = state.users.find(item => item.id === id);
+        if (!user) return;
+
+        $("#userEditId").value = user.id;
+        $("#accessLogin").value = user.login;
+        $("#accessPassword").value = "";
+        $("#accessPasswordConfirm").value = "";
+
+        showTab("settings");
+        $("#userForm").scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      async function deleteUser(id) {
+        if (state.users.length <= 1) {
+          toast("Não é possível remover o último usuário.");
+          return;
+        }
+
+        if (loggedUser && loggedUser.id === id) {
+          toast("Não é possível remover o usuário que está logado.");
+          return;
+        }
+
+        if (!confirm("Remover este usuário de acesso?")) return;
+
+        state.users = state.users.filter(user => user.id !== id);
+        await save("Usuário removido.");
+      }
+
+      function exportBackup() {
+        const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = `backup-residencial-beatriz-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(url);
+        toast("Backup exportado.");
+      }
+
+      async function importBackup(file) {
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = async () => {
+          try {
+            const imported = JSON.parse(String(reader.result || "{}"));
+
+            if (!imported || !Array.isArray(imported.apartments) || !Array.isArray(imported.expenses) || !Array.isArray(imported.entries)) {
+              throw new Error("Backup inválido");
+            }
+
+            if (!confirm("Importar este backup substituirá todos os dados atuais. Deseja continuar?")) {
+              $("#importInput").value = "";
+              return;
+            }
+
+            state = normalizeState(imported);
+            await seedDefaultUserIfNeeded(false);
+            await save("Backup importado e salvo no GitHub.");
+          } catch (error) {
+            console.error(error);
+            toast("Arquivo de backup inválido.");
+          } finally {
+            $("#importInput").value = "";
+          }
+        };
+
+        reader.readAsText(file);
+      }
+
+      async function resetData() {
+        if (!confirm("Deseja apagar todos os dados do sistema? Esta ação não pode ser desfeita.")) return;
+
+        state = clone(DEFAULT_STATE);
+        await seedDefaultUserIfNeeded(false);
+
+        clearApartmentForm();
+        clearExpenseForm();
+        clearEntryForm();
+        clearUserForm();
+
+        await save("Todos os dados foram apagados.");
+        setLoggedOutView();
+      }
+
+      function saveGithubForm(prefix = "") {
+        const ownerId = prefix ? `${prefix}GithubOwner` : "githubOwner";
+        const repoId = prefix ? `${prefix}GithubRepo` : "githubRepo";
+        const branchId = prefix ? `${prefix}GithubBranch` : "githubBranch";
+        const pathId = prefix ? `${prefix}GithubPath` : "githubPath";
+        const tokenId = prefix ? `${prefix}GithubToken` : "githubToken";
+
+        const owner = document.getElementById(ownerId).value.trim();
+        const repo = document.getElementById(repoId).value.trim() || "residencialbia2";
+        const branch = document.getElementById(branchId).value.trim() || "main";
+        const path = document.getElementById(pathId).value.trim() || "dados/residencialbia2.json";
+        const token = document.getElementById(tokenId).value.trim();
+
+        if (!owner || !repo || !branch || !path) {
+          toast("Preencha usuário/organização, repositório, branch e caminho do arquivo.");
+          return false;
+        }
+
+        saveGithubConfig({ owner, repo, branch, path, token: token || githubConfig.token });
+        document.getElementById(tokenId).value = "";
+        toast("Configuração GitHub salva neste navegador.");
+        return true;
+      }
+
+
+      function formatCpf(value) {
+        const digits = String(value || "").replace(/\D/g, "");
+        if (digits.length !== 11) return value || "________________";
+        return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
+      }
+
+      function formatDateLong(iso) {
+        const date = parseDate(iso);
+        if (!date) return "____ de __________________ de ______";
+        return new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "long", year: "numeric" }).format(date);
+      }
+
+      function rentValueInWords(value) {
+        const n = Math.round(toNumber(value));
+        const known = {
+          1000: "mil reais",
+          1100: "mil e cem reais",
+          1200: "mil e duzentos reais",
+          1250: "mil duzentos e cinquenta reais",
+          1300: "mil e trezentos reais",
+          1350: "mil trezentos e cinquenta reais",
+          1400: "mil e quatrocentos reais",
+          1500: "mil e quinhentos reais",
+          1600: "mil e seiscentos reais",
+          1700: "mil e setecentos reais",
+          1800: "mil e oitocentos reais",
+          1900: "mil e novecentos reais",
+          2000: "dois mil reais"
+        };
+        return known[n] || `${n.toLocaleString("pt-BR")} reais`;
+      }
+
+      function sanitizeFileName(value) {
+        return String(value || "contrato")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-zA-Z0-9-_]+/g, "_")
+          .replace(/_+/g, "_")
+          .replace(/^_|_$/g, "")
+          .toLowerCase();
+      }
+
+      function buildRentalContractHtml(apartment) {
+        const tenant = normalizeTenant(apartment.tenant);
+        const startDate = apartment.contractStart || isoDate(new Date());
+        const endDate = apartment.contractEnd || addMonths(startDate, 6);
+        const rent = toNumber(apartment.baseRent);
+        const rentText = rentValueInWords(rent);
+        const todayText = formatDateLong(isoDate(new Date()));
+        const tenantName = tenant.name || "________________________________";
+        const tenantCpf = formatCpf(tenant.cpf);
+        const tenantPhone = tenant.phone || "________________";
+
+        const rawApartmentNumber = String(apartment.number || "Apartamento").trim();
+        const apartmentDigits = rawApartmentNumber.match(/\d+/)?.[0] || rawApartmentNumber;
+        const apartmentContractLabel = apartmentDigits
+          ? `APARTAMENTO n ${apartmentDigits.padStart(2, "0")}`
+          : rawApartmentNumber.toUpperCase();
+
+        const propertyDescription = apartment.description || "Imóvel residencial situado no Residencial Beatriz, localizado na rua Albino Dias n 170, no Bairro Caminho Novo, Cidade Palhoça/SC.";
+        const logoHtml = state.settings.logo
+          ? `<img src="${state.settings.logo}" alt="Residencial Beatriz" style="max-height:80px;max-width:170px;object-fit:contain;">`
+          : `<div style="width:82px;height:82px;border-radius:22px;background:#4285F4;color:white;display:grid;place-items:center;font-weight:800;font-size:26px;margin:0 auto;">RB</div>`;
+
+        return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Contrato de Locação - ${escapeHtml(rawApartmentNumber)}</title>
+  <style>
+    @page { size: A4 portrait; margin: 20mm 18mm; }
+
+    html, body {
+      background: #f1f3f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #111;
+      font-size: 11.5pt;
+      line-height: 1.55;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20mm 18mm;
+      box-sizing: border-box;
+      box-shadow: 0 12px 38px rgba(0,0,0,.16);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 15pt;
+      line-height: 1.3;
+      margin: 12px 0 22px;
+      text-transform: uppercase;
+      letter-spacing: .2px;
+    }
+
+    h2 {
+      font-size: 12pt;
+      line-height: 1.35;
+      margin: 20px 0 14px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    p {
+      margin: 0 0 11px;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .opening {
+      margin-bottom: 18px;
+    }
+
+    .clause {
+      margin-top: 18px;
+      margin-bottom: 16px;
+      padding-top: 2px;
+      page-break-inside: avoid;
+    }
+
+    .subclause {
+      margin-top: 8px;
+      margin-left: 14px;
+      margin-bottom: 11px;
+    }
+
+    .contract-spacer {
+      height: 8px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .center { text-align: center; }
+
+    .signatures {
+      margin-top: 52px;
+      display: block;
+      page-break-inside: avoid;
+    }
+
+    .signature-gap-large {
+      height: 128px;
+    }
+
+    .signature-gap-locador-locatario {
+      height: 256px;
+    }
+
+    .signature-gap-locatario-testemunhas {
+      height: 352px;
+    }
+
+    .line {
+      border-top: 1px solid #111;
+      padding-top: 7px;
+      text-align: center;
+      min-height: 42px;
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      margin-top: 0;
+    }
+
+    .checklist {
+      border: 1px solid #111;
+      padding: 12px;
+      margin: 14px 0 18px;
+      page-break-inside: avoid;
+    }
+
+    .small {
+      font-size: 9.5pt;
+      color: #333;
+    }
+
+    .print-btn {
+      position: fixed;
+      right: 16px;
+      top: 16px;
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 999px;
+      background: #4285F4;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,.18);
+      font-weight: 700;
+      z-index: 20;
+    }
+
+    @media print {
+      html, body {
+        background: #fff;
+      }
+
+      .page {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .print-btn {
+        display: none;
+      }
+
+      body {
+        font-size: 11pt;
+        line-height: 1.5;
+      }
+
+      .clause {
+        margin-top: 16px;
+        margin-bottom: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn" onclick="window.print()">Imprimir / Salvar em PDF</button>
+
+  <main class="page">
+  <div class="header">
+    ${logoHtml}
+  </div>
+
+  <h1>Contrato de Locação com Prazo Determinado de 6 Meses</h1>
+
+  <p class="opening">Fazem entre si, <strong>LEANDRO PICKLER</strong>, brasileiro, casado, inscrito no RG n. 4.183.420 expedida pela SSP/SC e portador do CPF sob o n. <strong>050.158.229-01</strong>, residente e domiciliado na Prefeito Otávio Zacchi, Bairro Centro, na Cidade de Palhoça/SC, doravante denominado <strong>LOCADOR</strong>; de outro lado <strong>${escapeHtml(tenantName)}</strong>, brasileiro(a), inscrito(a) no CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número de telefone <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado(a) <strong>LOCATÁRIO(A)</strong>, firmam o presente <strong>CONTRATO DE LOCAÇÃO</strong>.</p>
+
+  <h2>Das Cláusulas do Contrato</h2>
+
+  <p class="clause"><strong>CLÁUSULA PRIMEIRA:</strong> O LOCADOR oferta em locação um <strong>${escapeHtml(apartmentContractLabel)}</strong> de sua propriedade, contendo 1 (um) quarto, 1 (uma) sala, 1 (uma) cozinha, 1 (uma) área de serviço e 1 (um) banheiro. O imóvel é localizado na rua Albino Dias n 170, no Bairro Caminho Novo, Cidade Palhoça/SC.</p>
+
+  <p class="clause"><strong>CLÁUSULA SEGUNDA:</strong> O prazo da locação é de 06 meses, iniciando no dia <strong>${formatDateLong(startDate)}</strong> e terminando no dia <strong>${formatDateLong(endDate)}</strong>;</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Terminado o prazo inicialmente convencionado e não havendo qualquer manifestação das partes, a locação será prorrogada por prazo determinado de 06 meses, desde que exista anuência do Locador quanto ao valor a ser pago correspondente ao aluguel, passível de reajuste.</p>
+
+  <p class="subclause"><strong>§ 2º.</strong> Caso não haja manifestação das partes para prorrogação, o contrato será automaticamente encerrado na data final do prazo acordado, salvo novo acordo entre as partes.</p>
+
+  <p class="clause"><strong>CLÁUSULA TERCEIRA:</strong> O aluguel mensal convencionado é de <strong>${money(rent)}</strong> (${escapeHtml(rentText)}) nos 6 meses consecutivos, a serem pagos pelo LOCATÁRIO sempre de forma adiantada, ou seja, primeiro paga o aluguel para ter direito à utilização do imóvel no mês corrente, sendo ajustado o pagamento até o dia 10 do mês subsequente ao vencido, a ser pago diretamente ao LOCADOR.</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Será de responsabilidade dos LOCATÁRIOS os pagamentos de luz e todas as demais despesas ordinárias referentes à conservação do imóvel legalmente permitidas por lei.</p>
+
+  <p class="clause"><strong>CLÁUSULA QUARTA:</strong> Caso não haja o pagamento até o prazo convencionado no contrato, incidirá multa de 10% sobre o valor do aluguel, mais juros de mora de 1% e correção monetária apuradas no período.</p>
+
+  <p class="subclause"><strong>Parágrafo único:</strong> Caberão aos LOCATÁRIOS as penalidades decorrentes dos atrasos nos pagamentos da luz.</p>
+
+  <p class="clause"><strong>CLÁUSULA QUINTA:</strong> O imóvel locado destina-se, exclusivamente, para fins residenciais e no máximo para 2 (duas) pessoas, sendo vedada outra destinação, transferência ou sublocação, total ou parcial, sem o consentimento expresso do LOCADOR.</p>
+
+  <p class="clause"><strong>CLÁUSULA SEXTA:</strong> Os LOCATÁRIOS declaram ter recebido o imóvel em perfeitas condições de habitabilidade e reparado em toda sua extensão.</p>
+
+  <p class="clause"><strong>CLÁUSULA SÉTIMA:</strong> Os LOCATÁRIOS obrigam-se a manter o imóvel locado sempre limpo e restituí-lo, finda a locação, nas mesmas e perfeitas condições de habitabilidade recebidas, correndo exclusivamente por sua conta todos os reparos tendentes à conservação do imóvel, das suas dependências, instalações e utensílios nele existentes, inclusive os consertos e reparos que se fizerem necessários, bem como as multas que der causa, por inobservância de quaisquer leis, decretos e regulamentos.</p>
+
+  <p class="clause"><strong>CLÁUSULA OITAVA:</strong> Os LOCATÁRIOS obrigam-se a respeitar, além das posturas municipais e as de saúde, ficando responsáveis pelas multas a que derem causa.</p>
+
+  <p class="clause"><strong>CLÁUSULA NONA:</strong> O LOCADOR poderá dar como rescindido o presente contrato de locação de pleno direito, independentemente de qualquer interpelação judicial, sem que assista aos LOCATÁRIOS direito a qualquer indenização ou reclamação, a exemplo: a) Em caso do não pagamento pontual do aluguel e encargos ou a falta do exato cumprimento de qualquer das obrigações; b) Em caso de sinistro ou desapropriação; c) Dar destinação diversa do que consta no contrato; d) Sublocar o imóvel sem autorização expressa do LOCADOR; e) Infringir qualquer das cláusulas do presente contrato.</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Uma vez tendo o LOCATÁRIO dado motivo à rescisão do contrato de locação, pagará este uma multa de 20% do valor devedor do contrato.</p>
+
+  <p class="subclause"><strong>§ 2º.</strong> Incorrerá na mesma multa do parágrafo acima se os LOCATÁRIOS decidirem rescindir o contrato dentro do prazo mínimo convencionado no contrato de locação.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA:</strong> O LOCADOR não se responsabiliza por eventuais danos sofridos pelos LOCATÁRIOS em caso de acidentes, incêndio, enchentes ocasionados por caso fortuito ou de força maior.</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Os locatários deverão comunicar ao locador, imediatamente, qualquer dano significativo no imóvel, para que este possa tomar as medidas necessárias.</p>
+
+  <p class="subclause"><strong>§ 2º.</strong> Fica expressamente proibido aos LOCATÁRIOS fazer qualquer furo nas paredes, tetos ou pisos do imóvel, sob pena de multa no valor de R$ 100,00 (cem reais) por furo, além da responsabilidade pelos danos causados, caso ocorra o rompimento de canos ou sistemas hidráulicos, elétricos ou de qualquer outra instalação do imóvel.</p>
+
+  <p class="subclause"><strong>Parágrafo único:</strong> O LOCATÁRIO se compromete a comunicar imediatamente ao LOCADOR qualquer dano ou risco de dano relacionado a furos ou modificações nas instalações do imóvel, sob pena de arcar com os custos de reparação e a multa mencionada.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA PRIMEIRA:</strong> Não poderão os LOCATÁRIOS escusar-se ao pagamento de quaisquer diferenças de aluguel, taxas, despesas de que estiverem obrigados nos termos da lei e do presente instrumento, sob a alegação de que o pagamento não lhe foi exigido na época fixada neste contrato de locação.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA SEGUNDA:</strong> Quaisquer tolerâncias ou concessões do LOCADOR não constituirão precedente invocável e não terão a virtude de alterar as obrigações que lhe são impostas neste instrumento.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA TERCEIRA:</strong> Caso ocorra o atraso no pagamento do aluguel, o contrato dar-se-á como findo, ensejando na execução deste contrato e possibilitando a ação de despejo.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA QUARTA:</strong> Os prazos e as obrigações dos LOCATÁRIOS vencerão independentemente de interpelação, notificação ou aviso, judicial ou extrajudicial.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA QUINTA:</strong> O vencimento do aluguel pago, após 15 dias, conferirá o direito do LOCADOR em ingressar com ação de despejo para desocupação do imóvel, sendo que a não propositura desta ação logo após o vencimento não caracterizará a moratória prevista no inciso I do artigo 838 do Código Civil Brasileiro.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA SEXTA:</strong> Em caso de morte dos LOCATÁRIOS, rescinde-se automaticamente o atual contrato, podendo o familiar ou cônjuge assumir o presente termo nas mesmas condições que os LOCATÁRIOS, desde que firmado novo termo de compromisso.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA SÉTIMA:</strong> Em caso de abandono do imóvel por mais de trinta dias ininterruptos, sem o devido aviso ao LOCADOR, os LOCATÁRIOS expressamente autorizam o proprietário a imitir-se na posse novamente, para que se evitem danos.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA OITAVA:</strong> Os locatários declaram que estão cientes que o objeto deste contrato é destinado somente à moradia das partes dispostas neste instrumento contratual.</p>
+
+  <p class="clause"><strong>CLÁUSULA DÉCIMA NONA:</strong> O contrato é regido pela lei nº 8.245/91 e Código Civil Brasileiro, no que couber, devendo os problemas que surgirem serem resolvidos baseados nos dois diplomas legais.</p>
+
+  <p class="clause"><strong>CLÁUSULA VIGÉSIMA:</strong> Os contratantes elegem o Foro da Comarca de Palhoça/SC, por mais privilegiado que possa ser qualquer outro, para dirimir quaisquer dúvidas surgidas do presente contrato.</p>
+
+  <p class="clause"><strong>CLÁUSULA VIGÉSIMA PRIMEIRA: DOS VALORES A SEREM COBRADOS NO ATO DA ENTRADA</strong></p>
+
+  <p class="subclause">No ato da entrada, os LOCATÁRIOS se comprometem a pagar ao LOCADOR os seguintes valores:</p>
+
+  <p class="subclause">I. <strong>${money(rent)}</strong> (${escapeHtml(rentText)}) referentes ao aluguel do primeiro mês;</p>
+
+  <p class="subclause">II. <strong>R$ 600,00</strong> (seiscentos reais) para despesas com pintura ao final da locação.</p>
+
+  <p class="clause"><strong>CLÁUSULA VIGÉSIMA SEGUNDA:</strong> Checklist de Entrada do Imóvel.</p>
+
+  <p class="clause"><strong>CLÁUSULA VIGÉSIMA TERCEIRA:</strong> No ato da entrega das chaves do imóvel, será realizada uma inspeção para verificar as condições do apartamento, conforme o Check List de Entrada abaixo. Ambas as partes, locador e locatário, deverão assinar o documento para confirmar o estado do imóvel na data de início da locação.</p>
+
+  <div class="checklist">
+    <p><strong>Declaração do Locatário:</strong></p>
+    <p>Eu, <strong>${escapeHtml(tenantName)}</strong>, abaixo assinado, confirmo que o imóvel foi inspecionado e que as condições de uso foram verificadas e estão de acordo com o que foi acordado no termo de vistoria.</p>
+    <p>Assinatura do Locatário: _______________________ Data: ____/____/______</p>
+    <p>Assinatura do Locador: _______________________ Data: ____/____/______</p>
+  </div>
+
+  <p style="margin-top:24px;">E por estarem justos e contratados, as partes firmam o presente contrato em duas vias de igual conteúdo e teor para que surjam seus legais e jurídicos efeitos na presença de testemunhas, que igualmente assinam.</p>
+
+  <p class="center" style="margin-top:26px;">Palhoça/SC, ${todayText}.</p>
+
+  <div class="signatures">
+    <div class="line">
+      <strong>LOCADOR</strong><br>
+      LEANDRO PICKLER<br>
+      CPF n. 050.158.229-01
+    </div>
+
+    <div class="signature-gap-locador-locatario"></div>
+
+    <div class="line">
+      <strong>LOCATÁRIO(A)</strong><br>
+      ${escapeHtml(tenantName)}<br>
+      CPF n. ${escapeHtml(tenantCpf)}
+    </div>
+
+    <div class="signature-gap-locatario-testemunhas"></div>
+
+    <div class="two">
+      <div class="line">
+        <strong>TESTEMUNHA</strong><br>
+        DEBORA APARECIDA KIRCHNER PICKLER<br>
+        CPF n. 047.833.189-48
+      </div>
+
+      <div class="line">
+        <strong>TESTEMUNHA</strong><br>
+        Nome: _______________________________<br>
+        CPF: ________________________________
+      </div>
+    </div>
+  </div>
+
+  <p class="small center" style="margin-top:24px;">Documento gerado automaticamente pelo sistema Residencial Beatriz.</p>
+  </main>
+</body>
+</html>`;
+      }
+
+      function downloadContract(id) {
+        const apartment = getApartment(id);
+
+        if (!apartment) {
+          toast("Apartamento não localizado.");
+          return;
+        }
+
+        if (apartment.status === "free" || !apartment.tenant?.name) {
+          toast("Apartamento livre não possui morador atual para gerar contrato.");
+          return;
+        }
+
+        const contractHtml = buildRentalContractHtml(apartment);
+        const blob = new Blob([contractHtml], { type: "text/html;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const fileName = `contrato_locacao_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.html`;
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+
+        toast("Contrato de locação gerado. Abra o HTML baixado e use imprimir/salvar em PDF.");
+      }
+
+      function bindEvents() {
+        $("#loginForm").addEventListener("submit", handleLogin);
+        $("#logoutBtn").addEventListener("click", logout);
+
+        $$(".tab-btn").forEach(button => {
+          button.addEventListener("click", () => showTab(button.dataset.tab));
+        });
+
+        document.addEventListener("click", async event => {
+          const button = event.target.closest("[data-action]");
+          if (!button) return;
+
+          const action = button.dataset.action;
+          const id = button.dataset.id;
+
+          const actions = {
+            editApartment,
+            newTenantApartment,
+            vacateApartment,
+            deleteApartment,
+            renewApartment,
+            downloadContract,
+            editExpense,
+            deleteExpense,
+            editEntry,
+            deleteEntry,
+            editUser,
+            deleteUser
+          };
+
+          if (actions[action]) await actions[action](id);
+        });
+
+        $("#dashboardPeriod").addEventListener("change", async event => {
+          state.settings.dashboardPeriod = event.target.value;
+          if (event.target.value === "currentYear" && !state.settings.dashboardYear) state.settings.dashboardYear = new Date().getFullYear();
+          await save("Filtro do dashboard salvo.");
+        });
+
+        $("#dashboardYear").addEventListener("change", async event => {
+          if (event.target.value === "all") {
+            state.settings.dashboardPeriod = "all";
+            await save("Todo o período selecionado.");
+            return;
+          }
+
+          state.settings.dashboardYear = Number(event.target.value);
+          state.settings.dashboardPeriod = "currentYear";
+          await save("Ano histórico selecionado.");
+        });
+
+        $("#apartmentForm").addEventListener("submit", saveApartmentForm);
+        $("#clearApartmentBtn").addEventListener("click", clearApartmentForm);
+
+        $("#contractStart").addEventListener("change", () => {
+          const start = $("#contractStart").value;
+          $("#contractEnd").value = start ? addMonths(start, 6) : "";
+        });
+
+        $("#apartmentPhoto").addEventListener("change", event => {
+          readImage(event.target.files[0], base64 => {
+            tempApartmentPhoto = base64;
+            renderApartmentPhotoPreview();
+          });
+        });
+
+        $("#removeApartmentPhotoBtn").addEventListener("click", () => {
+          tempApartmentPhoto = "";
+          $("#apartmentPhoto").value = "";
+          renderApartmentPhotoPreview();
+        });
+
+        $("#expenseForm").addEventListener("submit", saveExpenseForm);
+        $("#clearExpenseBtn").addEventListener("click", clearExpenseForm);
+
+        ["#expensesYearFilter", "#expensesTypeFilter"].forEach(selector => {
+          const el = $(selector);
+          if (el) el.addEventListener("change", renderExpenses);
+        });
+
+        if ($("#expensesSearchFilter")) {
+          $("#expensesSearchFilter").addEventListener("input", renderExpenses);
+        }
+
+        $("#entryForm").addEventListener("submit", saveEntryForm);
+        $("#clearEntryBtn").addEventListener("click", clearEntryForm);
+
+        $("#entriesHistoryFilter").addEventListener("change", async event => {
+          state.settings.entriesHistoryFilter = event.target.value;
+          await save("Filtro do histórico financeiro salvo.");
+        });
+
+        $("#entryApartmentId").addEventListener("change", event => {
+          const apartment = getApartment(event.target.value);
+          if (apartment && !$("#entryEditId").value && !manualEntryRent) $("#entryRent").value = apartment.baseRent;
+          if (($("#entryEnergyMode")?.value || "withKwh") === "withKwh") updatePreviousReadingFromHistory(true);
+          updateEntryPreview();
+        });
+
+        $("#entryMonth").addEventListener("change", () => {
+          if (!$("#entryEditId").value) updatePreviousReadingFromHistory(true);
+          updateEntryPreview();
+        });
+
+        $("#entryEnergyMode").addEventListener("change", () => {
+          if ($("#entryEnergyMode").value === "withKwh") {
+            updatePreviousReadingFromHistory(true);
+          } else {
+            updateEntryPreview();
+          }
+        });
+
+        ["#entryRent", "#entryKwhValue", "#entryKwhPrevious", "#entryKwhCurrent", "#entryCosip"].forEach(selector => {
+          $(selector).addEventListener("input", () => {
+            if (selector === "#entryRent") manualEntryRent = true;
+            updateEntryPreview();
+          });
+        });
+
+        $("#settingsForm").addEventListener("submit", saveSettingsForm);
+
+        $("#appLogo").addEventListener("change", event => {
+          readImage(event.target.files[0], base64 => {
+            tempAppLogo = base64;
+            renderLogoPreview();
+          });
+        });
+
+        $("#removeLogoBtn").addEventListener("click", async () => {
+          tempAppLogo = "";
+          state.settings.logo = "";
+          $("#appLogo").value = "";
+          await save("Logo removida.");
+        });
+
+        $("#userForm").addEventListener("submit", saveUserForm);
+        $("#clearUserBtn").addEventListener("click", clearUserForm);
+
+        $("#githubConfigForm").addEventListener("submit", event => {
+          event.preventDefault();
+          saveGithubForm("");
+        });
+
+        $("#githubLoginConfigForm").addEventListener("submit", event => {
+          event.preventDefault();
+          saveGithubForm("login");
+        });
+
+        $("#loadGithubBtn").addEventListener("click", () => loadStateFromGithub(true));
+        $("#loginLoadGithubBtn").addEventListener("click", () => loadStateFromGithub(true));
+        $("#reloadGithubBtn").addEventListener("click", () => loadStateFromGithub(true));
+
+        $("#forceSaveGithubBtn").addEventListener("click", async () => {
+          await save("Dados atuais enviados para o GitHub.");
+        });
+
+        $("#removeGithubTokenBtn").addEventListener("click", () => {
+          removeGithubToken();
+          toast("Token removido deste navegador.");
+        });
+
+        $("#exportBtn").addEventListener("click", exportBackup);
+        $("#importInput").addEventListener("change", event => importBackup(event.target.files[0]));
+        $("#resetBtn").addEventListener("click", resetData);
+      }
+
+      async function init() {
+        bindEvents();
+        fillGithubConfigForms();
+
+        if (hasGithubBaseConfig()) {
+          await loadStateFromGithub(false);
+        } else {
+          state = loadLocalCache();
+          await seedDefaultUserIfNeeded(false);
+        }
+
+        if (!state.settings.dashboardPeriod) state.settings.dashboardPeriod = "currentYear";
+        if (!state.settings.dashboardYear) state.settings.dashboardYear = new Date().getFullYear();
+        if (!state.settings.entriesHistoryFilter) state.settings.entriesHistoryFilter = "current";
+
+        clearExpenseForm();
+        clearEntryForm();
+        renderApartmentPhotoPreview();
+        renderBrand();
+        setLoggedOutView();
+        updateSyncStatus();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
