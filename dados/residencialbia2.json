@@ -63,8 +63,8 @@
       "contractStart": "2026-04-10",
       "contractEnd": "2026-10-10",
       "tenant": {
-        "name": "Leandro Luis de Araujo Oliveira",
-        "cpf": "804173530",
+        "name": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
+        "cpf": "80417353049",
         "phone": "988022350",
         "birth": "",
         "emergencyName": "",
@@ -89,6 +89,24 @@
           "baseRent": 1300,
           "endedAt": "2025-10-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
+        },
+        {
+          "id": "history_1600f623-4abf-450d-8f8b-da8978b8a1fa",
+          "apartmentId": "apartment_apto02",
+          "apartmentNumber": "Apto 02",
+          "tenant": {
+            "name": "Leandro Luis de Araujo Oliveira",
+            "cpf": "804173530",
+            "phone": "988022350",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2026-04-10",
+          "contractEnd": "2026-10-10",
+          "baseRent": 1300,
+          "endedAt": "2026-05-26T02:34:08.802Z",
+          "reason": "Substituição manual do morador"
         }
       ]
     },
@@ -2472,7 +2490,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T02:32:58.185Z",
+    "updatedAt": "2026-05-26T02:34:09.229Z",
     "updatedBy": "residencial"
   }
 }
