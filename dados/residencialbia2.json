@@ -251,8 +251,8 @@
       "contractStart": "2026-03-15",
       "contractEnd": "2026-09-15",
       "tenant": {
-        "name": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
-        "cpf": "032.356.472-01 / 055.898.932-24",
+        "name": "KETLEN CRISTINA BARBOSA OLIVEIRA",
+        "cpf": "055.898.932-24",
         "phone": "(91) 98460-5654 / (91) 98440-2936",
         "birth": "",
         "emergencyName": "",
@@ -277,6 +277,24 @@
           "baseRent": 1300,
           "endedAt": "2026-04-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
+        },
+        {
+          "id": "history_61306b69-2790-4642-9082-b58e9f677ebe",
+          "apartmentId": "apartment_apto06",
+          "apartmentNumber": "Apto 06",
+          "tenant": {
+            "name": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
+            "cpf": "032.356.472-01 / 055.898.932-24",
+            "phone": "(91) 98460-5654 / (91) 98440-2936",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2026-03-15",
+          "contractEnd": "2026-09-15",
+          "baseRent": 1300,
+          "endedAt": "2026-05-26T02:28:11.890Z",
+          "reason": "Substituição manual do morador"
         }
       ]
     },
@@ -1760,6 +1778,21 @@
       "cosip": 24.37
     },
     {
+      "id": "entry_apto_06_alida_thasy_nascimento_costa___ketlen_cristina_barbosa_oliveira_2026_05",
+      "apartmentId": "apartment_apto06",
+      "apartmentNumber": "Apto 06",
+      "tenantName": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
+      "tenantCpf": "032.356.472-01 / 055.898.932-24",
+      "month": "2026-05",
+      "rent": 1300,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0
+    },
+    {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_05",
       "apartmentId": "apartment_apto07",
       "apartmentNumber": "Apto 07",
@@ -2436,7 +2469,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T02:26:53.521Z",
+    "updatedAt": "2026-05-26T02:28:12.307Z",
     "updatedBy": "residencial"
   }
 }
