@@ -1190,21 +1190,6 @@
       "cosip": 24.37
     },
     {
-      "id": "entry_apto_03_karine_kauss_rodrigues_2026_05",
-      "apartmentId": "apartment_apto03",
-      "apartmentNumber": "Apto 03",
-      "tenantName": "KARINE KAUSS RODRIGUES",
-      "tenantCpf": "018.491.050-14",
-      "month": "2026-05",
-      "rent": 1300,
-      "energyMode": "noKwh",
-      "kwhValue": 0,
-      "kwhPrevious": 0,
-      "kwhCurrent": 0,
-      "kwhConsumed": 0,
-      "cosip": 0
-    },
-    {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_04",
       "apartmentId": "apartment_apto04",
       "apartmentNumber": "Apto 04",
@@ -1443,21 +1428,6 @@
       "kwhCurrent": 876.21,
       "kwhConsumed": 95.78000000000009,
       "cosip": 24.37
-    },
-    {
-      "id": "entry_apto_04_ismael_rosendo_da_silva_2026_05",
-      "apartmentId": "apartment_apto04",
-      "apartmentNumber": "Apto 04",
-      "tenantName": "ISMAEL ROSENDO DA SILVA",
-      "tenantCpf": "949.247.832-34",
-      "month": "2026-05",
-      "rent": 1300,
-      "energyMode": "noKwh",
-      "kwhValue": 0,
-      "kwhPrevious": 0,
-      "kwhCurrent": 0,
-      "kwhConsumed": 0,
-      "cosip": 0
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_04",
@@ -2481,7 +2451,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T02:24:46.198Z",
+    "updatedAt": "2026-05-26T02:25:50.676Z",
     "updatedBy": "residencial"
   }
 }
