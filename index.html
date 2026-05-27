@@ -1228,23 +1228,6 @@
           </div>
         </div>
 
-        <div class="dashboard-filter">
-          <div class="field">
-            <label for="contractHistoryPeriodFilter">Filtro por período</label>
-            <select id="contractHistoryPeriodFilter">
-              <option value="last6">Últimos 6 meses</option>
-              <option value="last12">Último 1 ano</option>
-              <option value="last24">Últimos 2 anos</option>
-              <option value="all" selected>Todo o período</option>
-            </select>
-          </div>
-
-          <div class="filter-badge" id="contractHistoryFilterBadge">
-            <i class="fa-solid fa-filter"></i>
-            Todo o período
-          </div>
-        </div>
-
         <div id="contractHistoryList"></div>
       </section>
 
@@ -1362,7 +1345,7 @@
           <form id="userForm" style="margin-top:16px;">
             <input type="hidden" id="userEditId">
 
-            <div class="form-row three">
+            <div class="form-row">
               <div class="field">
                 <label for="accessLogin">Login *</label>
                 <input id="accessLogin" type="text" placeholder="Ex.: admin" required>
@@ -1377,6 +1360,15 @@
               <div class="field">
                 <label for="accessPasswordConfirm">Confirmar Senha *</label>
                 <input id="accessPasswordConfirm" type="password" placeholder="Confirme a senha">
+              </div>
+
+              <div class="field">
+                <label for="accessRole">Permissão *</label>
+                <select id="accessRole" required>
+                  <option value="write">Leitura e escrita</option>
+                  <option value="read">Somente leitura</option>
+                </select>
+                <span class="mini muted">Usuário somente leitura não consegue salvar, editar ou remover dados.</span>
               </div>
             </div>
 
@@ -1567,11 +1559,47 @@
         };
       }
 
+      function normalizeUser(user) {
+        const source = user && typeof user === "object" ? user : {};
+
+        return {
+          ...source,
+          id: source.id || uid("user"),
+          login: source.login || "",
+          salt: source.salt || "",
+          passwordHash: source.passwordHash || "",
+          createdAt: source.createdAt || new Date().toISOString(),
+          role: source.role || source.permission || "write"
+        };
+      }
+
+      function userRoleLabel(user) {
+        return (user?.role || "write") === "read" ? "Somente leitura" : "Leitura e escrita";
+      }
+
+      function userRoleClass(user) {
+        return (user?.role || "write") === "read" ? "yellow" : "green";
+      }
+
+      function countWriteUsers() {
+        return state.users.filter(user => (user.role || "write") === "write").length;
+      }
+
+      function canWrite() {
+        return !loggedUser || (loggedUser.role || "write") === "write";
+      }
+
+      function requireWrite(message = "Seu usuário possui permissão somente leitura.") {
+        if (canWrite()) return true;
+        toast(message);
+        return false;
+      }
+
       function normalizeState(input) {
         const source = input && typeof input === "object" ? input : {};
         const normalized = {
           settings: { ...DEFAULT_STATE.settings, ...(source.settings || {}) },
-          users: Array.isArray(source.users) ? source.users : [],
+          users: Array.isArray(source.users) ? source.users.map(normalizeUser) : [],
           apartments: Array.isArray(source.apartments) ? source.apartments.map(normalizeApartment) : [],
           expenses: Array.isArray(source.expenses) ? source.expenses : [],
           entries: [],
@@ -1880,6 +1908,13 @@
       }
 
       async function save(message) {
+        if (!canWrite()) {
+          state = loadLocalCache();
+          renderAll();
+          toast("Seu usuário possui permissão somente leitura. Alteração não salva.");
+          return;
+        }
+
         await saveStateToGithub(message);
       }
 
@@ -1957,7 +1992,7 @@
         return sha256(`${salt}:${password}`);
       }
 
-      async function createUser(login, password) {
+      async function createUser(login, password, role = "write") {
         const salt = randomSalt();
         const passwordHash = await hashPassword(password, salt);
 
@@ -1966,6 +2001,7 @@
           login: login.trim(),
           salt,
           passwordHash,
+          role: role === "read" ? "read" : "write",
           createdAt: new Date().toISOString()
         };
       }
@@ -2241,12 +2277,12 @@
       }
 
       function setLoggedInView(user) {
-        loggedUser = user;
+        loggedUser = normalizeUser(user);
         $("#loginScreen").classList.add("hidden");
         $("#appShell").classList.remove("hidden");
         renderAll();
         showTab("dashboard");
-        $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login}`;
+        $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login} • ${userRoleLabel(loggedUser)}`;
       }
 
       function setLoggedOutView() {
@@ -2936,61 +2972,6 @@
         }).join("");
       }
 
-      function getContractHistoryFilterRange() {
-        const mode = $("#contractHistoryPeriodFilter")?.value || "all";
-        const now = new Date();
-
-        const ranges = {
-          last6: { months: 6, label: "Últimos 6 meses" },
-          last12: { months: 12, label: "Último 1 ano" },
-          last24: { months: 24, label: "Últimos 2 anos" },
-          all: { months: null, label: "Todo o período" }
-        };
-
-        const selected = ranges[mode] || ranges.all;
-
-        if (!selected.months) {
-          return {
-            mode,
-            label: selected.label,
-            start: null,
-            end: now
-          };
-        }
-
-        return {
-          mode,
-          label: selected.label,
-          start: new Date(now.getFullYear(), now.getMonth() - selected.months + 1, 1),
-          end: now
-        };
-      }
-
-      function contractRowInsideHistoryFilter(row) {
-        const range = getContractHistoryFilterRange();
-
-        if (!range.start) return true;
-
-        const start = parseDate(row.contractStart) || parseDate(row.contractEnd) || new Date(1900, 0, 1);
-        const end = parseDate(row.contractEnd) || start;
-
-        return end >= range.start && start <= range.end;
-      }
-
-      function renderContractHistoryFilterBadge(totalRows, filteredRows) {
-        const badge = $("#contractHistoryFilterBadge");
-        const select = $("#contractHistoryPeriodFilter");
-
-        if (!badge || !select) return;
-
-        const range = getContractHistoryFilterRange();
-
-        badge.innerHTML = `
-          <i class="fa-solid fa-filter"></i>
-          ${escapeHtml(range.label)} • ${filteredRows} de ${totalRows} contrato(s)
-        `;
-      }
-
       function renderContractHistory() {
         const el = $("#contractHistoryList");
 
@@ -2998,16 +2979,11 @@
           String(a.number || "").localeCompare(String(b.number || ""), "pt-BR", { numeric: true })
         );
 
-        let totalRows = 0;
-        let filteredRows = 0;
-
         const groups = apartments.map(apartment => {
           const rows = [];
 
           (apartment.contractHistory || []).forEach(item => {
             rows.push({
-              id: item.id,
-              apartmentId: item.apartmentId || apartment.id,
               apartmentNumber: item.apartmentNumber || apartment.number,
               tenant: normalizeTenant(item.tenant),
               contractStart: item.contractStart,
@@ -3015,15 +2991,12 @@
               baseRent: item.baseRent,
               status: "Histórico",
               endedAt: item.endedAt,
-              reason: item.reason,
-              canDelete: true
+              reason: item.reason
             });
           });
 
           if (apartment.status !== "free" && apartment.tenant?.name) {
             rows.push({
-              id: `active_${apartment.id}`,
-              apartmentId: apartment.id,
               apartmentNumber: apartment.number,
               tenant: apartment.tenant,
               contractStart: apartment.contractStart,
@@ -3031,30 +3004,21 @@
               baseRent: apartment.baseRent,
               status: "Contrato Ativo",
               endedAt: "",
-              reason: "",
-              canDelete: false
+              reason: ""
             });
           }
 
-          totalRows += rows.length;
+          rows.sort((a, b) => String(a.contractStart || "").localeCompare(String(b.contractStart || "")));
 
-          const filtered = rows
-            .filter(contractRowInsideHistoryFilter)
-            .sort((a, b) => String(a.contractStart || "").localeCompare(String(b.contractStart || "")));
-
-          filteredRows += filtered.length;
-
-          return { apartment, rows: filtered };
+          return { apartment, rows };
         }).filter(group => group.rows.length > 0);
-
-        renderContractHistoryFilterBadge(totalRows, filteredRows);
 
         if (!groups.length) {
           el.innerHTML = `
             <div class="empty">
               <i class="fa-solid fa-clock-rotate-left"></i>
-              <strong>Nenhum contrato encontrado no filtro selecionado.</strong>
-              <div class="mini">Altere o filtro para 6 meses, 1 ano, 2 anos ou todo o período.</div>
+              <strong>Nenhum histórico de contrato.</strong>
+              <div class="mini">Quando você liberar um apartamento, o morador antigo aparecerá aqui.</div>
             </div>
           `;
           return;
@@ -3092,7 +3056,6 @@
                       <th>Encerramento</th>
                       <th>Valor mensal</th>
                       <th>Registrado em</th>
-                      <th style="text-align:right;">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -3108,17 +3071,6 @@
                         <td>${formatDate(row.contractEnd)}</td>
                         <td>${money(row.baseRent)}</td>
                         <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
-                        <td>
-                          <div class="td-actions">
-                            ${row.canDelete ? `
-                              <button class="btn btn-danger btn-sm" data-action="deleteContractHistory" data-id="${row.id}">
-                                <i class="fa-solid fa-trash"></i> Remover
-                              </button>
-                            ` : `
-                              <span class="pill green"><i class="fa-solid fa-lock"></i> Atual</span>
-                            `}
-                          </div>
-                        </td>
                       </tr>
                     `).join("")}
                   </tbody>
@@ -3149,6 +3101,7 @@
               <thead>
                 <tr>
                   <th>Login</th>
+                  <th>Permissão</th>
                   <th>Criado em</th>
                   <th>Status</th>
                   <th style="text-align:right;">Ações</th>
@@ -3158,12 +3111,16 @@
                 ${state.users.map(user => `
                   <tr>
                     <td><strong>${escapeHtml(user.login)}</strong></td>
+                    <td><span class="pill ${userRoleClass(user)}">${userRoleLabel(user)}</span></td>
                     <td>${user.createdAt ? new Intl.DateTimeFormat("pt-BR").format(new Date(user.createdAt)) : "-"}</td>
                     <td>${loggedUser && loggedUser.id === user.id ? '<span class="pill green">Usuário atual</span>' : '<span class="pill blue">Ativo</span>'}</td>
                     <td>
                       <div class="td-actions">
                         <button class="btn btn-light btn-sm" data-action="editUser" data-id="${user.id}">
                           <i class="fa-solid fa-pen"></i> Editar
+                        </button>
+                        <button class="btn btn-warning btn-sm" data-action="resetUserPassword" data-id="${user.id}">
+                          <i class="fa-solid fa-key"></i> Reiniciar senha
                         </button>
                         <button class="btn btn-danger btn-sm" data-action="deleteUser" data-id="${user.id}">
                           <i class="fa-solid fa-trash"></i> Remover
@@ -3237,6 +3194,7 @@
         $("#accessLogin").value = "";
         $("#accessPassword").value = "";
         $("#accessPasswordConfirm").value = "";
+        $("#accessRole").value = "write";
       }
 
       function toggleEntryEnergyMode() {
@@ -3314,6 +3272,8 @@
 
       async function saveApartmentForm(event) {
         event.preventDefault();
+
+        if (!requireWrite()) return;
 
         const id = $("#apartmentEditId").value;
         const number = $("#apartmentNumber").value.trim();
@@ -3435,6 +3395,8 @@
       }
 
       async function vacateApartment(id) {
+        if (!requireWrite()) return;
+
         const apartment = getApartment(id);
         if (!apartment) return;
 
@@ -3458,29 +3420,9 @@
         await save("Apartamento liberado. Morador anterior enviado para o histórico.");
       }
 
-      async function deleteContractHistory(id) {
-        const apartment = state.apartments.find(item =>
-          Array.isArray(item.contractHistory) && item.contractHistory.some(history => history.id === id)
-        );
-
-        if (!apartment) {
-          toast("Histórico não localizado.");
-          return;
-        }
-
-        const history = apartment.contractHistory.find(item => item.id === id);
-        const tenantName = history?.tenant?.name || "morador";
-
-        if (!confirm(`Remover o histórico de ${tenantName}? Esta ação não remove lançamentos financeiros já cadastrados.`)) {
-          return;
-        }
-
-        apartment.contractHistory = apartment.contractHistory.filter(item => item.id !== id);
-
-        await save("Histórico removido.");
-      }
-
       async function deleteApartment(id) {
+        if (!requireWrite()) return;
+
         const hasEntries = state.entries.some(entry => entry.apartmentId === id);
         const hasExpenses = state.expenses.some(expense => expense.apartmentId === id);
 
@@ -3500,6 +3442,8 @@
       }
 
       async function renewApartment(id) {
+        if (!requireWrite()) return;
+
         const apartment = getApartment(id);
         if (!apartment) return;
 
@@ -3516,6 +3460,8 @@
 
       async function saveExpenseForm(event) {
         event.preventDefault();
+
+        if (!requireWrite()) return;
 
         const id = $("#expenseEditId").value;
 
@@ -3560,6 +3506,8 @@
       }
 
       async function deleteExpense(id) {
+        if (!requireWrite()) return;
+
         if (!confirm("Remover esta despesa?")) return;
         state.expenses = state.expenses.filter(expense => expense.id !== id);
         await save("Despesa removida.");
@@ -3567,6 +3515,8 @@
 
       async function saveEntryForm(event) {
         event.preventDefault();
+
+        if (!requireWrite()) return;
 
         const id = $("#entryEditId").value;
         const apartmentId = $("#entryApartmentId").value;
@@ -3655,6 +3605,8 @@
       }
 
       async function deleteEntry(id) {
+        if (!requireWrite()) return;
+
         if (!confirm("Remover este lançamento mensal?")) return;
         state.entries = state.entries.filter(entry => entry.id !== id);
         await save("Lançamento removido.");
@@ -3662,6 +3614,8 @@
 
       async function saveSettingsForm(event) {
         event.preventDefault();
+
+        if (!requireWrite()) return;
         state.settings.appName = $("#appName").value.trim() || "Residencial Beatriz";
         state.settings.logo = tempAppLogo || "";
         await save("Configurações salvas.");
@@ -3670,10 +3624,13 @@
       async function saveUserForm(event) {
         event.preventDefault();
 
+        if (!requireWrite("Seu usuário não possui permissão para gerenciar usuários.")) return;
+
         const id = $("#userEditId").value;
         const login = $("#accessLogin").value.trim();
         const password = $("#accessPassword").value;
         const passwordConfirm = $("#accessPasswordConfirm").value;
+        const role = $("#accessRole").value === "read" ? "read" : "write";
 
         if (!login) {
           toast("Informe o login do usuário.");
@@ -3707,7 +3664,16 @@
           const user = state.users.find(item => item.id === id);
           if (!user) return;
 
+          const previousRole = user.role || "write";
+          const wouldRemoveLastWrite = previousRole === "write" && role === "read" && countWriteUsers() <= 1;
+
+          if (wouldRemoveLastWrite) {
+            toast("Não é possível deixar o sistema sem usuário com permissão de leitura e escrita.");
+            return;
+          }
+
           user.login = login;
+          user.role = role;
 
           if (password) {
             user.salt = randomSalt();
@@ -3715,13 +3681,13 @@
           }
 
           if (loggedUser && loggedUser.id === id) {
-            loggedUser = user;
-            $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login}`;
+            loggedUser = normalizeUser(user);
+            $("#currentUserInfo").textContent = `Usuário conectado: ${loggedUser.login} • ${userRoleLabel(loggedUser)}`;
           }
 
           await save("Usuário atualizado.");
         } else {
-          const newUser = await createUser(login, password);
+          const newUser = await createUser(login, password, role);
           state.users.push(newUser);
           await save("Usuário criado.");
         }
@@ -3730,6 +3696,8 @@
       }
 
       function editUser(id) {
+        if (!requireWrite("Seu usuário não possui permissão para editar usuários.")) return;
+
         const user = state.users.find(item => item.id === id);
         if (!user) return;
 
@@ -3737,12 +3705,48 @@
         $("#accessLogin").value = user.login;
         $("#accessPassword").value = "";
         $("#accessPasswordConfirm").value = "";
+        $("#accessRole").value = user.role || "write";
 
         showTab("settings");
         $("#userForm").scrollIntoView({ behavior: "smooth", block: "center" });
       }
 
+      async function resetUserPassword(id) {
+        if (!requireWrite("Seu usuário não possui permissão para reiniciar senha.")) return;
+
+        const user = state.users.find(item => item.id === id);
+        if (!user) {
+          toast("Usuário não localizado.");
+          return;
+        }
+
+        const password = prompt(`Informe a nova senha para ${user.login}:`);
+
+        if (password === null) return;
+
+        if (password.length < 4) {
+          toast("A senha deve ter pelo menos 4 caracteres.");
+          return;
+        }
+
+        const confirmPassword = prompt("Confirme a nova senha:");
+
+        if (confirmPassword === null) return;
+
+        if (password !== confirmPassword) {
+          toast("As senhas não conferem.");
+          return;
+        }
+
+        user.salt = randomSalt();
+        user.passwordHash = await hashPassword(password, user.salt);
+
+        await save("Senha reiniciada.");
+      }
+
       async function deleteUser(id) {
+        if (!requireWrite("Seu usuário não possui permissão para remover usuários.")) return;
+
         if (state.users.length <= 1) {
           toast("Não é possível remover o último usuário.");
           return;
@@ -3750,6 +3754,13 @@
 
         if (loggedUser && loggedUser.id === id) {
           toast("Não é possível remover o usuário que está logado.");
+          return;
+        }
+
+        const user = state.users.find(item => item.id === id);
+
+        if (user && (user.role || "write") === "write" && countWriteUsers() <= 1) {
+          toast("Não é possível remover o último usuário com permissão de leitura e escrita.");
           return;
         }
 
@@ -3775,6 +3786,8 @@
       }
 
       async function importBackup(file) {
+        if (!requireWrite()) return;
+
         if (!file) return;
 
         const reader = new FileReader();
@@ -3807,6 +3820,8 @@
       }
 
       async function resetData() {
+        if (!requireWrite()) return;
+
         if (!confirm("Deseja apagar todos os dados do sistema? Esta ação não pode ser desfeita.")) return;
 
         state = clone(DEFAULT_STATE);
@@ -4264,12 +4279,12 @@
             deleteApartment,
             renewApartment,
             downloadContract,
-            deleteContractHistory,
             editExpense,
             deleteExpense,
             editEntry,
             deleteEntry,
             editUser,
+            resetUserPassword,
             deleteUser
           };
 
@@ -4335,10 +4350,6 @@
           await save("Filtro do histórico financeiro salvo.");
         });
 
-        if ($("#contractHistoryPeriodFilter")) {
-          $("#contractHistoryPeriodFilter").addEventListener("change", renderContractHistory);
-        }
-
         $("#entryApartmentId").addEventListener("change", event => {
           const apartment = getApartment(event.target.value);
           if (apartment && !$("#entryEditId").value && !manualEntryRent) $("#entryRent").value = apartment.baseRent;
@@ -4400,6 +4411,7 @@
         $("#reloadGithubBtn").addEventListener("click", () => loadStateFromGithub(true));
 
         $("#forceSaveGithubBtn").addEventListener("click", async () => {
+          if (!requireWrite("Seu usuário possui permissão somente leitura. Não é possível enviar dados.")) return;
           await save("Dados atuais enviados para o GitHub.");
         });
 
