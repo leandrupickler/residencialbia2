@@ -2615,10 +2615,25 @@
       "kwhCurrent": 1055.08,
       "kwhConsumed": 91.38999999999987,
       "cosip": 28
+    },
+    {
+      "id": "entry_eae7e53e-da03-46e0-8867-bbd9b2d40f06",
+      "apartmentId": "apartment_apto05",
+      "apartmentNumber": "Apto 05",
+      "tenantName": "ARTHUR SILVA CAVALCANTE",
+      "tenantCpf": "066.901.982-86",
+      "month": "2026-06",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.89,
+      "kwhPrevious": 1435.34,
+      "kwhCurrent": 1632.68,
+      "kwhConsumed": 197.34000000000015,
+      "cosip": 28
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T14:08:40.565Z",
+    "updatedAt": "2026-05-27T14:09:31.091Z",
     "updatedBy": "residencial"
   }
 }
