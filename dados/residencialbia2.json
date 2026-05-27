@@ -2645,10 +2645,25 @@
       "kwhCurrent": 1009.1,
       "kwhConsumed": 112.10000000000002,
       "cosip": 28
+    },
+    {
+      "id": "entry_b4a68f4d-a6ce-403d-900e-b20f3d8c73fb",
+      "apartmentId": "apartment_apto07",
+      "apartmentNumber": "Apto 07",
+      "tenantName": "RICARDO IACHITZKI JUNIOR",
+      "tenantCpf": "822.941.789-04",
+      "month": "2026-06",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.89,
+      "kwhPrevious": 1006.3,
+      "kwhCurrent": 1082.3,
+      "kwhConsumed": 76,
+      "cosip": 28
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T14:10:07.675Z",
+    "updatedAt": "2026-05-27T14:10:41.990Z",
     "updatedBy": "residencial"
   }
 }
