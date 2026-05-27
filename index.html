@@ -857,7 +857,7 @@
             </div>
             <div>
               <div class="stat-value" id="grossValue">R$ 0,00</div>
-              <p class="stat-note">Aluguel + Luz + COSIP pagos no período.</p>
+              <p class="stat-note">Aluguel + Luz + COSIP + Taxa de lixo pagos no período.</p>
             </div>
           </article>
 
@@ -1186,12 +1186,18 @@
                 </select>
                 <span class="mini muted">Marque “Não pago” quando o aluguel/luz ainda estiver pendente.</span>
               </div>
+
+              <div class="field">
+                <label for="entryTrashFee">Taxa de lixo</label>
+                <input id="entryTrashFee" type="number" min="0" step="0.01" placeholder="0,00">
+                <span class="mini muted">Opcional. Quando informado, soma no total a cobrar.</span>
+              </div>
             </div>
 
             <div class="total-preview">
               <div>
                 <strong>Total a cobrar do inquilino</strong>
-                <p class="mini muted" id="entryFormula">Energia + COSIP + Aluguel = Total a cobrar</p>
+                <p class="mini muted" id="entryFormula">Energia + COSIP + Taxa de lixo + Aluguel = Total a cobrar</p>
               </div>
               <div class="amount" id="entryTotalPreview">R$ 0,00</div>
             </div>
@@ -1606,6 +1612,7 @@
           kwhCurrent: currentReading,
           kwhConsumed: calculatedConsumed,
           cosip: toNumber(source.cosip),
+          trashFee: toNumber(source.trashFee ?? source.garbageFee ?? source.lixoFee ?? source.taxaLixo ?? source.taxaDeLixo ?? 0),
           paymentStatus: normalizePaymentStatus(source.paymentStatus ?? source.payment ?? source.paid ?? source.isPaid ?? source.statusPagamento)
         };
       }
@@ -2253,7 +2260,7 @@
       }
 
       function entryTotal(entry) {
-        return toNumber(entry.rent) + energyTotal(entry);
+        return toNumber(entry.rent) + energyTotal(entry) + toNumber(entry.trashFee);
       }
 
       function availableYears() {
@@ -3011,6 +3018,7 @@
           const total = entries.reduce((sum, entry) => sum + entryTotal(entry), 0);
           const rentTotal = entries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
           const energyTotalValue = entries.reduce((sum, entry) => sum + energyTotal(entry), 0);
+          const trashTotal = entries.reduce((sum, entry) => sum + toNumber(entry.trashFee), 0);
           const paidTotal = entries.filter(isEntryPaid).reduce((sum, entry) => sum + entryTotal(entry), 0);
           const unpaidTotal = entries.filter(entry => !isEntryPaid(entry)).reduce((sum, entry) => sum + entryTotal(entry), 0);
           const currentTenant = group.apartment?.tenant?.name || "";
@@ -3025,7 +3033,7 @@
               </summary>
 
               <div class="reference" style="border-radius:0; border-left:0; border-right:0;">
-                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Pago: ${money(paidTotal)} | Não pago: ${money(unpaidTotal)} | Total: ${money(total)}
+                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Taxa de lixo: ${money(trashTotal)} | Pago: ${money(paidTotal)} | Não pago: ${money(unpaidTotal)} | Total: ${money(total)}
               </div>
 
               <div class="table-wrap">
@@ -3042,6 +3050,7 @@
                       <th>Leitura atual</th>
                       <th>Consumo</th>
                       <th>Luz + COSIP</th>
+                      <th>Taxa de lixo</th>
                       <th>Total</th>
                       <th style="text-align:right;">Ações</th>
                     </tr>
@@ -3059,6 +3068,7 @@
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhCurrent).toLocaleString("pt-BR") + " kWh"}</td>
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhConsumed).toLocaleString("pt-BR") + " kWh"}</td>
                         <td>${money(energyTotal(entry))}</td>
+                        <td>${money(entry.trashFee)}</td>
                         <td><strong>${money(entryTotal(entry))}</strong></td>
                         <td>
                           <div class="td-actions">
@@ -3368,6 +3378,7 @@
         $("#entryRent").value = "";
         $("#entryEnergyMode").value = "withKwh";
         $("#entryPaymentStatus").value = "paid";
+        $("#entryTrashFee").value = "";
         $("#entryKwhValue").value = "";
         $("#entryKwhPrevious").value = "";
         $("#entryKwhCurrent").value = "";
@@ -3412,6 +3423,7 @@
 
       function updateEntryPreview() {
         const rent = toNumber($("#entryRent")?.value);
+        const trashFee = toNumber($("#entryTrashFee")?.value);
         const mode = $("#entryEnergyMode")?.value || "withKwh";
         const isNoKwh = mode === "noKwh";
         const kwhValue = isNoKwh ? 0 : toNumber($("#entryKwhValue")?.value);
@@ -3421,7 +3433,7 @@
         const cosip = isNoKwh ? 0 : toNumber($("#entryCosip")?.value);
         const energyAmount = isNoKwh ? 0 : kwhValue * kwhConsumed;
         const totalEnergyWithCosip = energyAmount + cosip;
-        const total = rent + totalEnergyWithCosip;
+        const total = rent + totalEnergyWithCosip + trashFee;
 
         toggleEntryEnergyMode();
 
@@ -3436,11 +3448,11 @@
         }
 
         if (isNoKwh) {
-          $("#entryFormula").textContent = `Sem cálculo de kWh neste lançamento | Energia: ${money(0)} | COSIP: ${money(0)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
+          $("#entryFormula").textContent = `Sem cálculo de kWh neste lançamento | Energia: ${money(0)} | COSIP: ${money(0)} | Taxa de lixo: ${money(trashFee)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
           return;
         }
 
-        $("#entryFormula").textContent = `Consumo: ${currentReading.toLocaleString("pt-BR")} - ${previousReading.toLocaleString("pt-BR")} = ${kwhConsumed.toLocaleString("pt-BR")} kWh | Energia: ${money(energyAmount)} + COSIP: ${money(cosip)} = ${money(totalEnergyWithCosip)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
+        $("#entryFormula").textContent = `Consumo: ${currentReading.toLocaleString("pt-BR")} - ${previousReading.toLocaleString("pt-BR")} = ${kwhConsumed.toLocaleString("pt-BR")} kWh | Energia: ${money(energyAmount)} + COSIP: ${money(cosip)} = ${money(totalEnergyWithCosip)} | Taxa de lixo: ${money(trashFee)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
       }
 
       function showTab(name) {
@@ -3760,6 +3772,7 @@
           rent: toNumber($("#entryRent").value),
           energyMode,
           paymentStatus: normalizePaymentStatus($("#entryPaymentStatus").value),
+          trashFee: toNumber($("#entryTrashFee").value),
           kwhValue: noKwh ? 0 : toNumber($("#entryKwhValue").value),
           kwhPrevious: previousReading,
           kwhCurrent: currentReading,
@@ -3767,8 +3780,8 @@
           cosip: noKwh ? 0 : toNumber($("#entryCosip").value)
         };
 
-        if (!entry.month || entry.rent < 0) {
-          toast("Preencha corretamente o mês e o valor do aluguel.");
+        if (!entry.month || entry.rent < 0 || entry.trashFee < 0) {
+          toast("Preencha corretamente o mês, o valor do aluguel e a taxa de lixo.");
           return;
         }
 
@@ -3809,6 +3822,7 @@
         $("#entryRent").value = entry.rent;
         $("#entryEnergyMode").value = entry.energyMode || "withKwh";
         $("#entryPaymentStatus").value = normalizePaymentStatus(entry.paymentStatus);
+        $("#entryTrashFee").value = entry.trashFee || "";
         $("#entryKwhValue").value = entry.kwhValue;
         $("#entryKwhPrevious").value = entry.kwhPrevious || "";
         $("#entryKwhCurrent").value = entry.kwhCurrent || "";
@@ -4293,6 +4307,7 @@
         const unpaidTotal = filtered.filter(entry => !isEntryPaid(entry)).reduce((sum, entry) => sum + entryTotal(entry), 0);
         const rentTotal = filtered.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
         const energyTotalValue = filtered.reduce((sum, entry) => sum + energyTotal(entry), 0);
+        const trashTotal = filtered.reduce((sum, entry) => sum + toNumber(entry.trashFee), 0);
 
         const historyText = selectedOptionText("#entriesHistoryFilter") || "Todos os lançamentos";
         const paymentText = selectedOptionText("#entriesPaymentFilter") || "Todos os pagamentos";
@@ -4311,6 +4326,7 @@
             escapeHtml(money(entry.rent)),
             escapeHtml((entry.energyMode || "withKwh") === "noKwh" ? "-" : `${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh`),
             escapeHtml(money(energyTotal(entry))),
+            escapeHtml(money(entry.trashFee)),
             escapeHtml(money(entryTotal(entry)))
           ]);
 
@@ -4323,9 +4339,10 @@
             { label: "Total não pago", value: money(unpaidTotal) },
             { label: "Registros", value: String(filtered.length) },
             { label: "Aluguel", value: money(rentTotal) },
-            { label: "Luz/COSIP", value: money(energyTotalValue) }
+            { label: "Luz/COSIP", value: money(energyTotalValue) },
+            { label: "Taxa de lixo", value: money(trashTotal) }
           ],
-          headers: ["Imóvel", "Morador", "Mês/Ano", "Status", "Aluguel", "Consumo", "Luz/COSIP", "Total"],
+          headers: ["Imóvel", "Morador", "Mês/Ano", "Status", "Aluguel", "Consumo", "Luz/COSIP", "Taxa de lixo", "Total"],
           rows,
           emptyMessage: "Nenhum lançamento encontrado para o filtro atual."
         });
@@ -5034,7 +5051,7 @@
           }
         });
 
-        ["#entryRent", "#entryKwhValue", "#entryKwhPrevious", "#entryKwhCurrent", "#entryCosip"].forEach(selector => {
+        ["#entryRent", "#entryKwhValue", "#entryKwhPrevious", "#entryKwhCurrent", "#entryCosip", "#entryTrashFee"].forEach(selector => {
           $(selector).addEventListener("input", () => {
             if (selector === "#entryRent") manualEntryRent = true;
             updateEntryPreview();
