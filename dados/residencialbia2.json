@@ -761,6 +761,14 @@
       "apartmentId": "",
       "amount": 461.26,
       "description": ""
+    },
+    {
+      "id": "expense_b4b31227-784c-4cbb-a1d5-6d54b5239e32",
+      "month": "2026-05",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 250,
+      "description": "Refletores"
     }
   ],
   "entries": [
@@ -2566,7 +2574,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T01:37:10.939Z",
+    "updatedAt": "2026-05-27T01:38:12.451Z",
     "updatedBy": "residencial"
   }
 }
