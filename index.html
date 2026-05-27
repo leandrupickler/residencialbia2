@@ -1228,6 +1228,23 @@
           </div>
         </div>
 
+        <div class="dashboard-filter">
+          <div class="field">
+            <label for="contractHistoryPeriodFilter">Filtro por período</label>
+            <select id="contractHistoryPeriodFilter">
+              <option value="last6">Últimos 6 meses</option>
+              <option value="last12">Último 1 ano</option>
+              <option value="last24">Últimos 2 anos</option>
+              <option value="all" selected>Todo o período</option>
+            </select>
+          </div>
+
+          <div class="filter-badge" id="contractHistoryFilterBadge">
+            <i class="fa-solid fa-filter"></i>
+            Todo o período
+          </div>
+        </div>
+
         <div id="contractHistoryList"></div>
       </section>
 
@@ -2972,6 +2989,60 @@
         }).join("");
       }
 
+      function getContractHistoryFilterRange() {
+        const mode = $("#contractHistoryPeriodFilter")?.value || "all";
+        const now = new Date();
+
+        const ranges = {
+          last6: { months: 6, label: "Últimos 6 meses" },
+          last12: { months: 12, label: "Último 1 ano" },
+          last24: { months: 24, label: "Últimos 2 anos" },
+          all: { months: null, label: "Todo o período" }
+        };
+
+        const selected = ranges[mode] || ranges.all;
+
+        if (!selected.months) {
+          return {
+            mode,
+            label: selected.label,
+            start: null,
+            end: now
+          };
+        }
+
+        return {
+          mode,
+          label: selected.label,
+          start: new Date(now.getFullYear(), now.getMonth() - selected.months + 1, 1),
+          end: now
+        };
+      }
+
+      function contractRowInsideHistoryFilter(row) {
+        const range = getContractHistoryFilterRange();
+
+        if (!range.start) return true;
+
+        const start = parseDate(row.contractStart) || parseDate(row.contractEnd) || new Date(1900, 0, 1);
+        const end = parseDate(row.contractEnd) || start;
+
+        return end >= range.start && start <= range.end;
+      }
+
+      function renderContractHistoryFilterBadge(totalRows, filteredRows) {
+        const badge = $("#contractHistoryFilterBadge");
+
+        if (!badge) return;
+
+        const range = getContractHistoryFilterRange();
+
+        badge.innerHTML = `
+          <i class="fa-solid fa-filter"></i>
+          ${escapeHtml(range.label)} • ${filteredRows} de ${totalRows} contrato(s)
+        `;
+      }
+
       function renderContractHistory() {
         const el = $("#contractHistoryList");
 
@@ -2979,11 +3050,16 @@
           String(a.number || "").localeCompare(String(b.number || ""), "pt-BR", { numeric: true })
         );
 
+        let totalRows = 0;
+        let filteredRows = 0;
+
         const groups = apartments.map(apartment => {
           const rows = [];
 
           (apartment.contractHistory || []).forEach(item => {
             rows.push({
+              id: item.id,
+              apartmentId: item.apartmentId || apartment.id,
               apartmentNumber: item.apartmentNumber || apartment.number,
               tenant: normalizeTenant(item.tenant),
               contractStart: item.contractStart,
@@ -2991,12 +3067,15 @@
               baseRent: item.baseRent,
               status: "Histórico",
               endedAt: item.endedAt,
-              reason: item.reason
+              reason: item.reason,
+              canDelete: true
             });
           });
 
           if (apartment.status !== "free" && apartment.tenant?.name) {
             rows.push({
+              id: `active_${apartment.id}`,
+              apartmentId: apartment.id,
               apartmentNumber: apartment.number,
               tenant: apartment.tenant,
               contractStart: apartment.contractStart,
@@ -3004,21 +3083,30 @@
               baseRent: apartment.baseRent,
               status: "Contrato Ativo",
               endedAt: "",
-              reason: ""
+              reason: "",
+              canDelete: false
             });
           }
 
-          rows.sort((a, b) => String(a.contractStart || "").localeCompare(String(b.contractStart || "")));
+          totalRows += rows.length;
 
-          return { apartment, rows };
+          const filtered = rows
+            .filter(contractRowInsideHistoryFilter)
+            .sort((a, b) => String(a.contractStart || "").localeCompare(String(b.contractStart || "")));
+
+          filteredRows += filtered.length;
+
+          return { apartment, rows: filtered };
         }).filter(group => group.rows.length > 0);
+
+        renderContractHistoryFilterBadge(totalRows, filteredRows);
 
         if (!groups.length) {
           el.innerHTML = `
             <div class="empty">
               <i class="fa-solid fa-clock-rotate-left"></i>
-              <strong>Nenhum histórico de contrato.</strong>
-              <div class="mini">Quando você liberar um apartamento, o morador antigo aparecerá aqui.</div>
+              <strong>Nenhum contrato encontrado no filtro selecionado.</strong>
+              <div class="mini">Altere o filtro para 6 meses, 1 ano, 2 anos ou todo o período.</div>
             </div>
           `;
           return;
@@ -3056,6 +3144,7 @@
                       <th>Encerramento</th>
                       <th>Valor mensal</th>
                       <th>Registrado em</th>
+                      <th style="text-align:right;">Ações</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -3071,6 +3160,17 @@
                         <td>${formatDate(row.contractEnd)}</td>
                         <td>${money(row.baseRent)}</td>
                         <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
+                        <td>
+                          <div class="td-actions">
+                            ${row.canDelete ? `
+                              <button class="btn btn-danger btn-sm" data-action="deleteContractHistory" data-id="${row.id}">
+                                <i class="fa-solid fa-trash"></i> Remover
+                              </button>
+                            ` : `
+                              <span class="pill green"><i class="fa-solid fa-lock"></i> Atual</span>
+                            `}
+                          </div>
+                        </td>
                       </tr>
                     `).join("")}
                   </tbody>
@@ -3418,6 +3518,30 @@
         apartment.contractEnd = "";
 
         await save("Apartamento liberado. Morador anterior enviado para o histórico.");
+      }
+
+      async function deleteContractHistory(id) {
+        if (!requireWrite("Seu usuário possui permissão somente leitura. Não é possível remover histórico.")) return;
+
+        const apartment = state.apartments.find(item =>
+          Array.isArray(item.contractHistory) && item.contractHistory.some(history => history.id === id)
+        );
+
+        if (!apartment) {
+          toast("Histórico não localizado.");
+          return;
+        }
+
+        const history = apartment.contractHistory.find(item => item.id === id);
+        const tenantName = history?.tenant?.name || "morador";
+
+        if (!confirm(`Remover o histórico de ${tenantName}? Esta ação não remove lançamentos financeiros já cadastrados.`)) {
+          return;
+        }
+
+        apartment.contractHistory = apartment.contractHistory.filter(item => item.id !== id);
+
+        await save("Histórico removido.");
       }
 
       async function deleteApartment(id) {
@@ -4279,6 +4403,7 @@
             deleteApartment,
             renewApartment,
             downloadContract,
+            deleteContractHistory,
             editExpense,
             deleteExpense,
             editEntry,
@@ -4349,6 +4474,10 @@
           state.settings.entriesHistoryFilter = event.target.value;
           await save("Filtro do histórico financeiro salvo.");
         });
+
+        if ($("#contractHistoryPeriodFilter")) {
+          $("#contractHistoryPeriodFilter").addEventListener("change", renderContractHistory);
+        }
 
         $("#entryApartmentId").addEventListener("change", event => {
           const apartment = getApartment(event.target.value);
