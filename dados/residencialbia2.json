@@ -769,6 +769,14 @@
       "apartmentId": "",
       "amount": 250,
       "description": "Refletores"
+    },
+    {
+      "id": "expense_606b7c77-ac5f-4c00-b069-1aa369278e74",
+      "month": "2025-08",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 1,
+      "description": "Portão Social - Ferro"
     }
   ],
   "entries": [
@@ -2574,7 +2582,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T01:38:12.451Z",
+    "updatedAt": "2026-05-27T01:39:31.702Z",
     "updatedBy": "residencial"
   }
 }
