@@ -12,7 +12,8 @@
       "login": "residencial",
       "salt": "70d060fb52feb917526f9e7847979035",
       "passwordHash": "53812c116857753f68e7e4b1c0bc9848bd3d94a12a7c83da9ddd3d2ab2b2f650",
-      "createdAt": "2026-05-24T01:59:02.135Z"
+      "createdAt": "2026-05-24T01:59:02.135Z",
+      "role": "write"
     }
   ],
   "apartments": [
@@ -277,24 +278,6 @@
           "baseRent": 1300,
           "endedAt": "2026-04-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
-        },
-        {
-          "id": "history_0abc011d-1de8-48ef-991a-2c69d4346c65",
-          "apartmentId": "apartment_apto06",
-          "apartmentNumber": "Apto 06",
-          "tenant": {
-            "name": "ALIDA THASY NASCIMENTO COSTA / KETLEN CRISTINA BARBOSA OLIVEIRA",
-            "cpf": "032.356.472-01 / 055.898.932-24",
-            "phone": "(91) 98460-5654 / (91) 98440-2936",
-            "birth": "",
-            "emergencyName": "",
-            "emergencyPhone": ""
-          },
-          "contractStart": "2026-03-15",
-          "contractEnd": "2026-09-15",
-          "baseRent": 1300,
-          "endedAt": "2026-05-26T02:52:05.146Z",
-          "reason": "Substituição manual do morador"
         }
       ]
     },
@@ -2590,7 +2573,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T01:41:04.449Z",
+    "updatedAt": "2026-05-27T02:13:19.340Z",
     "updatedBy": "residencial"
   }
 }
