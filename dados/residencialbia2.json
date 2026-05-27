@@ -775,7 +775,7 @@
       "month": "2026-02",
       "type": "IPTU",
       "apartmentId": "",
-      "amount": 1.2,
+      "amount": 1200,
       "description": "IPTU Global"
     }
   ],
@@ -2814,7 +2814,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T16:45:47.953Z",
+    "updatedAt": "2026-05-27T16:46:04.489Z",
     "updatedBy": "residencial"
   }
 }
