@@ -942,14 +942,14 @@
       "apartmentNumber": "Apto 01",
       "tenantName": "JARON GREGORI CAVALCANTE QUIRINO",
       "tenantCpf": "122.805.159-38",
-      "month": "2026-05",
+      "month": "2026-06",
       "rent": 1300,
       "energyMode": "withKwh",
-      "kwhValue": 0.84,
+      "kwhValue": 0.89,
       "kwhPrevious": 905.3,
       "kwhCurrent": 986.3,
       "kwhConsumed": 81,
-      "cosip": 19.55125
+      "cosip": 28
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_04",
@@ -2678,7 +2678,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T14:11:10.373Z",
+    "updatedAt": "2026-05-27T14:14:40.312Z",
     "updatedBy": "residencial"
   }
 }
