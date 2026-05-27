@@ -777,6 +777,14 @@
       "apartmentId": "",
       "amount": 1000,
       "description": "Portão Social - Ferro"
+    },
+    {
+      "id": "expense_92163ed6-cac2-42f7-a03f-1720be955cf0",
+      "month": "2026-04",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 300,
+      "description": "Faxina externa"
     }
   ],
   "entries": [
@@ -2582,7 +2590,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T01:40:17.224Z",
+    "updatedAt": "2026-05-27T01:41:04.449Z",
     "updatedBy": "residencial"
   }
 }
