@@ -857,7 +857,7 @@
             </div>
             <div>
               <div class="stat-value" id="grossValue">R$ 0,00</div>
-              <p class="stat-note">Aluguel + Luz + COSIP no período.</p>
+              <p class="stat-note">Aluguel + Luz + COSIP pagos no período.</p>
             </div>
           </article>
 
@@ -1174,6 +1174,17 @@
               </div>
             </div>
 
+            <div class="form-row three">
+              <div class="field">
+                <label for="entryPaymentStatus">Status do pagamento *</label>
+                <select id="entryPaymentStatus" required>
+                  <option value="paid">Pago</option>
+                  <option value="unpaid">Não pago</option>
+                </select>
+                <span class="mini muted">Marque “Não pago” quando o aluguel/luz ainda estiver pendente.</span>
+              </div>
+            </div>
+
             <div class="total-preview">
               <div>
                 <strong>Total a cobrar do inquilino</strong>
@@ -1208,6 +1219,15 @@
               <option value="current">Somente contrato atual</option>
               <option value="history">Somente contratos anteriores</option>
               <option value="all">Todos os lançamentos</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="entriesPaymentFilter">Filtro de pagamento</label>
+            <select id="entriesPaymentFilter">
+              <option value="all">Todos os pagamentos</option>
+              <option value="paid">Pagos</option>
+              <option value="unpaid">Não pagos</option>
             </select>
           </div>
 
@@ -1456,7 +1476,9 @@
           appName: "Residencial Beatriz",
           logo: "",
           dashboardPeriod: "currentYear",
-          dashboardYear: new Date().getFullYear()
+          dashboardYear: new Date().getFullYear(),
+          entriesHistoryFilter: "current",
+          entriesPaymentFilter: "all"
         },
         users: [],
         apartments: [],
@@ -1572,7 +1594,8 @@
           kwhPrevious: previousReading,
           kwhCurrent: currentReading,
           kwhConsumed: calculatedConsumed,
-          cosip: toNumber(source.cosip)
+          cosip: toNumber(source.cosip),
+          paymentStatus: normalizePaymentStatus(source.paymentStatus ?? source.payment ?? source.paid ?? source.isPaid ?? source.statusPagamento)
         };
       }
 
@@ -2044,6 +2067,34 @@
         }).format(toNumber(value));
       }
 
+      function normalizePaymentStatus(value) {
+        if (value === false) return "unpaid";
+
+        const raw = String(value ?? "paid")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase();
+
+        if (["unpaid", "notpaid", "not_paid", "naopago", "nao_pago", "não pago", "pendente", "aberto"].includes(raw)) {
+          return "unpaid";
+        }
+
+        return "paid";
+      }
+
+      function isEntryPaid(entry) {
+        return normalizePaymentStatus(entry?.paymentStatus) === "paid";
+      }
+
+      function paymentStatusLabel(entry) {
+        return isEntryPaid(entry) ? "Pago" : "Não pago";
+      }
+
+      function paymentStatusClass(entry) {
+        return isEntryPaid(entry) ? "green" : "red";
+      }
+
       function escapeHtml(value) {
         return String(value ?? "")
           .replaceAll("&", "&amp;")
@@ -2248,7 +2299,9 @@
       }
 
       function getFinancials() {
-        const filteredEntries = state.entries.filter(entry => isMonthInsideSelectedPeriod(entry.month));
+        const filteredEntries = state.entries
+          .filter(entry => isMonthInsideSelectedPeriod(entry.month))
+          .filter(isEntryPaid);
         const filteredExpenses = state.expenses.filter(expense => isMonthInsideSelectedPeriod(expense.month));
 
         const normalizeExpenseType = value => String(value || "")
@@ -2812,6 +2865,19 @@
         return state.settings.entriesHistoryFilter || "current";
       }
 
+      function getEntriesPaymentFilterMode() {
+        return state.settings.entriesPaymentFilter || "all";
+      }
+
+      function filterEntriesByPaymentStatus(entries) {
+        const mode = getEntriesPaymentFilterMode();
+
+        if (mode === "paid") return entries.filter(isEntryPaid);
+        if (mode === "unpaid") return entries.filter(entry => !isEntryPaid(entry));
+
+        return entries;
+      }
+
       function isEntryFromCurrentContract(entry) {
         const apartment = getApartment(entry.apartmentId);
 
@@ -2858,12 +2924,16 @@
 
       function renderEntriesFilterControls() {
         const select = $("#entriesHistoryFilter");
+        const paymentSelect = $("#entriesPaymentFilter");
         const badge = $("#entriesFilterBadge");
 
         if (!select || !badge) return;
 
         const mode = getEntriesFilterMode();
+        const paymentMode = getEntriesPaymentFilterMode();
+
         select.value = mode;
+        if (paymentSelect) paymentSelect.value = paymentMode;
 
         const labels = {
           current: "Somente contrato atual",
@@ -2871,7 +2941,13 @@
           all: "Todos os lançamentos"
         };
 
-        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${labels[mode] || labels.current}`;
+        const paymentLabels = {
+          all: "Todos os pagamentos",
+          paid: "Pagos",
+          unpaid: "Não pagos"
+        };
+
+        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${labels[mode] || labels.current} • ${paymentLabels[paymentMode] || paymentLabels.all}`;
       }
 
       function renderEntries() {
@@ -2879,7 +2955,7 @@
 
         renderEntriesFilterControls();
 
-        const filteredEntries = filterEntriesByMode(state.entries);
+        const filteredEntries = filterEntriesByPaymentStatus(filterEntriesByMode(state.entries));
 
         if (!filteredEntries.length) {
           const mode = getEntriesFilterMode();
@@ -2893,7 +2969,7 @@
             <div class="empty">
               <i class="fa-solid fa-file-invoice-dollar"></i>
               <strong>${emptyText}</strong>
-              <div class="mini">Use o filtro acima para alternar entre contrato atual, contratos anteriores ou todos os lançamentos.</div>
+              <div class="mini">Use os filtros acima para alternar entre contrato atual, contratos anteriores, pagos ou não pagos.</div>
             </div>
           `;
           return;
@@ -2924,6 +3000,8 @@
           const total = entries.reduce((sum, entry) => sum + entryTotal(entry), 0);
           const rentTotal = entries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
           const energyTotalValue = entries.reduce((sum, entry) => sum + energyTotal(entry), 0);
+          const paidTotal = entries.filter(isEntryPaid).reduce((sum, entry) => sum + entryTotal(entry), 0);
+          const unpaidTotal = entries.filter(entry => !isEntryPaid(entry)).reduce((sum, entry) => sum + entryTotal(entry), 0);
           const currentTenant = group.apartment?.tenant?.name || "";
           const activeInfo = currentTenant ? ` • Atual: ${escapeHtml(currentTenant)}` : "";
           const shouldOpen = index === 0;
@@ -2936,7 +3014,7 @@
               </summary>
 
               <div class="reference" style="border-radius:0; border-left:0; border-right:0;">
-                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Total: ${money(total)}
+                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Pago: ${money(paidTotal)} | Não pago: ${money(unpaidTotal)} | Total: ${money(total)}
               </div>
 
               <div class="table-wrap">
@@ -2945,6 +3023,7 @@
                     <tr>
                       <th>Morador do lançamento</th>
                       <th>Mês/Ano</th>
+                      <th>Status</th>
                       <th>Aluguel</th>
                       <th>Energia</th>
                       <th>Valor kWh</th>
@@ -2961,6 +3040,7 @@
                       <tr>
                         <td>${escapeHtml(entry.tenantName || getApartment(entry.apartmentId)?.tenant?.name || "-")}</td>
                         <td>${monthName(entry.month)}</td>
+                        <td><span class="pill ${paymentStatusClass(entry)}"><i class="fa-solid ${isEntryPaid(entry) ? "fa-circle-check" : "fa-circle-xmark"}"></i> ${paymentStatusLabel(entry)}</span></td>
                         <td>${money(entry.rent)}</td>
                         <td><span class="pill ${(entry.energyMode || "withKwh") === "noKwh" ? "green" : "blue"}">${(entry.energyMode || "withKwh") === "noKwh" ? "Sem kWh" : "Com kWh"}</span></td>
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : money(entry.kwhValue)}</td>
@@ -3276,6 +3356,7 @@
         $("#entryMonth").value = currentMonthValue();
         $("#entryRent").value = "";
         $("#entryEnergyMode").value = "withKwh";
+        $("#entryPaymentStatus").value = "paid";
         $("#entryKwhValue").value = "";
         $("#entryKwhPrevious").value = "";
         $("#entryKwhCurrent").value = "";
@@ -3667,6 +3748,7 @@
           month: $("#entryMonth").value,
           rent: toNumber($("#entryRent").value),
           energyMode,
+          paymentStatus: normalizePaymentStatus($("#entryPaymentStatus").value),
           kwhValue: noKwh ? 0 : toNumber($("#entryKwhValue").value),
           kwhPrevious: previousReading,
           kwhCurrent: currentReading,
@@ -3715,6 +3797,7 @@
         $("#entryMonth").value = entry.month;
         $("#entryRent").value = entry.rent;
         $("#entryEnergyMode").value = entry.energyMode || "withKwh";
+        $("#entryPaymentStatus").value = normalizePaymentStatus(entry.paymentStatus);
         $("#entryKwhValue").value = entry.kwhValue;
         $("#entryKwhPrevious").value = entry.kwhPrevious || "";
         $("#entryKwhCurrent").value = entry.kwhCurrent || "";
@@ -4483,6 +4566,13 @@
           state.settings.entriesHistoryFilter = event.target.value;
           await save("Filtro do histórico financeiro salvo.");
         });
+
+        if ($("#entriesPaymentFilter")) {
+          $("#entriesPaymentFilter").addEventListener("change", async event => {
+            state.settings.entriesPaymentFilter = event.target.value;
+            await save("Filtro de pagamento salvo.");
+          });
+        }
 
         if ($("#contractHistoryPeriodFilter")) {
           $("#contractHistoryPeriodFilter").addEventListener("change", renderContractHistory);
