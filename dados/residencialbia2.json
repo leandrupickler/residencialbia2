@@ -15,6 +15,14 @@
       "passwordHash": "53812c116857753f68e7e4b1c0bc9848bd3d94a12a7c83da9ddd3d2ab2b2f650",
       "createdAt": "2026-05-24T01:59:02.135Z",
       "role": "write"
+    },
+    {
+      "id": "user_4301f81f-0a2d-4e0f-a89c-78881d6d8b70",
+      "login": "teste",
+      "salt": "a7382cf45dd4b6a73a3af8a3e8490deb",
+      "passwordHash": "576b8e2ab00482049b22449d96cb4db6df0b2d87ea70d06c020afe6d865ee8d9",
+      "role": "read",
+      "createdAt": "2026-05-27T17:02:24.293Z"
     }
   ],
   "apartments": [
@@ -794,6 +802,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -810,6 +819,7 @@
       "kwhCurrent": 51.3,
       "kwhConsumed": 51.3,
       "cosip": 7.582222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -826,6 +836,7 @@
       "kwhCurrent": 103,
       "kwhConsumed": 103,
       "cosip": 19.222222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -842,6 +853,7 @@
       "kwhCurrent": 86,
       "kwhConsumed": 86,
       "cosip": 16.888889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -858,6 +870,7 @@
       "kwhCurrent": 301,
       "kwhConsumed": 60.69999999999999,
       "cosip": 14.714444,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -874,6 +887,7 @@
       "kwhCurrent": 352,
       "kwhConsumed": 51,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -890,6 +904,7 @@
       "kwhCurrent": 698.9,
       "kwhConsumed": 172.69999999999993,
       "cosip": 21.668889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -906,6 +921,7 @@
       "kwhCurrent": 708.7,
       "kwhConsumed": 9.800000000000068,
       "cosip": 19.111111,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -922,6 +938,7 @@
       "kwhCurrent": 772.3,
       "kwhConsumed": 63.59999999999991,
       "cosip": 21.666667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -938,6 +955,7 @@
       "kwhCurrent": 831.2,
       "kwhConsumed": 58.90000000000009,
       "cosip": 27.2325,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -954,6 +972,7 @@
       "kwhCurrent": 905.3,
       "kwhConsumed": 74.09999999999991,
       "cosip": 24.37,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -970,6 +989,7 @@
       "kwhCurrent": 986.3,
       "kwhConsumed": 81,
       "cosip": 28,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -986,6 +1006,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1002,6 +1023,7 @@
       "kwhCurrent": 15,
       "kwhConsumed": 15,
       "cosip": 7.582222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1018,6 +1040,7 @@
       "kwhCurrent": 143,
       "kwhConsumed": 143,
       "cosip": 19.222222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1034,6 +1057,7 @@
       "kwhCurrent": 108,
       "kwhConsumed": 108,
       "cosip": 16.888889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1050,6 +1074,7 @@
       "kwhCurrent": 394,
       "kwhConsumed": 128,
       "cosip": 14.714444,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1066,6 +1091,7 @@
       "kwhCurrent": 504,
       "kwhConsumed": 110,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1082,6 +1108,7 @@
       "kwhCurrent": 1431.3,
       "kwhConsumed": 129.5,
       "cosip": 24.37,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1098,6 +1125,7 @@
       "kwhCurrent": 1550,
       "kwhConsumed": 118.70000000000005,
       "cosip": 19.55125,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1114,6 +1142,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1130,6 +1159,7 @@
       "kwhCurrent": 32.8,
       "kwhConsumed": 32.8,
       "cosip": 7.582222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1146,6 +1176,7 @@
       "kwhCurrent": 228,
       "kwhConsumed": 228,
       "cosip": 19.222222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1162,6 +1193,7 @@
       "kwhCurrent": 68,
       "kwhConsumed": 68,
       "cosip": 16.888889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1178,6 +1210,7 @@
       "kwhCurrent": 460.4,
       "kwhConsumed": 131.59999999999997,
       "cosip": 14.714444,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1194,6 +1227,7 @@
       "kwhCurrent": 530,
       "kwhConsumed": 69.60000000000002,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1210,6 +1244,7 @@
       "kwhCurrent": 762.3,
       "kwhConsumed": 9.799999999999955,
       "cosip": 21.668889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1226,6 +1261,7 @@
       "kwhCurrent": 820.6,
       "kwhConsumed": 58.30000000000007,
       "cosip": 19.111111,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1242,6 +1278,7 @@
       "kwhCurrent": 967.9,
       "kwhConsumed": 147.29999999999995,
       "cosip": 21.666667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1258,6 +1295,7 @@
       "kwhCurrent": 1148,
       "kwhConsumed": 180.10000000000002,
       "cosip": 27.2325,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1274,6 +1312,7 @@
       "kwhCurrent": 1296.3,
       "kwhConsumed": 148.29999999999995,
       "cosip": 24.37,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1290,6 +1329,7 @@
       "kwhCurrent": 1419.5,
       "kwhConsumed": 123.20000000000005,
       "cosip": 19.55125,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1306,6 +1346,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1322,6 +1363,7 @@
       "kwhCurrent": 45.07,
       "kwhConsumed": 45.07,
       "cosip": 7.582222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1338,6 +1380,7 @@
       "kwhCurrent": 101,
       "kwhConsumed": 101,
       "cosip": 19.222222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1354,6 +1397,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1370,6 +1414,7 @@
       "kwhCurrent": 61.3,
       "kwhConsumed": 61.3,
       "cosip": 16.888889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1386,6 +1431,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1402,6 +1448,7 @@
       "kwhCurrent": 245.21,
       "kwhConsumed": 37.84,
       "cosip": 14.714444,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1418,6 +1465,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1434,6 +1482,7 @@
       "kwhCurrent": 330,
       "kwhConsumed": 84.78999999999999,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1450,6 +1499,7 @@
       "kwhCurrent": 405.75,
       "kwhConsumed": 75.75,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1466,6 +1516,7 @@
       "kwhCurrent": 475.32,
       "kwhConsumed": 69.57,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1482,6 +1533,7 @@
       "kwhCurrent": 509.32,
       "kwhConsumed": 34,
       "cosip": 21.668889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1498,6 +1550,7 @@
       "kwhCurrent": 698.53,
       "kwhConsumed": 189.20999999999998,
       "cosip": 19.111111,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1514,6 +1567,7 @@
       "kwhCurrent": 707.3,
       "kwhConsumed": 8.769999999999982,
       "cosip": 21.666667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1530,6 +1584,7 @@
       "kwhCurrent": 780.43,
       "kwhConsumed": 73.13,
       "cosip": 27.2325,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1546,6 +1601,7 @@
       "kwhCurrent": 876.21,
       "kwhConsumed": 95.78000000000009,
       "cosip": 24.37,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1562,6 +1618,7 @@
       "kwhCurrent": 963.69,
       "kwhConsumed": 87.48000000000002,
       "cosip": 19.55125,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1578,6 +1635,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1594,6 +1652,7 @@
       "kwhCurrent": 51.23,
       "kwhConsumed": 51.23,
       "cosip": 7.582222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1610,6 +1669,7 @@
       "kwhCurrent": 72,
       "kwhConsumed": 72,
       "cosip": 19.222222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1626,6 +1686,7 @@
       "kwhCurrent": 65,
       "kwhConsumed": 65,
       "cosip": 16.888889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1642,6 +1703,7 @@
       "kwhCurrent": 270,
       "kwhConsumed": 81.77000000000001,
       "cosip": 14.714444,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1658,6 +1720,7 @@
       "kwhCurrent": 319,
       "kwhConsumed": 49,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1674,6 +1737,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1690,6 +1754,7 @@
       "kwhCurrent": 373.26,
       "kwhConsumed": 54.25999999999999,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1706,6 +1771,7 @@
       "kwhCurrent": 507.64,
       "kwhConsumed": 134.38,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1722,6 +1788,7 @@
       "kwhCurrent": 612.06,
       "kwhConsumed": 104.41999999999996,
       "cosip": 21.668889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1738,6 +1805,7 @@
       "kwhCurrent": 746.64,
       "kwhConsumed": 134.58000000000004,
       "cosip": 19.111111,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1754,6 +1822,7 @@
       "kwhCurrent": 898.98,
       "kwhConsumed": 152.34000000000003,
       "cosip": 21.666667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1770,6 +1839,7 @@
       "kwhCurrent": 1057.66,
       "kwhConsumed": 158.68000000000006,
       "cosip": 27.2325,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1786,6 +1856,7 @@
       "kwhCurrent": 1229.49,
       "kwhConsumed": 171.82999999999993,
       "cosip": 24.37,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1802,6 +1873,7 @@
       "kwhCurrent": 1435.34,
       "kwhConsumed": 205.8499999999999,
       "cosip": 19.55125,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1818,6 +1890,7 @@
       "kwhCurrent": 445.7,
       "kwhConsumed": 46.69999999999999,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1834,6 +1907,7 @@
       "kwhCurrent": 488.6,
       "kwhConsumed": 42.900000000000034,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1850,6 +1924,7 @@
       "kwhCurrent": 555.8,
       "kwhConsumed": 67.19999999999993,
       "cosip": 21.668889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1866,6 +1941,7 @@
       "kwhCurrent": 631.2,
       "kwhConsumed": 75.40000000000009,
       "cosip": 19.111111,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1882,6 +1958,7 @@
       "kwhCurrent": 696.9,
       "kwhConsumed": 65.69999999999993,
       "cosip": 21.666667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1898,6 +1975,7 @@
       "kwhCurrent": 778.4,
       "kwhConsumed": 81.5,
       "cosip": 27.2325,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1914,6 +1992,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1930,6 +2009,7 @@
       "kwhCurrent": 784.6,
       "kwhConsumed": 6.2000000000000455,
       "cosip": 24.37,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1946,6 +2026,7 @@
       "kwhCurrent": 897,
       "kwhConsumed": 112.39999999999998,
       "cosip": 19.55125,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1962,6 +2043,7 @@
       "kwhCurrent": 1.1,
       "kwhConsumed": 1.1,
       "cosip": 7.582222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1978,6 +2060,7 @@
       "kwhCurrent": 43,
       "kwhConsumed": 43,
       "cosip": 19.222222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -1994,6 +2077,7 @@
       "kwhCurrent": 120,
       "kwhConsumed": 120,
       "cosip": 16.888889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2010,6 +2094,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2026,6 +2111,7 @@
       "kwhCurrent": 323.5,
       "kwhConsumed": 159.4,
       "cosip": 14.714444,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2042,6 +2128,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2058,6 +2145,7 @@
       "kwhCurrent": 363,
       "kwhConsumed": 39.5,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2074,6 +2162,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2090,6 +2179,7 @@
       "kwhCurrent": 447.6,
       "kwhConsumed": 84.60000000000002,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2106,6 +2196,7 @@
       "kwhCurrent": 506.9,
       "kwhConsumed": 59.299999999999955,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2122,6 +2213,7 @@
       "kwhCurrent": 579,
       "kwhConsumed": 72.10000000000002,
       "cosip": 21.668889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2138,6 +2230,7 @@
       "kwhCurrent": 658.1,
       "kwhConsumed": 79.10000000000002,
       "cosip": 19.111111,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2154,6 +2247,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2170,6 +2264,7 @@
       "kwhCurrent": 923.6,
       "kwhConsumed": 95.20000000000005,
       "cosip": 24.37,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2186,6 +2281,7 @@
       "kwhCurrent": 1006.3,
       "kwhConsumed": 82.69999999999993,
       "cosip": 19.55125,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2202,6 +2298,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2218,6 +2315,7 @@
       "kwhCurrent": 24.6,
       "kwhConsumed": 24.6,
       "cosip": 7.582222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2234,6 +2332,7 @@
       "kwhCurrent": 80,
       "kwhConsumed": 80,
       "cosip": 19.222222,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2250,6 +2349,7 @@
       "kwhCurrent": 68,
       "kwhConsumed": 68,
       "cosip": 16.888889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2266,6 +2366,7 @@
       "kwhCurrent": 272.6,
       "kwhConsumed": 100.00000000000003,
       "cosip": 14.714444,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2282,6 +2383,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2298,6 +2400,7 @@
       "kwhCurrent": 297.9,
       "kwhConsumed": 25.299999999999955,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2314,6 +2417,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2330,6 +2434,7 @@
       "kwhCurrent": 395.3,
       "kwhConsumed": 97.40000000000003,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2346,6 +2451,7 @@
       "kwhCurrent": 510.8,
       "kwhConsumed": 115.5,
       "cosip": 16.566667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2362,6 +2468,7 @@
       "kwhCurrent": 590.2,
       "kwhConsumed": 79.40000000000003,
       "cosip": 21.668889,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2378,6 +2485,7 @@
       "kwhCurrent": 685.9,
       "kwhConsumed": 95.69999999999993,
       "cosip": 19.111111,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2394,6 +2502,7 @@
       "kwhCurrent": 777,
       "kwhConsumed": 91.10000000000002,
       "cosip": 21.666667,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2410,6 +2519,7 @@
       "kwhCurrent": 869.6,
       "kwhConsumed": 92.60000000000002,
       "cosip": 27.2325,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2426,6 +2536,7 @@
       "kwhCurrent": 981.9,
       "kwhConsumed": 112.29999999999995,
       "cosip": 24.37,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2442,6 +2553,7 @@
       "kwhCurrent": 1073.9,
       "kwhConsumed": 92.00000000000011,
       "cosip": 19.55125,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2458,6 +2570,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2474,6 +2587,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2490,6 +2604,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2506,6 +2621,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2522,6 +2638,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2538,6 +2655,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2554,6 +2672,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2570,6 +2689,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2586,6 +2706,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2602,6 +2723,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2618,6 +2740,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2634,6 +2757,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2650,6 +2774,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2666,6 +2791,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2682,6 +2808,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2698,6 +2825,7 @@
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2714,6 +2842,7 @@
       "kwhCurrent": 1694.79,
       "kwhConsumed": 144.78999999999996,
       "cosip": 28,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2730,6 +2859,7 @@
       "kwhCurrent": 1553.1,
       "kwhConsumed": 133.5999999999999,
       "cosip": 28,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2746,6 +2876,7 @@
       "kwhCurrent": 1055.08,
       "kwhConsumed": 91.38999999999987,
       "cosip": 28,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2762,6 +2893,7 @@
       "kwhCurrent": 1632.68,
       "kwhConsumed": 197.34000000000015,
       "cosip": 28,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2778,6 +2910,7 @@
       "kwhCurrent": 1009.1,
       "kwhConsumed": 112.10000000000002,
       "cosip": 28,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2794,6 +2927,7 @@
       "kwhCurrent": 1082.3,
       "kwhConsumed": 76,
       "cosip": 28,
+      "trashFee": 0,
       "paymentStatus": "paid"
     },
     {
@@ -2810,11 +2944,12 @@
       "kwhCurrent": 1169.7,
       "kwhConsumed": 95.79999999999995,
       "cosip": 28,
+      "trashFee": 0,
       "paymentStatus": "paid"
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T16:46:04.489Z",
+    "updatedAt": "2026-05-27T17:02:24.838Z",
     "updatedBy": "residencial"
   }
 }
