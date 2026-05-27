@@ -1094,6 +1094,10 @@
             <i class="fa-solid fa-filter"></i>
             Todos os anos
           </div>
+
+          <button class="btn btn-primary" type="button" data-action="downloadExpensesReport">
+            <i class="fa-solid fa-file-arrow-down"></i> Baixar relatório
+          </button>
         </div>
 
         <div id="expensesList"></div>
@@ -1234,6 +1238,10 @@
             <i class="fa-solid fa-filter"></i>
             Contrato atual
           </div>
+
+          <button class="btn btn-primary" type="button" data-action="downloadEntriesReport">
+            <i class="fa-solid fa-file-arrow-down"></i> Baixar relatório
+          </button>
         </div>
 
         <div id="entriesList"></div>
@@ -1262,6 +1270,10 @@
             <i class="fa-solid fa-filter"></i>
             Todo o período
           </div>
+
+          <button class="btn btn-primary" type="button" data-action="downloadContractHistoryReport">
+            <i class="fa-solid fa-file-arrow-down"></i> Baixar relatório
+          </button>
         </div>
 
         <div id="contractHistoryList"></div>
@@ -3976,6 +3988,428 @@
         await save("Usuário removido.");
       }
 
+      function reportDateTime() {
+        return new Intl.DateTimeFormat("pt-BR", {
+          dateStyle: "short",
+          timeStyle: "short"
+        }).format(new Date());
+      }
+
+      function safeFilePart(value) {
+        return String(value || "relatorio")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9]+/gi, "-")
+          .replace(/^-+|-+$/g, "")
+          .toLowerCase() || "relatorio";
+      }
+
+      function selectedOptionText(selector) {
+        const el = $(selector);
+        if (!el) return "";
+        return el.selectedOptions?.[0]?.textContent?.trim() || el.value || "";
+      }
+
+      function downloadHtmlFile(filename, content) {
+        const blob = new Blob([content], { type: "text/html;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        URL.revokeObjectURL(url);
+      }
+
+      function buildPrintableReport({ title, subtitle, summaryCards = [], headers = [], rows = [], emptyMessage = "Nenhum registro encontrado no filtro atual." }) {
+        const appName = state.settings.appName || "Residencial Beatriz";
+        const logo = state.settings.logo
+          ? `<img src="${state.settings.logo}" alt="${escapeHtml(appName)}">`
+          : `<div class="report-logo-fallback">RB</div>`;
+
+        const summaryHtml = summaryCards.length
+          ? `<section class="summary">${summaryCards.map(item => `
+              <article>
+                <span>${escapeHtml(item.label)}</span>
+                <strong>${escapeHtml(item.value)}</strong>
+              </article>
+            `).join("")}</section>`
+          : "";
+
+        const tableHtml = rows.length
+          ? `<table>
+              <thead>
+                <tr>${headers.map(header => `<th>${escapeHtml(header)}</th>`).join("")}</tr>
+              </thead>
+              <tbody>
+                ${rows.map(row => `
+                  <tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>
+                `).join("")}
+              </tbody>
+            </table>`
+          : `<div class="empty-report">${escapeHtml(emptyMessage)}</div>`;
+
+        return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>${escapeHtml(title)} - ${escapeHtml(appName)}</title>
+  <style>
+    @page { size: A4 landscape; margin: 12mm; }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 18px;
+      background: #f6f8fc;
+      color: #202124;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 8px 28px rgba(60, 64, 67, 0.12);
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 4px solid #4285F4;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    .top img {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      border-radius: 14px;
+    }
+
+    .report-logo-fallback {
+      width: 74px;
+      height: 74px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
+      font-size: 24px;
+      background: linear-gradient(135deg, #4285F4, #34A853);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+      color: #202124;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: #5f6368;
+      font-size: 13px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .summary article {
+      border: 1px solid #e8eaed;
+      border-radius: 14px;
+      padding: 12px;
+      background: #f8fafd;
+    }
+
+    .summary span {
+      display: block;
+      color: #5f6368;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .summary strong {
+      display: block;
+      font-size: 15px;
+      color: #202124;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      overflow: hidden;
+      border: 1px solid #e8eaed;
+    }
+
+    th, td {
+      padding: 9px 10px;
+      border-bottom: 1px solid #e8eaed;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f1f4f9;
+      color: #3c4043;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: .04em;
+    }
+
+    tr:nth-child(even) td { background: #fbfcff; }
+    .paid { color: #188038; font-weight: 700; }
+    .unpaid { color: #d93025; font-weight: 700; }
+
+    .empty-report {
+      padding: 22px;
+      border: 1px dashed #cfd5df;
+      border-radius: 14px;
+      color: #5f6368;
+      text-align: center;
+      background: #f8fafd;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: #5f6368;
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .print-btn {
+      position: fixed;
+      right: 18px;
+      top: 18px;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: #4285F4;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(60, 64, 67, .18);
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .page {
+        max-width: none;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .print-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn" onclick="window.print()">Imprimir / Salvar em PDF</button>
+  <main class="page">
+    <header class="top">
+      ${logo}
+      <div>
+        <h1>${escapeHtml(title)}</h1>
+        <p class="subtitle">${escapeHtml(subtitle)}</p>
+      </div>
+    </header>
+
+    ${summaryHtml}
+    ${tableHtml}
+
+    <div class="footer">
+      Relatório gerado em ${escapeHtml(reportDateTime())} por ${escapeHtml(loggedUser?.login || "sistema")}.
+    </div>
+  </main>
+</body>
+</html>`;
+      }
+
+      function downloadExpensesReport() {
+        const filtered = getFilteredExpenses();
+        const total = filtered.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+
+        const yearText = selectedOptionText("#expensesYearFilter") || "Todos os anos";
+        const typeText = selectedOptionText("#expensesTypeFilter") || "Todos os tipos";
+        const searchText = $("#expensesSearchFilter")?.value?.trim() || "Sem busca textual";
+
+        const rows = filtered
+          .slice()
+          .sort((a, b) => String(a.month).localeCompare(String(b.month)) || String(a.type).localeCompare(String(b.type), "pt-BR"))
+          .map(expense => [
+            escapeHtml(monthName(expense.month)),
+            escapeHtml(expense.type || "-"),
+            escapeHtml(expense.apartmentId ? apartmentName(expense.apartmentId) : "Global"),
+            escapeHtml(expense.description || "-"),
+            escapeHtml(money(expense.amount))
+          ]);
+
+        const report = buildPrintableReport({
+          title: "Relatório de Despesas",
+          subtitle: `Filtros: ${yearText} • ${typeText} • ${searchText}`,
+          summaryCards: [
+            { label: "Total filtrado", value: money(total) },
+            { label: "Registros", value: String(filtered.length) },
+            { label: "Ano", value: yearText },
+            { label: "Tipo", value: typeText }
+          ],
+          headers: ["Mês/Ano", "Tipo", "Unidade", "Descrição", "Valor"],
+          rows,
+          emptyMessage: "Nenhuma despesa encontrada para o filtro atual."
+        });
+
+        downloadHtmlFile(`relatorio-despesas-${safeFilePart(yearText)}-${new Date().toISOString().slice(0,10)}.html`, report);
+        toast("Relatório de despesas baixado.");
+      }
+
+      function downloadEntriesReport() {
+        const filtered = filterEntriesByPaymentStatus(filterEntriesByMode(state.entries));
+        const total = filtered.reduce((sum, entry) => sum + entryTotal(entry), 0);
+        const paidTotal = filtered.filter(isEntryPaid).reduce((sum, entry) => sum + entryTotal(entry), 0);
+        const unpaidTotal = filtered.filter(entry => !isEntryPaid(entry)).reduce((sum, entry) => sum + entryTotal(entry), 0);
+        const rentTotal = filtered.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
+        const energyTotalValue = filtered.reduce((sum, entry) => sum + energyTotal(entry), 0);
+
+        const historyText = selectedOptionText("#entriesHistoryFilter") || "Todos os lançamentos";
+        const paymentText = selectedOptionText("#entriesPaymentFilter") || "Todos os pagamentos";
+
+        const rows = filtered
+          .slice()
+          .sort((a, b) =>
+            String(a.apartmentNumber || apartmentName(a.apartmentId)).localeCompare(String(b.apartmentNumber || apartmentName(b.apartmentId)), "pt-BR", { numeric: true }) ||
+            String(a.month).localeCompare(String(b.month))
+          )
+          .map(entry => [
+            escapeHtml(entry.apartmentNumber || apartmentName(entry.apartmentId)),
+            escapeHtml(entry.tenantName || "-"),
+            escapeHtml(monthName(entry.month)),
+            `<span class="${isEntryPaid(entry) ? "paid" : "unpaid"}">${escapeHtml(paymentStatusLabel(entry))}</span>`,
+            escapeHtml(money(entry.rent)),
+            escapeHtml((entry.energyMode || "withKwh") === "noKwh" ? "-" : `${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh`),
+            escapeHtml(money(energyTotal(entry))),
+            escapeHtml(money(entryTotal(entry)))
+          ]);
+
+        const report = buildPrintableReport({
+          title: "Relatório Financeiro de Lançamentos",
+          subtitle: `Filtros: ${historyText} • ${paymentText}`,
+          summaryCards: [
+            { label: "Total filtrado", value: money(total) },
+            { label: "Total pago", value: money(paidTotal) },
+            { label: "Total não pago", value: money(unpaidTotal) },
+            { label: "Registros", value: String(filtered.length) },
+            { label: "Aluguel", value: money(rentTotal) },
+            { label: "Luz/COSIP", value: money(energyTotalValue) }
+          ],
+          headers: ["Imóvel", "Morador", "Mês/Ano", "Status", "Aluguel", "Consumo", "Luz/COSIP", "Total"],
+          rows,
+          emptyMessage: "Nenhum lançamento encontrado para o filtro atual."
+        });
+
+        downloadHtmlFile(`relatorio-lancamentos-${safeFilePart(historyText)}-${safeFilePart(paymentText)}-${new Date().toISOString().slice(0,10)}.html`, report);
+        toast("Relatório de lançamentos baixado.");
+      }
+
+      function collectFilteredContractHistoryRows() {
+        return [...state.apartments]
+          .sort((a, b) => String(a.number || "").localeCompare(String(b.number || ""), "pt-BR", { numeric: true }))
+          .flatMap(apartment => {
+            const rows = [];
+
+            (apartment.contractHistory || []).forEach(item => {
+              rows.push({
+                apartmentNumber: item.apartmentNumber || apartment.number,
+                tenant: normalizeTenant(item.tenant),
+                contractStart: item.contractStart,
+                contractEnd: item.contractEnd,
+                baseRent: item.baseRent,
+                status: "Histórico",
+                endedAt: item.endedAt || ""
+              });
+            });
+
+            if (apartment.status !== "free" && apartment.tenant?.name) {
+              rows.push({
+                apartmentNumber: apartment.number,
+                tenant: apartment.tenant,
+                contractStart: apartment.contractStart,
+                contractEnd: apartment.contractEnd,
+                baseRent: apartment.baseRent,
+                status: "Contrato Ativo",
+                endedAt: ""
+              });
+            }
+
+            return rows;
+          })
+          .filter(contractRowInsideHistoryFilter)
+          .sort((a, b) =>
+            String(a.apartmentNumber || "").localeCompare(String(b.apartmentNumber || ""), "pt-BR", { numeric: true }) ||
+            String(a.contractStart || "").localeCompare(String(b.contractStart || ""))
+          );
+      }
+
+      function downloadContractHistoryReport() {
+        const rowsData = collectFilteredContractHistoryRows();
+        const range = getContractHistoryFilterRange();
+        const totalRent = rowsData.reduce((sum, row) => sum + toNumber(row.baseRent), 0);
+        const activeCount = rowsData.filter(row => row.status === "Contrato Ativo").length;
+        const historyCount = rowsData.filter(row => row.status === "Histórico").length;
+
+        const rows = rowsData.map(row => [
+          escapeHtml(row.status),
+          escapeHtml(row.apartmentNumber || "-"),
+          escapeHtml(row.tenant?.name || "-"),
+          escapeHtml(row.tenant?.cpf || "-"),
+          escapeHtml(row.tenant?.phone || "-"),
+          escapeHtml(formatDate(row.contractStart)),
+          escapeHtml(formatDate(row.contractEnd)),
+          escapeHtml(money(row.baseRent)),
+          escapeHtml(row.endedAt ? formatDate(String(row.endedAt).slice(0, 10)) : "-")
+        ]);
+
+        const report = buildPrintableReport({
+          title: "Relatório de Contratos e Moradores",
+          subtitle: `Filtro: ${range.label}`,
+          summaryCards: [
+            { label: "Contratos filtrados", value: String(rowsData.length) },
+            { label: "Contratos ativos", value: String(activeCount) },
+            { label: "Históricos", value: String(historyCount) },
+            { label: "Soma mensal de referência", value: money(totalRent) }
+          ],
+          headers: ["Status", "Apartamento", "Morador", "CPF", "Telefone", "Início", "Encerramento", "Valor mensal", "Registrado em"],
+          rows,
+          emptyMessage: "Nenhum contrato encontrado para o filtro atual."
+        });
+
+        downloadHtmlFile(`relatorio-contratos-${safeFilePart(range.label)}-${new Date().toISOString().slice(0,10)}.html`, report);
+        toast("Relatório de contratos baixado.");
+      }
+
       function exportBackup() {
         const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
         const url = URL.createObjectURL(blob);
@@ -4495,6 +4929,9 @@
             renewApartment,
             downloadContract,
             deleteContractHistory,
+            downloadContractHistoryReport,
+            downloadExpensesReport,
+            downloadEntriesReport,
             editExpense,
             deleteExpense,
             editEntry,
