@@ -769,6 +769,14 @@
       "apartmentId": "",
       "amount": 300,
       "description": "Faxina externa"
+    },
+    {
+      "id": "expense_2e7ae0cb-29ab-46c2-82ee-dfa5883cf8ed",
+      "month": "2026-02",
+      "type": "IPTU",
+      "apartmentId": "",
+      "amount": 1.2,
+      "description": "IPTU Global"
     }
   ],
   "entries": [
@@ -2806,7 +2814,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T14:14:40.312Z",
+    "updatedAt": "2026-05-27T16:45:47.953Z",
     "updatedBy": "residencial"
   }
 }
