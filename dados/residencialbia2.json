@@ -775,7 +775,7 @@
       "month": "2025-08",
       "type": "Manutenção Extra",
       "apartmentId": "",
-      "amount": 1,
+      "amount": 100000,
       "description": "Portão Social - Ferro"
     }
   ],
@@ -2582,7 +2582,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-27T01:39:31.702Z",
+    "updatedAt": "2026-05-27T01:39:49.370Z",
     "updatedBy": "residencial"
   }
 }
