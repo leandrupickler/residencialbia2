@@ -755,14 +755,6 @@
       "description": "Seguro do imóvel mensal desde 10/02/2025."
     },
     {
-      "id": "expense_e0f16c7f-242b-475d-b901-1563d26d6f03",
-      "month": "2026-05",
-      "type": "Água",
-      "apartmentId": "",
-      "amount": 379.58,
-      "description": ""
-    },
-    {
       "id": "expense_fb114395-cb35-42a7-a0da-f42240dba3de",
       "month": "2026-05",
       "type": "Água",
@@ -2574,7 +2566,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-26T22:41:27.529Z",
+    "updatedAt": "2026-05-27T01:37:10.939Z",
     "updatedBy": "residencial"
   }
 }
