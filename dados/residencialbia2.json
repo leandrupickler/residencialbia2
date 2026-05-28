@@ -990,7 +990,7 @@
       "kwhConsumed": 81,
       "cosip": 28,
       "trashFee": 0,
-      "paymentStatus": "paid"
+      "paymentStatus": "unpaid"
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_04",
@@ -2949,7 +2949,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-28T11:44:24.402Z",
+    "updatedAt": "2026-05-28T20:34:22.836Z",
     "updatedBy": "residencial"
   }
 }
