@@ -2852,7 +2852,7 @@
       "tenantName": "KARINE KAUSS RODRIGUES",
       "tenantCpf": "018.491.050-14",
       "month": "2026-06",
-      "rent": 1300,
+      "rent": 0,
       "energyMode": "withKwh",
       "kwhValue": 0.89,
       "kwhPrevious": 1419.5,
@@ -2949,7 +2949,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-28T20:34:56.408Z",
+    "updatedAt": "2026-05-28T20:35:19.348Z",
     "updatedBy": "residencial"
   }
 }
