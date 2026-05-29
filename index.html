@@ -434,6 +434,19 @@
     .pill.yellow { background: rgba(251, 188, 5, 0.18); color: #8a6500; }
     .pill.green { background: rgba(52, 168, 83, 0.12); color: var(--green); }
 
+    .payment-dot {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      border-radius: 50%;
+      vertical-align: middle;
+      box-shadow: 0 0 0 4px rgba(60, 64, 67, 0.06);
+    }
+
+    .payment-dot.green { background: var(--green); }
+    .payment-dot.yellow { background: var(--yellow); }
+    .payment-dot.red { background: var(--red); }
+
     .actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
 
     .table-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--border); background: #fff; }
@@ -3261,7 +3274,7 @@
                     <tr>
                       <th>Morador do lançamento</th>
                       <th>Mês/Ano</th>
-                      <th>Status</th>
+                      <th style="text-align:center;">Status</th>
                       <th>Aluguel</th>
                       <th>Energia</th>
                       <th>Valor kWh</th>
@@ -3279,7 +3292,14 @@
                       <tr>
                         <td>${escapeHtml(entry.tenantName || getApartment(entry.apartmentId)?.tenant?.name || "-")}</td>
                         <td>${monthName(entry.month)}</td>
-                        <td><span class="pill ${paymentStatusClass(entry)}"><i class="fa-solid ${paymentStatusIcon(entry)}"></i> ${paymentStatusLabel(entry)}</span></td>
+                        <td style="text-align:center;">
+                          <span
+                            class="payment-dot ${paymentStatusClass(entry)}"
+                            title="${paymentStatusLabel(entry)}"
+                            aria-label="${paymentStatusLabel(entry)}"
+                            role="img">
+                          </span>
+                        </td>
                         <td>${money(entry.rent)}</td>
                         <td><span class="pill ${(entry.energyMode || "withKwh") === "noKwh" ? "green" : "blue"}">${(entry.energyMode || "withKwh") === "noKwh" ? "Sem kWh" : "Com kWh"}</span></td>
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : money(entry.kwhValue)}</td>
