@@ -3276,7 +3276,6 @@
                       <th>Mês/Ano</th>
                       <th style="text-align:center;">Status</th>
                       <th>Aluguel</th>
-                      <th>Energia</th>
                       <th>Valor kWh</th>
                       <th>Leitura anterior</th>
                       <th>Leitura atual</th>
@@ -3301,7 +3300,6 @@
                           </span>
                         </td>
                         <td>${money(entry.rent)}</td>
-                        <td><span class="pill ${(entry.energyMode || "withKwh") === "noKwh" ? "green" : "blue"}">${(entry.energyMode || "withKwh") === "noKwh" ? "Sem kWh" : "Com kWh"}</span></td>
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : money(entry.kwhValue)}</td>
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhPrevious).toLocaleString("pt-BR") + " kWh"}</td>
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhCurrent).toLocaleString("pt-BR") + " kWh"}</td>
