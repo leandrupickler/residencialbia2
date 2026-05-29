@@ -2931,19 +2931,85 @@
         return $("#entriesApartmentFilter")?.value || "all";
       }
 
+      function normalizeFilterText(value) {
+        return String(value || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase();
+      }
+
+      function entryApartmentNumber(entry) {
+        const apartment = entry.apartmentId ? getApartment(entry.apartmentId) : null;
+        return String(entry.apartmentNumber || apartment?.number || "Unidade removida").trim();
+      }
+
+      function entryTenantName(entry) {
+        const apartment = entry.apartmentId ? getApartment(entry.apartmentId) : null;
+        return String(entry.tenantName || apartment?.tenant?.name || "Sem morador").trim();
+      }
+
+      function entryTenantCpf(entry) {
+        return String(entry.tenantCpf || "").trim();
+      }
+
+      function entryPersonFilterValue(entry) {
+        return [
+          "entry",
+          encodeURIComponent(entryApartmentNumber(entry)),
+          encodeURIComponent(entryTenantName(entry)),
+          encodeURIComponent(entryTenantCpf(entry))
+        ].join("::");
+      }
+
+      function parseEntryPersonFilterValue(value) {
+        const parts = String(value || "").split("::");
+
+        if (parts[0] !== "entry" || parts.length < 4) return null;
+
+        try {
+          return {
+            apartmentNumber: decodeURIComponent(parts[1] || ""),
+            tenantName: decodeURIComponent(parts[2] || ""),
+            tenantCpf: decodeURIComponent(parts[3] || "")
+          };
+        } catch {
+          return null;
+        }
+      }
+
+      function entryMatchesPersonFilter(entry, filter) {
+        if (!filter) return true;
+
+        const sameApartment = normalizeFilterText(entryApartmentNumber(entry)) === normalizeFilterText(filter.apartmentNumber);
+        const sameTenant = normalizeFilterText(entryTenantName(entry)) === normalizeFilterText(filter.tenantName);
+        const entryCpf = normalizeFilterText(entryTenantCpf(entry));
+        const filterCpf = normalizeFilterText(filter.tenantCpf);
+
+        if (filterCpf) {
+          return sameApartment && entryCpf && entryCpf === filterCpf;
+        }
+
+        return sameApartment && sameTenant;
+      }
+
       function entryMatchesApartmentFilter(entry, mode = getEntriesApartmentFilterMode()) {
         if (!mode || mode === "all") return true;
 
+        if (mode.startsWith("entry::")) {
+          return entryMatchesPersonFilter(entry, parseEntryPersonFilterValue(mode));
+        }
+
         if (mode.startsWith("number::")) {
           const wantedNumber = mode.replace("number::", "");
-          return String(entry.apartmentNumber || "").trim() === wantedNumber;
+          return normalizeFilterText(entryApartmentNumber(entry)) === normalizeFilterText(wantedNumber);
         }
 
         const selectedApartment = getApartment(mode);
         const selectedNumber = selectedApartment?.number || "";
 
         return entry.apartmentId === mode ||
-          (selectedNumber && String(entry.apartmentNumber || "").trim() === selectedNumber);
+          (selectedNumber && normalizeFilterText(entryApartmentNumber(entry)) === normalizeFilterText(selectedNumber));
       }
 
       function filterEntriesByApartment(entries) {
@@ -3037,6 +3103,27 @@
         if (paymentSelect) paymentSelect.value = paymentMode;
 
         if (apartmentSelect) {
+          const uniqueEntryOptions = new Map();
+
+          state.entries.forEach(entry => {
+            const value = entryPersonFilterValue(entry);
+            const label = `${entryApartmentNumber(entry)} — ${entryTenantName(entry)}${entryTenantCpf(entry) ? " — CPF " + entryTenantCpf(entry) : ""}`;
+
+            if (!uniqueEntryOptions.has(value)) {
+              uniqueEntryOptions.set(value, {
+                value,
+                label,
+                apartmentNumber: entryApartmentNumber(entry),
+                tenantName: entryTenantName(entry)
+              });
+            }
+          });
+
+          const personOptions = Array.from(uniqueEntryOptions.values()).sort((a, b) =>
+            String(a.apartmentNumber).localeCompare(String(b.apartmentNumber), "pt-BR", { numeric: true }) ||
+            String(a.tenantName).localeCompare(String(b.tenantName), "pt-BR")
+          );
+
           const sortedApartments = [...state.apartments].sort((a, b) =>
             String(a.number || "").localeCompare(String(b.number || ""), "pt-BR", { numeric: true })
           );
@@ -3046,18 +3133,27 @@
           const removedOrLegacyOptions = Array.from(new Set(
             state.entries
               .filter(entry => !entry.apartmentId || !getApartment(entry.apartmentId))
-              .map(entry => String(entry.apartmentNumber || "").trim())
+              .map(entry => entryApartmentNumber(entry))
               .filter(number => number && !knownNumbers.has(number))
           )).sort((a, b) => a.localeCompare(b, "pt-BR", { numeric: true }));
 
           apartmentSelect.innerHTML = `
             <option value="all">Todos os apartamentos</option>
-            ${sortedApartments.map(apartment => `
-              <option value="${apartment.id}">${escapeHtml(apartment.number || "Apartamento")} ${apartment.tenant?.name ? "— " + escapeHtml(apartment.tenant.name) : ""}</option>
-            `).join("")}
-            ${removedOrLegacyOptions.map(number => `
-              <option value="number::${escapeHtml(number)}">${escapeHtml(number)} — unidade sem cadastro atual</option>
-            `).join("")}
+
+            <optgroup label="Filtrar por apartamento e morador">
+              ${personOptions.map(option => `
+                <option value="${escapeHtml(option.value)}">${escapeHtml(option.label)}</option>
+              `).join("")}
+            </optgroup>
+
+            <optgroup label="Filtrar somente por apartamento">
+              ${sortedApartments.map(apartment => `
+                <option value="${apartment.id}">${escapeHtml(apartment.number || "Apartamento")} — todos os moradores</option>
+              `).join("")}
+              ${removedOrLegacyOptions.map(number => `
+                <option value="number::${escapeHtml(number)}">${escapeHtml(number)} — todos os moradores da unidade sem cadastro atual</option>
+              `).join("")}
+            </optgroup>
           `;
 
           const validValues = Array.from(apartmentSelect.options).map(option => option.value);
@@ -3105,14 +3201,22 @@
           return;
         }
 
+        const selectedApartmentMode = getEntriesApartmentFilterMode();
+        const groupByEntryPerson = selectedApartmentMode.startsWith("entry::");
+
         const grouped = filteredEntries.reduce((acc, entry) => {
-          const key = entry.apartmentId || entry.apartmentNumber || "sem_apartamento";
+          const apartment = getApartment(entry.apartmentId);
+          const key = groupByEntryPerson
+            ? entryPersonFilterValue(entry)
+            : (entry.apartmentId || entryApartmentNumber(entry) || "sem_apartamento");
 
           if (!acc[key]) {
-            const apartment = getApartment(entry.apartmentId);
             acc[key] = {
               apartment,
-              apartmentLabel: entry.apartmentNumber || apartment?.number || "Unidade removida",
+              apartmentLabel: groupByEntryPerson
+                ? `${entryApartmentNumber(entry)} — ${entryTenantName(entry)}`
+                : entryApartmentNumber(entry),
+              groupByEntryPerson,
               entries: []
             };
           }
@@ -3135,7 +3239,9 @@
           const pendingTotal = entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "pending").reduce((sum, entry) => sum + entryTotal(entry), 0);
           const unpaidTotal = entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "unpaid").reduce((sum, entry) => sum + entryTotal(entry), 0);
           const currentTenant = group.apartment?.tenant?.name || "";
-          const activeInfo = currentTenant ? ` • Atual: ${escapeHtml(currentTenant)}` : "";
+          const activeInfo = group.groupByEntryPerson
+            ? ""
+            : (currentTenant ? ` • Atual: ${escapeHtml(currentTenant)}` : "");
           const shouldOpen = index === 0;
 
           return `
