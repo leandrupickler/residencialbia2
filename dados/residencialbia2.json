@@ -981,7 +981,7 @@
       "apartmentNumber": "Apto 01",
       "tenantName": "JARON GREGORI CAVALCANTE QUIRINO",
       "tenantCpf": "122.805.159-38",
-      "month": "2026-05",
+      "month": "2026-06",
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.89,
@@ -2949,7 +2949,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-29T02:16:02.440Z",
+    "updatedAt": "2026-05-29T02:17:00.875Z",
     "updatedBy": "residencial"
   }
 }
