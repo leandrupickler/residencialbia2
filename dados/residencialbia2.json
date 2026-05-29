@@ -902,7 +902,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 526.2,
       "kwhCurrent": 698.9,
-      "kwhConsumed": 172.7,
+      "kwhConsumed": 172.69999999999993,
       "cosip": 21.668889,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -919,7 +919,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 698.9,
       "kwhCurrent": 708.7,
-      "kwhConsumed": 9.8,
+      "kwhConsumed": 9.800000000000068,
       "cosip": 19.111111,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -936,7 +936,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 708.7,
       "kwhCurrent": 772.3,
-      "kwhConsumed": 63.6,
+      "kwhConsumed": 63.59999999999991,
       "cosip": 21.666667,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -953,7 +953,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 772.3,
       "kwhCurrent": 831.2,
-      "kwhConsumed": 58.9,
+      "kwhConsumed": 58.90000000000009,
       "cosip": 27.2325,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -970,7 +970,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 831.2,
       "kwhCurrent": 905.3,
-      "kwhConsumed": 74.1,
+      "kwhConsumed": 74.09999999999991,
       "cosip": 24.37,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1105,8 +1105,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.84,
       "kwhPrevious": 1431.3,
-      "kwhCurrent": 1550.0,
-      "kwhConsumed": 118.7,
+      "kwhCurrent": 1550,
+      "kwhConsumed": 118.70000000000005,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1225,7 +1225,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 752.5,
       "kwhCurrent": 762.3,
-      "kwhConsumed": 9.8,
+      "kwhConsumed": 9.799999999999955,
       "cosip": 21.668889,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1242,7 +1242,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 762.3,
       "kwhCurrent": 820.6,
-      "kwhConsumed": 58.3,
+      "kwhConsumed": 58.30000000000007,
       "cosip": 19.111111,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1259,7 +1259,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 820.6,
       "kwhCurrent": 967.9,
-      "kwhConsumed": 147.3,
+      "kwhConsumed": 147.29999999999995,
       "cosip": 21.666667,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1275,8 +1275,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.89,
       "kwhPrevious": 967.9,
-      "kwhCurrent": 1148.0,
-      "kwhConsumed": 180.1,
+      "kwhCurrent": 1148,
+      "kwhConsumed": 180.10000000000002,
       "cosip": 27.2325,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1291,9 +1291,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.85,
-      "kwhPrevious": 1148.0,
+      "kwhPrevious": 1148,
       "kwhCurrent": 1296.3,
-      "kwhConsumed": 148.3,
+      "kwhConsumed": 148.29999999999995,
       "cosip": 24.37,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1310,7 +1310,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 1296.3,
       "kwhCurrent": 1419.5,
-      "kwhConsumed": 123.2,
+      "kwhConsumed": 123.20000000000005,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1531,7 +1531,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 509.32,
       "kwhCurrent": 698.53,
-      "kwhConsumed": 189.21,
+      "kwhConsumed": 189.20999999999998,
       "cosip": 19.111111,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1548,7 +1548,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 698.53,
       "kwhCurrent": 707.3,
-      "kwhConsumed": 8.77,
+      "kwhConsumed": 8.769999999999982,
       "cosip": 21.666667,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1582,7 +1582,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 780.43,
       "kwhCurrent": 876.21,
-      "kwhConsumed": 95.78,
+      "kwhConsumed": 95.78000000000009,
       "cosip": 24.37,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1599,7 +1599,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 876.21,
       "kwhCurrent": 963.69,
-      "kwhConsumed": 87.48,
+      "kwhConsumed": 87.48000000000002,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1820,7 +1820,7 @@
       "kwhValue": 0.89,
       "kwhPrevious": 898.98,
       "kwhCurrent": 1057.66,
-      "kwhConsumed": 158.68,
+      "kwhConsumed": 158.68000000000006,
       "cosip": 27.2325,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1837,7 +1837,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 1057.66,
       "kwhCurrent": 1229.49,
-      "kwhConsumed": 171.83,
+      "kwhConsumed": 171.82999999999993,
       "cosip": 24.37,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1854,7 +1854,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 1229.49,
       "kwhCurrent": 1435.34,
-      "kwhConsumed": 205.85,
+      "kwhConsumed": 205.8499999999999,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -1990,7 +1990,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 778.4,
       "kwhCurrent": 784.6,
-      "kwhConsumed": 6.2,
+      "kwhConsumed": 6.2000000000000455,
       "cosip": 24.37,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2006,8 +2006,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.84,
       "kwhPrevious": 784.6,
-      "kwhCurrent": 897.0,
-      "kwhConsumed": 112.4,
+      "kwhCurrent": 897,
+      "kwhConsumed": 112.39999999999998,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2245,7 +2245,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 828.4,
       "kwhCurrent": 923.6,
-      "kwhConsumed": 95.2,
+      "kwhConsumed": 95.20000000000005,
       "cosip": 24.37,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2262,7 +2262,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 923.6,
       "kwhCurrent": 1006.3,
-      "kwhConsumed": 82.7,
+      "kwhConsumed": 82.69999999999993,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2449,7 +2449,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 510.8,
       "kwhCurrent": 590.2,
-      "kwhConsumed": 79.4,
+      "kwhConsumed": 79.40000000000003,
       "cosip": 21.668889,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2466,7 +2466,7 @@
       "kwhValue": 0.78,
       "kwhPrevious": 590.2,
       "kwhCurrent": 685.9,
-      "kwhConsumed": 95.7,
+      "kwhConsumed": 95.69999999999993,
       "cosip": 19.111111,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2482,8 +2482,8 @@
       "energyMode": "withKwh",
       "kwhValue": 0.89,
       "kwhPrevious": 685.9,
-      "kwhCurrent": 777.0,
-      "kwhConsumed": 91.1,
+      "kwhCurrent": 777,
+      "kwhConsumed": 91.10000000000002,
       "cosip": 21.666667,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2498,9 +2498,9 @@
       "rent": 1300,
       "energyMode": "withKwh",
       "kwhValue": 0.89,
-      "kwhPrevious": 777.0,
+      "kwhPrevious": 777,
       "kwhCurrent": 869.6,
-      "kwhConsumed": 92.6,
+      "kwhConsumed": 92.60000000000002,
       "cosip": 27.2325,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2517,7 +2517,7 @@
       "kwhValue": 0.85,
       "kwhPrevious": 869.6,
       "kwhCurrent": 981.9,
-      "kwhConsumed": 112.3,
+      "kwhConsumed": 112.29999999999995,
       "cosip": 24.37,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2534,7 +2534,7 @@
       "kwhValue": 0.84,
       "kwhPrevious": 981.9,
       "kwhCurrent": 1073.9,
-      "kwhConsumed": 92.0,
+      "kwhConsumed": 92.00000000000011,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
@@ -2823,14 +2823,31 @@
       "kwhValue": 0.84,
       "kwhPrevious": 905.3,
       "kwhCurrent": 986.3,
-      "kwhConsumed": 81.0,
+      "kwhConsumed": 81,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
+    },
+    {
+      "id": "entry_512b727d-0c1c-4d4c-9e78-b3ef43155827",
+      "apartmentId": "apartment_apto01",
+      "apartmentNumber": "Apto 01",
+      "tenantName": "JARON GREGORI CAVALCANTE QUIRINO",
+      "tenantCpf": "122.805.159-38",
+      "month": "2026-06",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.89,
+      "kwhPrevious": 986.3,
+      "kwhCurrent": 1076.1,
+      "kwhConsumed": 89.79999999999995,
+      "cosip": 28,
+      "trashFee": 0,
+      "paymentStatus": "pending"
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-29T14:50:18.197Z",
+    "updatedAt": "2026-05-29T22:28:19.494Z",
     "updatedBy": "residencial"
   }
 }
