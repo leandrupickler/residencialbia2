@@ -987,27 +987,10 @@
       "kwhValue": 0.84,
       "kwhPrevious": 905.3,
       "kwhCurrent": 986.3,
-      "kwhConsumed": 81.0,
+      "kwhConsumed": 81,
       "cosip": 19.55125,
       "trashFee": 0,
       "paymentStatus": "paid"
-    },
-    {
-      "id": "entry_904bb555-b726-4c17-824c-04e9416e9600",
-      "apartmentId": "apartment_apto01",
-      "apartmentNumber": "Apto 01",
-      "tenantName": "JARON GREGORI CAVALCANTE QUIRINO",
-      "tenantCpf": "122.805.159-38",
-      "month": "2026-06",
-      "rent": 1300,
-      "energyMode": "withKwh",
-      "kwhValue": 0.89,
-      "kwhPrevious": 905.3,
-      "kwhCurrent": 986.3,
-      "kwhConsumed": 81,
-      "cosip": 28,
-      "trashFee": 0,
-      "paymentStatus": "pending"
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_04",
@@ -2966,7 +2949,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-29T14:50:18.197Z",
+    "updatedAt": "2026-05-29T22:02:44.859Z",
     "updatedBy": "residencial"
   }
 }
