@@ -437,7 +437,7 @@
     .actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
 
     .table-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--border); background: #fff; }
-    table { width: 100%; min-width: 980px; border-collapse: collapse; }
+    table { width: 100%; min-width: 1120px; border-collapse: collapse; }
     th, td { padding: 13px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
 
     th {
@@ -449,7 +449,20 @@
     }
 
     tr:last-child td { border-bottom: none; }
-    .td-actions { display: flex; justify-content: flex-end; gap: 8px; min-width: 190px; }
+
+    .td-actions {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-width: 300px;
+    }
+
+    .td-actions .btn {
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
 
     .empty {
       padding: 28px;
