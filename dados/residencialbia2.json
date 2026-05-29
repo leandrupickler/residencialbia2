@@ -2946,10 +2946,27 @@
       "cosip": 28,
       "trashFee": 0,
       "paymentStatus": "pending"
+    },
+    {
+      "id": "entry_c5baf787-66c0-48da-b105-1366ce1b747f",
+      "apartmentId": "apartment_apto01",
+      "apartmentNumber": "Apto 01",
+      "tenantName": "JARON GREGORI CAVALCANTE QUIRINO",
+      "tenantCpf": "122.805.159-38",
+      "month": "2026-06",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.89,
+      "kwhPrevious": 986.3,
+      "kwhCurrent": 1076.1,
+      "kwhConsumed": 89.79999999999995,
+      "cosip": 28,
+      "trashFee": 0,
+      "paymentStatus": "pending"
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-29T22:02:44.859Z",
+    "updatedAt": "2026-05-29T22:04:06.770Z",
     "updatedBy": "residencial"
   }
 }
