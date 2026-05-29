@@ -2843,7 +2843,7 @@
       "kwhConsumed": 144.78999999999996,
       "cosip": 28,
       "trashFee": 0,
-      "paymentStatus": "unpaid"
+      "paymentStatus": "pending"
     },
     {
       "id": "entry_b234d4ca-d0b7-4c60-bd5d-541245d40049",
@@ -2949,7 +2949,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-29T01:55:12.001Z",
+    "updatedAt": "2026-05-29T01:56:21.147Z",
     "updatedBy": "residencial"
   }
 }
