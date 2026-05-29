@@ -723,7 +723,7 @@
         <div class="section-title">
           <div>
             <h2>Painel financeiro</h2>
-            <p>Resumo automático com filtro temporal e dados salvos no GitHub.</p>
+            <p>Resumo automático com filtro temporal. Somente lançamentos marcados como Pago entram no faturamento.</p>
           </div>
         </div>
 
@@ -1255,6 +1255,13 @@
             </select>
           </div>
 
+          <div class="field">
+            <label for="entriesApartmentFilter">Filtro por apartamento</label>
+            <select id="entriesApartmentFilter">
+              <option value="all">Todos os apartamentos</option>
+            </select>
+          </div>
+
           <div class="filter-badge" id="entriesFilterBadge">
             <i class="fa-solid fa-filter"></i>
             Contrato atual
@@ -1262,6 +1269,10 @@
 
           <button class="btn btn-primary" type="button" data-action="downloadEntriesReport">
             <i class="fa-solid fa-file-arrow-down"></i> Baixar relatório
+          </button>
+
+          <button class="btn btn-success" type="button" data-action="downloadEntriesApartmentReport">
+            <i class="fa-solid fa-file-invoice"></i> Relatório individual
           </button>
         </div>
 
@@ -2916,6 +2927,30 @@
         return state.settings.entriesPaymentFilter || "all";
       }
 
+      function getEntriesApartmentFilterMode() {
+        return $("#entriesApartmentFilter")?.value || "all";
+      }
+
+      function entryMatchesApartmentFilter(entry, mode = getEntriesApartmentFilterMode()) {
+        if (!mode || mode === "all") return true;
+
+        if (mode.startsWith("number::")) {
+          const wantedNumber = mode.replace("number::", "");
+          return String(entry.apartmentNumber || "").trim() === wantedNumber;
+        }
+
+        const selectedApartment = getApartment(mode);
+        const selectedNumber = selectedApartment?.number || "";
+
+        return entry.apartmentId === mode ||
+          (selectedNumber && String(entry.apartmentNumber || "").trim() === selectedNumber);
+      }
+
+      function filterEntriesByApartment(entries) {
+        const mode = getEntriesApartmentFilterMode();
+        return entries.filter(entry => entryMatchesApartmentFilter(entry, mode));
+      }
+
       function filterEntriesByPaymentStatus(entries) {
         const mode = getEntriesPaymentFilterMode();
 
@@ -2924,6 +2959,22 @@
         if (mode === "unpaid") return entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "unpaid");
 
         return entries;
+      }
+
+      function getFilteredEntries() {
+        return filterEntriesByApartment(
+          filterEntriesByPaymentStatus(
+            filterEntriesByMode(state.entries)
+          )
+        );
+      }
+
+      function currentEntriesApartmentFilterLabel() {
+        const select = $("#entriesApartmentFilter");
+
+        if (!select || select.value === "all") return "Todos os apartamentos";
+
+        return select.selectedOptions?.[0]?.textContent?.trim() || "Apartamento selecionado";
       }
 
       function isEntryFromCurrentContract(entry) {
@@ -2973,15 +3024,45 @@
       function renderEntriesFilterControls() {
         const select = $("#entriesHistoryFilter");
         const paymentSelect = $("#entriesPaymentFilter");
+        const apartmentSelect = $("#entriesApartmentFilter");
         const badge = $("#entriesFilterBadge");
 
         if (!select || !badge) return;
 
         const mode = getEntriesFilterMode();
         const paymentMode = getEntriesPaymentFilterMode();
+        const previousApartmentMode = apartmentSelect?.value || "all";
 
         select.value = mode;
         if (paymentSelect) paymentSelect.value = paymentMode;
+
+        if (apartmentSelect) {
+          const sortedApartments = [...state.apartments].sort((a, b) =>
+            String(a.number || "").localeCompare(String(b.number || ""), "pt-BR", { numeric: true })
+          );
+
+          const knownNumbers = new Set(sortedApartments.map(apartment => String(apartment.number || "").trim()).filter(Boolean));
+
+          const removedOrLegacyOptions = Array.from(new Set(
+            state.entries
+              .filter(entry => !entry.apartmentId || !getApartment(entry.apartmentId))
+              .map(entry => String(entry.apartmentNumber || "").trim())
+              .filter(number => number && !knownNumbers.has(number))
+          )).sort((a, b) => a.localeCompare(b, "pt-BR", { numeric: true }));
+
+          apartmentSelect.innerHTML = `
+            <option value="all">Todos os apartamentos</option>
+            ${sortedApartments.map(apartment => `
+              <option value="${apartment.id}">${escapeHtml(apartment.number || "Apartamento")} ${apartment.tenant?.name ? "— " + escapeHtml(apartment.tenant.name) : ""}</option>
+            `).join("")}
+            ${removedOrLegacyOptions.map(number => `
+              <option value="number::${escapeHtml(number)}">${escapeHtml(number)} — unidade sem cadastro atual</option>
+            `).join("")}
+          `;
+
+          const validValues = Array.from(apartmentSelect.options).map(option => option.value);
+          apartmentSelect.value = validValues.includes(previousApartmentMode) ? previousApartmentMode : "all";
+        }
 
         const labels = {
           current: "Somente contrato atual",
@@ -2996,7 +3077,7 @@
           unpaid: "Não pagos"
         };
 
-        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${labels[mode] || labels.current} • ${paymentLabels[paymentMode] || paymentLabels.all}`;
+        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${labels[mode] || labels.current} • ${paymentLabels[paymentMode] || paymentLabels.all} • ${escapeHtml(currentEntriesApartmentFilterLabel())}`;
       }
 
       function renderEntries() {
@@ -3004,7 +3085,7 @@
 
         renderEntriesFilterControls();
 
-        const filteredEntries = filterEntriesByPaymentStatus(filterEntriesByMode(state.entries));
+        const filteredEntries = getFilteredEntries();
 
         if (!filteredEntries.length) {
           const mode = getEntriesFilterMode();
@@ -3018,7 +3099,7 @@
             <div class="empty">
               <i class="fa-solid fa-file-invoice-dollar"></i>
               <strong>${emptyText}</strong>
-              <div class="mini">Use os filtros acima para alternar entre contrato atual, contratos anteriores, pagos ou não pagos.</div>
+              <div class="mini">Use os filtros acima para alternar entre contrato atual, contratos anteriores, apartamento, pagos, aguardando pagamento ou não pagos.</div>
             </div>
           `;
           return;
@@ -3050,8 +3131,9 @@
           const rentTotal = entries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
           const energyTotalValue = entries.reduce((sum, entry) => sum + energyTotal(entry), 0);
           const trashTotal = entries.reduce((sum, entry) => sum + toNumber(entry.trashFee), 0);
-          const paidTotal = entries.filter(isEntryPaid).reduce((sum, entry) => sum + entryTotal(entry), 0);
-          const unpaidTotal = entries.filter(entry => !isEntryPaid(entry)).reduce((sum, entry) => sum + entryTotal(entry), 0);
+          const paidTotal = entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "paid").reduce((sum, entry) => sum + entryTotal(entry), 0);
+          const pendingTotal = entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "pending").reduce((sum, entry) => sum + entryTotal(entry), 0);
+          const unpaidTotal = entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "unpaid").reduce((sum, entry) => sum + entryTotal(entry), 0);
           const currentTenant = group.apartment?.tenant?.name || "";
           const activeInfo = currentTenant ? ` • Atual: ${escapeHtml(currentTenant)}` : "";
           const shouldOpen = index === 0;
@@ -3064,7 +3146,7 @@
               </summary>
 
               <div class="reference" style="border-radius:0; border-left:0; border-right:0;">
-                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Taxa de lixo: ${money(trashTotal)} | Pago: ${money(paidTotal)} | Não pago: ${money(unpaidTotal)} | Total: ${money(total)}
+                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Taxa de lixo: ${money(trashTotal)} | Pago: ${money(paidTotal)} | Aguardando: ${money(pendingTotal)} | Não pago: ${money(unpaidTotal)} | Total: ${money(total)}
               </div>
 
               <div class="table-wrap">
@@ -4558,10 +4640,9 @@
         toast("Relatório de despesas baixado.");
       }
 
-      function downloadEntriesReport() {
-        const filtered = filterEntriesByPaymentStatus(filterEntriesByMode(state.entries));
+      function buildEntriesReportFromRows(filtered, options = {}) {
         const total = filtered.reduce((sum, entry) => sum + entryTotal(entry), 0);
-        const paidTotal = filtered.filter(isEntryPaid).reduce((sum, entry) => sum + entryTotal(entry), 0);
+        const paidTotal = filtered.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "paid").reduce((sum, entry) => sum + entryTotal(entry), 0);
         const pendingTotal = filtered.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "pending").reduce((sum, entry) => sum + entryTotal(entry), 0);
         const unpaidTotal = filtered.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "unpaid").reduce((sum, entry) => sum + entryTotal(entry), 0);
         const rentTotal = filtered.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
@@ -4570,6 +4651,7 @@
 
         const historyText = selectedOptionText("#entriesHistoryFilter") || "Todos os lançamentos";
         const paymentText = selectedOptionText("#entriesPaymentFilter") || "Todos os pagamentos";
+        const apartmentText = currentEntriesApartmentFilterLabel();
 
         const rows = filtered
           .slice()
@@ -4590,8 +4672,8 @@
           ]);
 
         const report = buildPrintableReport({
-          title: "Relatório Financeiro de Lançamentos",
-          subtitle: `Filtros: ${historyText} • ${paymentText}`,
+          title: options.title || "Relatório Financeiro de Lançamentos",
+          subtitle: `Filtros: ${historyText} • ${paymentText} • ${apartmentText}`,
           summaryCards: [
             { label: "Total filtrado", value: money(total) },
             { label: "Total pago", value: money(paidTotal) },
@@ -4607,8 +4689,38 @@
           emptyMessage: "Nenhum lançamento encontrado para o filtro atual."
         });
 
-        downloadHtmlFile(`relatorio-lancamentos-${safeFilePart(historyText)}-${safeFilePart(paymentText)}-${new Date().toISOString().slice(0,10)}.html`, report);
-        toast("Relatório de lançamentos baixado.");
+        const prefix = options.prefix || "relatorio-lancamentos";
+        const fileParts = [
+          prefix,
+          safeFilePart(apartmentText),
+          safeFilePart(historyText),
+          safeFilePart(paymentText),
+          new Date().toISOString().slice(0,10)
+        ].filter(Boolean);
+
+        downloadHtmlFile(`${fileParts.join("-")}.html`, report);
+        toast(options.toast || "Relatório de lançamentos baixado.");
+      }
+
+      function downloadEntriesReport() {
+        buildEntriesReportFromRows(getFilteredEntries(), {
+          title: "Relatório Financeiro de Lançamentos",
+          prefix: "relatorio-lancamentos",
+          toast: "Relatório de lançamentos baixado."
+        });
+      }
+
+      function downloadEntriesApartmentReport() {
+        if (getEntriesApartmentFilterMode() === "all") {
+          toast("Selecione um apartamento no filtro para baixar o relatório individual.");
+          return;
+        }
+
+        buildEntriesReportFromRows(getFilteredEntries(), {
+          title: `Relatório Individual - ${currentEntriesApartmentFilterLabel()}`,
+          prefix: "relatorio-individual",
+          toast: "Relatório individual baixado."
+        });
       }
 
       function collectFilteredContractHistoryRows() {
@@ -5210,6 +5322,7 @@
             downloadContractHistoryReport,
             downloadExpensesReport,
             downloadEntriesReport,
+            downloadEntriesApartmentReport,
             editExpense,
             deleteExpense,
             editEntry,
@@ -5286,6 +5399,10 @@
             state.settings.entriesPaymentFilter = event.target.value;
             await save("Filtro de pagamento salvo.");
           });
+        }
+
+        if ($("#entriesApartmentFilter")) {
+          $("#entriesApartmentFilter").addEventListener("change", renderEntries);
         }
 
         if ($("#contractHistoryPeriodFilter")) {
