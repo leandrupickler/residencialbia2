@@ -108,17 +108,17 @@
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
       "baseRent": 1300,
-      "contractStart": "2025-12-10",
-      "contractEnd": "2026-06-10",
+      "contractStart": "",
+      "contractEnd": "",
       "tenant": {
-        "name": "KARINE KAUSS RODRIGUES",
-        "cpf": "018.491.050-14",
-        "phone": "54991920795",
+        "name": "",
+        "cpf": "",
+        "phone": "",
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
       },
-      "status": "occupied",
+      "status": "free",
       "contractHistory": [
         {
           "id": "history_apto03_ashely_2025_04_10",
@@ -137,6 +137,24 @@
           "baseRent": 1300,
           "endedAt": "2025-10-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
+        },
+        {
+          "id": "history_8b64b01a-8cff-41b7-9c8c-158a8d0376a3",
+          "apartmentId": "apartment_apto03",
+          "apartmentNumber": "Apto 03",
+          "tenant": {
+            "name": "KARINE KAUSS RODRIGUES",
+            "cpf": "018.491.050-14",
+            "phone": "54991920795",
+            "birth": "",
+            "emergencyName": "",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2025-12-10",
+          "contractEnd": "2026-06-10",
+          "baseRent": 1300,
+          "endedAt": "2026-05-30T22:51:43.049Z",
+          "reason": "Apartamento liberado para novo contrato"
         }
       ]
     },
@@ -2966,7 +2984,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-30T22:49:16.523Z",
+    "updatedAt": "2026-05-30T22:51:43.792Z",
     "updatedBy": "residencial"
   }
 }
