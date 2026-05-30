@@ -108,17 +108,17 @@
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
       "baseRent": 1300,
-      "contractStart": "",
-      "contractEnd": "",
+      "contractStart": "2026-06-10",
+      "contractEnd": "2026-12-10",
       "tenant": {
-        "name": "",
-        "cpf": "",
-        "phone": "",
-        "birth": "",
-        "emergencyName": "",
+        "name": "Paulo Henrique Ferreira dos Passos",
+        "cpf": "001.805.170.74",
+        "phone": "48991175954",
+        "birth": "1981-05-31",
+        "emergencyName": "Yestsenia Navarro Matos",
         "emergencyPhone": ""
       },
-      "status": "free",
+      "status": "occupied",
       "contractHistory": [
         {
           "id": "history_apto03_ashely_2025_04_10",
@@ -2984,7 +2984,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-30T22:51:43.792Z",
+    "updatedAt": "2026-05-30T22:54:43.064Z",
     "updatedBy": "residencial"
   }
 }
