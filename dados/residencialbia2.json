@@ -2946,10 +2946,27 @@
       "cosip": 28,
       "trashFee": 0,
       "paymentStatus": "pending"
+    },
+    {
+      "id": "entry_ac44b469-61e5-4632-9cb7-f226e31572c0",
+      "apartmentId": "apartment_apto03",
+      "apartmentNumber": "Apto 03",
+      "tenantName": "KARINE KAUSS RODRIGUES",
+      "tenantCpf": "018.491.050-14",
+      "month": "2026-06",
+      "rent": 0,
+      "energyMode": "withKwh",
+      "kwhValue": 0.89,
+      "kwhPrevious": 1419.5,
+      "kwhCurrent": 1575.3,
+      "kwhConsumed": 155.79999999999995,
+      "cosip": 28,
+      "trashFee": 0,
+      "paymentStatus": "pending"
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-30T20:27:58.620Z",
+    "updatedAt": "2026-05-30T22:49:16.523Z",
     "updatedBy": "residencial"
   }
 }
