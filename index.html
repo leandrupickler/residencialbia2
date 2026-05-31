@@ -517,6 +517,60 @@
       flex: 0 0 auto;
     }
 
+    .inspection-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .inspection-photo-thumb {
+      position: relative;
+      overflow: hidden;
+      min-height: 112px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #f8fafd;
+      box-shadow: 0 3px 14px rgba(60, 64, 67, 0.07);
+    }
+
+    .inspection-photo-thumb img {
+      width: 100%;
+      height: 126px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .inspection-photo-thumb .photo-count {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      min-width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(32, 33, 36, 0.78);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .inspection-photo-thumb button {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: rgba(234, 67, 53, 0.94);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 12px rgba(60, 64, 67, 0.24);
+    }
+
     .file-row { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
 
     .total-preview {
@@ -993,6 +1047,31 @@
 
                 <button class="btn btn-light" type="button" id="removeApartmentPhotoBtn">
                   <i class="fa-solid fa-ban"></i> Remover foto
+                </button>
+              </div>
+            </div>
+
+            <div class="card" style="box-shadow:none; background:#f8fafd; margin: 2px 0 8px;">
+              <div class="section-title" style="margin:0 0 12px;">
+                <div>
+                  <h2 style="font-size:1rem;">Fotos internas para vistoria</h2>
+                  <p>Adicione fotos dos ambientes internos, banheiro, lavanderia, portas, janelas e demais detalhes. Elas serão anexadas automaticamente ao termo de vistoria.</p>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="inspectionPhotos">Anexar várias fotos do imóvel</label>
+                <input id="inspectionPhotos" type="file" accept="image/*" multiple>
+                <span class="mini muted">As fotos serão salvas em Base64 no JSON. O termo de vistoria organiza 4 fotos por página antes da folha de assinatura.</span>
+              </div>
+
+              <div id="inspectionPhotosPreview" class="inspection-preview-grid">
+                <div class="empty" style="grid-column:1/-1; padding:16px;">Nenhuma foto interna anexada.</div>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-light" type="button" id="clearInspectionPhotosBtn">
+                  <i class="fa-solid fa-images"></i> Limpar fotos de vistoria
                 </button>
               </div>
             </div>
@@ -1593,6 +1672,7 @@
       let githubConfig = loadGithubConfig();
       let loggedUser = null;
       let tempApartmentPhoto = "";
+      let tempInspectionPhotos = [];
       let tempAppLogo = "";
       let manualEntryRent = false;
       let isSaving = false;
@@ -1612,6 +1692,39 @@
         return { ...EMPTY_TENANT, ...(tenant || {}) };
       }
 
+      function normalizeInspectionPhoto(photo) {
+        if (!photo) return null;
+
+        if (typeof photo === "string") {
+          return {
+            id: uid("inspection_photo"),
+            src: photo,
+            caption: "",
+            createdAt: ""
+          };
+        }
+
+        if (typeof photo === "object") {
+          const src = photo.src || photo.data || photo.base64 || photo.url || photo.image || "";
+
+          if (!src) return null;
+
+          return {
+            id: photo.id || uid("inspection_photo"),
+            src,
+            caption: photo.caption || photo.name || photo.description || "",
+            createdAt: photo.createdAt || ""
+          };
+        }
+
+        return null;
+      }
+
+      function normalizeInspectionPhotos(photos) {
+        if (!Array.isArray(photos)) return [];
+        return photos.map(normalizeInspectionPhoto).filter(photo => photo && photo.src);
+      }
+
       function normalizeApartment(apartment) {
         const apt = apartment && typeof apartment === "object" ? apartment : {};
         const tenant = normalizeTenant(apt.tenant);
@@ -1622,6 +1735,7 @@
           number: apt.number || "",
           description: apt.description || "",
           photo: apt.photo || "",
+          inspectionPhotos: normalizeInspectionPhotos(apt.inspectionPhotos || apt.vistoriaPhotos || apt.inspectionImages || apt.fotosVistoria || []),
           baseRent: toNumber(apt.baseRent),
           maintenanceFee: toNumber(apt.maintenanceFee ?? apt.maintenanceTax ?? apt.taxaManutencao ?? apt.taxaDeManutencao ?? 600),
           contractStart: apt.contractStart || "",
@@ -1651,6 +1765,7 @@
           contractEnd: source.contractEnd || source.fimContrato || "",
           baseRent: toNumber(source.baseRent ?? source.valorAluguelMensal),
           maintenanceFee: toNumber(source.maintenanceFee ?? source.maintenanceTax ?? source.taxaManutencao ?? source.taxaDeManutencao ?? 600),
+          inspectionPhotos: normalizeInspectionPhotos(source.inspectionPhotos || source.vistoriaPhotos || source.inspectionImages || source.fotosVistoria || []),
           endedAt: source.endedAt || "",
           reason: source.reason || source.observacao || ""
         };
@@ -2893,6 +3008,7 @@
                 <div class="meta">
                   <span class="pill blue"><i class="fa-solid fa-money-bill-wave"></i> Aluguel base: ${money(apartment.baseRent)}</span>
                   <span class="pill yellow"><i class="fa-solid fa-brush"></i> Taxa manutenção: ${money(apartment.maintenanceFee)}</span>
+                  <span class="pill blue"><i class="fa-solid fa-camera"></i> Vistoria: ${normalizeInspectionPhotos(apartment.inspectionPhotos || []).length} foto(s)</span>
                   ${isFree ? `
                     <span class="pill green"><i class="fa-solid fa-door-open"></i> Disponível para novo morador</span>
                   ` : `
@@ -2919,6 +3035,9 @@
                 ` : `
                   <button class="btn btn-primary btn-sm" data-action="downloadContract" data-id="${apartment.id}">
                     <i class="fa-solid fa-file-arrow-down"></i> Baixar Contrato de Locação
+                  </button>
+                  <button class="btn btn-success btn-sm" data-action="downloadInspectionContract" data-id="${apartment.id}">
+                    <i class="fa-solid fa-clipboard-check"></i> Baixar Termo de Vistoria
                   </button>
                   <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
                     <i class="fa-solid fa-rotate-right"></i> Renovar
@@ -3779,6 +3898,56 @@
         $("#apartmentPhotoPreview").innerHTML = tempApartmentPhoto ? `<img src="${tempApartmentPhoto}" alt="Prévia da foto">` : "Foto";
       }
 
+      function renderInspectionPhotosPreview() {
+        const el = $("#inspectionPhotosPreview");
+
+        if (!el) return;
+
+        if (!tempInspectionPhotos.length) {
+          el.innerHTML = `<div class="empty" style="grid-column:1/-1; padding:16px;">Nenhuma foto interna anexada.</div>`;
+          return;
+        }
+
+        el.innerHTML = tempInspectionPhotos.map((photo, index) => `
+          <div class="inspection-photo-thumb">
+            <img src="${photo.src}" alt="Foto de vistoria ${index + 1}">
+            <span class="photo-count">${index + 1}</span>
+            <button type="button" title="Remover foto" data-remove-inspection-photo="${index}">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        `).join("");
+      }
+
+      function appendInspectionPhotosFromFiles(files) {
+        const list = Array.from(files || []).filter(file => file && file.type && file.type.startsWith("image/"));
+
+        if (!list.length) {
+          toast("Selecione uma ou mais imagens para a vistoria.");
+          return;
+        }
+
+        let loaded = 0;
+
+        list.forEach(file => {
+          readImage(file, base64 => {
+            tempInspectionPhotos.push({
+              id: uid("inspection_photo"),
+              src: base64,
+              caption: file.name || "",
+              createdAt: new Date().toISOString()
+            });
+
+            loaded += 1;
+
+            if (loaded === list.length) {
+              renderInspectionPhotosPreview();
+              toast(`${list.length} foto(s) adicionada(s) à vistoria.`);
+            }
+          });
+        });
+      }
+
       function renderLogoPreview() {
         $("#appLogoPreview").innerHTML = tempAppLogo ? `<img src="${tempAppLogo}" alt="Prévia da logo">` : "Logo";
       }
@@ -3799,7 +3968,10 @@
         $("#emergencyName").value = "";
         $("#emergencyPhone").value = "";
         tempApartmentPhoto = "";
+        tempInspectionPhotos = [];
+        if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
         renderApartmentPhotoPreview();
+        renderInspectionPhotosPreview();
       }
 
       function clearExpenseForm() {
@@ -3913,6 +4085,7 @@
           contractEnd: apartment.contractEnd,
           baseRent: toNumber(apartment.baseRent),
           maintenanceFee: toNumber(apartment.maintenanceFee),
+          inspectionPhotos: normalizeInspectionPhotos(apartment.inspectionPhotos || []),
           endedAt: new Date().toISOString(),
           reason
         };
@@ -3948,6 +4121,7 @@
           number,
           description: $("#apartmentDescription").value.trim(),
           photo: tempApartmentPhoto,
+          inspectionPhotos: normalizeInspectionPhotos(tempInspectionPhotos),
           baseRent: toNumber($("#baseRent").value),
           maintenanceFee,
           contractStart,
@@ -4016,7 +4190,10 @@
         $("#emergencyPhone").value = apartment.tenant?.emergencyPhone || "";
 
         tempApartmentPhoto = apartment.photo || "";
+        tempInspectionPhotos = normalizeInspectionPhotos(apartment.inspectionPhotos || []);
+        if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
         renderApartmentPhotoPreview();
+        renderInspectionPhotosPreview();
 
         showTab("apartments");
         $("#apartmentForm").scrollIntoView({ behavior: "smooth", block: "center" });
@@ -4029,6 +4206,7 @@
         $("#apartmentEditId").value = apartment.id;
         $("#apartmentNumber").value = apartment.number || "";
         $("#baseRent").value = apartment.baseRent ?? "";
+        $("#maintenanceFee").value = apartment.maintenanceFee ?? 600;
         $("#contractStart").value = "";
         $("#contractEnd").value = "";
         $("#apartmentDescription").value = apartment.description || "";
@@ -4040,7 +4218,10 @@
         $("#emergencyPhone").value = "";
 
         tempApartmentPhoto = apartment.photo || "";
+        tempInspectionPhotos = [];
+        if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
         renderApartmentPhotoPreview();
+        renderInspectionPhotosPreview();
 
         showTab("apartments");
         $("#apartmentForm").scrollIntoView({ behavior: "smooth", block: "center" });
@@ -4068,6 +4249,7 @@
         apartment.tenant = clone(EMPTY_TENANT);
         apartment.contractStart = "";
         apartment.contractEnd = "";
+        apartment.inspectionPhotos = [];
 
         await save("Apartamento liberado. Morador anterior enviado para o histórico.");
       }
@@ -5620,6 +5802,391 @@
 </html>`;
       }
 
+
+      function getInspectionKwhEntry(apartment) {
+        if (!apartment) return null;
+
+        const startMonth = String(apartment.contractStart || "").slice(0, 7);
+        return getLastKwhEntry(apartment.id, startMonth) || getLastKwhEntry(apartment.id, "", "");
+      }
+
+      function formatKwh(value) {
+        const numeric = toNumber(value);
+        return numeric > 0
+          ? `${numeric.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kWh`
+          : "__________ kWh";
+      }
+
+      function buildInspectionContractHtml(apartment) {
+        const tenant = normalizeTenant(apartment.tenant);
+        const appName = state.settings.appName || "G.A - Gestão de Aluguel";
+        const logo = state.settings.logo
+          ? `<img src="${state.settings.logo}" alt="${escapeHtml(appName)}">`
+          : `<div class="report-logo-fallback">G.A</div>`;
+
+        const photos = normalizeInspectionPhotos(apartment.inspectionPhotos || []);
+        const inspectionDate = formatDateLong(isoDate(new Date()));
+        const startDate = apartment.contractStart || isoDate(new Date());
+        const endDate = apartment.contractEnd || addMonths(startDate, 6);
+        const tenantName = tenant.name || "________________________________";
+        const tenantCpf = formatCpf(tenant.cpf);
+        const tenantPhone = tenant.phone || "________________";
+        const apartmentDigits = String(apartment.number || "").match(/\d+/)?.[0] || "";
+        const apartmentNumberText = apartmentDigits ? apartmentDigits.replace(/^0+/, "") || apartmentDigits : escapeHtml(apartment.number || "____");
+        const propertyDescription = apartment.description || "um quarto, uma sala e cozinha conjugada, área de serviço e banheiro completo";
+        const kwhEntry = getInspectionKwhEntry(apartment);
+        const kwhReading = kwhEntry ? formatKwh(kwhEntry.kwhCurrent) : "__________ kWh";
+        const kwhReference = kwhEntry ? `Última leitura registrada em ${monthName(kwhEntry.month)}.` : "Leitura inicial não localizada no histórico financeiro.";
+        const photoPages = [];
+
+        for (let i = 0; i < photos.length; i += 4) {
+          photoPages.push(photos.slice(i, i + 4));
+        }
+
+        const photoPagesHtml = photoPages.map((page, pageIndex) => `
+          <section class="photo-page page-break">
+            <h2>REGISTRO FOTOGRÁFICO DO IMÓVEL</h2>
+            <p class="small">Fotos anexadas ao termo de vistoria. Página ${pageIndex + 1} de ${photoPages.length}.</p>
+            <div class="photo-grid">
+              ${page.map((photo, index) => `
+                <figure>
+                  <img src="${photo.src}" alt="Foto de vistoria ${pageIndex * 4 + index + 1}">
+                  <figcaption>Foto ${pageIndex * 4 + index + 1}${photo.caption ? ` - ${escapeHtml(photo.caption)}` : ""}</figcaption>
+                </figure>
+              `).join("")}
+            </div>
+          </section>
+        `).join("");
+
+        return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Termo de Vistoria - ${escapeHtml(apartment.number)} - ${escapeHtml(tenantName)}</title>
+  <style>
+    @page { size: A4 portrait; margin: 16mm 14mm; }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #f6f8fc;
+      color: #111;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12.5pt;
+      line-height: 1.42;
+    }
+
+    .print-btn {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 20;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: #4285F4;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(60, 64, 67, .18);
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 14mm 12mm;
+      background: #fff;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 18px;
+    }
+
+    .logo img {
+      width: 260px;
+      max-height: 94px;
+      object-fit: contain;
+    }
+
+    .report-logo-fallback {
+      width: 120px;
+      height: 72px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 900;
+      font-size: 30px;
+      background: linear-gradient(135deg, #4285F4, #34A853);
+    }
+
+    h1, h2 {
+      margin: 22px 0 14px;
+      text-align: center;
+      font-size: 13.5pt;
+      line-height: 1.25;
+      text-transform: uppercase;
+      border-bottom: 2px solid #777;
+      padding-bottom: 6px;
+    }
+
+    h1 { margin-top: 0; }
+
+    p { margin: 0 0 12px; text-align: justify; }
+
+    ul {
+      margin: 0 0 16px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li { margin: 0 0 7px; }
+
+    li::before { content: "- "; }
+
+    .center { text-align: center; }
+    .small { color: #444; font-size: 10.5pt; }
+    .highlight { background: #fff59d; padding: 0 3px; }
+    .page-break { page-break-before: always; break-before: page; }
+
+    .photo-page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 14mm 12mm;
+      background: #fff;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10mm;
+      margin-top: 8mm;
+    }
+
+    figure {
+      margin: 0;
+      border: 1px solid #bbb;
+      padding: 4mm;
+      min-height: 112mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    figure img {
+      width: 100%;
+      height: 95mm;
+      object-fit: cover;
+      border: 1px solid #ddd;
+    }
+
+    figcaption {
+      margin-top: 3mm;
+      text-align: center;
+      font-size: 10pt;
+      color: #444;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .signatures {
+      page-break-before: always;
+      break-before: page;
+      padding-top: 18mm;
+    }
+
+    .signature-gap {
+      height: 44mm;
+    }
+
+    .line {
+      border-top: 1px solid #111;
+      width: 86%;
+      margin: 0 auto;
+      padding-top: 7px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      text-align: center;
+      color: #555;
+      font-size: 10pt;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page, .photo-page { width: auto; min-height: auto; margin: 0; padding: 0; }
+      .print-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn" onclick="window.print()">Imprimir / Salvar em PDF</button>
+
+  <main class="page">
+    <div class="logo">${logo}</div>
+
+    <h1>TERMO DE VISTORIA DE ENTRADA</h1>
+
+    <p><strong>LEANDRO PICKLER</strong>, casado, funcionário publico, inscrito no RG n. 4183420 e portador do CPF sob o n. 050.158.229-01, residente e domiciliada na Rua Prefeito Otavio Zacchi, Centro, Palhoça/SC, doravante denominada <strong>LOCADOR</strong>; <strong>${escapeHtml(tenantName)}</strong>, brasileiro, e portador do CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número telefônico <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado <strong>LOCATÁRIO</strong> no presente termo de vistoria.</p>
+
+    <h2>DADOS DO IMÓVEL</h2>
+
+    <p>Um apartamento modelo Kitnet situado na Rua Albino Dias, n. 170, Bairro Caminho Novo, apartamento n. <strong>${escapeHtml(apartmentNumberText)}</strong>, na Cidade de Palhoça/SC, CEP n. 88132592. Contendo ${escapeHtml(propertyDescription)}, imóvel disposto na matrícula 145.992.</p>
+
+    <h2>DATA DA VISTORIA E DATAS DAS FOTOS</h2>
+
+    <p>Vistoria e fotos realizadas no dia <strong>${inspectionDate}</strong>.</p>
+
+    <h2>VIGÊNCIA DO CONTRATO</h2>
+
+    <p>O prazo da locação é de 6 meses, iniciando no dia <strong>${formatDateLong(startDate)}</strong> e terminando <strong>${formatDateLong(endDate)}</strong>.</p>
+
+    <h2>MEDIDOR DE ENERGIA ELÉTRICA</h2>
+
+    <p>Na data da entrega das chaves o medidor possui a leitura disposta a seguir <span class="highlight"><strong>${escapeHtml(kwhReading)}</strong></span>. <span class="small">${escapeHtml(kwhReference)}</span></p>
+
+    <h2>CONDIÇÕES GERAIS DO IMÓVEL POR AMBIENTE COZINHA E SALA CONJUGADA</h2>
+
+    <ul>
+      <li>01 Luminária de metal, com 01 lâmpada de led.</li>
+      <li>02 Torneira.</li>
+      <li>02 varão com de cortina.</li>
+      <li>02 Porta branca de alumínio NOVA 100% do seu funcionamento (porta da área de serviço contem vidro).</li>
+      <li>Todas tomadas, interruptores e disjuntores em perfeito estado de funcionamento.</li>
+      <li>Todas paredes e teto com pintura em perfeito estado.</li>
+      <li>Todos azulejos e pisos em perfeito estado.</li>
+      <li>Todos registros gerais com acabamento cromado.</li>
+      <li>Janela em perfeito funcionamento.</li>
+    </ul>
+
+    <h2>QUARTO</h2>
+
+    <ul>
+      <li>01 Luminária de plástico, com 01 lâmpada de led.</li>
+      <li>01 Porta de madeira em perfeito estado.</li>
+      <li>Todas tomadas, interruptores e disjuntores novos e em perfeito estado de funcionamento.</li>
+      <li>Todas paredes e tetos com pintura em perfeito estado e sem furos.</li>
+      <li>Todos azulejos e pisos em perfeito estado.</li>
+      <li>Todos registros gerais com acabamento cromado.</li>
+      <li>Janela em perfeito funcionamento.</li>
+    </ul>
+
+    <h2>BANHEIRO</h2>
+
+    <ul>
+      <li>01 Luminária de plástico, com 01 lâmpada de led.</li>
+      <li>01 Pia de louça</li>
+      <li>01 Vaso sanitário Celite</li>
+      <li>01 box padrão branco incolor 8mm em perfeito estado.</li>
+      <li>01 chuveiro Lorenzetti em perfeito estado.</li>
+      <li>01 Porta de madeira em perfeito estado.</li>
+      <li>01 jogo de toalheira e papel higiênico</li>
+      <li>01 torneira</li>
+      <li>01 Espelho com armário</li>
+      <li>Todas tomadas, interruptores e disjuntores em perfeito estado de funcionamento.</li>
+      <li>Todas paredes e teto com pintura sem furos e em perfeito estado.</li>
+      <li>Todos azulejos e pisos em perfeito estado.</li>
+      <li>Todos registros gerais cromados.</li>
+    </ul>
+
+    <h2>LAVANDERIA</h2>
+
+    <ul>
+      <li>01 Luminária de plástico, com 01 lâmpada de led.</li>
+      <li>01 tanque de plástico</li>
+      <li>01 torneira de inox</li>
+      <li>Todas tomadas, interruptores e disjuntores em perfeito estado de funcionamento.</li>
+      <li>Todas paredes com pintura sem furos e em perfeito estado.</li>
+      <li>Todos azulejos e pisos em perfeito estado.</li>
+      <li>Todos registros gerais com acabamento cromado.</li>
+    </ul>
+
+    <h2>PORTAS, JANELAS E TOMADAS</h2>
+
+    <ul>
+      <li>Todas as abertura e portas estão funcionando perfeitamente, são todos novos nunca usados</li>
+    </ul>
+
+    <h2>CONDIÇÕES GERAIS E DIVERGÊNCIAS</h2>
+
+    <p>Caso identifique divergências entre esse relatório e estado atual do imóvel, você poderá abrir contestação mediante os seguintes pré-requisitos: a) Serão aceitas as divergências apenas dentro do prazo previsto (48 horas após a entrega das chaves);</p>
+
+    <p>b) Confira a vistoria de entrada. Caso algum item não esteja descrito de acordo com o imóvel, envie as contestações por cômodo e fotos comprovando a divergência para o e-mail leandropickler@gmail.com Após a análise, o LOCADOR enviará um relatório para o cliente.</p>
+
+    <h2>OBSERVAÇÕES</h2>
+
+    <p>Vistoria elaborada por observação estética da construção e acabamento, o relatório retrata fidedignamente o estado do imóvel no momento da vistoria, caso algo não esteja relatado no texto, mas esteja visível nas fotos que acompanham esta vistoria, as mesmas poderão ser utilizadas para efeitos de comprovação das características e estado de conservação.</p>
+
+    <p>Caso o imóvel possua vícios aparentes anteriores à locação, assim como entendidos aqueles que são de fácil constatação e que tenham sido identificados na vistoria inicial do imóvel, tais como rachaduras em vidros e/ou ladrilho, desgastes na pintura, etc. o Locador não estará obrigado a efetuar qualquer reparo, uma vez que o imóvel foi apresentado nestas condições ao LOCATÁRIO, e o preço e demais condições do aluguel foram definidos considerando estes fatores. Por outro lado, o LOCATÁRIO, também não estará obrigado a efetuar o reparo dos referidos vícios quando da devolução do imóvel, tendo em vista que assim o recebera do locador.</p>
+
+    <p>Por fim, na hipótese de silêncio dos locatários, os itens serão considerados em perfeito estado de funcionamento.</p>
+  </main>
+
+  ${photoPagesHtml}
+
+  <section class="page signatures">
+    <div class="logo">${logo}</div>
+
+    <p class="center">Palhoça, ${inspectionDate}.</p>
+
+    <div class="signature-gap"></div>
+
+    <div class="line">
+      LEANDRO PICKLER - LOCADOR<br>
+      CPF n. 050.158.229-01
+    </div>
+
+    <div class="signature-gap"></div>
+
+    <div class="line">
+      ${escapeHtml(tenantName)} - LOCATÁRIO(A)<br>
+      CPF n. ${escapeHtml(tenantCpf)}
+    </div>
+
+    <p class="footer-note">Documento gerado automaticamente pelo sistema ${escapeHtml(appName)}.</p>
+  </section>
+</body>
+</html>`;
+      }
+
+      function downloadInspectionContract(id) {
+        const apartment = getApartment(id);
+
+        if (!apartment) {
+          toast("Apartamento não localizado.");
+          return;
+        }
+
+        if (apartment.status === "free" || !apartment.tenant?.name) {
+          toast("Apartamento livre não possui morador atual para gerar termo de vistoria.");
+          return;
+        }
+
+        const photos = normalizeInspectionPhotos(apartment.inspectionPhotos || []);
+
+        if (!photos.length) {
+          toast("Adicione fotos internas no cadastro do imóvel antes de baixar o termo de vistoria.");
+          return;
+        }
+
+        const contractHtml = buildInspectionContractHtml(apartment);
+        const fileName = `termo_vistoria_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.html`;
+
+        downloadHtmlFile(fileName, contractHtml);
+
+        toast("Termo de vistoria gerado. Abra o HTML baixado e use imprimir/salvar em PDF.");
+      }
+
       function downloadContract(id) {
         const apartment = getApartment(id);
 
@@ -5671,6 +6238,7 @@
             deleteApartment,
             renewApartment,
             downloadContract,
+            downloadInspectionContract,
             downloadEntryReceipt,
             deleteContractHistory,
             downloadContractHistoryReport,
@@ -5751,6 +6319,42 @@
           $("#apartmentPhoto").value = "";
           renderApartmentPhotoPreview();
         });
+
+        if ($("#inspectionPhotos")) {
+          $("#inspectionPhotos").addEventListener("change", event => {
+            appendInspectionPhotosFromFiles(event.target.files);
+            event.target.value = "";
+          });
+        }
+
+        if ($("#clearInspectionPhotosBtn")) {
+          $("#clearInspectionPhotosBtn").addEventListener("click", () => {
+            if (!tempInspectionPhotos.length) {
+              toast("Nenhuma foto de vistoria para limpar.");
+              return;
+            }
+
+            if (!confirm("Remover todas as fotos de vistoria deste cadastro?")) return;
+
+            tempInspectionPhotos = [];
+            if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
+            renderInspectionPhotosPreview();
+          });
+        }
+
+        if ($("#inspectionPhotosPreview")) {
+          $("#inspectionPhotosPreview").addEventListener("click", event => {
+            const button = event.target.closest("[data-remove-inspection-photo]");
+            if (!button) return;
+
+            const index = Number(button.dataset.removeInspectionPhoto);
+
+            if (!Number.isInteger(index) || index < 0 || index >= tempInspectionPhotos.length) return;
+
+            tempInspectionPhotos.splice(index, 1);
+            renderInspectionPhotosPreview();
+          });
+        }
 
         $("#expenseForm").addEventListener("submit", saveExpenseForm);
         $("#clearExpenseBtn").addEventListener("click", clearExpenseForm);
