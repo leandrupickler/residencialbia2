@@ -792,7 +792,7 @@
         <div class="section-title">
           <div>
             <h2>Detalhamento das despesas</h2>
-            <p>Separação automática por Água, Despesas Extras, Internet, IPTU e Seguro do Imóvel no período selecionado.</p>
+            <p>Separação automática por Água, Despesas Extras, Faxina, Internet, IPTU, Pintura e Seguro do Imóvel no período selecionado.</p>
           </div>
         </div>
 
@@ -815,7 +815,7 @@
             </div>
             <div>
               <div class="stat-value" id="maintenanceExpenseValue">R$ 0,00</div>
-              <p class="stat-note">Manutenção e despesas extras.</p>
+              <p class="stat-note">Manutenção, faxina, pintura e despesas extras.</p>
             </div>
           </article>
 
@@ -872,7 +872,7 @@
             </div>
             <div>
               <div class="stat-value" id="expenseValue">R$ 0,00</div>
-              <p class="stat-note">Água + Internet + IPTU + Manutenção + Seguro.</p>
+              <p class="stat-note">Água + Faxina + Internet + IPTU + Manutenção + Pintura + Seguro.</p>
             </div>
           </article>
 
@@ -883,7 +883,7 @@
             </div>
             <div>
               <div class="stat-value" id="grossValue">R$ 0,00</div>
-              <p class="stat-note">Aluguel + Luz + COSIP + Taxa de lixo pagos no período.</p>
+              <p class="stat-note">Aluguel + Luz + COSIP + Taxa de lixo pagos no período. Taxa de manutenção não entra no lucro.</p>
             </div>
           </article>
 
@@ -934,6 +934,12 @@
               <div class="field">
                 <label for="baseRent">Valor Base do Aluguel *</label>
                 <input id="baseRent" type="number" min="0" step="0.01" placeholder="0,00" required>
+              </div>
+
+              <div class="field">
+                <label for="maintenanceFee">Taxa de manutenção</label>
+                <input id="maintenanceFee" type="number" min="0" step="0.01" placeholder="600,00">
+                <span class="mini muted">Cobrada apenas no primeiro mês do contrato. Não entra no lucro líquido.</span>
               </div>
 
               <div class="field">
@@ -1049,9 +1055,11 @@
                 <label for="expenseType">Tipo *</label>
                 <select id="expenseType" required>
                   <option value="Água">Água</option>
+                  <option value="Faxina">Faxina</option>
                   <option value="Internet">Internet</option>
                   <option value="IPTU">IPTU</option>
                   <option value="Manutenção Extra">Manutenção Extra</option>
+                  <option value="Pintura">Pintura</option>
                   <option value="Seguro do Imóvel">Seguro do Imóvel</option>
                 </select>
               </div>
@@ -1104,9 +1112,11 @@
             <select id="expensesTypeFilter">
               <option value="all">Todos os tipos</option>
               <option value="Água">Água</option>
+              <option value="Faxina">Faxina</option>
               <option value="Internet">Internet</option>
               <option value="IPTU">IPTU</option>
               <option value="Manutenção Extra">Manutenção Extra</option>
+              <option value="Pintura">Pintura</option>
               <option value="Seguro do Imóvel">Seguro do Imóvel</option>
             </select>
           </div>
@@ -1224,7 +1234,7 @@
             <div class="total-preview">
               <div>
                 <strong>Total a cobrar do inquilino</strong>
-                <p class="mini muted" id="entryFormula">Energia + COSIP + Taxa de lixo + Aluguel = Total a cobrar</p>
+                <p class="mini muted" id="entryFormula">Energia + COSIP + Taxa de lixo + Taxa de manutenção + Aluguel = Total a cobrar</p>
               </div>
               <div class="amount" id="entryTotalPreview">R$ 0,00</div>
             </div>
@@ -1589,6 +1599,7 @@
           description: apt.description || "",
           photo: apt.photo || "",
           baseRent: toNumber(apt.baseRent),
+          maintenanceFee: toNumber(apt.maintenanceFee ?? apt.maintenanceTax ?? apt.taxaManutencao ?? apt.taxaDeManutencao ?? 600),
           contractStart: apt.contractStart || "",
           contractEnd: apt.contractEnd || "",
           tenant,
@@ -1615,6 +1626,7 @@
           contractStart: source.contractStart || source.inicioContrato || "",
           contractEnd: source.contractEnd || source.fimContrato || "",
           baseRent: toNumber(source.baseRent ?? source.valorAluguelMensal),
+          maintenanceFee: toNumber(source.maintenanceFee ?? source.maintenanceTax ?? source.taxaManutencao ?? source.taxaDeManutencao ?? 600),
           endedAt: source.endedAt || "",
           reason: source.reason || source.observacao || ""
         };
@@ -1652,6 +1664,7 @@
           kwhConsumed: calculatedConsumed,
           cosip: toNumber(source.cosip),
           trashFee: toNumber(source.trashFee ?? source.garbageFee ?? source.lixoFee ?? source.taxaLixo ?? source.taxaDeLixo ?? 0),
+          maintenanceFee: toNumber(source.maintenanceFee ?? source.maintenanceTax ?? source.taxaManutencao ?? source.taxaDeManutencao ?? 0),
           paymentStatus: normalizePaymentStatus(source.paymentStatus ?? source.payment ?? source.paid ?? source.isPaid ?? source.statusPagamento)
         };
       }
@@ -2312,8 +2325,58 @@
         return energyOnly(entry) + toNumber(entry.cosip);
       }
 
-      function entryTotal(entry) {
+      function entryMaintenanceFee(entry) {
+        return toNumber(entry?.maintenanceFee ?? entry?.maintenanceTax ?? entry?.taxaManutencao ?? 0);
+      }
+
+      function entryOperationalRevenue(entry) {
         return toNumber(entry.rent) + energyTotal(entry) + toNumber(entry.trashFee);
+      }
+
+      function entryTotal(entry) {
+        return entryOperationalRevenue(entry) + entryMaintenanceFee(entry);
+      }
+
+      function sameTenantForMaintenanceFee(entry, apartment) {
+        if (!entry || !apartment) return false;
+
+        const entryCpf = normalizeFilterText(entry.tenantCpf || "");
+        const tenantCpf = normalizeFilterText(apartment.tenant?.cpf || "");
+
+        if (entryCpf && tenantCpf) return entryCpf === tenantCpf;
+
+        return normalizeFilterText(entry.tenantName || "") === normalizeFilterText(apartment.tenant?.name || "");
+      }
+
+      function suggestedMaintenanceFeeForEntry(apartment, month, entryId = "") {
+        if (!apartment || !month) return 0;
+
+        const fee = toNumber(apartment.maintenanceFee);
+        if (fee <= 0) return 0;
+
+        const contractStartMonth = String(apartment.contractStart || "").slice(0, 7);
+        if (!contractStartMonth || month !== contractStartMonth) return 0;
+
+        const alreadyCharged = state.entries.some(entry =>
+          entry.id !== entryId &&
+          entry.apartmentId === apartment.id &&
+          sameTenantForMaintenanceFee(entry, apartment) &&
+          toNumber(entry.maintenanceFee) > 0
+        );
+
+        return alreadyCharged ? 0 : fee;
+      }
+
+      function entryFormMaintenanceFee() {
+        const id = $("#entryEditId")?.value || "";
+        const existing = id ? state.entries.find(entry => entry.id === id) : null;
+
+        if (existing) return entryMaintenanceFee(existing);
+
+        const apartment = getApartment($("#entryApartmentId")?.value);
+        const month = $("#entryMonth")?.value || "";
+
+        return suggestedMaintenanceFeeForEntry(apartment, month, id);
       }
 
       function availableYears() {
@@ -2390,14 +2453,14 @@
           }, 0);
         };
 
-        const gross = filteredEntries.reduce((sum, entry) => sum + entryTotal(entry), 0);
+        const gross = filteredEntries.reduce((sum, entry) => sum + entryOperationalRevenue(entry), 0);
         const rent = filteredEntries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
         const energy = filteredEntries.reduce((sum, entry) => sum + energyTotal(entry), 0);
 
         const waterExpenses = sumExpenseByType("Água", "Agua");
         const internetExpenses = sumExpenseByType("Internet");
         const iptuExpenses = sumExpenseByType("IPTU");
-        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra");
+        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra", "Faxina", "Pintura");
         const insuranceExpenses = sumExpenseByType("Seguro do Imóvel", "Seguro do Imovel", "Seguro Imóvel", "Seguro Imovel", "Seguro");
 
         const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
@@ -2703,6 +2766,7 @@
                 <h3>${escapeHtml(apartment.number)} ${isFree ? '<span class="pill green">Livre</span>' : `— ${escapeHtml(apartment.tenant.name)}`}</h3>
                 <div class="meta">
                   <span class="pill blue"><i class="fa-solid fa-money-bill-wave"></i> Aluguel base: ${money(apartment.baseRent)}</span>
+                  <span class="pill yellow"><i class="fa-solid fa-brush"></i> Taxa manutenção: ${money(apartment.maintenanceFee)}</span>
                   ${isFree ? `
                     <span class="pill green"><i class="fa-solid fa-door-open"></i> Disponível para novo morador</span>
                   ` : `
@@ -2758,6 +2822,8 @@
         if (type === "Internet") return "green";
         if (type === "IPTU") return "red";
         if (type === "Seguro do Imóvel") return "blue";
+        if (type === "Faxina") return "green";
+        if (type === "Pintura") return "yellow";
         return "yellow";
       }
 
@@ -2846,7 +2912,7 @@
             <div class="empty">
               <i class="fa-solid fa-receipt"></i>
               <strong>Nenhuma despesa cadastrada.</strong>
-              <div class="mini">Cadastre Água, Internet, IPTU, Manutenção ou Seguro do Imóvel para calcular o lucro líquido real.</div>
+              <div class="mini">Cadastre Água, Faxina, Internet, IPTU, Manutenção, Pintura ou Seguro do Imóvel para calcular o lucro líquido real.</div>
             </div>
           `;
           return;
@@ -3248,6 +3314,7 @@
           const rentTotal = entries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
           const energyTotalValue = entries.reduce((sum, entry) => sum + energyTotal(entry), 0);
           const trashTotal = entries.reduce((sum, entry) => sum + toNumber(entry.trashFee), 0);
+          const maintenanceFeeTotal = entries.reduce((sum, entry) => sum + entryMaintenanceFee(entry), 0);
           const paidTotal = entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "paid").reduce((sum, entry) => sum + entryTotal(entry), 0);
           const pendingTotal = entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "pending").reduce((sum, entry) => sum + entryTotal(entry), 0);
           const unpaidTotal = entries.filter(entry => normalizePaymentStatus(entry.paymentStatus) === "unpaid").reduce((sum, entry) => sum + entryTotal(entry), 0);
@@ -3265,7 +3332,7 @@
               </summary>
 
               <div class="reference" style="border-radius:0; border-left:0; border-right:0;">
-                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Taxa de lixo: ${money(trashTotal)} | Pago: ${money(paidTotal)} | Aguardando: ${money(pendingTotal)} | Não pago: ${money(unpaidTotal)} | Total: ${money(total)}
+                Aluguel: ${money(rentTotal)} | Energia/COSIP: ${money(energyTotalValue)} | Taxa de lixo: ${money(trashTotal)} | Taxa manutenção: ${money(maintenanceFeeTotal)} | Pago: ${money(paidTotal)} | Aguardando: ${money(pendingTotal)} | Não pago: ${money(unpaidTotal)} | Total: ${money(total)}
               </div>
 
               <div class="table-wrap">
@@ -3282,6 +3349,7 @@
                       <th>Consumo</th>
                       <th>Luz + COSIP</th>
                       <th>Taxa de lixo</th>
+                      <th>Taxa manutenção</th>
                       <th>Total</th>
                       <th style="text-align:right;">Ações</th>
                     </tr>
@@ -3306,6 +3374,7 @@
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhConsumed).toLocaleString("pt-BR") + " kWh"}</td>
                         <td>${money(energyTotal(entry))}</td>
                         <td>${money(entry.trashFee)}</td>
+                        <td>${money(entryMaintenanceFee(entry))}</td>
                         <td><strong>${money(entryTotal(entry))}</strong></td>
                         <td>
                           <div class="td-actions">
@@ -3406,6 +3475,7 @@
               contractStart: item.contractStart,
               contractEnd: item.contractEnd,
               baseRent: item.baseRent,
+              maintenanceFee: item.maintenanceFee,
               status: "Histórico",
               endedAt: item.endedAt,
               reason: item.reason,
@@ -3422,6 +3492,7 @@
               contractStart: apartment.contractStart,
               contractEnd: apartment.contractEnd,
               baseRent: apartment.baseRent,
+              maintenanceFee: apartment.maintenanceFee,
               status: "Contrato Ativo",
               endedAt: "",
               reason: "",
@@ -3484,6 +3555,7 @@
                       <th>Início</th>
                       <th>Encerramento</th>
                       <th>Valor mensal</th>
+                      <th>Taxa manutenção</th>
                       <th>Registrado em</th>
                       <th style="text-align:right;">Ações</th>
                     </tr>
@@ -3500,6 +3572,7 @@
                         <td>${formatDate(row.contractStart)}</td>
                         <td>${formatDate(row.contractEnd)}</td>
                         <td>${money(row.baseRent)}</td>
+                        <td>${money(row.maintenanceFee)}</td>
                         <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
                         <td>
                           <div class="td-actions">
@@ -3588,6 +3661,7 @@
         $("#apartmentEditId").value = "";
         $("#apartmentNumber").value = "";
         $("#baseRent").value = "";
+        $("#maintenanceFee").value = 600;
         $("#contractStart").value = "";
         $("#contractEnd").value = "";
         $("#apartmentDescription").value = "";
@@ -3664,6 +3738,7 @@
       function updateEntryPreview() {
         const rent = toNumber($("#entryRent")?.value);
         const trashFee = toNumber($("#entryTrashFee")?.value);
+        const maintenanceFee = entryFormMaintenanceFee();
         const mode = $("#entryEnergyMode")?.value || "withKwh";
         const isNoKwh = mode === "noKwh";
         const kwhValue = isNoKwh ? 0 : toNumber($("#entryKwhValue")?.value);
@@ -3673,7 +3748,7 @@
         const cosip = isNoKwh ? 0 : toNumber($("#entryCosip")?.value);
         const energyAmount = isNoKwh ? 0 : kwhValue * kwhConsumed;
         const totalEnergyWithCosip = energyAmount + cosip;
-        const total = rent + totalEnergyWithCosip + trashFee;
+        const total = rent + totalEnergyWithCosip + trashFee + maintenanceFee;
 
         toggleEntryEnergyMode();
 
@@ -3687,12 +3762,14 @@
           return;
         }
 
+        const maintenanceText = maintenanceFee > 0 ? ` | Taxa de manutenção: ${money(maintenanceFee)} (não entra no lucro)` : "";
+
         if (isNoKwh) {
-          $("#entryFormula").textContent = `Sem cálculo de kWh neste lançamento | Energia: ${money(0)} | COSIP: ${money(0)} | Taxa de lixo: ${money(trashFee)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
+          $("#entryFormula").textContent = `Sem cálculo de kWh neste lançamento | Energia: ${money(0)} | COSIP: ${money(0)} | Taxa de lixo: ${money(trashFee)}${maintenanceText} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
           return;
         }
 
-        $("#entryFormula").textContent = `Consumo: ${currentReading.toLocaleString("pt-BR")} - ${previousReading.toLocaleString("pt-BR")} = ${kwhConsumed.toLocaleString("pt-BR")} kWh | Energia: ${money(energyAmount)} + COSIP: ${money(cosip)} = ${money(totalEnergyWithCosip)} | Taxa de lixo: ${money(trashFee)} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
+        $("#entryFormula").textContent = `Consumo: ${currentReading.toLocaleString("pt-BR")} - ${previousReading.toLocaleString("pt-BR")} = ${kwhConsumed.toLocaleString("pt-BR")} kWh | Energia: ${money(energyAmount)} + COSIP: ${money(cosip)} = ${money(totalEnergyWithCosip)} | Taxa de lixo: ${money(trashFee)}${maintenanceText} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
       }
 
       function showTab(name) {
@@ -3709,6 +3786,7 @@
           contractStart: apartment.contractStart,
           contractEnd: apartment.contractEnd,
           baseRent: toNumber(apartment.baseRent),
+          maintenanceFee: toNumber(apartment.maintenanceFee),
           endedAt: new Date().toISOString(),
           reason
         };
@@ -3724,6 +3802,7 @@
         const contractStart = $("#contractStart").value;
         const contractEnd = $("#contractEnd").value;
         const tenantName = $("#tenantName").value.trim();
+        const maintenanceFee = toNumber($("#maintenanceFee").value || 0);
 
         if (!number || !contractStart || !contractEnd || !tenantName) {
           toast("Preencha ID do apto, início, vencimento e nome do morador.");
@@ -3744,6 +3823,7 @@
           description: $("#apartmentDescription").value.trim(),
           photo: tempApartmentPhoto,
           baseRent: toNumber($("#baseRent").value),
+          maintenanceFee,
           contractStart,
           contractEnd,
           status: "occupied",
@@ -3758,8 +3838,8 @@
           contractHistory: existing?.contractHistory || []
         };
 
-        if (nextApartment.baseRent < 0) {
-          toast("O valor base do aluguel não pode ser negativo.");
+        if (nextApartment.baseRent < 0 || nextApartment.maintenanceFee < 0) {
+          toast("O valor base do aluguel e a taxa de manutenção não podem ser negativos.");
           return;
         }
 
@@ -3797,6 +3877,8 @@
         $("#apartmentEditId").value = apartment.id;
         $("#apartmentNumber").value = apartment.number || "";
         $("#baseRent").value = apartment.baseRent ?? "";
+        $("#maintenanceFee").value = apartment.maintenanceFee ?? 600;
+        $("#maintenanceFee").value = apartment.maintenanceFee ?? 600;
         $("#contractStart").value = apartment.contractStart || "";
         $("#contractEnd").value = apartment.contractEnd || (apartment.contractStart ? addMonths(apartment.contractStart, 6) : "");
         $("#apartmentDescription").value = apartment.description || "";
@@ -4013,6 +4095,9 @@
           energyMode,
           paymentStatus: normalizePaymentStatus($("#entryPaymentStatus").value),
           trashFee: toNumber($("#entryTrashFee").value),
+          maintenanceFee: id
+            ? entryMaintenanceFee(state.entries.find(item => item.id === id))
+            : suggestedMaintenanceFeeForEntry(apartment, $("#entryMonth").value, id),
           kwhValue: noKwh ? 0 : toNumber($("#entryKwhValue").value),
           kwhPrevious: previousReading,
           kwhCurrent: currentReading,
@@ -4267,6 +4352,7 @@
         const month = monthName(entry.month);
         const receiptNumber = entryReceiptNumber(entry);
         const trashFee = toNumber(entry.trashFee);
+        const maintenanceFee = entryMaintenanceFee(entry);
 
         return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -4435,6 +4521,13 @@
             <td class="value">${money(trashFee)}</td>
           </tr>
         ` : ""}
+        ${maintenanceFee > 0 ? `
+          <tr>
+            <td>Taxa de manutenção</td>
+            <td>Cobrada apenas no primeiro mês do contrato para limpeza e pintura</td>
+            <td class="value">${money(maintenanceFee)}</td>
+          </tr>
+        ` : ""}
         <tr class="total-row">
           <td colspan="2">Total do mês</td>
           <td class="value">${money(total)}</td>
@@ -4443,8 +4536,8 @@
     </table>
     <div class="note">
       <strong>Resumo:</strong>
-      Aluguel ${money(entry.rent)}${isNoKwh ? "" : ` + Energia/COSIP ${money(energyWithCosip)}`}${trashFee > 0 ? ` + Taxa de lixo ${money(trashFee)}` : ""} = <strong>${money(total)}</strong>.
-      Este recibo não representa confirmação de pagamento; é um demonstrativo de cobrança mensal.
+      Aluguel ${money(entry.rent)}${isNoKwh ? "" : ` + Energia/COSIP ${money(energyWithCosip)}`}${trashFee > 0 ? ` + Taxa de lixo ${money(trashFee)}` : ""}${maintenanceFee > 0 ? ` + Taxa de manutenção ${money(maintenanceFee)}` : ""} = <strong>${money(total)}</strong>.
+      Este recibo não representa confirmação de pagamento; é um demonstrativo de cobrança mensal. A taxa de manutenção é destinada à limpeza e pintura e não compõe o lucro líquido.
     </div>
   </main>
 </body>
@@ -4772,6 +4865,7 @@
         const rentTotal = filtered.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
         const energyTotalValue = filtered.reduce((sum, entry) => sum + energyTotal(entry), 0);
         const trashTotal = filtered.reduce((sum, entry) => sum + toNumber(entry.trashFee), 0);
+        const maintenanceFeeTotal = filtered.reduce((sum, entry) => sum + entryMaintenanceFee(entry), 0);
 
         const historyText = selectedOptionText("#entriesHistoryFilter") || "Todos os lançamentos";
         const paymentText = selectedOptionText("#entriesPaymentFilter") || "Todos os pagamentos";
@@ -4792,6 +4886,7 @@
             escapeHtml((entry.energyMode || "withKwh") === "noKwh" ? "-" : `${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh`),
             escapeHtml(money(energyTotal(entry))),
             escapeHtml(money(entry.trashFee)),
+            escapeHtml(money(entryMaintenanceFee(entry))),
             escapeHtml(money(entryTotal(entry)))
           ]);
 
@@ -4806,9 +4901,10 @@
             { label: "Registros", value: String(filtered.length) },
             { label: "Aluguel", value: money(rentTotal) },
             { label: "Luz/COSIP", value: money(energyTotalValue) },
-            { label: "Taxa de lixo", value: money(trashTotal) }
+            { label: "Taxa de lixo", value: money(trashTotal) },
+            { label: "Taxa manutenção", value: money(maintenanceFeeTotal) }
           ],
-          headers: ["Imóvel", "Morador", "Mês/Ano", "Status", "Aluguel", "Consumo", "Luz/COSIP", "Taxa de lixo", "Total"],
+          headers: ["Imóvel", "Morador", "Mês/Ano", "Status", "Aluguel", "Consumo", "Luz/COSIP", "Taxa de lixo", "Taxa manutenção", "Total"],
           rows,
           emptyMessage: "Nenhum lançamento encontrado para o filtro atual."
         });
@@ -4860,6 +4956,7 @@
                 contractStart: item.contractStart,
                 contractEnd: item.contractEnd,
                 baseRent: item.baseRent,
+                maintenanceFee: item.maintenanceFee,
                 status: "Histórico",
                 endedAt: item.endedAt || ""
               });
@@ -4872,6 +4969,7 @@
                 contractStart: apartment.contractStart,
                 contractEnd: apartment.contractEnd,
                 baseRent: apartment.baseRent,
+                maintenanceFee: apartment.maintenanceFee,
                 status: "Contrato Ativo",
                 endedAt: ""
               });
@@ -4890,6 +4988,7 @@
         const rowsData = collectFilteredContractHistoryRows();
         const range = getContractHistoryFilterRange();
         const totalRent = rowsData.reduce((sum, row) => sum + toNumber(row.baseRent), 0);
+        const totalMaintenanceFee = rowsData.reduce((sum, row) => sum + toNumber(row.maintenanceFee), 0);
         const activeCount = rowsData.filter(row => row.status === "Contrato Ativo").length;
         const historyCount = rowsData.filter(row => row.status === "Histórico").length;
 
@@ -4902,6 +5001,7 @@
           escapeHtml(formatDate(row.contractStart)),
           escapeHtml(formatDate(row.contractEnd)),
           escapeHtml(money(row.baseRent)),
+          escapeHtml(money(row.maintenanceFee)),
           escapeHtml(row.endedAt ? formatDate(String(row.endedAt).slice(0, 10)) : "-")
         ]);
 
@@ -4912,9 +5012,10 @@
             { label: "Contratos filtrados", value: String(rowsData.length) },
             { label: "Contratos ativos", value: String(activeCount) },
             { label: "Históricos", value: String(historyCount) },
-            { label: "Soma mensal de referência", value: money(totalRent) }
+            { label: "Soma mensal de referência", value: money(totalRent) },
+            { label: "Taxas de manutenção", value: money(totalMaintenanceFee) }
           ],
-          headers: ["Status", "Apartamento", "Morador", "CPF", "Telefone", "Início", "Encerramento", "Valor mensal", "Registrado em"],
+          headers: ["Status", "Apartamento", "Morador", "CPF", "Telefone", "Início", "Encerramento", "Valor mensal", "Taxa manutenção", "Registrado em"],
           rows,
           emptyMessage: "Nenhum contrato encontrado para o filtro atual."
         });
@@ -5033,6 +5134,7 @@
           1100: "mil e cem reais",
           1200: "mil e duzentos reais",
           1250: "mil duzentos e cinquenta reais",
+          600: "seiscentos reais",
           1300: "mil e trezentos reais",
           1350: "mil trezentos e cinquenta reais",
           1400: "mil e quatrocentos reais",
@@ -5062,6 +5164,8 @@
         const endDate = apartment.contractEnd || addMonths(startDate, 6);
         const rent = toNumber(apartment.baseRent);
         const rentText = rentValueInWords(rent);
+        const maintenanceFee = toNumber(apartment.maintenanceFee);
+        const maintenanceFeeText = rentValueInWords(maintenanceFee);
         const todayText = formatDateLong(isoDate(new Date()));
         const tenantName = tenant.name || "________________________________";
         const tenantCpf = formatCpf(tenant.cpf);
@@ -5335,7 +5439,7 @@
 
   <p class="subclause">I. <strong>${money(rent)}</strong> (${escapeHtml(rentText)}) referentes ao aluguel do primeiro mês;</p>
 
-  <p class="subclause">II. <strong>R$ 600,00</strong> (seiscentos reais) para despesas com pintura ao final da locação.</p>
+  <p class="subclause">II. <strong>${money(maintenanceFee)}</strong> (${escapeHtml(maintenanceFeeText)}) para despesas com limpeza e pintura ao final da locação.</p>
 
   <p class="clause"><strong>CLÁUSULA VIGÉSIMA SEGUNDA:</strong> Checklist de Entrada do Imóvel.</p>
 
