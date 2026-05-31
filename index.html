@@ -796,6 +796,28 @@
           </div>
         </div>
 
+        <div class="dashboard-filter" id="expenseDetailFilterPanel">
+          <div class="field">
+            <label for="expenseDetailPeriod">Filtro das despesas</label>
+            <select id="expenseDetailPeriod">
+              <option value="last6">Últimos 6 Meses</option>
+              <option value="currentYear">Último Ano (Padrão/Corrente)</option>
+              <option value="last2">Últimos 2 Anos</option>
+              <option value="all">Todo o Período</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="expenseDetailYear">Histórico por Ano</label>
+            <select id="expenseDetailYear"></select>
+          </div>
+
+          <div class="filter-badge" id="expenseDetailPeriodBadge">
+            <i class="fa-solid fa-calendar-days"></i>
+            Ano corrente
+          </div>
+        </div>
+
         <div class="grid grid-4">
           <article class="card stat-card">
             <div class="stat-head">
@@ -1543,6 +1565,8 @@
           logo: "",
           dashboardPeriod: "currentYear",
           dashboardYear: new Date().getFullYear(),
+          expenseDetailPeriod: "currentYear",
+          expenseDetailYear: new Date().getFullYear(),
           entriesHistoryFilter: "current",
           entriesPaymentFilter: "all"
         },
@@ -2432,6 +2456,77 @@
         return date >= range.start && date < range.end;
       }
 
+      function getExpenseDetailPeriodRange() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const selectedYear = Number(state.settings.expenseDetailYear || state.settings.dashboardYear || currentYear);
+        const period = state.settings.expenseDetailPeriod || state.settings.dashboardPeriod || "currentYear";
+
+        if (period === "last6") {
+          return { start: new Date(now.getFullYear(), now.getMonth() - 5, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 6 meses" };
+        }
+
+        if (period === "last2") {
+          return { start: new Date(now.getFullYear(), now.getMonth() - 23, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 2 anos" };
+        }
+
+        if (period === "all") {
+          return {
+            start: new Date(1900, 0, 1),
+            end: new Date(2999, 11, 31),
+            label: "Todo o período"
+          };
+        }
+
+        return {
+          start: new Date(selectedYear, 0, 1),
+          end: new Date(selectedYear + 1, 0, 1),
+          label: selectedYear === currentYear ? `Ano corrente: ${selectedYear}` : `Arquivo histórico: ${selectedYear}`
+        };
+      }
+
+      function isMonthInsideExpenseDetailPeriod(yyyyMm) {
+        const date = parseMonth(yyyyMm);
+        const range = getExpenseDetailPeriodRange();
+        if (!date) return false;
+        return date >= range.start && date < range.end;
+      }
+
+      function getExpenseDetailFinancials() {
+        const filteredExpenses = state.expenses.filter(expense => isMonthInsideExpenseDetailPeriod(expense.month));
+
+        const normalizeExpenseType = value => String(value || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase();
+
+        const sumExpenseByType = (...types) => {
+          const normalizedTypes = types.map(normalizeExpenseType);
+          return filteredExpenses.reduce((sum, expense) => {
+            return normalizedTypes.includes(normalizeExpenseType(expense.type))
+              ? sum + toNumber(expense.amount)
+              : sum;
+          }, 0);
+        };
+
+        const waterExpenses = sumExpenseByType("Água", "Agua");
+        const internetExpenses = sumExpenseByType("Internet");
+        const iptuExpenses = sumExpenseByType("IPTU");
+        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra", "Faxina", "Pintura");
+        const insuranceExpenses = sumExpenseByType("Seguro do Imóvel", "Seguro do Imovel", "Seguro Imóvel", "Seguro Imovel", "Seguro");
+        const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+
+        return {
+          expenses,
+          waterExpenses,
+          internetExpenses,
+          iptuExpenses,
+          maintenanceExpenses,
+          insuranceExpenses
+        };
+      }
+
       function getFinancials() {
         const filteredEntries = state.entries
           .filter(entry => isMonthInsideSelectedPeriod(entry.month))
@@ -2588,21 +2683,52 @@
         $("#periodBadge").innerHTML = `<i class="fa-solid fa-calendar-days"></i>${escapeHtml(range.label)}`;
       }
 
+      function renderExpenseDetailControls() {
+        const periodSelect = $("#expenseDetailPeriod");
+        const yearSelect = $("#expenseDetailYear");
+
+        if (!periodSelect || !yearSelect) return;
+
+        const years = availableYears();
+        const currentYear = new Date().getFullYear();
+
+        periodSelect.value = state.settings.expenseDetailPeriod || state.settings.dashboardPeriod || "currentYear";
+
+        if (!years.includes(Number(state.settings.expenseDetailYear))) {
+          state.settings.expenseDetailYear = state.settings.dashboardYear || currentYear;
+        }
+
+        yearSelect.innerHTML = `<option value="all">Todo o período</option>` + years.map(year => `<option value="${year}">${year}</option>`).join("");
+
+        if (periodSelect.value === "all") {
+          yearSelect.value = "all";
+        } else {
+          yearSelect.value = String(state.settings.expenseDetailYear || currentYear);
+        }
+
+        yearSelect.disabled = periodSelect.value !== "currentYear";
+
+        const range = getExpenseDetailPeriodRange();
+        $("#expenseDetailPeriodBadge").innerHTML = `<i class="fa-solid fa-calendar-days"></i>${escapeHtml(range.label)}`;
+      }
+
       function renderDashboard() {
         renderDashboardControls();
+        renderExpenseDetailControls();
 
         const f = getFinancials();
+        const expenseDetail = getExpenseDetailFinancials();
 
         $("#grossValue").textContent = money(f.gross);
-        $("#expenseValue").textContent = money(f.expenses);
+        $("#expenseValue").textContent = money(expenseDetail.expenses);
         $("#rentValue").textContent = money(f.rent);
         $("#energyValue").textContent = money(f.energy);
 
-        $("#waterExpenseValue").textContent = money(f.waterExpenses);
-        $("#internetExpenseValue").textContent = money(f.internetExpenses);
-        $("#iptuExpenseValue").textContent = money(f.iptuExpenses);
-        $("#maintenanceExpenseValue").textContent = money(f.maintenanceExpenses);
-        $("#insuranceExpenseValue").textContent = money(f.insuranceExpenses);
+        $("#waterExpenseValue").textContent = money(expenseDetail.waterExpenses);
+        $("#internetExpenseValue").textContent = money(expenseDetail.internetExpenses);
+        $("#iptuExpenseValue").textContent = money(expenseDetail.iptuExpenses);
+        $("#maintenanceExpenseValue").textContent = money(expenseDetail.maintenanceExpenses);
+        $("#insuranceExpenseValue").textContent = money(expenseDetail.insuranceExpenses);
 
         renderPie("#pieCashFlow", [
           { label: "Faturamento Bruto", value: f.gross, color: "#4285F4" },
@@ -5580,6 +5706,30 @@
           state.settings.dashboardPeriod = "currentYear";
           await save("Ano histórico selecionado.");
         });
+
+        if ($("#expenseDetailPeriod")) {
+          $("#expenseDetailPeriod").addEventListener("change", async event => {
+            state.settings.expenseDetailPeriod = event.target.value;
+            if (event.target.value === "currentYear" && !state.settings.expenseDetailYear) {
+              state.settings.expenseDetailYear = new Date().getFullYear();
+            }
+            await save("Filtro do detalhamento das despesas salvo.");
+          });
+        }
+
+        if ($("#expenseDetailYear")) {
+          $("#expenseDetailYear").addEventListener("change", async event => {
+            if (event.target.value === "all") {
+              state.settings.expenseDetailPeriod = "all";
+              await save("Todo o período selecionado no detalhamento das despesas.");
+              return;
+            }
+
+            state.settings.expenseDetailYear = Number(event.target.value);
+            state.settings.expenseDetailPeriod = "currentYear";
+            await save("Ano do detalhamento das despesas selecionado.");
+          });
+        }
 
         $("#apartmentForm").addEventListener("submit", saveApartmentForm);
         $("#clearApartmentBtn").addEventListener("click", clearApartmentForm);
