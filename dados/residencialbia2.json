@@ -859,6 +859,14 @@
       "apartmentId": "",
       "amount": 19,
       "description": "Compra de Leno 4 metros e compra de 1 lixa"
+    },
+    {
+      "id": "expense_afad64d3-4d26-4fac-ac88-f4caf3cf9714",
+      "month": "2026-06",
+      "type": "Pintura",
+      "apartmentId": "apartment_apto03",
+      "amount": 300,
+      "description": "Pintura de entrada do apto."
     }
   ],
   "entries": [
@@ -3168,7 +3176,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-01T18:07:21.055Z",
+    "updatedAt": "2026-06-01T22:22:30.013Z",
     "updatedBy": "residencial"
   }
 }
