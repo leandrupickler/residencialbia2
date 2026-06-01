@@ -851,6 +851,14 @@
       "apartmentId": "",
       "amount": 1200,
       "description": "IPTU Global"
+    },
+    {
+      "id": "expense_67b9a622-824d-4688-b7b5-067ca1b9c4af",
+      "month": "2026-06",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 19,
+      "description": "Compra de Leno 4 metros e compra de 1 lixa"
     }
   ],
   "entries": [
@@ -3160,7 +3168,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-05-31T14:02:59.630Z",
+    "updatedAt": "2026-06-01T18:07:21.055Z",
     "updatedBy": "residencial"
   }
 }
