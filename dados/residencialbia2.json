@@ -867,6 +867,14 @@
       "apartmentId": "apartment_apto03",
       "amount": 300,
       "description": "Pintura de entrada do apto."
+    },
+    {
+      "id": "expense_858082eb-773a-4731-8c62-613c4a554957",
+      "month": "2026-06",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 100,
+      "description": "Compra da pia cozinha APTO 03"
     }
   ],
   "entries": [
@@ -3176,7 +3184,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-01T22:22:30.013Z",
+    "updatedAt": "2026-06-03T01:12:58.282Z",
     "updatedBy": "residencial"
   }
 }
