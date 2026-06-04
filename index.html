@@ -2408,7 +2408,11 @@
           .filter(entry => (entry.energyMode || "withKwh") !== "noKwh")
           .filter(entry => toNumber(entry.kwhCurrent) > 0)
           .filter(entry => !beforeMonth || String(entry.month || "") < String(beforeMonth))
-          .sort((a, b) => String(b.month || "").localeCompare(String(a.month || "")));
+          .sort((a, b) => {
+            const monthCompare = String(b.month || "").localeCompare(String(a.month || ""));
+            if (monthCompare !== 0) return monthCompare;
+            return toNumber(b.kwhCurrent) - toNumber(a.kwhCurrent);
+          });
 
         return entries.length ? entries[0] : null;
       }
@@ -2416,6 +2420,57 @@
       function getLastKwhReading(apartmentId, beforeMonth = "", excludeEntryId = "") {
         const lastEntry = getLastKwhEntry(apartmentId, beforeMonth, excludeEntryId);
         return lastEntry ? toNumber(lastEntry.kwhCurrent) : 0;
+      }
+
+      function addMonthsToMonth(yyyyMm, months = 1) {
+        const date = parseMonth(yyyyMm);
+        if (!date) return currentMonthValue();
+
+        date.setMonth(date.getMonth() + months);
+
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      }
+
+      function getLastMonthlyEntry(apartmentId, excludeEntryId = "") {
+        const entries = state.entries
+          .filter(entry => entry.apartmentId === apartmentId && entry.id !== excludeEntryId)
+          .filter(entry => parseMonth(entry.month))
+          .sort((a, b) => {
+            const monthCompare = String(b.month || "").localeCompare(String(a.month || ""));
+            if (monthCompare !== 0) return monthCompare;
+
+            const aCreated = String(a.createdAt || a.updatedAt || a.id || "");
+            const bCreated = String(b.createdAt || b.updatedAt || b.id || "");
+            return bCreated.localeCompare(aCreated);
+          });
+
+        return entries.length ? entries[0] : null;
+      }
+
+      function getSuggestedEntryMonth(apartmentId, excludeEntryId = "") {
+        const apartment = getApartment(apartmentId);
+        const lastEntry = getLastMonthlyEntry(apartmentId, excludeEntryId);
+
+        if (lastEntry?.month) {
+          return addMonthsToMonth(lastEntry.month, 1);
+        }
+
+        const contractStartMonth = String(apartment?.contractStart || "").slice(0, 7);
+        return contractStartMonth || currentMonthValue();
+      }
+
+      function applySuggestedEntryMonthForApartment(force = false) {
+        const entryId = $("#entryEditId")?.value || "";
+        const apartmentId = $("#entryApartmentId")?.value || "";
+        const monthInput = $("#entryMonth");
+
+        if (!monthInput || !apartmentId || entryId) return;
+
+        const suggestedMonth = getSuggestedEntryMonth(apartmentId, entryId);
+
+        if (force || !monthInput.value) {
+          monthInput.value = suggestedMonth;
+        }
       }
 
       function updatePreviousReadingFromHistory(force = false) {
@@ -5812,8 +5867,7 @@
       function getInspectionKwhEntry(apartment) {
         if (!apartment) return null;
 
-        const startMonth = String(apartment.contractStart || "").slice(0, 7);
-        return getLastKwhEntry(apartment.id, startMonth) || getLastKwhEntry(apartment.id, "", "");
+        return getLastKwhEntry(apartment.id, "", "");
       }
 
       function formatKwh(value) {
@@ -6399,8 +6453,19 @@
 
         $("#entryApartmentId").addEventListener("change", event => {
           const apartment = getApartment(event.target.value);
-          if (apartment && !$("#entryEditId").value && !manualEntryRent) $("#entryRent").value = apartment.baseRent;
-          if (($("#entryEnergyMode")?.value || "withKwh") === "withKwh") updatePreviousReadingFromHistory(true);
+
+          if (apartment && !$("#entryEditId").value && !manualEntryRent) {
+            $("#entryRent").value = apartment.baseRent;
+          }
+
+          if (!$("#entryEditId").value) {
+            applySuggestedEntryMonthForApartment(true);
+          }
+
+          if (($("#entryEnergyMode")?.value || "withKwh") === "withKwh") {
+            updatePreviousReadingFromHistory(true);
+          }
+
           updateEntryPreview();
         });
 
@@ -6411,6 +6476,9 @@
 
         $("#entryEnergyMode").addEventListener("change", () => {
           if ($("#entryEnergyMode").value === "withKwh") {
+            if (!$("#entryEditId").value) {
+              applySuggestedEntryMonthForApartment(false);
+            }
             updatePreviousReadingFromHistory(true);
           } else {
             updateEntryPreview();
