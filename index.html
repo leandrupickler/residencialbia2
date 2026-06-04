@@ -542,6 +542,26 @@
       object-fit: cover;
     }
 
+    .inspection-photo-placeholder {
+      height: 126px;
+      display: grid;
+      place-items: center;
+      padding: 14px;
+      text-align: center;
+      color: var(--muted);
+      background: linear-gradient(135deg, rgba(66, 133, 244, 0.10), rgba(52, 168, 83, 0.10));
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .inspection-photo-path {
+      display: block;
+      padding: 6px 8px 8px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      word-break: break-all;
+    }
+
     .inspection-photo-thumb .photo-count {
       position: absolute;
       left: 8px;
@@ -1049,7 +1069,7 @@
               <div class="field">
                 <label for="inspectionPhotos">Anexar várias fotos do imóvel</label>
                 <input id="inspectionPhotos" type="file" accept="image/*" multiple>
-                <span class="mini muted">As fotos serão salvas em Base64 no JSON. O termo de vistoria organiza 4 fotos por página antes da folha de assinatura.</span>
+                <span class="mini muted">As fotos serão compactadas e salvas no GitHub fora do JSON, em pastas separadas por apartamento. O JSON guarda apenas o caminho do arquivo.</span>
               </div>
 
               <div id="inspectionPhotosPreview" class="inspection-preview-grid">
@@ -1636,7 +1656,8 @@
           expenseDetailPeriod: "currentYear",
           expenseDetailYear: new Date().getFullYear(),
           entriesHistoryFilter: "current",
-          entriesPaymentFilter: "all"
+          entriesPaymentFilter: "all",
+          inspectionPhotosBasePath: INSPECTION_PHOTOS_BASE_PATH
         },
         users: [],
         apartments: [],
@@ -1669,6 +1690,10 @@
       let pendingSaveMessage = "";
       const SAVE_QUEUE_DELAY_MS = 3200;
       const SAVE_RETRY_DELAYS_MS = [0, 2500, 6000, 11000];
+      const INSPECTION_PHOTOS_BASE_PATH = "fotos-vistoria";
+      const INSPECTION_PHOTO_MAX_SIZE = 1600;
+      const INSPECTION_PHOTO_JPEG_QUALITY = 0.82;
+      const INSPECTION_PHOTO_UPLOAD_DELAY_MS = 1200;
 
       const $ = selector => document.querySelector(selector);
       const $$ = selector => Array.from(document.querySelectorAll(selector));
@@ -1681,27 +1706,42 @@
         return { ...EMPTY_TENANT, ...(tenant || {}) };
       }
 
-      function normalizeInspectionPhoto(photo) {
+            function normalizeInspectionPhoto(photo) {
         if (!photo) return null;
 
         if (typeof photo === "string") {
+          if (!photo.trim()) return null;
+
           return {
             id: uid("inspection_photo"),
             src: photo,
+            path: "",
             caption: "",
+            name: "",
+            contentType: photo.startsWith("data:image/png") ? "image/png" : "image/jpeg",
+            size: 0,
+            storage: photo.startsWith("data:") ? "base64" : "",
             createdAt: ""
           };
         }
 
         if (typeof photo === "object") {
           const src = photo.src || photo.data || photo.base64 || photo.url || photo.image || "";
+          const path = photo.path || photo.githubPath || photo.filePath || "";
+          const rawUrl = photo.rawUrl || photo.downloadUrl || "";
 
-          if (!src) return null;
+          if (!src && !path && !rawUrl) return null;
 
           return {
             id: photo.id || uid("inspection_photo"),
             src,
+            path,
+            rawUrl,
             caption: photo.caption || photo.name || photo.description || "",
+            name: photo.name || photo.caption || "",
+            contentType: photo.contentType || photo.mimeType || (String(src).startsWith("data:image/png") ? "image/png" : "image/jpeg"),
+            size: toNumber(photo.size),
+            storage: photo.storage || (path ? "github" : (String(src).startsWith("data:") ? "base64" : "")),
             createdAt: photo.createdAt || ""
           };
         }
@@ -1711,7 +1751,7 @@
 
       function normalizeInspectionPhotos(photos) {
         if (!Array.isArray(photos)) return [];
-        return photos.map(normalizeInspectionPhoto).filter(photo => photo && photo.src);
+        return photos.map(normalizeInspectionPhoto).filter(photo => photo && (photo.src || photo.path || photo.rawUrl));
       }
 
       function normalizeApartment(apartment) {
@@ -1920,6 +1960,243 @@
 
       function githubApiUrl() {
         return `https://api.github.com/repos/${encodeURIComponent(githubConfig.owner)}/${encodeURIComponent(githubConfig.repo)}/contents/${encodedGithubPath()}`;
+      }
+
+      function encodeGithubContentPath(path) {
+        return String(path || "").split("/").filter(Boolean).map(part => encodeURIComponent(part)).join("/");
+      }
+
+      function githubContentApiUrl(path) {
+        return `https://api.github.com/repos/${encodeURIComponent(githubConfig.owner)}/${encodeURIComponent(githubConfig.repo)}/contents/${encodeGithubContentPath(path)}`;
+      }
+
+      function githubRawUrl(path) {
+        return `https://raw.githubusercontent.com/${encodeURIComponent(githubConfig.owner)}/${encodeURIComponent(githubConfig.repo)}/${encodeURIComponent(githubConfig.branch)}/${String(path || "").split("/").map(part => encodeURIComponent(part)).join("/")}`;
+      }
+
+      function normalizePathSegment(value, fallback = "apto") {
+        const text = String(value || fallback)
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+
+        return text || fallback;
+      }
+
+      function inspectionPhotosBasePath() {
+        return normalizePathSegment(state.settings.inspectionPhotosBasePath || INSPECTION_PHOTOS_BASE_PATH, INSPECTION_PHOTOS_BASE_PATH);
+      }
+
+      function inspectionPhotoFolderForApartment(apartmentOrNumber) {
+        const number = typeof apartmentOrNumber === "object"
+          ? apartmentOrNumber?.number
+          : apartmentOrNumber;
+
+        return `${inspectionPhotosBasePath()}/${normalizePathSegment(number || "apto")}`;
+      }
+
+      function inspectionPhotoPathForFile(apartmentNumber, file, index = 0) {
+        const folder = inspectionPhotoFolderForApartment(apartmentNumber);
+        const baseName = sanitizeFileName(file?.name || `foto_${index + 1}`) || `foto_${index + 1}`;
+        const timestamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
+        const random = Math.random().toString(16).slice(2, 8);
+
+        return `${folder}/${timestamp}_${String(index + 1).padStart(2, "0")}_${random}_${baseName}.jpg`;
+      }
+
+      async function getGithubContent(path) {
+        if (!hasGithubBaseConfig()) return null;
+
+        return githubRequest(`${githubContentApiUrl(path)}?ref=${encodeURIComponent(githubConfig.branch)}&t=${Date.now()}`);
+      }
+
+      async function putGithubContent(path, base64Content, message) {
+        if (!hasGithubWriteConfig()) {
+          throw new Error("Configure o token do GitHub para enviar arquivos.");
+        }
+
+        const currentFile = await getGithubContent(path);
+        const payload = {
+          message: message || `Envia foto de vistoria - ${path}`,
+          content: base64Content,
+          branch: githubConfig.branch
+        };
+
+        if (currentFile?.sha) payload.sha = currentFile.sha;
+
+        return githubRequest(githubContentApiUrl(path), {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+      }
+
+      async function deleteGithubContent(path, message = "") {
+        if (!path || !hasGithubWriteConfig()) return false;
+
+        const currentFile = await getGithubContent(path);
+
+        if (!currentFile?.sha) return false;
+
+        await githubRequest(githubContentApiUrl(path), {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: message || `Remove foto de vistoria - ${path}`,
+            sha: currentFile.sha,
+            branch: githubConfig.branch
+          })
+        });
+
+        return true;
+      }
+
+      async function listGithubDirectory(path) {
+        if (!path || !hasGithubBaseConfig()) return [];
+
+        const result = await githubRequest(`${githubContentApiUrl(path)}?ref=${encodeURIComponent(githubConfig.branch)}&t=${Date.now()}`);
+
+        return Array.isArray(result) ? result : [];
+      }
+
+      function dataUrlToBase64Content(dataUrl) {
+        return String(dataUrl || "").split(",")[1] || "";
+      }
+
+      async function readFileAsDataUrl(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ""));
+          reader.onerror = () => reject(new Error("Não foi possível carregar a imagem."));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function loadImageElement(dataUrl) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error("Não foi possível processar a imagem selecionada."));
+          img.src = dataUrl;
+        });
+      }
+
+      async function compressImageFile(file) {
+        const dataUrl = await readFileAsDataUrl(file);
+        const image = await loadImageElement(dataUrl);
+        const scale = Math.min(1, INSPECTION_PHOTO_MAX_SIZE / Math.max(image.width, image.height));
+        const width = Math.max(1, Math.round(image.width * scale));
+        const height = Math.max(1, Math.round(image.height * scale));
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0, width, height);
+
+        const compressedDataUrl = canvas.toDataURL("image/jpeg", INSPECTION_PHOTO_JPEG_QUALITY);
+
+        return {
+          dataUrl: compressedDataUrl,
+          base64: dataUrlToBase64Content(compressedDataUrl),
+          contentType: "image/jpeg",
+          size: Math.round((dataUrlToBase64Content(compressedDataUrl).length * 3) / 4)
+        };
+      }
+
+      async function uploadInspectionPhotoToGithub(file, apartmentNumber, index = 0) {
+        const compressed = await compressImageFile(file);
+        const path = inspectionPhotoPathForFile(apartmentNumber, file, index);
+
+        await putGithubContent(
+          path,
+          compressed.base64,
+          `Envia foto de vistoria ${apartmentNumber || ""} - ${file?.name || "foto"}`
+        );
+
+        return {
+          id: uid("inspection_photo"),
+          src: "",
+          path,
+          rawUrl: githubRawUrl(path),
+          caption: file?.name || `Foto ${index + 1}`,
+          name: file?.name || "",
+          contentType: compressed.contentType,
+          size: compressed.size,
+          storage: "github",
+          createdAt: new Date().toISOString()
+        };
+      }
+
+      async function getInspectionPhotoDataUrl(photo) {
+        const item = normalizeInspectionPhoto(photo);
+
+        if (!item) return "";
+
+        if (item.src && String(item.src).startsWith("data:")) return item.src;
+
+        if (item.path) {
+          const file = await getGithubContent(item.path);
+          const content = String(file?.content || "").replace(/\n/g, "");
+          if (!content) return item.rawUrl || "";
+
+          return `data:${item.contentType || "image/jpeg"};base64,${content}`;
+        }
+
+        return item.src || item.rawUrl || "";
+      }
+
+      async function hydrateInspectionPhotosForDocument(photos) {
+        const normalized = normalizeInspectionPhotos(photos);
+
+        const hydrated = [];
+
+        for (const photo of normalized) {
+          try {
+            const src = await getInspectionPhotoDataUrl(photo);
+            hydrated.push({ ...photo, src });
+          } catch (error) {
+            console.error("Erro ao carregar foto da vistoria:", photo.path || photo.caption, error);
+            hydrated.push(photo);
+          }
+        }
+
+        return hydrated.filter(photo => photo.src || photo.rawUrl || photo.path);
+      }
+
+      async function deleteInspectionPhotosFromGithub(apartment) {
+        if (!apartment || !hasGithubWriteConfig()) return;
+
+        const paths = new Set();
+
+        normalizeInspectionPhotos(apartment.inspectionPhotos || []).forEach(photo => {
+          if (photo.path) paths.add(photo.path);
+        });
+
+        try {
+          const folderItems = await listGithubDirectory(inspectionPhotoFolderForApartment(apartment));
+          folderItems
+            .filter(item => item && item.type === "file" && item.path)
+            .forEach(item => paths.add(item.path));
+        } catch (error) {
+          console.warn("Não foi possível listar a pasta de fotos da vistoria:", error);
+        }
+
+        let index = 0;
+
+        for (const path of paths) {
+          try {
+            if (index > 0) await sleep(INSPECTION_PHOTO_UPLOAD_DELAY_MS);
+            await deleteGithubContent(path, `Remove fotos de vistoria de ${apartment.number || "imóvel"}`);
+            index += 1;
+          } catch (error) {
+            console.warn("Não foi possível remover foto de vistoria:", path, error);
+          }
+        }
       }
 
       function utf8ToBase64(text) {
@@ -3941,9 +4218,8 @@
         if (preview) preview.innerHTML = "Foto";
       }
 
-      function renderInspectionPhotosPreview() {
+            function renderInspectionPhotosPreview() {
         const el = $("#inspectionPhotosPreview");
-
         if (!el) return;
 
         if (!tempInspectionPhotos.length) {
@@ -3951,18 +4227,28 @@
           return;
         }
 
-        el.innerHTML = tempInspectionPhotos.map((photo, index) => `
-          <div class="inspection-photo-thumb">
-            <img src="${photo.src}" alt="Foto de vistoria ${index + 1}">
-            <span class="photo-count">${index + 1}</span>
-            <button type="button" title="Remover foto" data-remove-inspection-photo="${index}">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </div>
-        `).join("");
+        el.innerHTML = tempInspectionPhotos.map((photo, index) => {
+          const src = photo.src || photo.rawUrl || "";
+          const caption = photo.caption || photo.name || `Foto ${index + 1}`;
+          const storageText = photo.path ? "GitHub" : "Local";
+
+          return `
+            <div class="inspection-photo-thumb">
+              ${src
+                ? `<img src="${src}" alt="Foto de vistoria ${index + 1}">`
+                : `<div class="inspection-photo-placeholder"><i class="fa-brands fa-github"></i><br>Foto salva no GitHub</div>`
+              }
+              <span class="photo-count">${index + 1}</span>
+              <button type="button" title="Remover foto" data-remove-inspection-photo="${index}">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+              <span class="inspection-photo-path">${escapeHtml(storageText)} • ${escapeHtml(caption)}</span>
+            </div>
+          `;
+        }).join("");
       }
 
-      function appendInspectionPhotosFromFiles(files) {
+            async function appendInspectionPhotosFromFiles(files) {
         const list = Array.from(files || []).filter(file => file && file.type && file.type.startsWith("image/"));
 
         if (!list.length) {
@@ -3970,25 +4256,38 @@
           return;
         }
 
-        let loaded = 0;
+        if (!hasGithubWriteConfig()) {
+          toast("Configure o GitHub e o token com permissão Contents Read and Write antes de anexar fotos.");
+          return;
+        }
 
-        list.forEach(file => {
-          readImage(file, base64 => {
-            tempInspectionPhotos.push({
-              id: uid("inspection_photo"),
-              src: base64,
-              caption: file.name || "",
-              createdAt: new Date().toISOString()
-            });
+        const apartmentNumber = ($("#apartmentNumber")?.value || "").trim();
 
-            loaded += 1;
+        if (!apartmentNumber) {
+          toast("Informe primeiro o ID/Número do Apto para criar a pasta correta no GitHub.");
+          return;
+        }
 
-            if (loaded === list.length) {
-              renderInspectionPhotosPreview();
-              toast(`${list.length} foto(s) adicionada(s) à vistoria.`);
-            }
-          });
-        });
+        try {
+          updateSyncStatus("warn", "Enviando fotos para o GitHub...");
+
+          for (let index = 0; index < list.length; index++) {
+            const file = list[index];
+
+            if (index > 0) await sleep(INSPECTION_PHOTO_UPLOAD_DELAY_MS);
+
+            const uploadedPhoto = await uploadInspectionPhotoToGithub(file, apartmentNumber, tempInspectionPhotos.length + index);
+            tempInspectionPhotos.push(uploadedPhoto);
+            renderInspectionPhotosPreview();
+          }
+
+          updateSyncStatus("ok", "Fotos salvas no GitHub");
+          toast(`${list.length} foto(s) enviada(s) para o GitHub fora do JSON. Clique em Salvar apartamento/morador para gravar os caminhos.`);
+        } catch (error) {
+          console.error(error);
+          updateSyncStatus("error", "Erro ao enviar fotos");
+          toast("Erro ao enviar fotos ao GitHub. Verifique token, permissão Contents e conexão.");
+        }
       }
 
       function renderLogoPreview() {
@@ -4200,6 +4499,7 @@
               ];
             }
 
+            await deleteInspectionPhotosFromGithub(existing);
             nextApartment.inspectionPhotos = [];
             tempInspectionPhotos = [];
           }
@@ -4280,12 +4580,14 @@
           return;
         }
 
-        if (!confirm(`Liberar ${apartment.number}? O morador atual será enviado para o histórico, as fotos internas de vistoria serão excluídas e o apartamento ficará livre para novo cadastro.`)) return;
+        if (!confirm(`Liberar ${apartment.number}? O morador atual será enviado para o histórico, a pasta de fotos internas da vistoria será excluída do GitHub e o apartamento ficará livre para novo cadastro.`)) return;
 
         apartment.contractHistory = [
           ...(apartment.contractHistory || []),
           currentContractSnapshot(apartment, "Apartamento liberado para novo contrato")
         ];
+
+        await deleteInspectionPhotosFromGithub(apartment);
 
         apartment.status = "free";
         apartment.tenant = clone(EMPTY_TENANT);
@@ -4293,7 +4595,7 @@
         apartment.contractEnd = "";
         apartment.inspectionPhotos = [];
 
-        await save("Apartamento liberado. Morador anterior enviado para o histórico e fotos de vistoria excluídas.");
+        await save("Apartamento liberado. Morador anterior enviado para o histórico e fotos de vistoria excluídas do GitHub.");
       }
 
       async function deleteContractHistory(id) {
@@ -4333,6 +4635,9 @@
         }
 
         if (!confirm(message)) return;
+
+        const apartment = getApartment(id);
+        if (apartment) await deleteInspectionPhotosFromGithub(apartment);
 
         state.apartments = state.apartments.filter(apartment => apartment.id !== id);
         state.entries = state.entries.filter(entry => entry.apartmentId !== id);
@@ -5859,14 +6164,14 @@
           : "__________ kWh";
       }
 
-      function buildInspectionContractHtml(apartment) {
+      async function buildInspectionContractHtml(apartment) {
         const tenant = normalizeTenant(apartment.tenant);
         const appName = state.settings.appName || "G.A - Gestão de Aluguel";
         const logo = state.settings.logo
           ? `<img src="${state.settings.logo}" alt="${escapeHtml(appName)}">`
           : `<div class="report-logo-fallback">G.A</div>`;
 
-        const photos = normalizeInspectionPhotos(apartment.inspectionPhotos || []);
+        const photos = await hydrateInspectionPhotosForDocument(apartment.inspectionPhotos || []);
         const inspectionDate = formatDateLong(isoDate(new Date()));
         const startDate = apartment.contractStart || isoDate(new Date());
         const endDate = apartment.contractEnd || addMonths(startDate, 6);
@@ -5892,7 +6197,7 @@
             <div class="photo-grid">
               ${page.map((photo, index) => `
                 <figure>
-                  <img src="${photo.src}" alt="Foto de vistoria ${pageIndex * 4 + index + 1}">
+                  ${photo.src ? `<img src="${photo.src}" alt="Foto de vistoria ${pageIndex * 4 + index + 1}">` : `<div class="photo-missing">Foto salva no GitHub não pôde ser carregada</div>`}
                   <figcaption>Foto ${pageIndex * 4 + index + 1}${photo.caption ? ` - ${escapeHtml(photo.caption)}` : ""}</figcaption>
                 </figure>
               `).join("")}
@@ -6027,6 +6332,20 @@
       height: 95mm;
       object-fit: cover;
       border: 1px solid #ddd;
+    }
+
+    .photo-missing {
+      width: 100%;
+      height: 95mm;
+      display: grid;
+      place-items: center;
+      border: 1px solid #ddd;
+      background: #f5f5f5;
+      color: #555;
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11pt;
+      padding: 8mm;
     }
 
     figcaption {
@@ -6206,8 +6525,6 @@
       }
 
       async function downloadInspectionContract(id) {
-        if (!requireWrite("Seu usuário possui permissão somente leitura. Não é possível apagar fotos de vistoria.")) return;
-
         const apartment = getApartment(id);
 
         if (!apartment) {
@@ -6227,25 +6544,25 @@
           return;
         }
 
-        const confirmed = confirm("Ao baixar o Termo de Vistoria, as fotos internas de vistoria serão apagadas do cadastro deste imóvel para reduzir o tamanho do JSON. Confirma que deseja gerar o termo e apagar as fotos?");
-
-        if (!confirmed) return;
-
-        const contractHtml = buildInspectionContractHtml(apartment);
-        const fileName = `termo_vistoria_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.html`;
-
-        downloadHtmlFile(fileName, contractHtml);
-
-        apartment.inspectionPhotos = [];
-
-        if ($("#apartmentEditId")?.value === id) {
-          tempInspectionPhotos = [];
-          if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
-          renderInspectionPhotosPreview();
+        if (!hasGithubBaseConfig()) {
+          toast("Configure o GitHub para carregar as fotos do termo de vistoria.");
+          return;
         }
 
-        await save("Termo de vistoria gerado e fotos internas apagadas do cadastro.");
-        toast("Termo de vistoria baixado. As fotos internas foram apagadas do cadastro deste imóvel.");
+        try {
+          updateSyncStatus("warn", "Carregando fotos do termo...");
+          const contractHtml = await buildInspectionContractHtml(apartment);
+          const fileName = `termo_vistoria_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.html`;
+
+          downloadHtmlFile(fileName, contractHtml);
+
+          updateSyncStatus("ok", "Termo de vistoria gerado");
+          toast("Termo de vistoria gerado com as fotos salvas no GitHub. As fotos continuam salvas até o imóvel ser liberado.");
+        } catch (error) {
+          console.error(error);
+          updateSyncStatus("error", "Erro no termo de vistoria");
+          toast("Erro ao carregar fotos do GitHub para o termo. Verifique token, permissão e conexão.");
+        }
       }
 
       function downloadContract(id) {
@@ -6383,29 +6700,41 @@
         }
 
         if ($("#inspectionPhotos")) {
-          $("#inspectionPhotos").addEventListener("change", event => {
-            appendInspectionPhotosFromFiles(event.target.files);
+          $("#inspectionPhotos").addEventListener("change", async event => {
+            await appendInspectionPhotosFromFiles(event.target.files);
             event.target.value = "";
           });
         }
 
         if ($("#clearInspectionPhotosBtn")) {
-          $("#clearInspectionPhotosBtn").addEventListener("click", () => {
+          $("#clearInspectionPhotosBtn").addEventListener("click", async () => {
             if (!tempInspectionPhotos.length) {
               toast("Nenhuma foto de vistoria para limpar.");
               return;
             }
 
-            if (!confirm("Remover todas as fotos de vistoria deste cadastro?")) return;
+            if (!confirm("Remover todas as fotos de vistoria deste cadastro e da pasta no GitHub?")) return;
+
+            const paths = tempInspectionPhotos.map(photo => photo.path).filter(Boolean);
+
+            for (let index = 0; index < paths.length; index++) {
+              try {
+                if (index > 0) await sleep(INSPECTION_PHOTO_UPLOAD_DELAY_MS);
+                await deleteGithubContent(paths[index], `Remove foto de vistoria - ${paths[index]}`);
+              } catch (error) {
+                console.warn("Não foi possível remover foto no GitHub:", paths[index], error);
+              }
+            }
 
             tempInspectionPhotos = [];
             if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
             renderInspectionPhotosPreview();
+            toast("Fotos de vistoria removidas. Clique em Salvar apartamento/morador para atualizar o JSON.");
           });
         }
 
         if ($("#inspectionPhotosPreview")) {
-          $("#inspectionPhotosPreview").addEventListener("click", event => {
+          $("#inspectionPhotosPreview").addEventListener("click", async event => {
             const button = event.target.closest("[data-remove-inspection-photo]");
             if (!button) return;
 
@@ -6413,8 +6742,23 @@
 
             if (!Number.isInteger(index) || index < 0 || index >= tempInspectionPhotos.length) return;
 
+            const removed = tempInspectionPhotos[index];
+
+            if (removed?.path && hasGithubWriteConfig()) {
+              if (!confirm("Remover esta foto também da pasta de vistoria no GitHub?")) return;
+
+              try {
+                await deleteGithubContent(removed.path, `Remove foto de vistoria - ${removed.path}`);
+              } catch (error) {
+                console.error(error);
+                toast("Não foi possível remover a foto do GitHub. Verifique token e permissão.");
+                return;
+              }
+            }
+
             tempInspectionPhotos.splice(index, 1);
             renderInspectionPhotosPreview();
+            toast("Foto removida da vistoria. Clique em Salvar apartamento/morador para atualizar o JSON.");
           });
         }
 
