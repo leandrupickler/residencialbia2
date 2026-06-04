@@ -1036,19 +1036,6 @@
                 <textarea id="apartmentDescription" placeholder="Ex.: quarto, cozinha, banheiro, garagem, observações..."></textarea>
               </div>
 
-              <div class="file-row">
-                <div class="preview-box" id="apartmentPhotoPreview">Foto</div>
-
-                <div class="field" style="flex:1; min-width:260px;">
-                  <label for="apartmentPhoto">Foto do imóvel</label>
-                  <input id="apartmentPhoto" type="file" accept="image/*">
-                  <span class="mini muted">A imagem será convertida em Base64 e salva no GitHub.</span>
-                </div>
-
-                <button class="btn btn-light" type="button" id="removeApartmentPhotoBtn">
-                  <i class="fa-solid fa-ban"></i> Remover foto
-                </button>
-              </div>
             </div>
 
             <div class="card" style="box-shadow:none; background:#f8fafd; margin: 2px 0 8px;">
@@ -1736,7 +1723,7 @@
           id: apt.id || uid("apartment"),
           number: apt.number || "",
           description: apt.description || "",
-          photo: apt.photo || "",
+          photo: "",
           inspectionPhotos: normalizeInspectionPhotos(apt.inspectionPhotos || apt.vistoriaPhotos || apt.inspectionImages || apt.fotosVistoria || []),
           baseRent: toNumber(apt.baseRent),
           maintenanceFee: toNumber(apt.maintenanceFee ?? apt.maintenanceTax ?? apt.taxaManutencao ?? apt.taxaDeManutencao ?? 600),
@@ -3053,9 +3040,7 @@
 
         el.innerHTML = sorted.map(apartment => {
           const isFree = apartment.status === "free" || !apartment.tenant?.name;
-          const photo = apartment.photo
-            ? `<img src="${apartment.photo}" alt="Foto do imóvel">`
-            : `<span>${escapeHtml(String(apartment.number || "AP").slice(0, 3).toUpperCase())}</span>`;
+          const photo = `<span><i class="fa-solid fa-building"></i></span>`;
 
           return `
             <div class="item">
@@ -3952,7 +3937,8 @@
       }
 
       function renderApartmentPhotoPreview() {
-        $("#apartmentPhotoPreview").innerHTML = tempApartmentPhoto ? `<img src="${tempApartmentPhoto}" alt="Prévia da foto">` : "Foto";
+        const preview = $("#apartmentPhotoPreview");
+        if (preview) preview.innerHTML = "Foto";
       }
 
       function renderInspectionPhotosPreview() {
@@ -4017,7 +4003,6 @@
         $("#contractStart").value = "";
         $("#contractEnd").value = "";
         $("#apartmentDescription").value = "";
-        $("#apartmentPhoto").value = "";
         $("#tenantName").value = "";
         $("#tenantCpf").value = "";
         $("#tenantPhone").value = "";
@@ -4027,7 +4012,6 @@
         tempApartmentPhoto = "";
         tempInspectionPhotos = [];
         if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
-        renderApartmentPhotoPreview();
         renderInspectionPhotosPreview();
       }
 
@@ -4177,7 +4161,7 @@
           id: id || uid("apartment"),
           number,
           description: $("#apartmentDescription").value.trim(),
-          photo: tempApartmentPhoto,
+          photo: "",
           inspectionPhotos: normalizeInspectionPhotos(tempInspectionPhotos),
           baseRent: toNumber($("#baseRent").value),
           maintenanceFee,
@@ -4249,10 +4233,9 @@
         $("#emergencyName").value = apartment.tenant?.emergencyName || "";
         $("#emergencyPhone").value = apartment.tenant?.emergencyPhone || "";
 
-        tempApartmentPhoto = apartment.photo || "";
+        tempApartmentPhoto = "";
         tempInspectionPhotos = normalizeInspectionPhotos(apartment.inspectionPhotos || []);
         if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
-        renderApartmentPhotoPreview();
         renderInspectionPhotosPreview();
 
         showTab("apartments");
@@ -4277,10 +4260,9 @@
         $("#emergencyName").value = "";
         $("#emergencyPhone").value = "";
 
-        tempApartmentPhoto = apartment.photo || "";
+        tempApartmentPhoto = "";
         tempInspectionPhotos = [];
         if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
-        renderApartmentPhotoPreview();
         renderInspectionPhotosPreview();
 
         showTab("apartments");
@@ -6061,8 +6043,12 @@
       padding-top: 18mm;
     }
 
-    .signature-gap {
-      height: 44mm;
+    .signature-gap-date-locador {
+      height: 68mm;
+    }
+
+    .signature-gap-locador-locatario-vistoria {
+      height: 68mm;
     }
 
     .line {
@@ -6199,14 +6185,14 @@
 
     <p class="center">Palhoça, ${inspectionDate}.</p>
 
-    <div class="signature-gap"></div>
+    <div class="signature-gap-date-locador"></div>
 
     <div class="line">
       LEANDRO PICKLER - LOCADOR<br>
       CPF n. 050.158.229-01
     </div>
 
-    <div class="signature-gap"></div>
+    <div class="signature-gap-locador-locatario-vistoria"></div>
 
     <div class="line">
       ${escapeHtml(tenantName)} - LOCATÁRIO(A)<br>
@@ -6219,7 +6205,9 @@
 </html>`;
       }
 
-      function downloadInspectionContract(id) {
+      async function downloadInspectionContract(id) {
+        if (!requireWrite("Seu usuário possui permissão somente leitura. Não é possível apagar fotos de vistoria.")) return;
+
         const apartment = getApartment(id);
 
         if (!apartment) {
@@ -6239,12 +6227,25 @@
           return;
         }
 
+        const confirmed = confirm("Ao baixar o Termo de Vistoria, as fotos internas de vistoria serão apagadas do cadastro deste imóvel para reduzir o tamanho do JSON. Confirma que deseja gerar o termo e apagar as fotos?");
+
+        if (!confirmed) return;
+
         const contractHtml = buildInspectionContractHtml(apartment);
         const fileName = `termo_vistoria_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.html`;
 
         downloadHtmlFile(fileName, contractHtml);
 
-        toast("Termo de vistoria gerado. Abra o HTML baixado e use imprimir/salvar em PDF.");
+        apartment.inspectionPhotos = [];
+
+        if ($("#apartmentEditId")?.value === id) {
+          tempInspectionPhotos = [];
+          if ($("#inspectionPhotos")) $("#inspectionPhotos").value = "";
+          renderInspectionPhotosPreview();
+        }
+
+        await save("Termo de vistoria gerado e fotos internas apagadas do cadastro.");
+        toast("Termo de vistoria baixado. As fotos internas foram apagadas do cadastro deste imóvel.");
       }
 
       function downloadContract(id) {
@@ -6367,18 +6368,19 @@
           $("#contractEnd").value = start ? addMonths(start, 6) : "";
         });
 
-        $("#apartmentPhoto").addEventListener("change", event => {
-          readImage(event.target.files[0], base64 => {
-            tempApartmentPhoto = base64;
-            renderApartmentPhotoPreview();
+        if ($("#apartmentPhoto")) {
+          $("#apartmentPhoto").addEventListener("change", event => {
+            tempApartmentPhoto = "";
+            if (event.target) event.target.value = "";
           });
-        });
+        }
 
-        $("#removeApartmentPhotoBtn").addEventListener("click", () => {
-          tempApartmentPhoto = "";
-          $("#apartmentPhoto").value = "";
-          renderApartmentPhotoPreview();
-        });
+        if ($("#removeApartmentPhotoBtn")) {
+          $("#removeApartmentPhotoBtn").addEventListener("click", () => {
+            tempApartmentPhoto = "";
+            if ($("#apartmentPhoto")) $("#apartmentPhoto").value = "";
+          });
+        }
 
         if ($("#inspectionPhotos")) {
           $("#inspectionPhotos").addEventListener("change", event => {
@@ -6557,7 +6559,6 @@
 
         clearExpenseForm();
         clearEntryForm();
-        renderApartmentPhotoPreview();
         renderBrand();
         setLoggedOutView();
         updateSyncStatus();
