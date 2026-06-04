@@ -1016,7 +1016,7 @@
       "type": "Manutenção Extra",
       "apartmentId": "",
       "amount": 19,
-      "description": "Compra de Leno 4 metros e compra de 1 lixa"
+      "description": "Compra de Lena 4 metros e compra de 1 lixa"
     },
     {
       "id": "expense_afad64d3-4d26-4fac-ac88-f4caf3cf9714",
@@ -3358,7 +3358,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-04T20:41:26.792Z",
+    "updatedAt": "2026-06-04T20:49:52.678Z",
     "updatedBy": "residencial"
   }
 }
