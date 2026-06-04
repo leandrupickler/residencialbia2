@@ -875,6 +875,14 @@
       "apartmentId": "",
       "amount": 100,
       "description": "Compra da pia cozinha APTO 03"
+    },
+    {
+      "id": "expense_289d8c0b-d60e-4b47-a633-52ce0e491a86",
+      "month": "2026-06",
+      "type": "Faxina",
+      "apartmentId": "",
+      "amount": 150,
+      "description": "Limpeza apto 03"
     }
   ],
   "entries": [
@@ -3184,7 +3192,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-03T01:12:58.282Z",
+    "updatedAt": "2026-06-04T18:49:58.661Z",
     "updatedBy": "residencial"
   }
 }
