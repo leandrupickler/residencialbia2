@@ -883,6 +883,14 @@
       "apartmentId": "",
       "amount": 150,
       "description": "Limpeza apto 03"
+    },
+    {
+      "id": "expense_5fd91a3a-9b2d-44c5-84d2-e8677011353f",
+      "month": "2026-06",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 449,
+      "description": "Balção Pia apto 03 completa"
     }
   ],
   "entries": [
@@ -3192,7 +3200,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-04T18:49:58.661Z",
+    "updatedAt": "2026-06-04T18:50:41.645Z",
     "updatedBy": "residencial"
   }
 }
