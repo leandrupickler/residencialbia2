@@ -866,7 +866,7 @@
         <div class="section-title">
           <div>
             <h2>Detalhamento das despesas</h2>
-            <p>Separação automática por Água, Despesas Extras, Faxina, Internet, IPTU, Pintura e Seguro do Imóvel no período selecionado.</p>
+            <p>Separação automática por Água, Despesas Extras, Faxina, Internet, IPTU, Pintura, Seguro do Imóvel e total de Despesas administrativas no período selecionado.</p>
           </div>
         </div>
 
@@ -911,7 +911,18 @@
             </div>
             <div>
               <div class="stat-value" id="maintenanceExpenseValue">R$ 0,00</div>
-              <p class="stat-note">Manutenção, faxina, pintura e despesas extras.</p>
+              <p class="stat-note">Manutenção e demais despesas extras.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Despesa com Faxina</span>
+              <span class="icon green"><i class="fa-solid fa-broom"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="cleaningExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como Faxina.</p>
             </div>
           </article>
 
@@ -939,25 +950,23 @@
 
           <article class="card stat-card">
             <div class="stat-head">
+              <span>Despesa com Pintura</span>
+              <span class="icon yellow"><i class="fa-solid fa-paint-roller"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="paintingExpenseValue">R$ 0,00</div>
+              <p class="stat-note">Total lançado como Pintura.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
               <span>Seguro do Imóvel</span>
               <span class="icon"><i class="fa-solid fa-shield-halved"></i></span>
             </div>
             <div>
               <div class="stat-value" id="insuranceExpenseValue">R$ 0,00</div>
               <p class="stat-note">Total lançado como Seguro.</p>
-            </div>
-          </article>
-        </div>
-
-        <div class="grid grid-4" style="margin-top:18px;">
-          <article class="card stat-card">
-            <div class="stat-head">
-              <span>Aluguel recebido</span>
-              <span class="icon yellow"><i class="fa-solid fa-key"></i></span>
-            </div>
-            <div>
-              <div class="stat-value" id="rentValue">R$ 0,00</div>
-              <p class="stat-note">Somente valor de aluguel.</p>
             </div>
           </article>
 
@@ -968,18 +977,27 @@
             </div>
             <div>
               <div class="stat-value" id="expenseValue">R$ 0,00</div>
-              <p class="stat-note">Água + Faxina + Internet + IPTU + Manutenção + Pintura + Seguro.</p>
+              <p class="stat-note">Total de despesas do proprietário no filtro selecionado.</p>
             </div>
           </article>
+        </div>
 
+        <div class="section-title">
+          <div>
+            <h2>Informações financeiras</h2>
+            <p>Receitas e totais financeiros separados das despesas para facilitar a leitura do dashboard.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
           <article class="card stat-card">
             <div class="stat-head">
-              <span>Faturamento bruto</span>
-              <span class="icon"><i class="fa-solid fa-sack-dollar"></i></span>
+              <span>Aluguel recebido</span>
+              <span class="icon yellow"><i class="fa-solid fa-key"></i></span>
             </div>
             <div>
-              <div class="stat-value" id="grossValue">R$ 0,00</div>
-              <p class="stat-note">Aluguel + Luz + COSIP + Taxa de lixo pagos no período. Taxa de manutenção não entra no lucro.</p>
+              <div class="stat-value" id="rentValue">R$ 0,00</div>
+              <p class="stat-note">Somente valor de aluguel pago no período do painel financeiro.</p>
             </div>
           </article>
 
@@ -990,7 +1008,18 @@
             </div>
             <div>
               <div class="stat-value" id="energyValue">R$ 0,00</div>
-              <p class="stat-note">kWh + COSIP.</p>
+              <p class="stat-note">kWh + COSIP pagos no período do painel financeiro.</p>
+            </div>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-head">
+              <span>Faturamento bruto</span>
+              <span class="icon"><i class="fa-solid fa-sack-dollar"></i></span>
+            </div>
+            <div>
+              <div class="stat-value" id="grossValue">R$ 0,00</div>
+              <p class="stat-note">Aluguel + Luz/COSIP + Taxa de lixo pagos. Taxa de manutenção não entra no lucro.</p>
             </div>
           </article>
         </div>
@@ -2949,7 +2978,9 @@
         const waterExpenses = sumExpenseByType("Água", "Agua");
         const internetExpenses = sumExpenseByType("Internet");
         const iptuExpenses = sumExpenseByType("IPTU");
-        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra", "Faxina", "Pintura");
+        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra");
+        const cleaningExpenses = sumExpenseByType("Faxina");
+        const paintingExpenses = sumExpenseByType("Pintura");
         const insuranceExpenses = sumExpenseByType("Seguro do Imóvel", "Seguro do Imovel", "Seguro Imóvel", "Seguro Imovel", "Seguro");
         const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
 
@@ -2959,6 +2990,8 @@
           internetExpenses,
           iptuExpenses,
           maintenanceExpenses,
+          cleaningExpenses,
+          paintingExpenses,
           insuranceExpenses
         };
       }
@@ -2991,7 +3024,9 @@
         const waterExpenses = sumExpenseByType("Água", "Agua");
         const internetExpenses = sumExpenseByType("Internet");
         const iptuExpenses = sumExpenseByType("IPTU");
-        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra", "Faxina", "Pintura");
+        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra");
+        const cleaningExpenses = sumExpenseByType("Faxina");
+        const paintingExpenses = sumExpenseByType("Pintura");
         const insuranceExpenses = sumExpenseByType("Seguro do Imóvel", "Seguro do Imovel", "Seguro Imóvel", "Seguro Imovel", "Seguro");
 
         const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
@@ -3007,6 +3042,8 @@
           internetExpenses,
           iptuExpenses,
           maintenanceExpenses,
+          cleaningExpenses,
+          paintingExpenses,
           insuranceExpenses
         };
       }
@@ -3164,6 +3201,8 @@
         $("#internetExpenseValue").textContent = money(expenseDetail.internetExpenses);
         $("#iptuExpenseValue").textContent = money(expenseDetail.iptuExpenses);
         $("#maintenanceExpenseValue").textContent = money(expenseDetail.maintenanceExpenses);
+        $("#cleaningExpenseValue").textContent = money(expenseDetail.cleaningExpenses);
+        $("#paintingExpenseValue").textContent = money(expenseDetail.paintingExpenses);
         $("#insuranceExpenseValue").textContent = money(expenseDetail.insuranceExpenses);
 
         renderPie("#pieCashFlow", [
