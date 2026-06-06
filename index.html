@@ -3400,7 +3400,9 @@
         renderPie("#pieCurrentMonthProfit", [
           { label: "Receita limpa do mês", value: currentMonthFinancials.gross, color: "#4285F4" },
           { label: "Despesas do proprietário", value: currentMonthFinancials.expenses, color: "#EA4335" }
-        ]);
+        ], {
+          centerValue: currentMonthFinancials.net
+        });
 
         renderPie("#pieCurrentMonthExpenses", [
           { label: "Água", value: currentMonthFinancials.waterExpenses, color: "#4285F4" },
@@ -3413,7 +3415,7 @@
         ]);
 
         if ($("#currentMonthProfitReference")) {
-          $("#currentMonthProfitReference").textContent = `${money(currentMonthFinancials.gross)} - ${money(currentMonthFinancials.expenses)} = ${money(currentMonthFinancials.net)}`;
+          $("#currentMonthProfitReference").textContent = `Receita limpa ${money(currentMonthFinancials.gross)} - despesas ${money(currentMonthFinancials.expenses)} = lucro real ${money(currentMonthFinancials.net)}`;
         }
 
         const profitEl = $("#netProfitValue");
@@ -3425,10 +3427,11 @@
         renderContractAlerts();
       }
 
-      function renderPie(target, slices) {
+      function renderPie(target, slices, options = {}) {
         const el = $(target);
         const normalized = slices.map(slice => ({ ...slice, value: Math.max(0, toNumber(slice.value)) }));
         const total = normalized.reduce((sum, slice) => sum + slice.value, 0);
+        const centerValue = options.centerValue !== undefined ? toNumber(options.centerValue) : total;
 
         if (total <= 0) {
           el.innerHTML = `
@@ -3456,7 +3459,7 @@
 
         el.innerHTML = `
           <div class="pie" style="background: conic-gradient(${gradient});">
-            <div class="pie-center">${money(total)}</div>
+            <div class="pie-center">${money(centerValue)}</div>
           </div>
           <div class="legend">
             ${normalized.map(slice => {
