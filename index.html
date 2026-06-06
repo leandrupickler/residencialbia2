@@ -1746,7 +1746,7 @@
     </main>
 
     <p class="footer">
-      G.A - Gestão de Aluguel • GitHub Pages + GitHub JSON Storage • Histórico de contratos integrado
+      G.A - Gestão de Aluguel - Todos os direitos reservado.
     </p>
   </div>
 
@@ -2970,6 +2970,17 @@
         return normalizeFilterText(entry.tenantName || "") === normalizeFilterText(apartment.tenant?.name || "");
       }
 
+      function hasMaintenanceFeeAlreadyChargedForTenant(apartment, ignoreEntryId = "") {
+        if (!apartment?.id || !apartment.tenant?.name) return false;
+
+        return state.entries.some(entry =>
+          entry.id !== ignoreEntryId &&
+          entry.apartmentId === apartment.id &&
+          sameTenantForInitialContractEntry(entry, apartment) &&
+          entryMaintenanceFee(entry) > 0
+        );
+      }
+
       function findInitialContractEntry(apartment) {
         if (!apartment?.id) return null;
 
@@ -3028,6 +3039,9 @@
 
         const existing = findInitialContractEntry(apartment);
         const nextEntry = buildInitialContractEntry(apartment);
+
+        const maintenanceAlreadyCharged = hasMaintenanceFeeAlreadyChargedForTenant(apartment, existing?.id || "");
+        nextEntry.maintenanceFee = maintenanceAlreadyCharged ? 0 : toNumber(apartment.maintenanceFee);
 
         if (existing) {
           Object.assign(existing, {
