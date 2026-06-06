@@ -277,7 +277,7 @@
         }
       ],
       "baseRent": 1300,
-      "maintenanceFee": 600,
+      "maintenanceFee": 100,
       "contractStart": "2026-06-10",
       "contractEnd": "2026-12-10",
       "tenant": {
@@ -3376,7 +3376,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-06T02:06:57.474Z",
+    "updatedAt": "2026-06-06T02:09:55.532Z",
     "updatedBy": "residencial"
   }
 }
