@@ -3300,7 +3300,7 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
-      "paymentStatus": "pending"
+      "paymentStatus": "paid"
     },
     {
       "id": "entry_a1b7feb6-021b-4cc1-99d4-b0328afa8d50",
@@ -3358,7 +3358,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-05T02:16:57.807Z",
+    "updatedAt": "2026-06-06T02:05:32.437Z",
     "updatedBy": "residencial"
   }
 }
