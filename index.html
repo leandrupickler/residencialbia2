@@ -997,7 +997,7 @@
             </div>
             <div>
               <div class="stat-value" id="rentValue">R$ 0,00</div>
-              <p class="stat-note">Somente valor de aluguel pago no período do painel financeiro.</p>
+              <p class="stat-note">Aluguel + taxa de manutenção pagos no período do painel financeiro.</p>
             </div>
           </article>
 
@@ -1019,7 +1019,7 @@
             </div>
             <div>
               <div class="stat-value" id="grossValue">R$ 0,00</div>
-              <p class="stat-note">Aluguel + Luz/COSIP + Taxa de lixo pagos. Taxa de manutenção não entra no lucro.</p>
+              <p class="stat-note">Aluguel + taxa de manutenção + Luz/COSIP + Taxa de lixo pagos.</p>
             </div>
           </article>
         </div>
@@ -1064,7 +1064,7 @@
               <div class="field">
                 <label for="maintenanceFee">Taxa de manutenção</label>
                 <input id="maintenanceFee" type="number" min="0" step="0.01" placeholder="600,00">
-                <span class="mini muted">Cobrada apenas no primeiro mês do contrato. Não entra no lucro líquido.</span>
+                <span class="mini muted">Cobrada apenas no primeiro mês do contrato e soma ao aluguel recebido.</span>
               </div>
 
               <div class="field">
@@ -1862,6 +1862,8 @@
           cosip: toNumber(source.cosip),
           trashFee: toNumber(source.trashFee ?? source.garbageFee ?? source.lixoFee ?? source.taxaLixo ?? source.taxaDeLixo ?? 0),
           maintenanceFee: toNumber(source.maintenanceFee ?? source.maintenanceTax ?? source.taxaManutencao ?? source.taxaDeManutencao ?? 0),
+          entrySource: source.entrySource || source.source || "",
+          contractStart: source.contractStart || "",
           paymentStatus: normalizePaymentStatus(source.paymentStatus ?? source.payment ?? source.paid ?? source.isPaid ?? source.statusPagamento)
         };
       }
@@ -2818,12 +2820,16 @@
         return toNumber(entry?.maintenanceFee ?? entry?.maintenanceTax ?? entry?.taxaManutencao ?? 0);
       }
 
+      function entryRentIncome(entry) {
+        return toNumber(entry.rent) + entryMaintenanceFee(entry);
+      }
+
       function entryOperationalRevenue(entry) {
-        return toNumber(entry.rent) + energyTotal(entry) + toNumber(entry.trashFee);
+        return entryRentIncome(entry) + energyTotal(entry) + toNumber(entry.trashFee);
       }
 
       function entryTotal(entry) {
-        return entryOperationalRevenue(entry) + entryMaintenanceFee(entry);
+        return entryOperationalRevenue(entry);
       }
 
       function sameTenantForMaintenanceFee(entry, apartment) {
@@ -2866,6 +2872,103 @@
         const month = $("#entryMonth")?.value || "";
 
         return suggestedMaintenanceFeeForEntry(apartment, month, id);
+      }
+
+      function sameTenantForInitialContractEntry(entry, apartment) {
+        if (!entry || !apartment) return false;
+
+        const entryCpf = normalizeFilterText(entry.tenantCpf || "");
+        const tenantCpf = normalizeFilterText(apartment.tenant?.cpf || "");
+
+        if (entryCpf && tenantCpf) return entryCpf === tenantCpf;
+
+        return normalizeFilterText(entry.tenantName || "") === normalizeFilterText(apartment.tenant?.name || "");
+      }
+
+      function findInitialContractEntry(apartment) {
+        if (!apartment?.id) return null;
+
+        const startMonth = String(apartment.contractStart || "").slice(0, 7);
+
+        if (!startMonth) return null;
+
+        return state.entries.find(entry =>
+          entry.apartmentId === apartment.id &&
+          entry.month === startMonth &&
+          sameTenantForInitialContractEntry(entry, apartment) &&
+          (
+            entry.entrySource === "contractInitial" ||
+            entry.contractStart === apartment.contractStart ||
+            entryMaintenanceFee(entry) > 0
+          )
+        ) || null;
+      }
+
+      function buildInitialContractEntry(apartment) {
+        const startMonth = String(apartment.contractStart || "").slice(0, 7);
+
+        return {
+          id: uid("entry_initial_contract"),
+          apartmentId: apartment.id,
+          apartmentNumber: apartment.number,
+          tenantName: apartment.tenant?.name || "",
+          tenantCpf: apartment.tenant?.cpf || "",
+          month: startMonth,
+          rent: toNumber(apartment.baseRent),
+          energyMode: "noKwh",
+          paymentStatus: "paid",
+          trashFee: 0,
+          maintenanceFee: toNumber(apartment.maintenanceFee),
+          kwhValue: 0,
+          kwhPrevious: 0,
+          kwhCurrent: 0,
+          kwhConsumed: 0,
+          cosip: 0,
+          entrySource: "contractInitial",
+          contractStart: apartment.contractStart || ""
+        };
+      }
+
+      function upsertInitialContractEntry(apartment) {
+        if (!apartment || apartment.status === "free" || !apartment.tenant?.name) return null;
+
+        const startMonth = String(apartment.contractStart || "").slice(0, 7);
+
+        if (!startMonth) return null;
+
+        const rent = toNumber(apartment.baseRent);
+        const maintenance = toNumber(apartment.maintenanceFee);
+
+        if (rent <= 0 && maintenance <= 0) return null;
+
+        const existing = findInitialContractEntry(apartment);
+        const nextEntry = buildInitialContractEntry(apartment);
+
+        if (existing) {
+          Object.assign(existing, {
+            apartmentNumber: nextEntry.apartmentNumber,
+            tenantName: nextEntry.tenantName,
+            tenantCpf: nextEntry.tenantCpf,
+            month: nextEntry.month,
+            rent: nextEntry.rent,
+            energyMode: nextEntry.energyMode,
+            paymentStatus: normalizePaymentStatus(existing.paymentStatus || "paid"),
+            trashFee: 0,
+            maintenanceFee: nextEntry.maintenanceFee,
+            kwhValue: 0,
+            kwhPrevious: 0,
+            kwhCurrent: 0,
+            kwhConsumed: 0,
+            cosip: 0,
+            entrySource: "contractInitial",
+            contractStart: nextEntry.contractStart
+          });
+
+          return existing;
+        }
+
+        state.entries.push(nextEntry);
+        return nextEntry;
       }
 
       function availableYears() {
@@ -3018,7 +3121,7 @@
         };
 
         const gross = filteredEntries.reduce((sum, entry) => sum + entryOperationalRevenue(entry), 0);
-        const rent = filteredEntries.reduce((sum, entry) => sum + toNumber(entry.rent), 0);
+        const rent = filteredEntries.reduce((sum, entry) => sum + entryRentIncome(entry), 0);
         const energy = filteredEntries.reduce((sum, entry) => sum + energyTotal(entry), 0);
 
         const waterExpenses = sumExpenseByType("Água", "Agua");
@@ -4439,7 +4542,7 @@
           return;
         }
 
-        const maintenanceText = maintenanceFee > 0 ? ` | Taxa de manutenção: ${money(maintenanceFee)} (não entra no lucro)` : "";
+        const maintenanceText = maintenanceFee > 0 ? ` | Taxa de manutenção: ${money(maintenanceFee)} (entrada do contrato)` : "";
 
         if (isNoKwh) {
           $("#entryFormula").textContent = `Sem cálculo de kWh neste lançamento | Energia: ${money(0)} | COSIP: ${money(0)} | Taxa de lixo: ${money(trashFee)}${maintenanceText} | Aluguel: ${money(rent)} | Total a cobrar: ${money(total)}`;
@@ -4544,10 +4647,12 @@
           }
 
           state.apartments = state.apartments.map(item => item.id === id ? nextApartment : item);
-          await save("Apartamento e morador atualizados.");
+          upsertInitialContractEntry(nextApartment);
+          await save("Apartamento e morador atualizados. Entrada inicial do contrato registrada no histórico financeiro.");
         } else {
           state.apartments.push(nextApartment);
-          await save("Apartamento e morador cadastrados.");
+          upsertInitialContractEntry(nextApartment);
+          await save("Apartamento e morador cadastrados. Entrada inicial do contrato registrada no histórico financeiro.");
         }
 
         clearApartmentForm();
