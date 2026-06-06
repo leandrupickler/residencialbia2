@@ -1073,6 +1073,14 @@
       "apartmentId": "",
       "amount": 159.9,
       "description": "Chuveiro apto 01"
+    },
+    {
+      "id": "expense_5925fdce-80b0-482a-b9c8-a97de635d8da",
+      "month": "2026-06",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 100,
+      "description": ""
     }
   ],
   "entries": [
@@ -3678,7 +3686,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-06T02:50:13.555Z",
+    "updatedAt": "2026-06-06T02:50:43.868Z",
     "updatedBy": "residencial"
   }
 }
