@@ -358,6 +358,49 @@
       line-height: 1.5;
     }
 
+    .energy-month-summary {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(52, 168, 83, 0.18);
+      background: linear-gradient(135deg, rgba(52, 168, 83, 0.10), rgba(66, 133, 244, 0.08));
+    }
+
+    .energy-month-summary h4 {
+      margin: 0 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.98rem;
+    }
+
+    .energy-month-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .energy-month-item {
+      padding: 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(232, 234, 237, 0.82);
+    }
+
+    .energy-month-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .energy-month-item strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 1.02rem;
+      color: var(--text);
+    }
+
     form { display: grid; gap: 14px; }
     .form-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
     .form-row.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -703,6 +746,7 @@
       .actions, .form-actions { justify-content: flex-start; }
       .contract-alert, .total-preview { grid-template-columns: 1fr; }
       .dashboard-filter .field { min-width: 100%; }
+      .energy-month-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -869,6 +913,32 @@
             <p class="muted mini" id="currentMonthProfitLabel">Mês atual</p>
             <div id="pieCurrentMonthProfit" class="pie-layout"></div>
             <div class="reference" id="currentMonthProfitReference" style="margin-top:14px;">R$ 0,00 - R$ 0,00 = R$ 0,00</div>
+
+            <div class="energy-month-summary" id="currentMonthEnergySummary">
+              <h4><i class="fa-solid fa-bolt"></i> Energia lançada no mês atual</h4>
+              <div class="energy-month-grid">
+                <div class="energy-month-item">
+                  <span>Lançamentos com kWh</span>
+                  <strong id="currentMonthEnergyEntries">0</strong>
+                </div>
+
+                <div class="energy-month-item">
+                  <span>Consumo total</span>
+                  <strong id="currentMonthEnergyKwh">0 kWh</strong>
+                </div>
+
+                <div class="energy-month-item">
+                  <span>Valor da energia</span>
+                  <strong id="currentMonthEnergyAmount">R$ 0,00</strong>
+                </div>
+
+                <div class="energy-month-item">
+                  <span>COSIP total</span>
+                  <strong id="currentMonthCosipAmount">R$ 0,00</strong>
+                </div>
+              </div>
+              <p class="mini muted" id="currentMonthEnergyNote" style="margin:10px 0 0;">Considera os lançamentos com cálculo de kWh no mês atual.</p>
+            </div>
           </article>
 
           <article class="card chart-card">
@@ -3166,6 +3236,35 @@
         };
       }
 
+      function getCurrentMonthEnergySummary() {
+        const currentMonth = currentMonthValue();
+
+        const entries = state.entries
+          .filter(entry => String(entry.month || "") === currentMonth)
+          .filter(entry => (entry.energyMode || "withKwh") !== "noKwh");
+
+        const kwhConsumed = entries.reduce((sum, entry) => sum + toNumber(entry.kwhConsumed), 0);
+
+        const energyAmount = entries.reduce((sum, entry) => {
+          const savedEnergyAmount = toNumber(entry.energyAmount);
+
+          if (savedEnergyAmount > 0) return sum + savedEnergyAmount;
+
+          return sum + (toNumber(entry.kwhConsumed) * toNumber(entry.kwhValue));
+        }, 0);
+
+        const cosipAmount = entries.reduce((sum, entry) => sum + toNumber(entry.cosip), 0);
+
+        return {
+          month: currentMonth,
+          count: entries.length,
+          kwhConsumed,
+          energyAmount,
+          cosipAmount,
+          totalEnergyWithCosip: energyAmount + cosipAmount
+        };
+      }
+
       function getCurrentMonthFinancials() {
         const currentMonth = currentMonthValue();
         const filteredEntries = state.entries
@@ -3416,6 +3515,28 @@
 
         if ($("#currentMonthProfitReference")) {
           $("#currentMonthProfitReference").textContent = `Receita limpa ${money(currentMonthFinancials.gross)} - despesas ${money(currentMonthFinancials.expenses)} = lucro real ${money(currentMonthFinancials.net)}`;
+        }
+
+        const currentMonthEnergy = getCurrentMonthEnergySummary();
+
+        if ($("#currentMonthEnergyEntries")) {
+          $("#currentMonthEnergyEntries").textContent = `${currentMonthEnergy.count} lançamento(s)`;
+        }
+
+        if ($("#currentMonthEnergyKwh")) {
+          $("#currentMonthEnergyKwh").textContent = `${currentMonthEnergy.kwhConsumed.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} kWh`;
+        }
+
+        if ($("#currentMonthEnergyAmount")) {
+          $("#currentMonthEnergyAmount").textContent = money(currentMonthEnergy.energyAmount);
+        }
+
+        if ($("#currentMonthCosipAmount")) {
+          $("#currentMonthCosipAmount").textContent = money(currentMonthEnergy.cosipAmount);
+        }
+
+        if ($("#currentMonthEnergyNote")) {
+          $("#currentMonthEnergyNote").textContent = `Mês atual: ${monthName(currentMonthEnergy.month)} • Energia + COSIP: ${money(currentMonthEnergy.totalEnergyWithCosip)}. Valor informativo, não entra no lucro.`;
         }
 
         const profitEl = $("#netProfitValue");
