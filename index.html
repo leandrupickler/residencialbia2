@@ -843,19 +843,19 @@
 
         <div class="grid grid-3" style="margin-top:18px;">
           <article class="card chart-card">
-            <h3><i class="fa-solid fa-chart-pie"></i> Faturamento Bruto vs Despesas</h3>
+            <h3><i class="fa-solid fa-chart-pie"></i> Receita limpa vs Despesas</h3>
             <div id="pieCashFlow" class="pie-layout"></div>
           </article>
 
           <article class="card chart-card">
-            <h3><i class="fa-solid fa-chart-pie"></i> Proporção de Ganhos</h3>
+            <h3><i class="fa-solid fa-chart-pie"></i> Receitas e repasses</h3>
             <div id="pieRevenueDivision" class="pie-layout"></div>
           </article>
 
           <article class="card profit-card">
             <div>
               <h3><i class="fa-solid fa-trophy"></i> Lucro Líquido Real</h3>
-              <p class="muted mini">Despesas do proprietário não são cobradas do inquilino.</p>
+              <p class="muted mini">Lucro considera somente aluguel + taxa de manutenção, descontando as despesas do proprietário.</p>
               <div class="profit-value" id="netProfitValue">R$ 0,00</div>
             </div>
 
@@ -1000,7 +1000,7 @@
         <div class="section-title">
           <div>
             <h2>Informações financeiras</h2>
-            <p>Receitas e totais financeiros separados das despesas para facilitar a leitura do dashboard.</p>
+            <p>Receitas limpas, repasses e totais financeiros separados das despesas para facilitar a leitura do dashboard.</p>
           </div>
         </div>
 
@@ -1034,7 +1034,7 @@
             </div>
             <div>
               <div class="stat-value" id="grossValue">R$ 0,00</div>
-              <p class="stat-note">Aluguel + taxa de manutenção + Luz/COSIP + Taxa de lixo pagos.</p>
+              <p class="stat-note">Aluguel + taxa de manutenção pagos. Luz/COSIP e taxa de lixo ficam como repasse.</p>
             </div>
           </article>
         </div>
@@ -3135,7 +3135,7 @@
           }, 0);
         };
 
-        const gross = filteredEntries.reduce((sum, entry) => sum + entryOperationalRevenue(entry), 0);
+        const gross = filteredEntries.reduce((sum, entry) => sum + entryRentIncome(entry), 0);
         const rent = filteredEntries.reduce((sum, entry) => sum + entryRentIncome(entry), 0);
         const energy = filteredEntries.reduce((sum, entry) => sum + energyTotal(entry), 0);
 
@@ -3188,7 +3188,7 @@
           }, 0);
         };
 
-        const gross = filteredEntries.reduce((sum, entry) => sum + entryOperationalRevenue(entry), 0);
+        const gross = filteredEntries.reduce((sum, entry) => sum + entryRentIncome(entry), 0);
         const rent = filteredEntries.reduce((sum, entry) => sum + entryRentIncome(entry), 0);
         const energy = filteredEntries.reduce((sum, entry) => sum + energyTotal(entry), 0);
 
@@ -3378,13 +3378,13 @@
         $("#insuranceExpenseValue").textContent = money(expenseDetail.insuranceExpenses);
 
         renderPie("#pieCashFlow", [
-          { label: "Faturamento Bruto", value: f.gross, color: "#4285F4" },
+          { label: "Receita limpa", value: f.gross, color: "#4285F4" },
           { label: "Despesas Administrativas", value: f.expenses, color: "#EA4335" }
         ]);
 
         renderPie("#pieRevenueDivision", [
-          { label: "Aluguel Total", value: f.rent, color: "#FBBC05" },
-          { label: "Luz/COSIP Total", value: f.energy, color: "#34A853" }
+          { label: "Aluguel + Taxa", value: f.rent, color: "#FBBC05" },
+          { label: "Luz/COSIP (repasse)", value: f.energy, color: "#34A853" }
         ]);
 
         const currentMonthFinancials = getCurrentMonthFinancials();
@@ -3398,7 +3398,7 @@
         }
 
         renderPie("#pieCurrentMonthProfit", [
-          { label: "Faturamento do mês", value: currentMonthFinancials.gross, color: "#4285F4" },
+          { label: "Receita limpa do mês", value: currentMonthFinancials.gross, color: "#4285F4" },
           { label: "Despesas do proprietário", value: currentMonthFinancials.expenses, color: "#EA4335" }
         ]);
 
