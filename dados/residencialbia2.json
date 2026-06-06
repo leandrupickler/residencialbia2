@@ -1431,7 +1431,7 @@
       "kwhConsumed": 129.5,
       "cosip": 24.37,
       "trashFee": 0,
-      "maintenanceFee": 600,
+      "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid"
@@ -2291,7 +2291,7 @@
       "kwhConsumed": 158.68000000000006,
       "cosip": 27.2325,
       "trashFee": 0,
-      "maintenanceFee": 600,
+      "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid"
@@ -2791,7 +2791,7 @@
       "kwhConsumed": 95.20000000000005,
       "cosip": 24.37,
       "trashFee": 0,
-      "maintenanceFee": 600,
+      "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid"
@@ -3271,7 +3271,7 @@
       "kwhConsumed": 0,
       "cosip": 0,
       "trashFee": 0,
-      "maintenanceFee": 600,
+      "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid"
