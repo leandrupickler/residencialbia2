@@ -1049,6 +1049,14 @@
       "apartmentId": "",
       "amount": 449,
       "description": "Balção Pia apto 03 completa"
+    },
+    {
+      "id": "expense_c72dad2b-11af-431f-98f6-f7a3ce5e821e",
+      "month": "2026-06",
+      "type": "Internet",
+      "apartmentId": "",
+      "amount": 129,
+      "description": ""
     }
   ],
   "entries": [
@@ -1068,6 +1076,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1086,6 +1096,8 @@
       "cosip": 7.582222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1104,6 +1116,8 @@
       "cosip": 19.222222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1122,6 +1136,8 @@
       "cosip": 16.888889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1140,6 +1156,8 @@
       "cosip": 14.714444,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1158,6 +1176,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1176,6 +1196,8 @@
       "cosip": 21.668889,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1194,6 +1216,8 @@
       "cosip": 19.111111,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1212,6 +1236,8 @@
       "cosip": 21.666667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1230,6 +1256,8 @@
       "cosip": 27.2325,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1248,6 +1276,8 @@
       "cosip": 24.37,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1266,6 +1296,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1284,6 +1316,8 @@
       "cosip": 7.582222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1302,6 +1336,8 @@
       "cosip": 19.222222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1320,6 +1356,8 @@
       "cosip": 16.888889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1338,6 +1376,8 @@
       "cosip": 14.714444,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1356,6 +1396,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1374,6 +1416,8 @@
       "cosip": 24.37,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1392,6 +1436,8 @@
       "cosip": 19.55125,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1410,6 +1456,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1428,6 +1476,8 @@
       "cosip": 7.582222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1446,6 +1496,8 @@
       "cosip": 19.222222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1464,6 +1516,8 @@
       "cosip": 16.888889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1482,6 +1536,8 @@
       "cosip": 14.714444,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1500,6 +1556,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1518,6 +1576,8 @@
       "cosip": 21.668889,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1536,6 +1596,8 @@
       "cosip": 19.111111,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1554,6 +1616,8 @@
       "cosip": 21.666667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1572,6 +1636,8 @@
       "cosip": 27.2325,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1590,6 +1656,8 @@
       "cosip": 24.37,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1608,6 +1676,8 @@
       "cosip": 19.55125,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1626,6 +1696,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1644,6 +1716,8 @@
       "cosip": 7.582222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1662,6 +1736,8 @@
       "cosip": 19.222222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1680,6 +1756,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1698,6 +1776,8 @@
       "cosip": 16.888889,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1716,6 +1796,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1734,6 +1816,8 @@
       "cosip": 14.714444,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1752,6 +1836,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1770,6 +1856,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1788,6 +1876,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1806,6 +1896,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1824,6 +1916,8 @@
       "cosip": 21.668889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1842,6 +1936,8 @@
       "cosip": 19.111111,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1860,6 +1956,8 @@
       "cosip": 21.666667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1878,6 +1976,8 @@
       "cosip": 27.2325,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1896,6 +1996,8 @@
       "cosip": 24.37,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1914,6 +2016,8 @@
       "cosip": 19.55125,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1932,6 +2036,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1950,6 +2056,8 @@
       "cosip": 7.582222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1968,6 +2076,8 @@
       "cosip": 19.222222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -1986,6 +2096,8 @@
       "cosip": 16.888889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2004,6 +2116,8 @@
       "cosip": 14.714444,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2022,6 +2136,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2040,6 +2156,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2058,6 +2176,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2076,6 +2196,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2094,6 +2216,8 @@
       "cosip": 21.668889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2112,6 +2236,8 @@
       "cosip": 19.111111,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2130,6 +2256,8 @@
       "cosip": 21.666667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2148,6 +2276,8 @@
       "cosip": 27.2325,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2166,6 +2296,8 @@
       "cosip": 24.37,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2184,6 +2316,8 @@
       "cosip": 19.55125,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2202,6 +2336,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2220,6 +2356,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2238,6 +2376,8 @@
       "cosip": 21.668889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2256,6 +2396,8 @@
       "cosip": 19.111111,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2274,6 +2416,8 @@
       "cosip": 21.666667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2292,6 +2436,8 @@
       "cosip": 27.2325,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2310,6 +2456,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2328,6 +2476,8 @@
       "cosip": 24.37,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2346,6 +2496,8 @@
       "cosip": 19.55125,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2364,6 +2516,8 @@
       "cosip": 7.582222,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2382,6 +2536,8 @@
       "cosip": 19.222222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2400,6 +2556,8 @@
       "cosip": 16.888889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2418,6 +2576,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2436,6 +2596,8 @@
       "cosip": 14.714444,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2454,6 +2616,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2472,6 +2636,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2490,6 +2656,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2508,6 +2676,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2526,6 +2696,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2544,6 +2716,8 @@
       "cosip": 21.668889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2562,6 +2736,8 @@
       "cosip": 19.111111,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2580,6 +2756,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2598,6 +2776,8 @@
       "cosip": 24.37,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2616,6 +2796,8 @@
       "cosip": 19.55125,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2634,6 +2816,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2652,6 +2836,8 @@
       "cosip": 7.582222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2670,6 +2856,8 @@
       "cosip": 19.222222,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2688,6 +2876,8 @@
       "cosip": 16.888889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2706,6 +2896,8 @@
       "cosip": 14.714444,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2724,6 +2916,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2742,6 +2936,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2760,6 +2956,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2778,6 +2976,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2796,6 +2996,8 @@
       "cosip": 16.566667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2814,6 +3016,8 @@
       "cosip": 21.668889,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2832,6 +3036,8 @@
       "cosip": 19.111111,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2850,6 +3056,8 @@
       "cosip": 21.666667,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2868,6 +3076,8 @@
       "cosip": 27.2325,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2886,6 +3096,8 @@
       "cosip": 24.37,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2904,6 +3116,8 @@
       "cosip": 19.55125,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2922,6 +3136,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2940,6 +3156,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2958,6 +3176,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2976,6 +3196,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -2994,6 +3216,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3012,6 +3236,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3030,6 +3256,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3048,6 +3276,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3066,6 +3296,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3084,6 +3316,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3102,6 +3336,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3120,6 +3356,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3138,6 +3376,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3156,6 +3396,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3174,6 +3416,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3192,6 +3436,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3210,6 +3456,8 @@
       "cosip": 19.55125,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3228,6 +3476,8 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3246,6 +3496,8 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "pending"
     },
     {
@@ -3264,6 +3516,8 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "pending"
     },
     {
@@ -3282,6 +3536,8 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "pending"
     },
     {
@@ -3300,6 +3556,8 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3318,6 +3576,8 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "pending"
     },
     {
@@ -3336,6 +3596,8 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "pending"
     },
     {
@@ -3354,6 +3616,8 @@
       "cosip": 28,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3372,6 +3636,8 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid"
     },
     {
@@ -3381,22 +3647,22 @@
       "tenantName": "PAULO HENRIQUE FERREIRA DOS PASSOS",
       "tenantCpf": "001.805.170.74",
       "month": "2026-06",
-      "rent": 1300.0,
+      "rent": 1300,
       "energyMode": "noKwh",
-      "paymentStatus": "paid",
-      "trashFee": 0,
-      "maintenanceFee": 600.0,
       "kwhValue": 0,
       "kwhPrevious": 0,
       "kwhCurrent": 0,
       "kwhConsumed": 0,
       "cosip": 0,
+      "trashFee": 0,
+      "maintenanceFee": 600,
       "entrySource": "contractInitial",
-      "contractStart": "2026-06-10"
+      "contractStart": "2026-06-10",
+      "paymentStatus": "paid"
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-06T02:11:22.136Z",
+    "updatedAt": "2026-06-06T02:47:28.142Z",
     "updatedBy": "residencial"
   }
 }
