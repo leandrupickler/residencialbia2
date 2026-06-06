@@ -863,6 +863,21 @@
           </article>
         </div>
 
+        <div class="grid grid-2" style="margin-top:18px;">
+          <article class="card chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Lucro real do mês</h3>
+            <p class="muted mini" id="currentMonthProfitLabel">Mês atual</p>
+            <div id="pieCurrentMonthProfit" class="pie-layout"></div>
+            <div class="reference" id="currentMonthProfitReference" style="margin-top:14px;">R$ 0,00 - R$ 0,00 = R$ 0,00</div>
+          </article>
+
+          <article class="card chart-card">
+            <h3><i class="fa-solid fa-chart-pie"></i> Despesas do mês atual</h3>
+            <p class="muted mini" id="currentMonthExpensesLabel">Somente despesas do proprietário no mês atual.</p>
+            <div id="pieCurrentMonthExpenses" class="pie-layout"></div>
+          </article>
+        </div>
+
         <div class="section-title">
           <div>
             <h2>Detalhamento das despesas</h2>
@@ -3151,6 +3166,60 @@
         };
       }
 
+      function getCurrentMonthFinancials() {
+        const currentMonth = currentMonthValue();
+        const filteredEntries = state.entries
+          .filter(entry => String(entry.month || "") === currentMonth)
+          .filter(isEntryPaid);
+        const filteredExpenses = state.expenses.filter(expense => String(expense.month || "") === currentMonth);
+
+        const normalizeExpenseType = value => String(value || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase();
+
+        const sumExpenseByType = (...types) => {
+          const normalizedTypes = types.map(normalizeExpenseType);
+          return filteredExpenses.reduce((sum, expense) => {
+            return normalizedTypes.includes(normalizeExpenseType(expense.type))
+              ? sum + toNumber(expense.amount)
+              : sum;
+          }, 0);
+        };
+
+        const gross = filteredEntries.reduce((sum, entry) => sum + entryOperationalRevenue(entry), 0);
+        const rent = filteredEntries.reduce((sum, entry) => sum + entryRentIncome(entry), 0);
+        const energy = filteredEntries.reduce((sum, entry) => sum + energyTotal(entry), 0);
+
+        const waterExpenses = sumExpenseByType("Água", "Agua");
+        const internetExpenses = sumExpenseByType("Internet");
+        const iptuExpenses = sumExpenseByType("IPTU");
+        const maintenanceExpenses = sumExpenseByType("Manutenção Extra", "Manutencao Extra", "Manutenção", "Manutencao", "Despesas Extras", "Despesa Extra");
+        const cleaningExpenses = sumExpenseByType("Faxina");
+        const paintingExpenses = sumExpenseByType("Pintura");
+        const insuranceExpenses = sumExpenseByType("Seguro do Imóvel", "Seguro do Imovel", "Seguro Imóvel", "Seguro Imovel", "Seguro");
+
+        const expenses = filteredExpenses.reduce((sum, expense) => sum + toNumber(expense.amount), 0);
+        const net = gross - expenses;
+
+        return {
+          month: currentMonth,
+          gross,
+          rent,
+          energy,
+          expenses,
+          net,
+          waterExpenses,
+          internetExpenses,
+          iptuExpenses,
+          maintenanceExpenses,
+          cleaningExpenses,
+          paintingExpenses,
+          insuranceExpenses
+        };
+      }
+
       function setLoggedInView(user) {
         loggedUser = normalizeUser(user);
         $("#loginScreen").classList.add("hidden");
@@ -3317,6 +3386,35 @@
           { label: "Aluguel Total", value: f.rent, color: "#FBBC05" },
           { label: "Luz/COSIP Total", value: f.energy, color: "#34A853" }
         ]);
+
+        const currentMonthFinancials = getCurrentMonthFinancials();
+
+        if ($("#currentMonthProfitLabel")) {
+          $("#currentMonthProfitLabel").textContent = `Mês atual: ${monthName(currentMonthFinancials.month)}`;
+        }
+
+        if ($("#currentMonthExpensesLabel")) {
+          $("#currentMonthExpensesLabel").textContent = `Somente despesas do proprietário em ${monthName(currentMonthFinancials.month)}.`;
+        }
+
+        renderPie("#pieCurrentMonthProfit", [
+          { label: "Faturamento do mês", value: currentMonthFinancials.gross, color: "#4285F4" },
+          { label: "Despesas do proprietário", value: currentMonthFinancials.expenses, color: "#EA4335" }
+        ]);
+
+        renderPie("#pieCurrentMonthExpenses", [
+          { label: "Água", value: currentMonthFinancials.waterExpenses, color: "#4285F4" },
+          { label: "Despesas Extras", value: currentMonthFinancials.maintenanceExpenses, color: "#FBBC05" },
+          { label: "Faxina", value: currentMonthFinancials.cleaningExpenses, color: "#34A853" },
+          { label: "Internet", value: currentMonthFinancials.internetExpenses, color: "#0F9D58" },
+          { label: "IPTU", value: currentMonthFinancials.iptuExpenses, color: "#EA4335" },
+          { label: "Pintura", value: currentMonthFinancials.paintingExpenses, color: "#F4B400" },
+          { label: "Seguro do Imóvel", value: currentMonthFinancials.insuranceExpenses, color: "#7E57C2" }
+        ]);
+
+        if ($("#currentMonthProfitReference")) {
+          $("#currentMonthProfitReference").textContent = `${money(currentMonthFinancials.gross)} - ${money(currentMonthFinancials.expenses)} = ${money(currentMonthFinancials.net)}`;
+        }
 
         const profitEl = $("#netProfitValue");
         profitEl.textContent = money(f.net);
