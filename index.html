@@ -1461,6 +1461,18 @@
               </div>
 
               <div class="field">
+                <label for="entryPaymentMethod">Forma de pagamento</label>
+                <select id="entryPaymentMethod">
+                  <option value="">Não informado</option>
+                  <option value="pix">Pix</option>
+                  <option value="boleto">Boleto</option>
+                  <option value="transferencia">Transferência</option>
+                  <option value="dinheiro">Dinheiro</option>
+                </select>
+                <span class="mini muted">Informe como o morador realizou ou realizará o pagamento.</span>
+              </div>
+
+              <div class="field">
                 <label for="entryTrashFee">Taxa de lixo</label>
                 <input id="entryTrashFee" type="number" min="0" step="0.01" placeholder="0,00">
                 <span class="mini muted">Opcional. Quando informado, soma no total a cobrar.</span>
@@ -2020,7 +2032,8 @@
           maintenanceFee: toNumber(source.maintenanceFee ?? source.maintenanceTax ?? source.taxaManutencao ?? source.taxaDeManutencao ?? 0),
           entrySource: source.entrySource || source.source || "",
           contractStart: source.contractStart || "",
-          paymentStatus: normalizePaymentStatus(source.paymentStatus ?? source.payment ?? source.paid ?? source.isPaid ?? source.statusPagamento)
+          paymentStatus: normalizePaymentStatus(source.paymentStatus ?? source.payment ?? source.paid ?? source.isPaid ?? source.statusPagamento),
+          paymentMethod: normalizePaymentMethod(source.paymentMethod ?? source.formaPagamento ?? source.formaDePagamento ?? source.metodoPagamento ?? source.paymentType)
         };
       }
 
@@ -2837,6 +2850,35 @@
         return status === "paid" ? "fa-circle-check" : "fa-circle-xmark";
       }
 
+      function normalizePaymentMethod(value) {
+        const raw = String(value ?? "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase();
+
+        if (!raw) return "";
+        if (raw === "pix") return "pix";
+        if (raw === "boleto") return "boleto";
+        if (raw === "transferencia" || raw === "transferencia bancaria" || raw === "transferencia bancária") return "transferencia";
+        if (raw === "dinheiro") return "dinheiro";
+
+        return "";
+      }
+
+      function paymentMethodLabel(value) {
+        const method = normalizePaymentMethod(value);
+
+        const labels = {
+          pix: "Pix",
+          boleto: "Boleto",
+          transferencia: "Transferência",
+          dinheiro: "Dinheiro"
+        };
+
+        return labels[method] || "Não informado";
+      }
+
       function escapeHtml(value) {
         return String(value ?? "")
           .replaceAll("&", "&amp;")
@@ -3150,6 +3192,7 @@
           rent: toNumber(apartment.baseRent),
           energyMode: "noKwh",
           paymentStatus: "paid",
+          paymentMethod: "",
           trashFee: 0,
           maintenanceFee: toNumber(apartment.maintenanceFee),
           kwhValue: 0,
@@ -3189,6 +3232,7 @@
             rent: nextEntry.rent,
             energyMode: nextEntry.energyMode,
             paymentStatus: normalizePaymentStatus(existing.paymentStatus || "paid"),
+            paymentMethod: normalizePaymentMethod(existing.paymentMethod),
             trashFee: 0,
             maintenanceFee: nextEntry.maintenanceFee,
             kwhValue: 0,
@@ -4421,6 +4465,7 @@
                       <th>Morador do lançamento</th>
                       <th>Mês/Ano</th>
                       <th style="text-align:center;">Status</th>
+                      <th>Forma pgto.</th>
                       <th>Aluguel</th>
                       <th>Valor kWh</th>
                       <th>Leitura anterior</th>
@@ -4446,6 +4491,7 @@
                             role="img">
                           </span>
                         </td>
+                        <td>${escapeHtml(paymentMethodLabel(entry.paymentMethod))}</td>
                         <td>${money(entry.rent)}</td>
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : money(entry.kwhValue)}</td>
                         <td>${(entry.energyMode || "withKwh") === "noKwh" ? "-" : toNumber(entry.kwhPrevious).toLocaleString("pt-BR") + " kWh"}</td>
@@ -4865,6 +4911,7 @@
         $("#entryRent").value = "";
         $("#entryEnergyMode").value = "withKwh";
         $("#entryPaymentStatus").value = "paid";
+        $("#entryPaymentMethod").value = "pix";
         $("#entryTrashFee").value = "";
         $("#entryKwhValue").value = "";
         $("#entryKwhPrevious").value = "";
@@ -5286,6 +5333,7 @@
           rent: toNumber($("#entryRent").value),
           energyMode,
           paymentStatus: normalizePaymentStatus($("#entryPaymentStatus").value),
+          paymentMethod: normalizePaymentMethod($("#entryPaymentMethod").value),
           trashFee: toNumber($("#entryTrashFee").value),
           maintenanceFee: id
             ? entryMaintenanceFee(state.entries.find(item => item.id === id))
@@ -5339,6 +5387,7 @@
         $("#entryRent").value = entry.rent;
         $("#entryEnergyMode").value = entry.energyMode || "withKwh";
         $("#entryPaymentStatus").value = normalizePaymentStatus(entry.paymentStatus);
+        $("#entryPaymentMethod").value = normalizePaymentMethod(entry.paymentMethod);
         $("#entryTrashFee").value = entry.trashFee || "";
         $("#entryKwhValue").value = entry.kwhValue;
         $("#entryKwhPrevious").value = entry.kwhPrevious || "";
@@ -5547,6 +5596,7 @@
         const receiptNumber = entryReceiptNumber(entry);
         const trashFee = toNumber(entry.trashFee);
         const maintenanceFee = entryMaintenanceFee(entry);
+        const paymentMethod = paymentMethodLabel(entry.paymentMethod);
         const paymentStatus = normalizePaymentStatus(entry.paymentStatus);
         const receiptStatusText = paymentStatus === "paid" ? "PAGO" : (paymentStatus === "pending" ? "AGUARDANDO PAGAMENTO" : "NÃO PAGO");
         const receiptStatusClass = paymentStatus === "paid" ? "paid" : (paymentStatus === "pending" ? "pending" : "unpaid");
@@ -5750,6 +5800,7 @@
       <div class="info"><span>Morador</span><strong>${escapeHtml(tenantName)}</strong></div>
       <div class="info"><span>CPF</span><strong>${escapeHtml(tenantCpf || "-")}</strong></div>
       <div class="info"><span>Imóvel</span><strong>${escapeHtml(aptNumber)}</strong></div>
+      <div class="info"><span>Forma de pagamento</span><strong>${escapeHtml(paymentMethod)}</strong></div>
       <div class="info"><span>Data de emissão</span><strong>${escapeHtml(new Intl.DateTimeFormat("pt-BR").format(new Date()))}</strong></div>
     </section>
     <table>
@@ -6150,6 +6201,7 @@
             escapeHtml(entry.tenantName || "-"),
             escapeHtml(monthName(entry.month)),
             `<span class="${normalizePaymentStatus(entry.paymentStatus) === "paid" ? "paid" : normalizePaymentStatus(entry.paymentStatus) === "pending" ? "pending" : "unpaid"}">${escapeHtml(paymentStatusLabel(entry))}</span>`,
+            escapeHtml(paymentMethodLabel(entry.paymentMethod)),
             escapeHtml(money(entry.rent)),
             escapeHtml((entry.energyMode || "withKwh") === "noKwh" ? "-" : `${toNumber(entry.kwhConsumed).toLocaleString("pt-BR")} kWh`),
             escapeHtml(money(energyTotal(entry))),
@@ -6172,7 +6224,7 @@
             { label: "Taxa de lixo", value: money(trashTotal) },
             { label: "Taxa manutenção", value: money(maintenanceFeeTotal) }
           ],
-          headers: ["Imóvel", "Morador", "Mês/Ano", "Status", "Aluguel", "Consumo", "Luz/COSIP", "Taxa de lixo", "Taxa manutenção", "Total"],
+          headers: ["Imóvel", "Morador", "Mês/Ano", "Status", "Forma pgto.", "Aluguel", "Consumo", "Luz/COSIP", "Taxa de lixo", "Taxa manutenção", "Total"],
           rows,
           emptyMessage: "Nenhum lançamento encontrado para o filtro atual."
         });
