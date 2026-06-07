@@ -560,6 +560,20 @@
       flex: 0 0 auto;
     }
 
+    .preview-box.qrcode-preview {
+      width: 132px;
+      height: 132px;
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .preview-box.qrcode-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 8px;
+    }
+
     .inspection-preview-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -1585,6 +1599,20 @@
               </button>
             </div>
 
+            <div class="file-row">
+              <div class="preview-box qrcode-preview" id="paymentQrCodePreview">QR Code</div>
+
+              <div class="field" style="flex:1; min-width:260px;">
+                <label for="paymentQrCodeFile">QR Code para pagamento</label>
+                <input id="paymentQrCodeFile" type="file" accept="image/*">
+                <span class="mini muted">A imagem do QR Code será salva no GitHub fora do JSON. O JSON guarda somente o caminho do arquivo.</span>
+              </div>
+
+              <button class="btn btn-light" type="button" id="removePaymentQrCodeBtn">
+                <i class="fa-solid fa-ban"></i> Remover QR Code
+              </button>
+            </div>
+
             <div class="form-actions">
               <button class="btn btn-primary" type="submit">
                 <i class="fa-solid fa-floppy-disk"></i> Salvar configurações
@@ -1771,7 +1799,9 @@
           expenseDetailYear: new Date().getFullYear(),
           entriesHistoryFilter: "current",
           entriesPaymentFilter: "all",
-          inspectionPhotosBasePath: "fotos-vistoria"
+          inspectionPhotosBasePath: "fotos-vistoria",
+          paymentQrCodeBasePath: "configuracoes/qrcode-pagamento",
+          paymentQrCode: null
         },
         users: [],
         apartments: [],
@@ -1798,6 +1828,7 @@
       let tempApartmentPhoto = "";
       let tempInspectionPhotos = [];
       let tempAppLogo = "";
+      let tempPaymentQrCode = null;
       let manualEntryRent = false;
       let isSaving = false;
       let pendingSaveRequest = false;
@@ -1805,6 +1836,7 @@
       const SAVE_QUEUE_DELAY_MS = 3200;
       const SAVE_RETRY_DELAYS_MS = [0, 2500, 6000, 11000];
       const INSPECTION_PHOTOS_BASE_PATH = "fotos-vistoria";
+      const PAYMENT_QRCODE_BASE_PATH = "configuracoes/qrcode-pagamento";
       const INSPECTION_PHOTO_MAX_SIZE = 1600;
       const INSPECTION_PHOTO_JPEG_QUALITY = 0.82;
       const INSPECTION_PHOTO_UPLOAD_DELAY_MS = 1200;
@@ -1866,6 +1898,45 @@
       function normalizeInspectionPhotos(photos) {
         if (!Array.isArray(photos)) return [];
         return photos.map(normalizeInspectionPhoto).filter(photo => photo && (photo.src || photo.path || photo.rawUrl));
+      }
+
+      function normalizePaymentQrCode(qrCode) {
+        if (!qrCode) return null;
+
+        if (typeof qrCode === "string") {
+          if (!qrCode.trim()) return null;
+
+          return {
+            path: qrCode.startsWith("data:") ? "" : qrCode,
+            rawUrl: qrCode.startsWith("data:") ? "" : qrCode,
+            src: qrCode.startsWith("data:") ? qrCode : "",
+            contentType: qrCode.startsWith("data:image/png") ? "image/png" : "image/jpeg",
+            name: "qrcode-pagamento",
+            storage: qrCode.startsWith("data:") ? "base64" : "github",
+            updatedAt: ""
+          };
+        }
+
+        if (typeof qrCode === "object") {
+          const src = qrCode.src || qrCode.data || qrCode.base64 || "";
+          const path = qrCode.path || qrCode.githubPath || qrCode.filePath || "";
+          const rawUrl = qrCode.rawUrl || qrCode.downloadUrl || qrCode.url || "";
+
+          if (!src && !path && !rawUrl) return null;
+
+          return {
+            path,
+            rawUrl,
+            src,
+            contentType: qrCode.contentType || qrCode.mimeType || (String(src).startsWith("data:image/png") ? "image/png" : "image/jpeg"),
+            name: qrCode.name || qrCode.caption || "qrcode-pagamento",
+            size: toNumber(qrCode.size),
+            storage: qrCode.storage || (path ? "github" : (String(src).startsWith("data:") ? "base64" : "")),
+            updatedAt: qrCode.updatedAt || ""
+          };
+        }
+
+        return null;
       }
 
       function normalizeApartment(apartment) {
@@ -2123,6 +2194,15 @@
         return `${folder}/${timestamp}_${String(index + 1).padStart(2, "0")}_${random}_${baseName}.jpg`;
       }
 
+      function paymentQrCodeBasePath() {
+        return state.settings.paymentQrCodeBasePath || PAYMENT_QRCODE_BASE_PATH;
+      }
+
+      function paymentQrCodePathForFile(file) {
+        const extension = String(file?.type || "").includes("png") ? "png" : "jpg";
+        return `${paymentQrCodeBasePath()}/qrcode-pagamento.${extension}`;
+      }
+
       async function getGithubContent(path) {
         if (!hasGithubBaseConfig()) return null;
 
@@ -2246,6 +2326,63 @@
           storage: "github",
           createdAt: new Date().toISOString()
         };
+      }
+
+      async function uploadPaymentQrCodeToGithub(file) {
+        if (!file || !file.type || !file.type.startsWith("image/")) {
+          throw new Error("Selecione uma imagem válida para o QR Code.");
+        }
+
+        if (!hasGithubWriteConfig()) {
+          throw new Error("Configure o token do GitHub para enviar o QR Code.");
+        }
+
+        const dataUrl = await readFileAsDataUrl(file);
+        const path = paymentQrCodePathForFile(file);
+        const previous = normalizePaymentQrCode(state.settings.paymentQrCode);
+
+        if (previous?.path && previous.path !== path) {
+          try {
+            await deleteGithubContent(previous.path, `Remove QR Code anterior - ${previous.path}`);
+          } catch (error) {
+            console.warn("Não foi possível remover QR Code anterior:", error);
+          }
+        }
+
+        await putGithubContent(
+          path,
+          dataUrlToBase64Content(dataUrl),
+          `Atualiza QR Code de pagamento - ${path}`
+        );
+
+        return {
+          path,
+          rawUrl: githubRawUrl(path),
+          src: "",
+          contentType: file.type || (path.endsWith(".png") ? "image/png" : "image/jpeg"),
+          name: file.name || "qrcode-pagamento",
+          size: file.size || 0,
+          storage: "github",
+          updatedAt: new Date().toISOString()
+        };
+      }
+
+      async function getPaymentQrCodeDataUrl(qrCode = state.settings.paymentQrCode) {
+        const item = normalizePaymentQrCode(qrCode);
+
+        if (!item) return "";
+
+        if (item.src && String(item.src).startsWith("data:")) return item.src;
+
+        if (item.path) {
+          const file = await getGithubContent(item.path);
+          const content = String(file?.content || "").replace(/\n/g, "");
+          if (!content) return item.rawUrl || githubRawUrl(item.path);
+
+          return `data:${item.contentType || "image/png"};base64,${content}`;
+        }
+
+        return item.rawUrl || "";
       }
 
       async function getInspectionPhotoDataUrl(photo) {
@@ -4540,7 +4677,9 @@
       function renderSettings() {
         $("#appName").value = state.settings.appName || "G.A - Gestão de Aluguel";
         tempAppLogo = state.settings.logo || "";
+        tempPaymentQrCode = normalizePaymentQrCode(state.settings.paymentQrCode);
         renderLogoPreview();
+        renderPaymentQrCodePreview();
       }
 
       function renderUsers() {
@@ -4594,6 +4733,24 @@
       function renderApartmentPhotoPreview() {
         const preview = $("#apartmentPhotoPreview");
         if (preview) preview.innerHTML = "Foto";
+      }
+
+      function renderPaymentQrCodePreview() {
+        const preview = $("#paymentQrCodePreview");
+        if (!preview) return;
+
+        const qrCode = normalizePaymentQrCode(tempPaymentQrCode || state.settings.paymentQrCode);
+
+        if (!qrCode) {
+          preview.innerHTML = "QR Code";
+          return;
+        }
+
+        const src = qrCode.src || qrCode.rawUrl || (qrCode.path ? githubRawUrl(qrCode.path) : "");
+
+        preview.innerHTML = src
+          ? `<img src="${src}" alt="QR Code de pagamento">`
+          : `<i class="fa-solid fa-qrcode"></i>`;
       }
 
             function renderInspectionPhotosPreview() {
@@ -5210,6 +5367,8 @@
         if (!requireWrite()) return;
         state.settings.appName = $("#appName").value.trim() || "G.A - Gestão de Aluguel";
         state.settings.logo = tempAppLogo || "";
+        state.settings.paymentQrCodeBasePath = state.settings.paymentQrCodeBasePath || PAYMENT_QRCODE_BASE_PATH;
+        state.settings.paymentQrCode = normalizePaymentQrCode(tempPaymentQrCode);
         await save("Configurações salvas.");
       }
 
@@ -5373,7 +5532,7 @@
         return `${apt.toUpperCase()}-${String(entry.month || "").replace("-", "")}`;
       }
 
-      function buildEntryReceiptHtml(entry) {
+      async function buildEntryReceiptHtml(entry) {
         const apartment = getApartment(entry.apartmentId) || {};
         const appName = state.settings.appName || "G.A - Gestão de Aluguel";
         const logo = receiptLogoSrc();
@@ -5388,6 +5547,19 @@
         const receiptNumber = entryReceiptNumber(entry);
         const trashFee = toNumber(entry.trashFee);
         const maintenanceFee = entryMaintenanceFee(entry);
+        const paymentStatus = normalizePaymentStatus(entry.paymentStatus);
+        const receiptStatusText = paymentStatus === "paid" ? "PAGO" : (paymentStatus === "pending" ? "AGUARDANDO PAGAMENTO" : "NÃO PAGO");
+        const receiptStatusClass = paymentStatus === "paid" ? "paid" : (paymentStatus === "pending" ? "pending" : "unpaid");
+        const qrCodeSrc = await getPaymentQrCodeDataUrl();
+        const qrCodeBlock = qrCodeSrc ? `
+    <section class="payment-qrcode">
+      <div>
+        <h2>Pagamento via QR Code</h2>
+        <p>Escaneie o QR Code ao lado para realizar o pagamento. Após o pagamento, envie o comprovante pelo WhatsApp.</p>
+      </div>
+      <img src="${qrCodeSrc}" alt="QR Code de pagamento">
+    </section>
+        ` : "";
 
         return `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -5437,6 +5609,64 @@
       text-transform: uppercase;
     }
     .subtitle { margin: 0; color: #5f6368; font-size: 13px; }
+    .status-banner {
+      margin: 14px 0 18px;
+      padding: 16px;
+      border-radius: 16px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border: 2px solid transparent;
+    }
+    .status-banner.paid {
+      color: #0f5132;
+      background: #d1e7dd;
+      border-color: #34A853;
+    }
+    .status-banner.pending {
+      color: #7a5b00;
+      background: #fff3cd;
+      border-color: #FBBC05;
+    }
+    .status-banner.unpaid {
+      color: #842029;
+      background: #f8d7da;
+      border-color: #EA4335;
+    }
+    .payment-qrcode {
+      display: grid;
+      grid-template-columns: 1fr 170px;
+      gap: 18px;
+      align-items: center;
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #e8eaed;
+      background: #f8fafd;
+    }
+    .payment-qrcode h2 {
+      margin: 0 0 6px;
+      color: #202124;
+      font-size: 17px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .payment-qrcode p {
+      margin: 0;
+      color: #5f6368;
+      font-size: 13px;
+    }
+    .payment-qrcode img {
+      width: 170px;
+      height: 170px;
+      object-fit: contain;
+      padding: 8px;
+      background: #fff;
+      border: 1px solid #e8eaed;
+      border-radius: 14px;
+    }
     .info-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -5513,6 +5743,7 @@
       <h1>Recibo de Cobrança Mensal</h1>
       <p class="subtitle">Documento para envio ao morador via WhatsApp</p>
     </header>
+    <div class="status-banner ${receiptStatusClass}">${receiptStatusText}</div>
     <section class="info-grid">
       <div class="info"><span>Recibo</span><strong>${escapeHtml(receiptNumber)}</strong></div>
       <div class="info"><span>Mês de referência</span><strong>${escapeHtml(month)}</strong></div>
@@ -5569,6 +5800,7 @@
         </tr>
       </tbody>
     </table>
+    ${qrCodeBlock}
     <div class="note">
       <strong>Resumo:</strong>
       Aluguel ${money(entry.rent)}${isNoKwh ? "" : ` + Energia/COSIP ${money(energyWithCosip)}`}${trashFee > 0 ? ` + Taxa de lixo ${money(trashFee)}` : ""}${maintenanceFee > 0 ? ` + Taxa de manutenção ${money(maintenanceFee)}` : ""} = <strong>${money(total)}</strong>.
@@ -5579,7 +5811,7 @@
 </html>`;
       }
 
-      function downloadEntryReceipt(id) {
+      async function downloadEntryReceipt(id) {
         const entry = state.entries.find(item => item.id === id);
 
         if (!entry) {
@@ -5589,7 +5821,7 @@
 
         const fileName = `recibo-${safeFilePart(entry.apartmentNumber || apartmentName(entry.apartmentId))}-${safeFilePart(entry.tenantName || "morador")}-${safeFilePart(entry.month)}.html`;
 
-        downloadHtmlFile(fileName, buildEntryReceiptHtml(entry));
+        downloadHtmlFile(fileName, await buildEntryReceiptHtml(entry));
         toast("Recibo baixado.");
       }
 
@@ -7232,6 +7464,66 @@
           state.settings.logo = "";
           $("#appLogo").value = "";
           await save("Logo removida.");
+        });
+
+        $("#paymentQrCodeFile").addEventListener("change", async event => {
+          const file = event.target.files?.[0];
+
+          if (!file) return;
+
+          if (!requireWrite("Seu usuário possui permissão somente leitura. Não é possível enviar QR Code.")) {
+            event.target.value = "";
+            return;
+          }
+
+          if (!hasGithubWriteConfig()) {
+            toast("Configure o GitHub e o token com permissão Contents Read and Write antes de anexar o QR Code.");
+            event.target.value = "";
+            return;
+          }
+
+          try {
+            updateSyncStatus("warn", "Enviando QR Code para o GitHub...");
+            tempPaymentQrCode = await uploadPaymentQrCodeToGithub(file);
+            state.settings.paymentQrCodeBasePath = state.settings.paymentQrCodeBasePath || PAYMENT_QRCODE_BASE_PATH;
+            state.settings.paymentQrCode = normalizePaymentQrCode(tempPaymentQrCode);
+            renderPaymentQrCodePreview();
+            event.target.value = "";
+            await save("QR Code de pagamento salvo no GitHub.");
+            updateSyncStatus("ok", "QR Code salvo");
+          } catch (error) {
+            console.error(error);
+            updateSyncStatus("error", "Erro ao salvar QR Code");
+            toast("Erro ao enviar QR Code ao GitHub. Verifique o token e a permissão Contents Read and Write.");
+            event.target.value = "";
+          }
+        });
+
+        $("#removePaymentQrCodeBtn").addEventListener("click", async () => {
+          if (!requireWrite("Seu usuário possui permissão somente leitura. Não é possível remover QR Code.")) return;
+
+          const qrCode = normalizePaymentQrCode(state.settings.paymentQrCode);
+
+          if (!qrCode) {
+            toast("Nenhum QR Code cadastrado.");
+            return;
+          }
+
+          if (!confirm("Remover o QR Code de pagamento das configurações e do GitHub?")) return;
+
+          if (qrCode.path && hasGithubWriteConfig()) {
+            try {
+              await deleteGithubContent(qrCode.path, `Remove QR Code de pagamento - ${qrCode.path}`);
+            } catch (error) {
+              console.warn("Não foi possível remover QR Code do GitHub:", error);
+            }
+          }
+
+          tempPaymentQrCode = null;
+          state.settings.paymentQrCode = null;
+          if ($("#paymentQrCodeFile")) $("#paymentQrCodeFile").value = "";
+          renderPaymentQrCodePreview();
+          await save("QR Code de pagamento removido.");
         });
 
         $("#userForm").addEventListener("submit", saveUserForm);
