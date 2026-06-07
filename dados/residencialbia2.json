@@ -10,7 +10,16 @@
     "entriesPaymentFilter": "all",
     "inspectionPhotosBasePath": "fotos-vistoria",
     "paymentQrCodeBasePath": "configuracoes/qrcode-pagamento",
-    "paymentQrCode": null
+    "paymentQrCode": {
+      "path": "configuracoes/qrcode-pagamento/qrcode-pagamento.png",
+      "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/configuracoes/qrcode-pagamento/qrcode-pagamento.png",
+      "src": "",
+      "contentType": "image/png",
+      "name": "qrcode-teste.png",
+      "size": 20511,
+      "storage": "github",
+      "updatedAt": "2026-06-07T22:49:54.170Z"
+    }
   },
   "users": [
     {
@@ -3680,7 +3689,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-07T22:06:26.515Z",
+    "updatedAt": "2026-06-07T22:49:54.817Z",
     "updatedBy": "residencial"
   }
 }
