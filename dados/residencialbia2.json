@@ -10,16 +10,7 @@
     "entriesPaymentFilter": "all",
     "inspectionPhotosBasePath": "fotos-vistoria",
     "paymentQrCodeBasePath": "configuracoes/qrcode-pagamento",
-    "paymentQrCode": {
-      "path": "configuracoes/qrcode-pagamento/qrcode-pagamento.png",
-      "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/configuracoes/qrcode-pagamento/qrcode-pagamento.png",
-      "src": "",
-      "contentType": "image/png",
-      "name": "qrcode-teste.png",
-      "size": 20511,
-      "storage": "github",
-      "updatedAt": "2026-06-07T22:49:54.170Z"
-    }
+    "paymentQrCode": null
   },
   "users": [
     {
@@ -1105,7 +1096,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_05",
@@ -1125,7 +1117,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_06",
@@ -1145,7 +1138,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_07",
@@ -1165,7 +1159,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_08",
@@ -1185,7 +1180,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_marcos_aurelio_soares_2025_09",
@@ -1205,7 +1201,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2025_12",
@@ -1225,7 +1222,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_01",
@@ -1245,7 +1243,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_02",
@@ -1265,7 +1264,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_03",
@@ -1285,7 +1285,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_04",
@@ -1305,7 +1306,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_04",
@@ -1325,7 +1327,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_05",
@@ -1345,7 +1348,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_06",
@@ -1365,7 +1369,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_07",
@@ -1385,7 +1390,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_08",
@@ -1405,7 +1411,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_09",
@@ -1425,7 +1432,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2026_04",
@@ -1445,7 +1453,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_703a2f53-9818-45a7-a6b4-c27b1431500f",
@@ -1465,7 +1474,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_04",
@@ -1485,7 +1495,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_05",
@@ -1505,7 +1516,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_06",
@@ -1525,7 +1537,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_07",
@@ -1545,7 +1558,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_08",
@@ -1565,7 +1579,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_ashely_orlando_jordan_2025_09",
@@ -1585,7 +1600,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2025_12",
@@ -1605,7 +1621,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_01",
@@ -1625,7 +1642,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_02",
@@ -1645,7 +1663,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_03",
@@ -1665,7 +1684,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_04",
@@ -1685,7 +1705,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_03_karine_kauss_rodrigues_2026_05",
@@ -1705,7 +1726,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_04",
@@ -1725,7 +1747,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_05",
@@ -1745,7 +1768,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_06",
@@ -1765,7 +1789,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_07",
@@ -1785,7 +1810,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_07",
@@ -1805,7 +1831,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_08",
@@ -1825,7 +1852,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_08",
@@ -1845,7 +1873,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_erica_cristina_santos_cunha_2025_09",
@@ -1865,7 +1894,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_09",
@@ -1885,7 +1915,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_10",
@@ -1905,7 +1936,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_11",
@@ -1925,7 +1957,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_evelle_soares_guimaraes_2025_12",
@@ -1945,7 +1978,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_01",
@@ -1965,7 +1999,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_02",
@@ -1985,7 +2020,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_03",
@@ -2005,7 +2041,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_04",
@@ -2025,7 +2062,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_04_ismael_rosendo_da_silva_2026_05",
@@ -2045,7 +2083,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_04",
@@ -2065,7 +2104,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_05",
@@ -2085,7 +2125,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_06",
@@ -2105,7 +2146,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_07",
@@ -2125,7 +2167,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_08",
@@ -2145,7 +2188,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2025_09",
@@ -2165,7 +2209,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_caroline_bettanzos_goncalves_2025_09",
@@ -2185,7 +2230,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2025_10",
@@ -2205,7 +2251,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2025_11",
@@ -2225,7 +2272,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2025_12",
@@ -2245,7 +2293,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2026_01",
@@ -2265,7 +2314,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2026_02",
@@ -2285,7 +2335,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2026_03",
@@ -2305,7 +2356,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2026_04",
@@ -2325,7 +2377,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_05_arthur_silva_cavalcante_2026_05",
@@ -2345,7 +2398,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2025_10",
@@ -2365,7 +2419,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2025_11",
@@ -2385,7 +2440,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2025_12",
@@ -2405,7 +2461,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2026_01",
@@ -2425,7 +2482,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2026_02",
@@ -2445,7 +2503,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_06_alida_thasy_nascimento_costa___ketlen_cristina_barbosa_oliveira_2026_03",
@@ -2465,7 +2524,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_06_allyson_de_oliveira_barbosa_2026_03",
@@ -2485,7 +2545,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_06_alida_thasy_nascimento_costa___ketlen_cristina_barbosa_oliveira_2026_04",
@@ -2505,7 +2566,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_720e13ad-9375-492a-95c4-331bae8f5217",
@@ -2525,7 +2587,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_05",
@@ -2545,7 +2608,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_06",
@@ -2565,7 +2629,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_07",
@@ -2585,7 +2650,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_08",
@@ -2605,7 +2671,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_08",
@@ -2625,7 +2692,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_09",
@@ -2645,7 +2713,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_09",
@@ -2665,7 +2734,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_matheus_de_sousa_pereira_2025_10",
@@ -2685,7 +2755,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_10",
@@ -2705,7 +2776,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_11",
@@ -2725,7 +2797,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2025_12",
@@ -2745,7 +2818,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2026_01",
@@ -2765,7 +2839,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2026_02",
@@ -2785,7 +2860,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2026_04",
@@ -2805,7 +2881,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_07_ricardo_iachitzki_junior_2026_05",
@@ -2825,7 +2902,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_04",
@@ -2845,7 +2923,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_05",
@@ -2865,7 +2944,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_06",
@@ -2885,7 +2965,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_07",
@@ -2905,7 +2986,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_08",
@@ -2925,7 +3007,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_08",
@@ -2945,7 +3028,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_09",
@@ -2965,7 +3049,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_marks_paul_santiago_mendez_guzman_2025_09",
@@ -2985,7 +3070,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_10",
@@ -3005,7 +3091,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_11",
@@ -3025,7 +3112,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2025_12",
@@ -3045,7 +3133,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2026_01",
@@ -3065,7 +3154,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2026_02",
@@ -3085,7 +3175,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2026_03",
@@ -3105,7 +3196,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2026_04",
@@ -3125,7 +3217,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_08_luiz_pereira_de_sousa_2026_05",
@@ -3145,7 +3238,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_02",
@@ -3165,7 +3259,8 @@
       "maintenanceFee": 600,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_03",
@@ -3185,7 +3280,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_04",
@@ -3205,7 +3301,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_05",
@@ -3225,7 +3322,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_06",
@@ -3245,7 +3343,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_07",
@@ -3265,7 +3364,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_08",
@@ -3285,7 +3385,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_09",
@@ -3305,7 +3406,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_10",
@@ -3325,7 +3427,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_11",
@@ -3345,7 +3448,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_casa_eldorado_wanilson_da_silva_teixeira_2025_12",
@@ -3365,7 +3469,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_2207511d-8ca6-47fc-8149-b4dabff9630d",
@@ -3385,7 +3490,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_9971a6b0-e011-40f5-95ec-40863a2e9f7c",
@@ -3405,7 +3511,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_91e88550-7c20-418e-acb3-6a60cf5c07af",
@@ -3425,7 +3532,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_be4ad383-5739-41e1-8070-f7f6b4e762ed",
@@ -3445,7 +3553,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_3428e067-c2f4-4c18-bb10-2de1067759e5",
@@ -3465,7 +3574,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_apto_01_jaron_gregori_cavalcante_quirino_2026_05",
@@ -3485,7 +3595,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_512b727d-0c1c-4d4c-9e78-b3ef43155827",
@@ -3505,7 +3616,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_ea889652-2efb-47f2-88d3-4edd5c4aaaa2",
@@ -3525,7 +3637,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "pending"
+      "paymentStatus": "pending",
+      "paymentMethod": ""
     },
     {
       "id": "entry_f50d00c4-afeb-4efa-9b64-2e9c75405c95",
@@ -3545,7 +3658,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "pending"
+      "paymentStatus": "pending",
+      "paymentMethod": ""
     },
     {
       "id": "entry_043bb472-b971-4d56-9548-c3ea33f19bd4",
@@ -3565,7 +3679,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "pending"
+      "paymentStatus": "pending",
+      "paymentMethod": ""
     },
     {
       "id": "entry_4c9298a1-a7cc-41e9-a5b1-700d0bb26ab2",
@@ -3585,7 +3700,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_a1b7feb6-021b-4cc1-99d4-b0328afa8d50",
@@ -3605,7 +3721,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_dbdfe164-0d5d-462e-9681-c7591857eb4b",
@@ -3625,7 +3742,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "pending"
+      "paymentStatus": "pending",
+      "paymentMethod": ""
     },
     {
       "id": "entry_ac44b469-61e5-4632-9cb7-f226e31572c0",
@@ -3645,7 +3763,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_fd79a75a-939b-4f32-86aa-570c0b5a4014",
@@ -3665,7 +3784,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     },
     {
       "id": "entry_initial_contract_apto03_paulo_henrique_2026_06",
@@ -3685,11 +3805,12 @@
       "maintenanceFee": 600,
       "entrySource": "contractInitial",
       "contractStart": "2026-06-10",
-      "paymentStatus": "paid"
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-07T22:50:00.361Z",
+    "updatedAt": "2026-06-07T22:06:26.515Z",
     "updatedBy": "residencial"
   }
 }
