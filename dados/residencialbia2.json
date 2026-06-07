@@ -8,7 +8,9 @@
     "expenseDetailYear": 2026,
     "entriesHistoryFilter": "current",
     "entriesPaymentFilter": "all",
-    "inspectionPhotosBasePath": "fotos-vistoria"
+    "inspectionPhotosBasePath": "fotos-vistoria",
+    "paymentQrCodeBasePath": "configuracoes/qrcode-pagamento",
+    "paymentQrCode": null
   },
   "users": [
     {
