@@ -2354,6 +2354,12 @@
         const path = paymentQrCodePathForFile(file);
         const previous = normalizePaymentQrCode(state.settings.paymentQrCode);
 
+        await putGithubContent(
+          path,
+          dataUrlToBase64Content(dataUrl),
+          `Atualiza QR Code de pagamento - ${path}`
+        );
+
         if (previous?.path && previous.path !== path) {
           try {
             await deleteGithubContent(previous.path, `Remove QR Code anterior - ${previous.path}`);
@@ -2362,11 +2368,17 @@
           }
         }
 
-        await putGithubContent(
-          path,
-          dataUrlToBase64Content(dataUrl),
-          `Atualiza QR Code de pagamento - ${path}`
-        );
+        try {
+          const folderItems = await listGithubDirectory(paymentQrCodeBasePath());
+
+          for (const item of folderItems) {
+            if (!item || item.type !== "file" || !item.path || item.path === path) continue;
+
+            await deleteGithubContent(item.path, `Remove QR Code antigo sem uso - ${item.path}`);
+          }
+        } catch (error) {
+          console.warn("Não foi possível limpar QR Codes antigos da pasta:", error);
+        }
 
         return {
           path,
@@ -5855,7 +5867,6 @@
     <div class="note">
       <strong>Resumo:</strong>
       Aluguel ${money(entry.rent)}${isNoKwh ? "" : ` + Energia/COSIP ${money(energyWithCosip)}`}${trashFee > 0 ? ` + Taxa de lixo ${money(trashFee)}` : ""}${maintenanceFee > 0 ? ` + Taxa de manutenção ${money(maintenanceFee)}` : ""} = <strong>${money(total)}</strong>.
-      Este recibo não representa confirmação de pagamento; é um demonstrativo de cobrança mensal. A taxa de manutenção é destinada à limpeza e pintura e não compõe o lucro líquido.
     </div>
   </main>
 </body>
