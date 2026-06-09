@@ -285,6 +285,30 @@
           "size": 154080,
           "storage": "github",
           "createdAt": "2026-06-04T20:40:58.771Z"
+        },
+        {
+          "id": "inspection_photo_427d6855-9add-48c0-a825-556a52dfabf3",
+          "src": "",
+          "path": "fotos-vistoria/apto-03/20260609011425_14_243370_whatsapp_image_2026-06-08_at_22_11_27_1_jpeg.jpg",
+          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260609011425_14_243370_whatsapp_image_2026-06-08_at_22_11_27_1_jpeg.jpg",
+          "caption": "WhatsApp Image 2026-06-08 at 22.11.27 (1).jpeg",
+          "name": "WhatsApp Image 2026-06-08 at 22.11.27 (1).jpeg",
+          "contentType": "image/jpeg",
+          "size": 100152,
+          "storage": "github",
+          "createdAt": "2026-06-09T01:14:27.667Z"
+        },
+        {
+          "id": "inspection_photo_61bfa45b-9b6b-4985-9847-0e0770b7b290",
+          "src": "",
+          "path": "fotos-vistoria/apto-03/20260609011429_16_1df4d2_whatsapp_image_2026-06-08_at_22_11_27_jpeg.jpg",
+          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260609011429_16_1df4d2_whatsapp_image_2026-06-08_at_22_11_27_jpeg.jpg",
+          "caption": "WhatsApp Image 2026-06-08 at 22.11.27.jpeg",
+          "name": "WhatsApp Image 2026-06-08 at 22.11.27.jpeg",
+          "contentType": "image/jpeg",
+          "size": 160788,
+          "storage": "github",
+          "createdAt": "2026-06-09T01:14:30.831Z"
         }
       ],
       "baseRent": 1300,
@@ -3819,7 +3843,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-08T13:44:32.214Z",
+    "updatedAt": "2026-06-09T01:14:34.333Z",
     "updatedBy": "residencial"
   }
 }
