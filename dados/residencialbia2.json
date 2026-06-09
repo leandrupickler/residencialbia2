@@ -8,7 +8,7 @@
     "expenseDetailYear": 2026,
     "entriesHistoryFilter": "current",
     "entriesPaymentFilter": "all",
-    "entriesPaymentMethodFilter": "transferencia",
+    "entriesPaymentMethodFilter": "all",
     "entriesPeriodFilter": "all",
     "inspectionPhotosBasePath": "fotos-vistoria",
     "paymentQrCodeBasePath": "configuracoes/qrcode-pagamento",
@@ -3868,7 +3868,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-09T01:45:22.476Z",
+    "updatedAt": "2026-06-09T01:45:26.098Z",
     "updatedBy": "residencial"
   }
 }
