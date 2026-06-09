@@ -1176,6 +1176,12 @@
                 <input id="contractEnd" type="date" required>
                 <span class="mini muted">Calculado para 6 meses, mas pode ser ajustado.</span>
               </div>
+
+              <div class="field">
+                <label for="inspectionDate">Data da vistoria</label>
+                <input id="inspectionDate" type="date">
+                <span class="mini muted">Essa data aparecerá no termo como: Vistoria e fotos realizadas no dia.</span>
+              </div>
             </div>
 
             <div class="form-row two">
@@ -1527,6 +1533,28 @@
           </div>
 
           <div class="field">
+            <label for="entriesPaymentMethodFilter">Forma de pagamento</label>
+            <select id="entriesPaymentMethodFilter">
+              <option value="all">Todas as formas</option>
+              <option value="pix">Pix</option>
+              <option value="dinheiro">Dinheiro</option>
+              <option value="transferencia">Transferência</option>
+              <option value="boleto">Boleto</option>
+              <option value="not_informed">Não informado</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="entriesPeriodFilter">Filtro por período</label>
+            <select id="entriesPeriodFilter">
+              <option value="last6">Últimos 6 meses</option>
+              <option value="last12">Último 1 ano</option>
+              <option value="last24">Últimos 2 anos</option>
+              <option value="all">Todo o período</option>
+            </select>
+          </div>
+
+          <div class="field">
             <label for="entriesApartmentFilter">Filtro por apartamento</label>
             <select id="entriesApartmentFilter">
               <option value="all">Todos os apartamentos</option>
@@ -1811,6 +1839,8 @@
           expenseDetailYear: new Date().getFullYear(),
           entriesHistoryFilter: "current",
           entriesPaymentFilter: "all",
+          entriesPaymentMethodFilter: "all",
+          entriesPeriodFilter: "all",
           inspectionPhotosBasePath: "fotos-vistoria",
           paymentQrCodeBasePath: "configuracoes/qrcode-pagamento",
           paymentQrCode: null
@@ -1900,7 +1930,7 @@
             contentType: photo.contentType || photo.mimeType || (String(src).startsWith("data:image/png") ? "image/png" : "image/jpeg"),
             size: toNumber(photo.size),
             storage: photo.storage || (path ? "github" : (String(src).startsWith("data:") ? "base64" : "")),
-            createdAt: photo.createdAt || ""
+            createdAt: photo.createdAt || photo.uploadedAt || photo.date || photo.dataAnexo || ""
           };
         }
 
@@ -1961,6 +1991,7 @@
           number: apt.number || "",
           description: apt.description || "",
           photo: "",
+          inspectionDate: apt.inspectionDate || apt.vistoriaDate || apt.dataVistoria || apt.dataDaVistoria || apt.contractStart || "",
           inspectionPhotos: normalizeInspectionPhotos(apt.inspectionPhotos || apt.vistoriaPhotos || apt.inspectionImages || apt.fotosVistoria || []),
           baseRent: toNumber(apt.baseRent),
           maintenanceFee: toNumber(apt.maintenanceFee ?? apt.maintenanceTax ?? apt.taxaManutencao ?? apt.taxaDeManutencao ?? 600),
@@ -1991,6 +2022,7 @@
           contractEnd: source.contractEnd || source.fimContrato || "",
           baseRent: toNumber(source.baseRent ?? source.valorAluguelMensal),
           maintenanceFee: toNumber(source.maintenanceFee ?? source.maintenanceTax ?? source.taxaManutencao ?? source.taxaDeManutencao ?? 600),
+          inspectionDate: source.inspectionDate || source.vistoriaDate || source.dataVistoria || source.dataDaVistoria || source.contractStart || "",
           inspectionPhotos: normalizeInspectionPhotos(source.inspectionPhotos || source.vistoriaPhotos || source.inspectionImages || source.fotosVistoria || []),
           endedAt: source.endedAt || "",
           reason: source.reason || source.observacao || ""
@@ -2939,6 +2971,22 @@
         const date = parseDate(iso);
         if (!date) return "-";
         return new Intl.DateTimeFormat("pt-BR").format(date);
+      }
+
+      function photoDateIso(photo, fallbackIso = "") {
+        const raw = String(photo?.createdAt || photo?.uploadedAt || photo?.date || photo?.dataAnexo || "").trim();
+        const datePart = raw ? raw.slice(0, 10) : "";
+
+        return datePart || fallbackIso || "";
+      }
+
+      function inspectionPhotoDateLabel(photo, fallbackIso = "") {
+        const iso = photoDateIso(photo, fallbackIso);
+        return iso ? formatDate(iso) : "Data não informada";
+      }
+
+      function apartmentInspectionDate(apartment) {
+        return apartment?.inspectionDate || apartment?.vistoriaDate || apartment?.dataVistoria || apartment?.dataDaVistoria || apartment?.contractStart || isoDate(new Date());
       }
 
       function monthName(yyyyMm) {
@@ -3899,6 +3947,7 @@
                   <span class="pill blue"><i class="fa-solid fa-money-bill-wave"></i> Aluguel base: ${money(apartment.baseRent)}</span>
                   <span class="pill yellow"><i class="fa-solid fa-brush"></i> Taxa manutenção: ${money(apartment.maintenanceFee)}</span>
                   <span class="pill blue"><i class="fa-solid fa-camera"></i> Vistoria: ${normalizeInspectionPhotos(apartment.inspectionPhotos || []).length} foto(s)</span>
+                  <span class="pill"><i class="fa-solid fa-calendar-days"></i> Data vistoria: ${formatDate(apartmentInspectionDate(apartment))}</span>
                   ${isFree ? `
                     <span class="pill green"><i class="fa-solid fa-door-open"></i> Disponível para novo morador</span>
                   ` : `
@@ -4141,6 +4190,14 @@
         return state.settings.entriesPaymentFilter || "all";
       }
 
+      function getEntriesPaymentMethodFilterMode() {
+        return state.settings.entriesPaymentMethodFilter || "all";
+      }
+
+      function getEntriesPeriodFilterMode() {
+        return state.settings.entriesPeriodFilter || "all";
+      }
+
       function getEntriesApartmentFilterMode() {
         return $("#entriesApartmentFilter")?.value || "all";
       }
@@ -4241,10 +4298,52 @@
         return entries;
       }
 
+      function filterEntriesByPaymentMethod(entries) {
+        const mode = getEntriesPaymentMethodFilterMode();
+
+        if (!mode || mode === "all") return entries;
+        if (mode === "not_informed") return entries.filter(entry => !normalizePaymentMethod(entry.paymentMethod));
+
+        return entries.filter(entry => normalizePaymentMethod(entry.paymentMethod) === mode);
+      }
+
+      function entriesPeriodRange(mode = getEntriesPeriodFilterMode()) {
+        const monthsByMode = {
+          last6: 6,
+          last12: 12,
+          last24: 24
+        };
+        const months = monthsByMode[mode];
+
+        if (!months) return null;
+
+        const current = parseMonth(currentMonthValue()) || new Date();
+        const start = new Date(current.getFullYear(), current.getMonth() - months + 1, 1);
+        const end = new Date(current.getFullYear(), current.getMonth(), 1);
+        const toMonth = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+        return { start: toMonth(start), end: toMonth(end) };
+      }
+
+      function filterEntriesByPeriod(entries) {
+        const range = entriesPeriodRange();
+
+        if (!range) return entries;
+
+        return entries.filter(entry => {
+          const month = String(entry.month || "").slice(0, 7);
+          return month && month >= range.start && month <= range.end;
+        });
+      }
+
       function getFilteredEntries() {
         return filterEntriesByApartment(
-          filterEntriesByPaymentStatus(
-            filterEntriesByMode(state.entries)
+          filterEntriesByPaymentMethod(
+            filterEntriesByPeriod(
+              filterEntriesByPaymentStatus(
+                filterEntriesByMode(state.entries)
+              )
+            )
           )
         );
       }
@@ -4304,6 +4403,8 @@
       function renderEntriesFilterControls() {
         const select = $("#entriesHistoryFilter");
         const paymentSelect = $("#entriesPaymentFilter");
+        const methodSelect = $("#entriesPaymentMethodFilter");
+        const periodSelect = $("#entriesPeriodFilter");
         const apartmentSelect = $("#entriesApartmentFilter");
         const badge = $("#entriesFilterBadge");
 
@@ -4311,10 +4412,14 @@
 
         const mode = getEntriesFilterMode();
         const paymentMode = getEntriesPaymentFilterMode();
+        const methodMode = getEntriesPaymentMethodFilterMode();
+        const periodMode = getEntriesPeriodFilterMode();
         const previousApartmentMode = apartmentSelect?.value || "all";
 
         select.value = mode;
         if (paymentSelect) paymentSelect.value = paymentMode;
+        if (methodSelect) methodSelect.value = methodMode;
+        if (periodSelect) periodSelect.value = periodMode;
 
         if (apartmentSelect) {
           const uniqueEntryOptions = new Map();
@@ -4387,7 +4492,23 @@
           unpaid: "Não pagos"
         };
 
-        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${labels[mode] || labels.current} • ${paymentLabels[paymentMode] || paymentLabels.all} • ${escapeHtml(currentEntriesApartmentFilterLabel())}`;
+        const methodLabels = {
+          all: "Todas as formas",
+          pix: "Pix",
+          dinheiro: "Dinheiro",
+          transferencia: "Transferência",
+          boleto: "Boleto",
+          not_informed: "Não informado"
+        };
+
+        const periodLabels = {
+          all: "Todo o período",
+          last6: "Últimos 6 meses",
+          last12: "Último 1 ano",
+          last24: "Últimos 2 anos"
+        };
+
+        badge.innerHTML = `<i class="fa-solid fa-filter"></i>${labels[mode] || labels.current} • ${paymentLabels[paymentMode] || paymentLabels.all} • ${methodLabels[methodMode] || methodLabels.all} • ${periodLabels[periodMode] || periodLabels.all} • ${escapeHtml(currentEntriesApartmentFilterLabel())}`;
       }
 
       function renderEntries() {
@@ -4409,7 +4530,7 @@
             <div class="empty">
               <i class="fa-solid fa-file-invoice-dollar"></i>
               <strong>${emptyText}</strong>
-              <div class="mini">Use os filtros acima para alternar entre contrato atual, contratos anteriores, apartamento, pagos, aguardando pagamento ou não pagos.</div>
+              <div class="mini">Use os filtros acima para alternar entre contrato atual, contratos anteriores, apartamento, status, forma de pagamento e período.</div>
             </div>
           `;
           return;
@@ -4822,8 +4943,7 @@
 
         el.innerHTML = tempInspectionPhotos.map((photo, index) => {
           const src = photo.src || photo.rawUrl || "";
-          const caption = photo.caption || photo.name || `Foto ${index + 1}`;
-          const storageText = photo.path ? "GitHub" : "Local";
+          const photoDate = inspectionPhotoDateLabel(photo, $("#inspectionDate")?.value || $("#contractStart")?.value || "");
 
           return `
             <div class="inspection-photo-thumb">
@@ -4835,7 +4955,7 @@
               <button type="button" title="Remover foto" data-remove-inspection-photo="${index}">
                 <i class="fa-solid fa-xmark"></i>
               </button>
-              <span class="inspection-photo-path">${escapeHtml(storageText)} • ${escapeHtml(caption)}</span>
+              <span class="inspection-photo-path">${escapeHtml(photoDate)}</span>
             </div>
           `;
         }).join("");
@@ -4894,6 +5014,7 @@
         $("#maintenanceFee").value = 600;
         $("#contractStart").value = "";
         $("#contractEnd").value = "";
+        if ($("#inspectionDate")) $("#inspectionDate").value = "";
         $("#apartmentDescription").value = "";
         $("#tenantName").value = "";
         $("#tenantCpf").value = "";
@@ -5019,6 +5140,7 @@
           contractEnd: apartment.contractEnd,
           baseRent: toNumber(apartment.baseRent),
           maintenanceFee: toNumber(apartment.maintenanceFee),
+          inspectionDate: apartmentInspectionDate(apartment),
           inspectionPhotos: [],
           endedAt: new Date().toISOString(),
           reason
@@ -5055,6 +5177,7 @@
           number,
           description: $("#apartmentDescription").value.trim(),
           photo: "",
+          inspectionDate: $("#inspectionDate")?.value || contractStart,
           inspectionPhotos: normalizeInspectionPhotos(tempInspectionPhotos),
           baseRent: toNumber($("#baseRent").value),
           maintenanceFee,
@@ -5121,6 +5244,7 @@
         $("#maintenanceFee").value = apartment.maintenanceFee ?? 600;
         $("#contractStart").value = apartment.contractStart || "";
         $("#contractEnd").value = apartment.contractEnd || (apartment.contractStart ? addMonths(apartment.contractStart, 6) : "");
+        if ($("#inspectionDate")) $("#inspectionDate").value = apartmentInspectionDate(apartment);
         $("#apartmentDescription").value = apartment.description || "";
         $("#tenantName").value = apartment.tenant?.name || "";
         $("#tenantCpf").value = apartment.tenant?.cpf || "";
@@ -5148,6 +5272,7 @@
         $("#maintenanceFee").value = apartment.maintenanceFee ?? 600;
         $("#contractStart").value = "";
         $("#contractEnd").value = "";
+        if ($("#inspectionDate")) $("#inspectionDate").value = "";
         $("#apartmentDescription").value = apartment.description || "";
         $("#tenantName").value = "";
         $("#tenantCpf").value = "";
@@ -6199,6 +6324,8 @@
 
         const historyText = selectedOptionText("#entriesHistoryFilter") || "Todos os lançamentos";
         const paymentText = selectedOptionText("#entriesPaymentFilter") || "Todos os pagamentos";
+        const methodText = selectedOptionText("#entriesPaymentMethodFilter") || "Todas as formas";
+        const periodText = selectedOptionText("#entriesPeriodFilter") || "Todo o período";
         const apartmentText = currentEntriesApartmentFilterLabel();
 
         const rows = filtered
@@ -6223,7 +6350,7 @@
 
         const report = buildPrintableReport({
           title: options.title || "Relatório Financeiro de Lançamentos",
-          subtitle: `Filtros: ${historyText} • ${paymentText} • ${apartmentText}`,
+          subtitle: `Filtros: ${historyText} • ${paymentText} • ${methodText} • ${periodText} • ${apartmentText}`,
           summaryCards: [
             { label: "Total filtrado", value: money(total) },
             { label: "Total pago", value: money(paidTotal) },
@@ -6233,7 +6360,9 @@
             { label: "Aluguel", value: money(rentTotal) },
             { label: "Luz/COSIP", value: money(energyTotalValue) },
             { label: "Taxa de lixo", value: money(trashTotal) },
-            { label: "Taxa manutenção", value: money(maintenanceFeeTotal) }
+            { label: "Taxa manutenção", value: money(maintenanceFeeTotal) },
+            { label: "Forma pgto.", value: methodText },
+            { label: "Período", value: periodText }
           ],
           headers: ["Imóvel", "Morador", "Mês/Ano", "Status", "Forma pgto.", "Aluguel", "Consumo", "Luz/COSIP", "Taxa de lixo", "Taxa manutenção", "Total"],
           rows,
@@ -6246,6 +6375,8 @@
           safeFilePart(apartmentText),
           safeFilePart(historyText),
           safeFilePart(paymentText),
+          safeFilePart(methodText),
+          safeFilePart(periodText),
           new Date().toISOString().slice(0,10)
         ].filter(Boolean);
 
@@ -6847,7 +6978,8 @@
           : `<div class="report-logo-fallback">G.A</div>`;
 
         const photos = await hydrateInspectionPhotosForDocument(apartment.inspectionPhotos || []);
-        const inspectionDate = formatDateLong(isoDate(new Date()));
+        const inspectionDateIso = apartmentInspectionDate(apartment);
+        const inspectionDate = formatDateLong(inspectionDateIso);
         const startDate = apartment.contractStart || isoDate(new Date());
         const endDate = apartment.contractEnd || addMonths(startDate, 6);
         const tenantName = tenant.name || "________________________________";
@@ -6873,7 +7005,7 @@
               ${page.map((photo, index) => `
                 <figure>
                   ${photo.src ? `<img src="${photo.src}" alt="Foto de vistoria ${pageIndex * 4 + index + 1}">` : `<div class="photo-missing">Foto salva no GitHub não pôde ser carregada</div>`}
-                  <figcaption>Foto ${pageIndex * 4 + index + 1}${photo.caption ? ` - ${escapeHtml(photo.caption)}` : ""}</figcaption>
+                  <figcaption>Foto ${pageIndex * 4 + index + 1} - ${escapeHtml(inspectionPhotoDateLabel(photo, inspectionDateIso))}</figcaption>
                 </figure>
               `).join("")}
             </div>
@@ -7464,6 +7596,20 @@
           });
         }
 
+        if ($("#entriesPaymentMethodFilter")) {
+          $("#entriesPaymentMethodFilter").addEventListener("change", async event => {
+            state.settings.entriesPaymentMethodFilter = event.target.value;
+            await save("Filtro de forma de pagamento salvo.");
+          });
+        }
+
+        if ($("#entriesPeriodFilter")) {
+          $("#entriesPeriodFilter").addEventListener("change", async event => {
+            state.settings.entriesPeriodFilter = event.target.value;
+            await save("Filtro de período financeiro salvo.");
+          });
+        }
+
         if ($("#entriesApartmentFilter")) {
           $("#entriesApartmentFilter").addEventListener("change", renderEntries);
         }
@@ -7635,6 +7781,9 @@
         if (!state.settings.dashboardPeriod) state.settings.dashboardPeriod = "currentYear";
         if (!state.settings.dashboardYear) state.settings.dashboardYear = new Date().getFullYear();
         if (!state.settings.entriesHistoryFilter) state.settings.entriesHistoryFilter = "current";
+        if (!state.settings.entriesPaymentFilter) state.settings.entriesPaymentFilter = "all";
+        if (!state.settings.entriesPaymentMethodFilter) state.settings.entriesPaymentMethodFilter = "all";
+        if (!state.settings.entriesPeriodFilter) state.settings.entriesPeriodFilter = "all";
 
         clearExpenseForm();
         clearEntryForm();
