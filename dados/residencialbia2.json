@@ -8,6 +8,8 @@
     "expenseDetailYear": 2026,
     "entriesHistoryFilter": "current",
     "entriesPaymentFilter": "pending",
+    "entriesPaymentMethodFilter": "pix",
+    "entriesPeriodFilter": "all",
     "inspectionPhotosBasePath": "fotos-vistoria",
     "paymentQrCodeBasePath": "configuracoes/qrcode-pagamento",
     "paymentQrCode": {
@@ -19,9 +21,7 @@
       "size": 86920,
       "storage": "github",
       "updatedAt": "2026-06-07T23:02:21.726Z"
-    },
-    "entriesPaymentMethodFilter": "all",
-    "entriesPeriodFilter": "all"
+    }
   },
   "users": [
     {
@@ -47,6 +47,7 @@
       "number": "Apto 01",
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
+      "inspectionDate": "2025-12-10",
       "inspectionPhotos": [],
       "baseRent": 1300,
       "maintenanceFee": 600,
@@ -78,6 +79,7 @@
           "contractEnd": "2025-10-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-04-10",
           "inspectionPhotos": [],
           "endedAt": "2025-10-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -89,6 +91,7 @@
       "number": "Apto 02",
       "description": "Apartamento importado do contrato de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado no Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
+      "inspectionDate": "2026-04-10",
       "inspectionPhotos": [],
       "baseRent": 1300,
       "maintenanceFee": 600,
@@ -120,6 +123,7 @@
           "contractEnd": "2025-10-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-04-10",
           "inspectionPhotos": [],
           "endedAt": "2025-10-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -131,6 +135,7 @@
       "number": "Apto 03",
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
+      "inspectionDate": "2026-06-10",
       "inspectionPhotos": [
         {
           "id": "inspection_photo_256ada41-a9fe-496e-ae7d-78f203cfe9fb",
@@ -343,6 +348,7 @@
           "contractEnd": "2025-10-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-04-10",
           "inspectionPhotos": [],
           "endedAt": "2025-10-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -363,6 +369,7 @@
           "contractEnd": "2026-06-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-12-10",
           "inspectionPhotos": [],
           "endedAt": "2026-05-30T22:51:43.049Z",
           "reason": "Apartamento liberado para novo contrato"
@@ -374,6 +381,7 @@
       "number": "Apto 04",
       "description": "Apartamento importado dos contratos e termos de vistoria. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
+      "inspectionDate": "2026-01-16",
       "inspectionPhotos": [],
       "baseRent": 1300,
       "maintenanceFee": 600,
@@ -405,6 +413,7 @@
           "contractEnd": "2025-10-09",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-04-09",
           "inspectionPhotos": [],
           "endedAt": "2025-10-09T12:00:00.000Z",
           "reason": "Termo de vistoria/contrato anterior importado."
@@ -425,6 +434,7 @@
           "contractEnd": "2026-01-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-07-10",
           "inspectionPhotos": [],
           "endedAt": "2026-01-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -436,6 +446,7 @@
       "number": "Apto 05",
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado no Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
+      "inspectionDate": "2026-03-10",
       "inspectionPhotos": [],
       "baseRent": 1300,
       "maintenanceFee": 600,
@@ -467,6 +478,7 @@
           "contractEnd": "2025-10-06",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-04-06",
           "inspectionPhotos": [],
           "endedAt": "2025-10-06T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -487,6 +499,7 @@
           "contractEnd": "2026-03-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-09-10",
           "inspectionPhotos": [],
           "endedAt": "2026-03-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -498,6 +511,7 @@
       "number": "Apto 06",
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC. Contrato atual possui duas moradoras: ALIDA THASY NASCIMENTO COSTA e KETLEN CRISTINA BARBOSA OLIVEIRA.",
       "photo": "",
+      "inspectionDate": "2026-03-15",
       "inspectionPhotos": [],
       "baseRent": 1300,
       "maintenanceFee": 600,
@@ -529,6 +543,7 @@
           "contractEnd": "2026-04-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-10-10",
           "inspectionPhotos": [],
           "endedAt": "2026-04-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -540,6 +555,7 @@
       "number": "Apto 07",
       "description": "Apartamento importado dos contratos e termos de vistoria. Imóvel tipo kitnet situado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
+      "inspectionDate": "2026-03-16",
       "inspectionPhotos": [],
       "baseRent": 1300,
       "maintenanceFee": 600,
@@ -571,6 +587,7 @@
           "contractEnd": "2025-11-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-05-16",
           "inspectionPhotos": [],
           "endedAt": "2025-11-10T12:00:00.000Z",
           "reason": "Termo de vistoria/contrato anterior importado."
@@ -591,6 +608,7 @@
           "contractEnd": "2026-02-16",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-08-10",
           "inspectionPhotos": [],
           "endedAt": "2026-02-16T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -602,6 +620,7 @@
       "number": "Apto 08",
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado no Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
+      "inspectionDate": "2025-08-14",
       "inspectionPhotos": [],
       "baseRent": 1300,
       "maintenanceFee": 600,
@@ -633,6 +652,7 @@
           "contractEnd": "2025-10-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-04-10",
           "inspectionPhotos": [],
           "endedAt": "2025-10-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -653,6 +673,7 @@
           "contractEnd": "2026-02-10",
           "baseRent": 1300,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-08-14",
           "inspectionPhotos": [],
           "endedAt": "2026-02-10T12:00:00.000Z",
           "reason": "Contrato anterior importado."
@@ -664,6 +685,7 @@
       "number": "Casa Eldorado",
       "description": "",
       "photo": "",
+      "inspectionDate": "2025-08-10",
       "inspectionPhotos": [],
       "baseRent": 1250,
       "maintenanceFee": 600,
@@ -695,6 +717,7 @@
           "contractEnd": "2025-08-10",
           "baseRent": 1250,
           "maintenanceFee": 600,
+          "inspectionDate": "2025-02-10",
           "inspectionPhotos": [],
           "endedAt": "2025-08-10T12:00:00.000Z",
           "reason": "Contrato anterior informado pelo proprietário e importado para histórico."
@@ -3845,7 +3868,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-09T01:29:24.354Z",
+    "updatedAt": "2026-06-09T01:44:35.500Z",
     "updatedBy": "residencial"
   }
 }
