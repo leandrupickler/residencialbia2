@@ -19,7 +19,9 @@
       "size": 86920,
       "storage": "github",
       "updatedAt": "2026-06-07T23:02:21.726Z"
-    }
+    },
+    "entriesPaymentMethodFilter": "all",
+    "entriesPeriodFilter": "all"
   },
   "users": [
     {
