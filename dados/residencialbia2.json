@@ -3675,7 +3675,7 @@
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid",
-      "paymentMethod": ""
+      "paymentMethod": "pix"
     },
     {
       "id": "entry_ea889652-2efb-47f2-88d3-4edd5c4aaaa2",
@@ -3868,7 +3868,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-09T01:45:32.417Z",
+    "updatedAt": "2026-06-09T01:45:37.044Z",
     "updatedBy": "residencial"
   }
 }
