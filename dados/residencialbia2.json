@@ -7,7 +7,7 @@
     "expenseDetailPeriod": "last6",
     "expenseDetailYear": 2026,
     "entriesHistoryFilter": "current",
-    "entriesPaymentFilter": "pending",
+    "entriesPaymentFilter": "paid",
     "entriesPaymentMethodFilter": "pix",
     "entriesPeriodFilter": "all",
     "inspectionPhotosBasePath": "fotos-vistoria",
@@ -3868,7 +3868,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-09T01:44:41.774Z",
+    "updatedAt": "2026-06-09T01:44:48.351Z",
     "updatedBy": "residencial"
   }
 }
