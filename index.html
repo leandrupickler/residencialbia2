@@ -1691,6 +1691,91 @@
               </button>
             </div>
 
+            <div class="section-title" style="margin-top:22px;">
+              <div>
+                <h2>Dados dos contratos</h2>
+                <p>Altere as informações do locador e das testemunhas usadas no contrato de locação e no termo de vistoria.</p>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="contractLandlordName">Nome do locador *</label>
+                <input id="contractLandlordName" type="text" required>
+              </div>
+
+              <div class="field">
+                <label for="contractLandlordNationality">Nacionalidade</label>
+                <input id="contractLandlordNationality" type="text" placeholder="Ex.: brasileiro">
+              </div>
+
+              <div class="field">
+                <label for="contractLandlordMaritalStatus">Estado civil</label>
+                <input id="contractLandlordMaritalStatus" type="text" placeholder="Ex.: casado">
+              </div>
+
+              <div class="field">
+                <label for="contractLandlordProfession">Profissão</label>
+                <input id="contractLandlordProfession" type="text" placeholder="Ex.: funcionário público">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="contractLandlordRg">RG</label>
+                <input id="contractLandlordRg" type="text">
+              </div>
+
+              <div class="field">
+                <label for="contractLandlordRgIssuer">Órgão expedidor</label>
+                <input id="contractLandlordRgIssuer" type="text" placeholder="Ex.: SSP/SC">
+              </div>
+
+              <div class="field">
+                <label for="contractLandlordCpf">CPF *</label>
+                <input id="contractLandlordCpf" type="text" placeholder="000.000.000-00" required>
+              </div>
+
+              <div class="field">
+                <label for="contractLandlordCity">Cidade/UF da assinatura</label>
+                <input id="contractLandlordCity" type="text" placeholder="Ex.: Palhoça/SC">
+              </div>
+            </div>
+
+            <div class="form-row two">
+              <div class="field">
+                <label for="contractLandlordAddress">Endereço completo do locador</label>
+                <input id="contractLandlordAddress" type="text" placeholder="Rua, bairro, cidade/UF">
+              </div>
+
+              <div class="field">
+                <label for="contractLandlordEmail">E-mail para contato/contestação</label>
+                <input id="contractLandlordEmail" type="email" placeholder="email@exemplo.com">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="contractWitness1Name">Testemunha 1 - Nome</label>
+                <input id="contractWitness1Name" type="text">
+              </div>
+
+              <div class="field">
+                <label for="contractWitness1Cpf">Testemunha 1 - CPF</label>
+                <input id="contractWitness1Cpf" type="text" placeholder="000.000.000-00">
+              </div>
+
+              <div class="field">
+                <label for="contractWitness2Name">Testemunha 2 - Nome</label>
+                <input id="contractWitness2Name" type="text">
+              </div>
+
+              <div class="field">
+                <label for="contractWitness2Cpf">Testemunha 2 - CPF</label>
+                <input id="contractWitness2Cpf" type="text" placeholder="000.000.000-00">
+              </div>
+            </div>
+
             <div class="form-actions">
               <button class="btn btn-primary" type="submit">
                 <i class="fa-solid fa-floppy-disk"></i> Salvar configurações
@@ -1881,7 +1966,21 @@
           entriesPeriodFilter: "all",
           inspectionPhotosBasePath: "fotos-vistoria",
           paymentQrCodeBasePath: "configuracoes/qrcode-pagamento",
-          paymentQrCode: null
+          paymentQrCode: null,
+          contractLandlordName: "LEANDRO PICKLER",
+          contractLandlordNationality: "brasileiro",
+          contractLandlordMaritalStatus: "casado",
+          contractLandlordProfession: "funcionário público",
+          contractLandlordRg: "4.183.420",
+          contractLandlordRgIssuer: "SSP/SC",
+          contractLandlordCpf: "050.158.229-01",
+          contractLandlordAddress: "Prefeito Otávio Zacchi, Bairro Centro, na Cidade de Palhoça/SC",
+          contractLandlordCity: "Palhoça/SC",
+          contractLandlordEmail: "leandropickler@gmail.com",
+          contractWitness1Name: "DEBORA APARECIDA KIRCHNER PICKLER",
+          contractWitness1Cpf: "047.833.189-48",
+          contractWitness2Name: "",
+          contractWitness2Cpf: ""
         },
         users: [],
         apartments: [],
@@ -4948,6 +5047,20 @@
 
       function renderSettings() {
         $("#appName").value = state.settings.appName || "G.A - Gestão de Aluguel";
+        $("#contractLandlordName").value = state.settings.contractLandlordName || "LEANDRO PICKLER";
+        $("#contractLandlordNationality").value = state.settings.contractLandlordNationality || "brasileiro";
+        $("#contractLandlordMaritalStatus").value = state.settings.contractLandlordMaritalStatus || "casado";
+        $("#contractLandlordProfession").value = state.settings.contractLandlordProfession || "funcionário público";
+        $("#contractLandlordRg").value = state.settings.contractLandlordRg || "4.183.420";
+        $("#contractLandlordRgIssuer").value = state.settings.contractLandlordRgIssuer || "SSP/SC";
+        $("#contractLandlordCpf").value = state.settings.contractLandlordCpf || "050.158.229-01";
+        $("#contractLandlordAddress").value = state.settings.contractLandlordAddress || "Prefeito Otávio Zacchi, Bairro Centro, na Cidade de Palhoça/SC";
+        $("#contractLandlordCity").value = state.settings.contractLandlordCity || "Palhoça/SC";
+        $("#contractLandlordEmail").value = state.settings.contractLandlordEmail || "leandropickler@gmail.com";
+        $("#contractWitness1Name").value = state.settings.contractWitness1Name || "DEBORA APARECIDA KIRCHNER PICKLER";
+        $("#contractWitness1Cpf").value = state.settings.contractWitness1Cpf || "047.833.189-48";
+        $("#contractWitness2Name").value = state.settings.contractWitness2Name || "";
+        $("#contractWitness2Cpf").value = state.settings.contractWitness2Cpf || "";
         tempAppLogo = state.settings.logo || "";
         tempPaymentQrCode = normalizePaymentQrCode(state.settings.paymentQrCode);
         renderLogoPreview();
@@ -5646,6 +5759,20 @@
         if (!requireWrite()) return;
         state.settings.appName = $("#appName").value.trim() || "G.A - Gestão de Aluguel";
         state.settings.logo = tempAppLogo || "";
+        state.settings.contractLandlordName = $("#contractLandlordName").value.trim() || "LEANDRO PICKLER";
+        state.settings.contractLandlordNationality = $("#contractLandlordNationality").value.trim() || "brasileiro";
+        state.settings.contractLandlordMaritalStatus = $("#contractLandlordMaritalStatus").value.trim() || "casado";
+        state.settings.contractLandlordProfession = $("#contractLandlordProfession").value.trim() || "funcionário público";
+        state.settings.contractLandlordRg = $("#contractLandlordRg").value.trim() || "4.183.420";
+        state.settings.contractLandlordRgIssuer = $("#contractLandlordRgIssuer").value.trim() || "SSP/SC";
+        state.settings.contractLandlordCpf = $("#contractLandlordCpf").value.trim() || "050.158.229-01";
+        state.settings.contractLandlordAddress = $("#contractLandlordAddress").value.trim() || "Prefeito Otávio Zacchi, Bairro Centro, na Cidade de Palhoça/SC";
+        state.settings.contractLandlordCity = $("#contractLandlordCity").value.trim() || "Palhoça/SC";
+        state.settings.contractLandlordEmail = $("#contractLandlordEmail").value.trim() || "leandropickler@gmail.com";
+        state.settings.contractWitness1Name = $("#contractWitness1Name").value.trim();
+        state.settings.contractWitness1Cpf = $("#contractWitness1Cpf").value.trim();
+        state.settings.contractWitness2Name = $("#contractWitness2Name").value.trim();
+        state.settings.contractWitness2Cpf = $("#contractWitness2Cpf").value.trim();
         state.settings.paymentQrCodeBasePath = state.settings.paymentQrCodeBasePath || PAYMENT_QRCODE_BASE_PATH;
         state.settings.paymentQrCode = normalizePaymentQrCode(tempPaymentQrCode);
         await save("Configurações salvas.");
@@ -6676,6 +6803,48 @@
         return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
       }
 
+      function contractField(value, fallback = "________________") {
+        const text = String(value || "").trim();
+        return text || fallback;
+      }
+
+      function contractCpf(value) {
+        const text = String(value || "").trim();
+        return text ? formatCpf(text) : "________________";
+      }
+
+      function getContractSettings() {
+        const settings = state.settings || {};
+        return {
+          landlordName: contractField(settings.contractLandlordName, "LEANDRO PICKLER"),
+          landlordNationality: contractField(settings.contractLandlordNationality, "brasileiro"),
+          landlordMaritalStatus: contractField(settings.contractLandlordMaritalStatus, "casado"),
+          landlordProfession: contractField(settings.contractLandlordProfession, "funcionário público"),
+          landlordRg: contractField(settings.contractLandlordRg, "4.183.420"),
+          landlordRgIssuer: contractField(settings.contractLandlordRgIssuer, "SSP/SC"),
+          landlordCpf: contractCpf(settings.contractLandlordCpf || "050.158.229-01"),
+          landlordAddress: contractField(settings.contractLandlordAddress, "Prefeito Otávio Zacchi, Bairro Centro, na Cidade de Palhoça/SC"),
+          landlordCity: contractField(settings.contractLandlordCity, "Palhoça/SC"),
+          landlordEmail: contractField(settings.contractLandlordEmail, "leandropickler@gmail.com"),
+          witness1Name: contractField(settings.contractWitness1Name, "DEBORA APARECIDA KIRCHNER PICKLER"),
+          witness1Cpf: contractCpf(settings.contractWitness1Cpf || "047.833.189-48"),
+          witness2Name: String(settings.contractWitness2Name || "").trim(),
+          witness2Cpf: String(settings.contractWitness2Cpf || "").trim()
+        };
+      }
+
+      function contractWitnessSignature(name, cpf) {
+        const witnessName = String(name || "").trim();
+        const witnessCpf = String(cpf || "").trim();
+
+        return `
+      <div class="line">
+        <strong>TESTEMUNHA</strong><br>
+        ${witnessName ? escapeHtml(witnessName) : "Nome: _______________________________"}<br>
+        ${witnessCpf ? `CPF n. ${escapeHtml(contractCpf(witnessCpf))}` : "CPF: ________________________________"}
+      </div>`;
+      }
+
       function formatDateLong(iso) {
         const date = parseDate(iso);
         if (!date) return "____ de __________________ de ______";
@@ -6725,6 +6894,7 @@
         const tenantName = tenant.name || "________________________________";
         const tenantCpf = formatCpf(tenant.cpf);
         const tenantPhone = tenant.phone || "________________";
+        const contractSettings = getContractSettings();
 
         const rawApartmentNumber = String(apartment.number || "Apartamento").trim();
         const apartmentDigits = rawApartmentNumber.match(/\d+/)?.[0] || rawApartmentNumber;
@@ -6926,7 +7096,7 @@
 
   <h1>Contrato de Locação com Prazo Determinado de 6 Meses</h1>
 
-  <p class="opening">Fazem entre si, <strong>LEANDRO PICKLER</strong>, brasileiro, casado, inscrito no RG n. 4.183.420 expedida pela SSP/SC e portador do CPF sob o n. <strong>050.158.229-01</strong>, residente e domiciliado na Prefeito Otávio Zacchi, Bairro Centro, na Cidade de Palhoça/SC, doravante denominado <strong>LOCADOR</strong>; de outro lado <strong>${escapeHtml(tenantName)}</strong>, brasileiro(a), inscrito(a) no CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número de telefone <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado(a) <strong>LOCATÁRIO(A)</strong>, firmam o presente <strong>CONTRATO DE LOCAÇÃO</strong>.</p>
+  <p class="opening">Fazem entre si, <strong>${escapeHtml(contractSettings.landlordName)}</strong>, ${escapeHtml(contractSettings.landlordNationality)}, ${escapeHtml(contractSettings.landlordMaritalStatus)}, ${escapeHtml(contractSettings.landlordProfession)}, inscrito no RG n. ${escapeHtml(contractSettings.landlordRg)} expedida pela ${escapeHtml(contractSettings.landlordRgIssuer)} e portador do CPF sob o n. <strong>${escapeHtml(contractSettings.landlordCpf)}</strong>, residente e domiciliado na ${escapeHtml(contractSettings.landlordAddress)}, doravante denominado <strong>LOCADOR</strong>; de outro lado <strong>${escapeHtml(tenantName)}</strong>, brasileiro(a), inscrito(a) no CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número de telefone <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado(a) <strong>LOCATÁRIO(A)</strong>, firmam o presente <strong>CONTRATO DE LOCAÇÃO</strong>.</p>
 
   <h2>Das Cláusulas do Contrato</h2>
 
@@ -7009,13 +7179,13 @@
 
   <p style="margin-top:24px;">E por estarem justos e contratados, as partes firmam o presente contrato em duas vias de igual conteúdo e teor para que surjam seus legais e jurídicos efeitos na presença de testemunhas, que igualmente assinam.</p>
 
-  <p class="center" style="margin-top:26px;">Palhoça/SC, ${todayText}.</p>
+  <p class="center" style="margin-top:26px;">${escapeHtml(contractSettings.landlordCity)}, ${todayText}.</p>
 
   <div class="signatures">
     <div class="line">
       <strong>LOCADOR</strong><br>
-      LEANDRO PICKLER<br>
-      CPF n. 050.158.229-01
+      ${escapeHtml(contractSettings.landlordName)}<br>
+      CPF n. ${escapeHtml(contractSettings.landlordCpf)}
     </div>
 
     <div class="signature-gap-locador-locatario"></div>
@@ -7029,17 +7199,9 @@
     <div class="signature-gap-locatario-testemunhas"></div>
 
     <div class="two">
-      <div class="line">
-        <strong>TESTEMUNHA</strong><br>
-        DEBORA APARECIDA KIRCHNER PICKLER<br>
-        CPF n. 047.833.189-48
-      </div>
+      ${contractWitnessSignature(contractSettings.witness1Name, contractSettings.witness1Cpf)}
 
-      <div class="line">
-        <strong>TESTEMUNHA</strong><br>
-        Nome: _______________________________<br>
-        CPF: ________________________________
-      </div>
+      ${contractWitnessSignature(contractSettings.witness2Name, contractSettings.witness2Cpf)}
     </div>
   </div>
 
@@ -7078,6 +7240,7 @@
         const tenantName = tenant.name || "________________________________";
         const tenantCpf = formatCpf(tenant.cpf);
         const tenantPhone = tenant.phone || "________________";
+        const contractSettings = getContractSettings();
         const apartmentDigits = String(apartment.number || "").match(/\d+/)?.[0] || "";
         const apartmentNumberText = apartmentDigits ? apartmentDigits.replace(/^0+/, "") || apartmentDigits : escapeHtml(apartment.number || "____");
         const propertyDescription = apartment.description || "um quarto, uma sala e cozinha conjugada, área de serviço e banheiro completo";
@@ -7302,7 +7465,7 @@
 
     <h1>TERMO DE VISTORIA DE ENTRADA</h1>
 
-    <p><strong>LEANDRO PICKLER</strong>, casado, funcionário publico, inscrito no RG n. 4183420 e portador do CPF sob o n. 050.158.229-01, residente e domiciliada na Rua Prefeito Otavio Zacchi, Centro, Palhoça/SC, doravante denominada <strong>LOCADOR</strong>; <strong>${escapeHtml(tenantName)}</strong>, brasileiro, e portador do CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número telefônico <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado <strong>LOCATÁRIO</strong> no presente termo de vistoria.</p>
+    <p><strong>${escapeHtml(contractSettings.landlordName)}</strong>, ${escapeHtml(contractSettings.landlordMaritalStatus)}, ${escapeHtml(contractSettings.landlordProfession)}, inscrito no RG n. ${escapeHtml(contractSettings.landlordRg)} e portador do CPF sob o n. ${escapeHtml(contractSettings.landlordCpf)}, residente e domiciliado na ${escapeHtml(contractSettings.landlordAddress)}, doravante denominado <strong>LOCADOR</strong>; <strong>${escapeHtml(tenantName)}</strong>, brasileiro, e portador do CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número telefônico <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado <strong>LOCATÁRIO</strong> no presente termo de vistoria.</p>
 
     <h2>DADOS DO IMÓVEL</h2>
 
@@ -7386,7 +7549,7 @@
 
     <p>Caso identifique divergências entre esse relatório e estado atual do imóvel, você poderá abrir contestação mediante os seguintes pré-requisitos: a) Serão aceitas as divergências apenas dentro do prazo previsto (48 horas após a entrega das chaves);</p>
 
-    <p>b) Confira a vistoria de entrada. Caso algum item não esteja descrito de acordo com o imóvel, envie as contestações por cômodo e fotos comprovando a divergência para o e-mail leandropickler@gmail.com Após a análise, o LOCADOR enviará um relatório para o cliente.</p>
+    <p>b) Confira a vistoria de entrada. Caso algum item não esteja descrito de acordo com o imóvel, envie as contestações por cômodo e fotos comprovando a divergência para o e-mail ${escapeHtml(contractSettings.landlordEmail)}. Após a análise, o LOCADOR enviará um relatório para o cliente.</p>
 
     <h2>OBSERVAÇÕES</h2>
 
@@ -7402,13 +7565,13 @@
   <section class="page signatures">
     <div class="logo">${logo}</div>
 
-    <p class="center">Palhoça, ${inspectionDate}.</p>
+    <p class="center">${escapeHtml(contractSettings.landlordCity)}, ${inspectionDate}.</p>
 
     <div class="signature-gap-date-locador"></div>
 
     <div class="line">
-      LEANDRO PICKLER - LOCADOR<br>
-      CPF n. 050.158.229-01
+      ${escapeHtml(contractSettings.landlordName)} - LOCADOR<br>
+      CPF n. ${escapeHtml(contractSettings.landlordCpf)}
     </div>
 
     <div class="signature-gap-locador-locatario-vistoria"></div>
