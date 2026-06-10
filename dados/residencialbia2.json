@@ -114,7 +114,7 @@
       "tenant": {
         "name": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
         "cpf": "804.173.530-49",
-        "phone": "988022350",
+        "phone": "48 988022350",
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
@@ -3900,10 +3900,31 @@
       "contractStart": "2025-08-10",
       "paymentStatus": "paid",
       "paymentMethod": ""
+    },
+    {
+      "id": "entry_initial_contract_587fdaeb-5631-4a8c-bea5-53fde7ee0683",
+      "apartmentId": "apartment_apto02",
+      "apartmentNumber": "Apto 02",
+      "tenantName": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
+      "tenantCpf": "804.173.530-49",
+      "month": "2026-04",
+      "rent": 1300,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "contractInitial",
+      "contractStart": "2026-04-10",
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-10T01:49:10.753Z",
+    "updatedAt": "2026-06-10T01:52:58.457Z",
     "updatedBy": "residencial"
   }
 }
