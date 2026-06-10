@@ -702,7 +702,7 @@
       "inspectionDate": "2025-08-10",
       "inspectionPhotos": [],
       "baseRent": 1250,
-      "maintenanceFee": 600,
+      "maintenanceFee": 0,
       "contractStart": "2025-08-10",
       "contractEnd": "2026-08-10",
       "tenant": {
@@ -3879,10 +3879,31 @@
       "contractStart": "2026-06-10",
       "paymentStatus": "paid",
       "paymentMethod": ""
+    },
+    {
+      "id": "entry_initial_contract_a3993741-f625-4352-b32c-6ea6da60f9f6",
+      "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
+      "apartmentNumber": "Casa Eldorado",
+      "tenantName": "WANILSON DA SILVA TEIXEIRA",
+      "tenantCpf": "009.022.242-39",
+      "month": "2025-08",
+      "rent": 1250,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "contractInitial",
+      "contractStart": "2025-08-10",
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-10T01:29:58.277Z",
+    "updatedAt": "2026-06-10T01:49:10.753Z",
     "updatedBy": "residencial"
   }
 }
