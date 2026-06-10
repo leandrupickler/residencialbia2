@@ -135,7 +135,7 @@
       "number": "Apto 03",
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
-      "inspectionDate": "2026-06-10",
+      "inspectionDate": "2026-06-06",
       "inspectionPhotos": [
         {
           "id": "inspection_photo_256ada41-a9fe-496e-ae7d-78f203cfe9fb",
@@ -3868,7 +3868,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-09T01:45:37.044Z",
+    "updatedAt": "2026-06-10T01:29:30.494Z",
     "updatedBy": "residencial"
   }
 }
