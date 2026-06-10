@@ -21,7 +21,21 @@
       "size": 86920,
       "storage": "github",
       "updatedAt": "2026-06-07T23:02:21.726Z"
-    }
+    },
+    "contractLandlordName": "LEANDRO PICKLER",
+    "contractLandlordNationality": "brasileiro",
+    "contractLandlordMaritalStatus": "casado",
+    "contractLandlordProfession": "funcionário público",
+    "contractLandlordRg": "4.183.420",
+    "contractLandlordRgIssuer": "SSP/SC",
+    "contractLandlordCpf": "050.158.229-01",
+    "contractLandlordAddress": "Prefeito Otávio Zacchi, Bairro Centro, na Cidade de Palhoça/SC",
+    "contractLandlordCity": "Palhoça/SC",
+    "contractLandlordEmail": "leandropickler@gmail.com",
+    "contractWitness1Name": "DEBORA APARECIDA KIRCHNER PICKLER",
+    "contractWitness1Cpf": "047.833.189-48",
+    "contractWitness2Name": "",
+    "contractWitness2Cpf": ""
   },
   "users": [
     {
