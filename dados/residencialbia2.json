@@ -400,7 +400,7 @@
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2026-01-16",
-      "contractEnd": "2026-07-10",
+      "contractEnd": "2027-01-10",
       "tenant": {
         "name": "ISMAEL ROSENDO DA SILVA",
         "cpf": "949.247.832-34",
@@ -3924,7 +3924,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-10T22:39:19.722Z",
+    "updatedAt": "2026-06-10T22:43:25.066Z",
     "updatedBy": "residencial"
   }
 }
