@@ -546,6 +546,44 @@
 
     .contract-alert strong { color: #6f5100; }
 
+    .alert-group-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0 4px;
+      padding: 0 2px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    .alert-group-title span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alert-count {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .payment-alert.pending {
+      border-color: rgba(66, 133, 244, 0.30);
+      background: rgba(66, 133, 244, 0.10);
+    }
+
+    .payment-alert.pending strong { color: var(--blue); }
+
+    .payment-alert.unpaid {
+      border-color: rgba(234, 67, 53, 0.30);
+      background: rgba(234, 67, 53, 0.10);
+    }
+
+    .payment-alert.unpaid strong { color: var(--red); }
+
     .preview-box {
       display: grid;
       place-items: center;
@@ -1125,8 +1163,8 @@
 
         <div class="section-title">
           <div>
-            <h2>Alertas de contratos</h2>
-            <p>Contratos que vencem no mês seguinte, considerando ciclo de 6 meses.</p>
+            <h2>Alertas</h2>
+            <p>Contratos que vencem no mês seguinte e lançamentos com pagamento aguardando ou não pago.</p>
           </div>
         </div>
 
@@ -3858,7 +3896,7 @@
         const firstNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
         const firstAfterNext = new Date(now.getFullYear(), now.getMonth() + 2, 1);
 
-        const alerts = state.apartments
+        const contractAlerts = state.apartments
           .filter(apartment => apartment.status !== "free" && apartment.tenant?.name)
           .map(apartment => ({ ...apartment, currentEnd: apartment.contractEnd || addMonths(apartment.contractStart, 6) }))
           .filter(apartment => {
@@ -3867,28 +3905,83 @@
           })
           .sort((a, b) => String(a.currentEnd).localeCompare(String(b.currentEnd)));
 
-        if (!alerts.length) {
+        const paymentAlerts = state.entries
+          .filter(entry => {
+            const status = normalizePaymentStatus(entry.paymentStatus);
+            return status === "pending" || status === "unpaid";
+          })
+          .map(entry => ({
+            entry,
+            apartment: getApartment(entry.apartmentId),
+            status: normalizePaymentStatus(entry.paymentStatus)
+          }))
+          .sort((a, b) => {
+            const monthCompare = String(b.entry.month || "").localeCompare(String(a.entry.month || ""));
+            if (monthCompare !== 0) return monthCompare;
+
+            const apartmentCompare = entryApartmentNumber(a.entry).localeCompare(entryApartmentNumber(b.entry), "pt-BR", { numeric: true });
+            if (apartmentCompare !== 0) return apartmentCompare;
+
+            return entryTenantName(a.entry).localeCompare(entryTenantName(b.entry), "pt-BR", { numeric: true });
+          });
+
+        if (!contractAlerts.length && !paymentAlerts.length) {
           el.innerHTML = `
             <div class="empty">
               <i class="fa-solid fa-circle-check"></i>
-              <strong>Nenhum contrato vence no mês seguinte.</strong>
-              <div class="mini">Quando algum contrato estiver próximo do vencimento, aparecerá aqui.</div>
+              <strong>Nenhum alerta no momento.</strong>
+              <div class="mini">Contratos próximos do vencimento e pagamentos pendentes aparecerão aqui.</div>
             </div>
           `;
           return;
         }
 
-        el.innerHTML = alerts.map(apartment => `
-          <div class="contract-alert">
-            <div>
-              <strong>${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</strong>
-              <div class="mini muted">Vencimento: ${formatDate(apartment.currentEnd)} • Telefone: ${escapeHtml(apartment.tenant.phone || "-")}</div>
-            </div>
-            <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
-              <i class="fa-solid fa-rotate-right"></i> Renovar por mais 6 meses
-            </button>
+        const contractHtml = contractAlerts.length ? `
+          <div class="alert-group-title">
+            <span><i class="fa-solid fa-file-signature"></i> Contratos a vencer</span>
+            <span class="alert-count">${contractAlerts.length} alerta(s)</span>
           </div>
-        `).join("");
+          ${contractAlerts.map(apartment => `
+            <div class="contract-alert">
+              <div>
+                <strong>${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</strong>
+                <div class="mini muted">Vencimento: ${formatDate(apartment.currentEnd)} • Telefone: ${escapeHtml(apartment.tenant.phone || "-")}</div>
+              </div>
+              <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
+                <i class="fa-solid fa-rotate-right"></i> Renovar por mais 6 meses
+              </button>
+            </div>
+          `).join("")}
+        ` : "";
+
+        const paymentHtml = paymentAlerts.length ? `
+          <div class="alert-group-title" style="${contractAlerts.length ? "margin-top:14px;" : ""}">
+            <span><i class="fa-solid fa-money-bill-wave"></i> Pagamentos pendentes</span>
+            <span class="alert-count">${paymentAlerts.length} alerta(s)</span>
+          </div>
+          ${paymentAlerts.map(({ entry, apartment, status }) => {
+            const isPending = status === "pending";
+            const buttonClass = isPending ? "btn-primary" : "btn-danger";
+            const icon = isPending ? "fa-clock" : "fa-circle-xmark";
+            const phone = entry.tenantPhone || apartment?.tenant?.phone || "-";
+
+            return `
+              <div class="contract-alert payment-alert ${isPending ? "pending" : "unpaid"}">
+                <div>
+                  <strong>${escapeHtml(entryApartmentNumber(entry))} — ${escapeHtml(entryTenantName(entry))}</strong>
+                  <div class="mini muted">
+                    ${escapeHtml(paymentStatusLabel(entry))} • Mês: ${escapeHtml(monthName(entry.month))} • Total: ${money(entryTotal(entry))} • Forma: ${escapeHtml(paymentMethodLabel(entry.paymentMethod))} • Telefone: ${escapeHtml(phone)}
+                  </div>
+                </div>
+                <button class="btn ${buttonClass} btn-sm" data-action="editEntry" data-id="${entry.id}">
+                  <i class="fa-solid ${icon}"></i> Editar lançamento
+                </button>
+              </div>
+            `;
+          }).join("")}
+        ` : "";
+
+        el.innerHTML = contractHtml + paymentHtml;
       }
 
       function renderApartmentOptions() {
