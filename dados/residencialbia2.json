@@ -3662,13 +3662,13 @@
       "kwhPrevious": 905.3,
       "kwhCurrent": 986.3,
       "kwhConsumed": 81,
-      "cosip": 19.55125,
+      "cosip": 19.56,
       "trashFee": 0,
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid",
-      "paymentMethod": ""
+      "paymentMethod": "pix"
     },
     {
       "id": "entry_512b727d-0c1c-4d4c-9e78-b3ef43155827",
@@ -3924,7 +3924,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-12T14:18:54.272Z",
+    "updatedAt": "2026-06-12T14:19:18.418Z",
     "updatedBy": "residencial"
   }
 }
