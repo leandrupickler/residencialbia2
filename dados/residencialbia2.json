@@ -1379,7 +1379,7 @@
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid",
-      "paymentMethod": ""
+      "paymentMethod": "pix"
     },
     {
       "id": "entry_apto_02_leandro_luis_de_araujo_oliveira_2025_04",
@@ -3924,7 +3924,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-12T14:20:08.504Z",
+    "updatedAt": "2026-06-12T14:20:25.106Z",
     "updatedBy": "residencial"
   }
 }
