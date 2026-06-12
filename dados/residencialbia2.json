@@ -3875,10 +3875,10 @@
       "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
-      "entrySource": "contractInitial",
-      "contractStart": "2026-06-10",
+      "entrySource": "",
+      "contractStart": "",
       "paymentStatus": "paid",
-      "paymentMethod": ""
+      "paymentMethod": "pix"
     },
     {
       "id": "entry_initial_contract_a3993741-f625-4352-b32c-6ea6da60f9f6",
@@ -3924,7 +3924,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-12T02:38:36.766Z",
+    "updatedAt": "2026-06-12T02:38:59.148Z",
     "updatedBy": "residencial"
   }
 }
