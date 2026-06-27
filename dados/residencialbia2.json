@@ -4068,10 +4068,31 @@
       "contractStart": "",
       "paymentStatus": "pending",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_15285532-bac9-4fae-92f2-4ef0a86a6455",
+      "apartmentId": "apartment_apto08",
+      "apartmentNumber": "Apto 08",
+      "tenantName": "LUIZ PEREIRA DE SOUSA",
+      "tenantCpf": "772.410.121-49",
+      "month": "2026-07",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.9,
+      "kwhPrevious": 1169.7,
+      "kwhCurrent": 1267.4,
+      "kwhConsumed": 97.70000000000005,
+      "cosip": 21.12,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "pending",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-27T20:37:16.836Z",
+    "updatedAt": "2026-06-27T20:37:40.381Z",
     "updatedBy": "residencial"
   }
 }
