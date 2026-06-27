@@ -3074,6 +3074,27 @@
         return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
       }
 
+      function dashboardReferenceMonthValue() {
+        const currentMonth = currentMonthValue();
+        const months = [currentMonth];
+
+        state.entries.forEach(entry => {
+          const month = String(entry.month || "").trim();
+          if (/^\d{4}-\d{2}$/.test(month)) months.push(month);
+        });
+
+        state.expenses.forEach(expense => {
+          const month = String(expense.month || "").trim();
+          if (/^\d{4}-\d{2}$/.test(month)) months.push(month);
+        });
+
+        return months.sort().at(-1) || currentMonth;
+      }
+
+      function dashboardReferenceDate() {
+        return parseMonth(dashboardReferenceMonthValue()) || new Date();
+      }
+
       function parseDate(iso) {
         if (!iso) return null;
         const [year, month, day] = iso.split("-").map(Number);
@@ -3466,7 +3487,7 @@
       }
 
       function getPeriodRange() {
-        const now = new Date();
+        const now = dashboardReferenceDate();
         const currentYear = now.getFullYear();
         const selectedYear = Number(state.settings.dashboardYear || currentYear);
         const period = state.settings.dashboardPeriod || "currentYear";
@@ -3502,7 +3523,7 @@
       }
 
       function getExpenseDetailPeriodRange() {
-        const now = new Date();
+        const now = dashboardReferenceDate();
         const currentYear = now.getFullYear();
         const selectedYear = Number(state.settings.expenseDetailYear || state.settings.dashboardYear || currentYear);
         const period = state.settings.expenseDetailPeriod || state.settings.dashboardPeriod || "currentYear";
@@ -3629,7 +3650,7 @@
       }
 
       function getCurrentMonthEnergySummary() {
-        const currentMonth = currentMonthValue();
+        const currentMonth = dashboardReferenceMonthValue();
 
         const entries = state.entries
           .filter(entry => String(entry.month || "") === currentMonth)
@@ -3658,7 +3679,7 @@
       }
 
       function getCurrentMonthFinancials() {
-        const currentMonth = currentMonthValue();
+        const currentMonth = dashboardReferenceMonthValue();
         const filteredEntries = state.entries
           .filter(entry => String(entry.month || "") === currentMonth)
           .filter(isEntryPaid);
@@ -3799,7 +3820,7 @@
         const periodSelect = $("#dashboardPeriod");
         const yearSelect = $("#dashboardYear");
         const years = availableYears();
-        const currentYear = new Date().getFullYear();
+        const currentYear = dashboardReferenceDate().getFullYear();
 
         periodSelect.value = state.settings.dashboardPeriod || "currentYear";
 
@@ -3826,7 +3847,7 @@
         if (!periodSelect || !yearSelect) return;
 
         const years = availableYears();
-        const currentYear = new Date().getFullYear();
+        const currentYear = dashboardReferenceDate().getFullYear();
 
         periodSelect.value = state.settings.expenseDetailPeriod || state.settings.dashboardPeriod || "currentYear";
 
@@ -3881,7 +3902,7 @@
         const currentMonthFinancials = getCurrentMonthFinancials();
 
         if ($("#currentMonthProfitLabel")) {
-          $("#currentMonthProfitLabel").textContent = `Mês atual: ${monthName(currentMonthFinancials.month)}`;
+          $("#currentMonthProfitLabel").textContent = `Mês atual do sistema: ${monthName(currentMonthFinancials.month)}`;
         }
 
         if ($("#currentMonthExpensesLabel")) {
