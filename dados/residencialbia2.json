@@ -1147,6 +1147,14 @@
       "apartmentId": "",
       "amount": 159.9,
       "description": "Chuveiro apto 01"
+    },
+    {
+      "id": "expense_5d20284a-5d09-41b9-805c-fe3106fbdfd2",
+      "month": "2026-07",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 451.05,
+      "description": ""
     }
   ],
   "entries": [
@@ -4092,7 +4100,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-27T20:59:22.965Z",
+    "updatedAt": "2026-06-27T21:01:54.011Z",
     "updatedBy": "residencial"
   }
 }
