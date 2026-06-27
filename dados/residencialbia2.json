@@ -1155,6 +1155,14 @@
       "apartmentId": "",
       "amount": 451.05,
       "description": ""
+    },
+    {
+      "id": "expense_2b8b8f14-a11c-4ea3-b882-e290854e9992",
+      "month": "2026-07",
+      "type": "Internet",
+      "apartmentId": "",
+      "amount": 129,
+      "description": ""
     }
   ],
   "entries": [
@@ -4100,7 +4108,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-27T21:01:54.011Z",
+    "updatedAt": "2026-06-27T21:02:16.683Z",
     "updatedBy": "residencial"
   }
 }
