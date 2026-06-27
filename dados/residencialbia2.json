@@ -4026,10 +4026,31 @@
       "contractStart": "",
       "paymentStatus": "pending",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_7f3f61c3-de42-4927-8b52-66141aec008b",
+      "apartmentId": "apartment_apto06",
+      "apartmentNumber": "Apto 06",
+      "tenantName": "KETLEN CRISTINA BARBOSA OLIVEIRA",
+      "tenantCpf": "055.898.932-24",
+      "month": "2026-07",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.9,
+      "kwhPrevious": 1009.1,
+      "kwhCurrent": 1106.6,
+      "kwhConsumed": 97.49999999999989,
+      "cosip": 21.12,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "pending",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-27T20:36:29.918Z",
+    "updatedAt": "2026-06-27T20:36:53.701Z",
     "updatedBy": "residencial"
   }
 }
