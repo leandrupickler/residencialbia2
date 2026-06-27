@@ -4106,7 +4106,7 @@
       "kwhPrevious": 1169.7,
       "kwhCurrent": 1267.4,
       "kwhConsumed": 97.70000000000005,
-      "cosip": 21.12,
+      "cosip": 27.12,
       "trashFee": 0,
       "maintenanceFee": 0,
       "entrySource": "",
@@ -4116,7 +4116,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-27T21:06:48.506Z",
+    "updatedAt": "2026-06-27T21:07:01.586Z",
     "updatedBy": "residencial"
   }
 }
