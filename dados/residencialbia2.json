@@ -4005,10 +4005,31 @@
       "contractStart": "",
       "paymentStatus": "pending",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_a7102dd7-7a50-4660-883c-dbd801818edc",
+      "apartmentId": "apartment_apto05",
+      "apartmentNumber": "Apto 05",
+      "tenantName": "ARTHUR SILVA CAVALCANTE",
+      "tenantCpf": "066.901.982-86",
+      "month": "2026-07",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.9,
+      "kwhPrevious": 1632.68,
+      "kwhCurrent": 1782.2,
+      "kwhConsumed": 149.51999999999998,
+      "cosip": 21.12,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "paid",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-27T20:35:14.246Z",
+    "updatedAt": "2026-06-27T20:35:48.620Z",
     "updatedBy": "residencial"
   }
 }
