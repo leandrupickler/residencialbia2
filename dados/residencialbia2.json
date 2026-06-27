@@ -3921,10 +3921,31 @@
       "contractStart": "2026-04-10",
       "paymentStatus": "paid",
       "paymentMethod": ""
+    },
+    {
+      "id": "entry_ca0449e0-c019-4048-b758-d9f85bf3a96d",
+      "apartmentId": "apartment_apto01",
+      "apartmentNumber": "Apto 01",
+      "tenantName": "JARON GREGORI CAVALCANTE QUIRINO",
+      "tenantCpf": "122.805.159-38",
+      "month": "2026-07",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.9,
+      "kwhPrevious": 1076.1,
+      "kwhCurrent": 1195.9,
+      "kwhConsumed": 119.80000000000018,
+      "cosip": 21.12,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "pending",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-12T14:20:25.106Z",
+    "updatedAt": "2026-06-27T20:33:19.254Z",
     "updatedBy": "residencial"
   }
 }
