@@ -70,7 +70,7 @@
       "tenant": {
         "name": "JARON GREGORI CAVALCANTE QUIRINO",
         "cpf": "122.805.159-38",
-        "phone": "",
+        "phone": "4199888-9168",
         "birth": "",
         "emergencyName": "",
         "emergencyPhone": ""
@@ -1308,16 +1308,16 @@
       "tenantCpf": "122.805.159-38",
       "month": "2025-12",
       "rent": 1300,
-      "energyMode": "withKwh",
-      "kwhValue": 0.78,
-      "kwhPrevious": 526.2,
-      "kwhCurrent": 698.9,
-      "kwhConsumed": 172.69999999999993,
-      "cosip": 21.668889,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
-      "entrySource": "",
-      "contractStart": "",
+      "entrySource": "contractInitial",
+      "contractStart": "2025-12-10",
       "paymentStatus": "paid",
       "paymentMethod": ""
     },
@@ -4137,7 +4137,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-06-30T18:04:46.324Z",
+    "updatedAt": "2026-06-30T18:23:34.019Z",
     "updatedBy": "residencial"
   }
 }
