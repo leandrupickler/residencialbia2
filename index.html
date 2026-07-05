@@ -3214,6 +3214,87 @@
         return `${formatDate(startIso)} até ${endLabel} • ${duration}`;
       }
 
+      function normalizeResidentIdentity(tenant) {
+        const cpfDigits = String(tenant?.cpf || "").replace(/\D/g, "");
+
+        if (cpfDigits) return `cpf:${cpfDigits}`;
+
+        return `nome:${String(tenant?.name || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "")}`;
+      }
+
+      function sameResident(tenantA, tenantB) {
+        const a = normalizeResidentIdentity(tenantA);
+        const b = normalizeResidentIdentity(tenantB);
+
+        return Boolean(a && b && a === b);
+      }
+
+      function residentContractPeriods(apartment, tenant, includeCurrent = true) {
+        const periods = [];
+
+        (apartment.contractHistory || []).forEach(item => {
+          if (!sameResident(item.tenant, tenant)) return;
+
+          const start = item.contractStart || "";
+          const end = item.contractEnd || (item.endedAt ? String(item.endedAt).slice(0, 10) : "");
+
+          if (start) periods.push({ start, end, active: false });
+        });
+
+        if (includeCurrent && apartment.status !== "free" && apartment.tenant?.name && sameResident(apartment.tenant, tenant)) {
+          if (apartment.contractStart) {
+            periods.push({
+              start: apartment.contractStart,
+              end: "",
+              active: true
+            });
+          }
+        }
+
+        return periods.sort((a, b) => String(a.start || "").localeCompare(String(b.start || "")));
+      }
+
+      function residentTotalStartDate(apartment, tenant, includeCurrent = true) {
+        const periods = residentContractPeriods(apartment, tenant, includeCurrent);
+        return periods[0]?.start || "";
+      }
+
+      function residentTotalEndDate(apartment, tenant, includeCurrent = true) {
+        const periods = residentContractPeriods(apartment, tenant, includeCurrent);
+
+        if (!periods.length) return "";
+
+        if (periods.some(period => period.active)) return "";
+
+        return periods
+          .map(period => period.end || period.start)
+          .sort()
+          .at(-1) || "";
+      }
+
+      function residentTotalDurationLabel(apartment, tenant, includeCurrent = true) {
+        const start = residentTotalStartDate(apartment, tenant, includeCurrent);
+        const end = residentTotalEndDate(apartment, tenant, includeCurrent);
+        const active = !end && includeCurrent && apartment.status !== "free" && apartment.tenant?.name && sameResident(apartment.tenant, tenant);
+
+        return contractDurationLabel(start, end, active);
+      }
+
+      function residentTotalRangeLabel(apartment, tenant, includeCurrent = true) {
+        const start = residentTotalStartDate(apartment, tenant, includeCurrent);
+        const end = residentTotalEndDate(apartment, tenant, includeCurrent);
+        const active = !end && includeCurrent && apartment.status !== "free" && apartment.tenant?.name && sameResident(apartment.tenant, tenant);
+
+        if (!start) return "-";
+
+        return `${formatDate(start)} até ${active ? "hoje" : formatDate(end)} • ${residentTotalDurationLabel(apartment, tenant, includeCurrent)}`;
+      }
+
       function renderApartmentResidentHistory(apartment) {
         const history = [...(apartment.contractHistory || [])]
           .sort((a, b) => String(b.contractStart || "").localeCompare(String(a.contractStart || "")));
@@ -3230,7 +3311,7 @@
                 return `
                   <span class="pill">
                     <i class="fa-solid fa-clock-rotate-left"></i>
-                    ${escapeHtml(tenant.name || "-")} • ${escapeHtml(contractDurationRangeLabel(item.contractStart, endDate, false))}
+                    ${escapeHtml(tenant.name || "-")} • Contrato: ${escapeHtml(contractDurationRangeLabel(item.contractStart, endDate, false))} • Total no imóvel: ${escapeHtml(residentTotalRangeLabel(apartment, tenant, false))}
                   </span>
                 `;
               }).join("")}
@@ -4259,6 +4340,8 @@
           const isFree = apartment.status === "free" || !apartment.tenant?.name;
           const photo = `<span><i class="fa-solid fa-building"></i></span>`;
           const currentResidentTime = isFree ? "" : contractDurationLabel(apartment.contractStart, "", true);
+          const currentResidentTotalTime = isFree ? "" : residentTotalDurationLabel(apartment, apartment.tenant, true);
+          const currentResidentFirstStart = isFree ? "" : residentTotalStartDate(apartment, apartment.tenant, true);
           const residentHistoryHtml = renderApartmentResidentHistory(apartment);
 
           return `
@@ -4276,7 +4359,9 @@
                   ` : `
                     <span class="pill green"><i class="fa-solid fa-calendar-day"></i> Início: ${formatDate(apartment.contractStart)}</span>
                     <span class="pill yellow"><i class="fa-solid fa-calendar-check"></i> Vence: ${formatDate(apartment.contractEnd)}</span>
-                    <span class="pill blue"><i class="fa-solid fa-hourglass-half"></i> Tempo atual: ${escapeHtml(currentResidentTime)}</span>
+                    <span class="pill blue"><i class="fa-solid fa-hourglass-half"></i> Tempo contrato atual: ${escapeHtml(currentResidentTime)}</span>
+                    <span class="pill green"><i class="fa-solid fa-layer-group"></i> Tempo total: ${escapeHtml(currentResidentTotalTime)}</span>
+                    <span class="pill"><i class="fa-solid fa-user-clock"></i> Desde: ${formatDate(currentResidentFirstStart)}</span>
                     <span class="pill"><i class="fa-solid fa-id-card"></i> CPF: ${escapeHtml(apartment.tenant.cpf || "-")}</span>
                     <span class="pill"><i class="fa-solid fa-phone"></i> ${escapeHtml(apartment.tenant.phone || "-")}</span>
                   `}
@@ -5137,7 +5222,8 @@
                       <th>Telefone</th>
                       <th>Início</th>
                       <th>Encerramento</th>
-                      <th>Tempo no imóvel</th>
+                      <th>Tempo no contrato</th>
+                      <th>Tempo total do morador</th>
                       <th>Valor mensal</th>
                       <th>Taxa manutenção</th>
                       <th>Registrado em</th>
@@ -5156,6 +5242,7 @@
                         <td>${formatDate(row.contractStart)}</td>
                         <td>${formatDate(row.contractEnd)}</td>
                         <td>${escapeHtml(contractDurationLabel(row.contractStart, row.status === "Contrato Ativo" ? "" : row.contractEnd, row.status === "Contrato Ativo"))}</td>
+                        <td>${escapeHtml(residentTotalDurationLabel(apartment, row.tenant, row.status === "Contrato Ativo"))}</td>
                         <td>${money(row.baseRent)}</td>
                         <td>${money(row.maintenanceFee)}</td>
                         <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
