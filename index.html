@@ -460,6 +460,37 @@
     .item h3 { margin: 0; font-size: 1rem; font-weight: 800; }
     .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 7px; }
 
+    .resident-history-card {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #f8fafd;
+    }
+
+    .resident-history-card summary {
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 800;
+      list-style: none;
+    }
+
+    .resident-history-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .resident-history-card summary::after {
+      content: "\f078";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      margin-left: 8px;
+      color: var(--muted);
+    }
+
+    .resident-history-card[open] summary::after {
+      content: "\f077";
+    }
+
     .pill {
       display: inline-flex;
       align-items: center;
@@ -3131,6 +3162,83 @@
         return new Intl.DateTimeFormat("pt-BR").format(date);
       }
 
+      function daysInPreviousMonth(date) {
+        return new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+      }
+
+      function contractDurationLabel(startIso, endIso = "", useTodayWhenEmpty = true) {
+        const start = parseDate(startIso);
+
+        if (!start) return "-";
+
+        const end = endIso
+          ? parseDate(String(endIso).slice(0, 10))
+          : (useTodayWhenEmpty ? new Date() : null);
+
+        if (!end) return "-";
+
+        let from = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        let to = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+
+        if (to < from) return "0 dia";
+
+        let years = to.getFullYear() - from.getFullYear();
+        let months = to.getMonth() - from.getMonth();
+        let days = to.getDate() - from.getDate();
+
+        if (days < 0) {
+          months -= 1;
+          days += daysInPreviousMonth(to);
+        }
+
+        if (months < 0) {
+          years -= 1;
+          months += 12;
+        }
+
+        const parts = [];
+
+        if (years > 0) parts.push(`${years} ${years === 1 ? "ano" : "anos"}`);
+        if (months > 0) parts.push(`${months} ${months === 1 ? "mês" : "meses"}`);
+        if (days > 0 || !parts.length) parts.push(`${days} ${days === 1 ? "dia" : "dias"}`);
+
+        if (parts.length === 1) return parts[0];
+        if (parts.length === 2) return `${parts[0]} e ${parts[1]}`;
+        return `${parts[0]}, ${parts[1]} e ${parts[2]}`;
+      }
+
+      function contractDurationRangeLabel(startIso, endIso = "", active = false) {
+        const duration = contractDurationLabel(startIso, endIso, active);
+        const endLabel = active ? "até hoje" : formatDate(endIso);
+
+        return `${formatDate(startIso)} até ${endLabel} • ${duration}`;
+      }
+
+      function renderApartmentResidentHistory(apartment) {
+        const history = [...(apartment.contractHistory || [])]
+          .sort((a, b) => String(b.contractStart || "").localeCompare(String(a.contractStart || "")));
+
+        if (!history.length) return "";
+
+        return `
+          <details class="resident-history-card">
+            <summary><i class="fa-solid fa-user-clock"></i> Moradores anteriores (${history.length})</summary>
+            <div class="meta">
+              ${history.map(item => {
+                const tenant = normalizeTenant(item.tenant);
+                const endDate = item.contractEnd || (item.endedAt ? String(item.endedAt).slice(0, 10) : "");
+                return `
+                  <span class="pill">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    ${escapeHtml(tenant.name || "-")} • ${escapeHtml(contractDurationRangeLabel(item.contractStart, endDate, false))}
+                  </span>
+                `;
+              }).join("")}
+            </div>
+          </details>
+        `;
+      }
+
       function photoDateIso(photo, fallbackIso = "") {
         const raw = String(photo?.createdAt || photo?.uploadedAt || photo?.date || photo?.dataAnexo || "").trim();
         const datePart = raw ? raw.slice(0, 10) : "";
@@ -4150,6 +4258,8 @@
         el.innerHTML = sorted.map(apartment => {
           const isFree = apartment.status === "free" || !apartment.tenant?.name;
           const photo = `<span><i class="fa-solid fa-building"></i></span>`;
+          const currentResidentTime = isFree ? "" : contractDurationLabel(apartment.contractStart, "", true);
+          const residentHistoryHtml = renderApartmentResidentHistory(apartment);
 
           return `
             <div class="item">
@@ -4166,6 +4276,7 @@
                   ` : `
                     <span class="pill green"><i class="fa-solid fa-calendar-day"></i> Início: ${formatDate(apartment.contractStart)}</span>
                     <span class="pill yellow"><i class="fa-solid fa-calendar-check"></i> Vence: ${formatDate(apartment.contractEnd)}</span>
+                    <span class="pill blue"><i class="fa-solid fa-hourglass-half"></i> Tempo atual: ${escapeHtml(currentResidentTime)}</span>
                     <span class="pill"><i class="fa-solid fa-id-card"></i> CPF: ${escapeHtml(apartment.tenant.cpf || "-")}</span>
                     <span class="pill"><i class="fa-solid fa-phone"></i> ${escapeHtml(apartment.tenant.phone || "-")}</span>
                   `}
@@ -4178,6 +4289,7 @@
                   `}
                 </p>
                 <p class="mini muted" style="margin:6px 0 0;">${escapeHtml(apartment.description || "Sem descrição cadastrada.")}</p>
+                ${residentHistoryHtml}
               </div>
               <div class="actions">
                 ${isFree ? `
@@ -5025,6 +5137,7 @@
                       <th>Telefone</th>
                       <th>Início</th>
                       <th>Encerramento</th>
+                      <th>Tempo no imóvel</th>
                       <th>Valor mensal</th>
                       <th>Taxa manutenção</th>
                       <th>Registrado em</th>
@@ -5042,6 +5155,7 @@
                         <td>${escapeHtml(row.tenant.phone || "-")}</td>
                         <td>${formatDate(row.contractStart)}</td>
                         <td>${formatDate(row.contractEnd)}</td>
+                        <td>${escapeHtml(contractDurationLabel(row.contractStart, row.status === "Contrato Ativo" ? "" : row.contractEnd, row.status === "Contrato Ativo"))}</td>
                         <td>${money(row.baseRent)}</td>
                         <td>${money(row.maintenanceFee)}</td>
                         <td>${row.endedAt ? formatDate(row.endedAt.slice(0, 10)) : "-"}</td>
