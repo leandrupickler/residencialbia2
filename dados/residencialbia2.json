@@ -639,7 +639,7 @@
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2025-08-14",
-      "contractEnd": "2026-08-14",
+      "contractEnd": "2027-02-14",
       "tenant": {
         "name": "LUIZ PEREIRA DE SOUSA",
         "cpf": "772.410.121-49",
@@ -4137,7 +4137,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-07-08T11:01:25.326Z",
+    "updatedAt": "2026-07-09T18:05:11.741Z",
     "updatedBy": "residencial"
   }
 }
