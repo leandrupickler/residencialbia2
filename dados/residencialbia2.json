@@ -636,7 +636,7 @@
       "photo": "",
       "inspectionDate": "2025-08-14",
       "inspectionPhotos": [],
-      "baseRent": 1300,
+      "baseRent": 1350,
       "maintenanceFee": 600,
       "contractStart": "2025-08-14",
       "contractEnd": "2027-02-14",
@@ -3092,17 +3092,17 @@
       "tenantName": "LUIZ PEREIRA DE SOUSA",
       "tenantCpf": "772.410.121-49",
       "month": "2025-08",
-      "rent": 1300,
-      "energyMode": "withKwh",
-      "kwhValue": 0.82,
-      "kwhPrevious": 172.6,
-      "kwhCurrent": 272.6,
-      "kwhConsumed": 100.00000000000003,
-      "cosip": 14.714444,
+      "rent": 1350,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0,
       "trashFee": 0,
       "maintenanceFee": 600,
-      "entrySource": "",
-      "contractStart": "",
+      "entrySource": "contractInitial",
+      "contractStart": "2025-08-14",
       "paymentStatus": "paid",
       "paymentMethod": ""
     },
@@ -4137,7 +4137,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-07-11T12:45:31.880Z",
+    "updatedAt": "2026-07-11T12:46:00.905Z",
     "updatedBy": "residencial"
   }
 }
