@@ -3156,6 +3156,34 @@
         return isoDate(result);
       }
 
+      function currentSixMonthContractValidity(apartment) {
+        const originalStart = apartment?.contractStart || isoDate(new Date());
+        const finalEnd = apartment?.contractEnd || addMonths(originalStart, 6);
+
+        const originalStartDate = parseDate(originalStart);
+        const finalEndDate = parseDate(finalEnd);
+        const firstSixMonthEndDate = parseDate(addMonths(originalStart, 6));
+
+        if (!originalStartDate || !finalEndDate) {
+          return {
+            startDate: originalStart,
+            endDate: addMonths(originalStart, 6)
+          };
+        }
+
+        if (finalEndDate > firstSixMonthEndDate) {
+          return {
+            startDate: addMonths(finalEnd, -6),
+            endDate: finalEnd
+          };
+        }
+
+        return {
+          startDate: originalStart,
+          endDate: finalEnd || addMonths(originalStart, 6)
+        };
+      }
+
       function formatDate(iso) {
         const date = parseDate(iso);
         if (!date) return "-";
@@ -7106,8 +7134,9 @@
 
       function buildRentalContractHtml(apartment) {
         const tenant = normalizeTenant(apartment.tenant);
-        const startDate = apartment.contractStart || isoDate(new Date());
-        const endDate = apartment.contractEnd || addMonths(startDate, 6);
+        const currentValidity = currentSixMonthContractValidity(apartment);
+        const startDate = currentValidity.startDate;
+        const endDate = currentValidity.endDate;
         const rent = toNumber(apartment.baseRent);
         const rentText = rentValueInWords(rent);
         const maintenanceFee = toNumber(apartment.maintenanceFee);
