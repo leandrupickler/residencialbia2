@@ -4155,10 +4155,31 @@
       "contractStart": "",
       "paymentStatus": "paid",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_09fa05ae-0a6f-4f92-a11c-be2ff162adbd",
+      "apartmentId": "apartment_apto02",
+      "apartmentNumber": "Apto 02",
+      "tenantName": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
+      "tenantCpf": "804.173.530-49",
+      "month": "2026-08",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.92,
+      "kwhPrevious": 1841.31,
+      "kwhCurrent": 1988.3,
+      "kwhConsumed": 146.99,
+      "cosip": 28,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "pending",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-07-29T21:48:00.210Z",
+    "updatedAt": "2026-07-29T21:48:42.287Z",
     "updatedBy": "residencial"
   }
 }
