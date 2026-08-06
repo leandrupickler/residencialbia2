@@ -1202,7 +1202,7 @@
       "type": "Manutenção Extra",
       "apartmentId": "",
       "amount": 360,
-      "description": "4 unidade Extintores 90,00 cada"
+      "description": "4 unidade Extintores vence AGOS 2027"
     }
   ],
   "entries": [
@@ -4358,7 +4358,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-06T20:57:33.067Z",
+    "updatedAt": "2026-08-06T21:43:11.539Z",
     "updatedBy": "residencial"
   }
 }
