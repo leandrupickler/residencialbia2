@@ -1195,6 +1195,14 @@
       "apartmentId": "",
       "amount": 128,
       "description": ""
+    },
+    {
+      "id": "expense_7c0bb442-3178-4cb6-be7b-ed7b74eacc48",
+      "month": "2026-08",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 360,
+      "description": "4 unidade Extintores 90,00 cada"
     }
   ],
   "entries": [
@@ -4350,7 +4358,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-06T18:05:54.452Z",
+    "updatedAt": "2026-08-06T20:57:33.067Z",
     "updatedBy": "residencial"
   }
 }
