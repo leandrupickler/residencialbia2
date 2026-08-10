@@ -4227,8 +4227,8 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "pending",
-      "paymentMethod": "pix"
+      "paymentStatus": "paid",
+      "paymentMethod": "dinheiro"
     },
     {
       "id": "entry_6354c409-d805-48f6-91e4-4c8c02c0c4c0",
@@ -4358,7 +4358,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-10T13:25:07.535Z",
+    "updatedAt": "2026-08-10T21:41:25.313Z",
     "updatedBy": "residencial"
   }
 }
