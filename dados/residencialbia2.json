@@ -1203,6 +1203,14 @@
       "apartmentId": "",
       "amount": 360,
       "description": "4 unidade Extintores vence AGOS 2027"
+    },
+    {
+      "id": "expense_b3c3f98c-7890-41d8-9ad4-8fe009c06f7c",
+      "month": "2026-09",
+      "type": "Internet",
+      "apartmentId": "",
+      "amount": 129,
+      "description": ""
     }
   ],
   "entries": [
@@ -4526,7 +4534,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-26T02:12:13.729Z",
+    "updatedAt": "2026-08-26T02:17:04.059Z",
     "updatedBy": "residencial"
   }
 }
