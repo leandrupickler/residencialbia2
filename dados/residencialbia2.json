@@ -1211,6 +1211,14 @@
       "apartmentId": "",
       "amount": 129,
       "description": ""
+    },
+    {
+      "id": "expense_f6a72bdd-283e-4617-8269-7f76d0acc977",
+      "month": "2026-09",
+      "type": "Seguro do Imóvel",
+      "apartmentId": "",
+      "amount": 128,
+      "description": ""
     }
   ],
   "entries": [
@@ -4534,7 +4542,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-26T02:17:04.059Z",
+    "updatedAt": "2026-08-26T02:17:33.605Z",
     "updatedBy": "residencial"
   }
 }
