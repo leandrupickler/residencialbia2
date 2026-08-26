@@ -4539,10 +4539,31 @@
       "contractStart": "",
       "paymentStatus": "pending",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_4b739ca1-da56-48e2-bab8-70b9d8119f3b",
+      "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
+      "apartmentNumber": "Casa Eldorado",
+      "tenantName": "WANILSON DA SILVA TEIXEIRA",
+      "tenantCpf": "009.022.242-39",
+      "month": "2026-09",
+      "rent": 1250,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "paid",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-26T02:17:33.605Z",
+    "updatedAt": "2026-08-26T02:18:34.534Z",
     "updatedBy": "residencial"
   }
 }
