@@ -4397,10 +4397,31 @@
       "contractStart": "",
       "paymentStatus": "pending",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_dd6c787e-e218-4b1f-bd4d-9689f55a28e5",
+      "apartmentId": "apartment_apto03",
+      "apartmentNumber": "Apto 03",
+      "tenantName": "PAULO HENRIQUE FERREIRA DOS PASSOS",
+      "tenantCpf": "001.805.170.74",
+      "month": "2026-09",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.98,
+      "kwhPrevious": 1856.6,
+      "kwhCurrent": 2028.4,
+      "kwhConsumed": 171.80000000000018,
+      "cosip": 33,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "pending",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-26T02:08:49.702Z",
+    "updatedAt": "2026-08-26T02:09:41.293Z",
     "updatedBy": "residencial"
   }
 }
