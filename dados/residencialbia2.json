@@ -465,7 +465,7 @@
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2026-03-10",
-      "contractEnd": "2026-09-10",
+      "contractEnd": "2027-03-10",
       "tenant": {
         "name": "ARTHUR SILVA CAVALCANTE",
         "cpf": "066.901.982-86",
@@ -4563,7 +4563,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-26T02:23:14.464Z",
+    "updatedAt": "2026-08-27T00:55:15.568Z",
     "updatedBy": "residencial"
   }
 }
