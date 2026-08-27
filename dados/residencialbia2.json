@@ -571,7 +571,7 @@
       "photo": "",
       "inspectionDate": "2026-03-16",
       "inspectionPhotos": [],
-      "baseRent": 1300,
+      "baseRent": 1350,
       "maintenanceFee": 600,
       "contractStart": "2026-03-16",
       "contractEnd": "2027-03-16",
@@ -4581,10 +4581,31 @@
       "contractStart": "2026-03-10",
       "paymentStatus": "paid",
       "paymentMethod": ""
+    },
+    {
+      "id": "entry_initial_contract_f45ec3f8-9654-41cb-a674-9f8f61e922aa",
+      "apartmentId": "apartment_apto07",
+      "apartmentNumber": "Apto 07",
+      "tenantName": "RICARDO IACHITZKI JUNIOR",
+      "tenantCpf": "822.941.789-04",
+      "month": "2026-03",
+      "rent": 1350,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "contractInitial",
+      "contractStart": "2026-03-16",
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-27T01:08:00.109Z",
+    "updatedAt": "2026-08-27T01:08:14.901Z",
     "updatedBy": "residencial"
   }
 }
