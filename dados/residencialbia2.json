@@ -574,7 +574,7 @@
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2026-03-16",
-      "contractEnd": "2026-09-16",
+      "contractEnd": "2027-03-16",
       "tenant": {
         "name": "RICARDO IACHITZKI JUNIOR",
         "cpf": "822.941.789-04",
@@ -4563,7 +4563,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-27T00:55:15.568Z",
+    "updatedAt": "2026-08-27T01:04:45.053Z",
     "updatedBy": "residencial"
   }
 }
