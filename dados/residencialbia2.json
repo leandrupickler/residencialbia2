@@ -530,7 +530,7 @@
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2026-03-15",
-      "contractEnd": "2026-09-15",
+      "contractEnd": "2027-03-15",
       "tenant": {
         "name": "KETLEN CRISTINA BARBOSA OLIVEIRA",
         "cpf": "055.898.932-24",
@@ -4605,7 +4605,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-08-27T01:08:14.901Z",
+    "updatedAt": "2026-08-28T00:31:12.400Z",
     "updatedBy": "residencial"
   }
 }
