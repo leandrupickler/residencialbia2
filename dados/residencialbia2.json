@@ -1219,6 +1219,14 @@
       "apartmentId": "",
       "amount": 128,
       "description": ""
+    },
+    {
+      "id": "expense_86bd8e82-3c85-4fbd-8ba8-132bdd1f71fd",
+      "month": "2026-09",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 465,
+      "description": "Pinche para calha, pincel, brocha."
     }
   ],
   "entries": [
@@ -4626,7 +4634,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-09-05T21:15:22.620Z",
+    "updatedAt": "2026-09-05T21:17:04.548Z",
     "updatedBy": "residencial"
   }
 }
