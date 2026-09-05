@@ -1227,6 +1227,14 @@
       "apartmentId": "",
       "amount": 465,
       "description": "Pinche para calha, pincel, brocha."
+    },
+    {
+      "id": "expense_980654c5-0ab2-403b-a94e-d31ef7b95f93",
+      "month": "2026-09",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 471.47,
+      "description": ""
     }
   ],
   "entries": [
@@ -4634,7 +4642,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-09-05T21:17:04.548Z",
+    "updatedAt": "2026-09-05T21:19:26.593Z",
     "updatedBy": "residencial"
   }
 }
