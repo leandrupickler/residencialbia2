@@ -1251,6 +1251,14 @@
       "apartmentId": "",
       "amount": 200,
       "description": "Troca da rede energia - Morais"
+    },
+    {
+      "id": "expense_a6e5a4c7-8238-41de-9a45-bd8ddf0007ce",
+      "month": "2026-10",
+      "type": "Internet",
+      "apartmentId": "",
+      "amount": 129.9,
+      "description": ""
     }
   ],
   "entries": [
@@ -4805,7 +4813,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-04T01:21:51.743Z",
+    "updatedAt": "2026-10-04T01:22:12.279Z",
     "updatedBy": "residencial"
   }
 }
