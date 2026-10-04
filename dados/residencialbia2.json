@@ -4723,7 +4723,7 @@
       "month": "2026-10",
       "rent": 1350,
       "energyMode": "withKwh",
-      "kwhValue": 1,
+      "kwhValue": 0.99,
       "kwhPrevious": 1311.3,
       "kwhCurrent": 1395.7,
       "kwhConsumed": 84.40000000000009,
@@ -4842,7 +4842,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-04T14:39:47.687Z",
+    "updatedAt": "2026-10-04T14:40:01.636Z",
     "updatedBy": "residencial"
   }
 }
