@@ -1235,6 +1235,14 @@
       "apartmentId": "",
       "amount": 471.47,
       "description": ""
+    },
+    {
+      "id": "expense_a6f7674c-54e4-4c70-9a23-584d32e6dfd7",
+      "month": "2026-10",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 100,
+      "description": "Custo manutenção energia - Salvador"
     }
   ],
   "entries": [
@@ -4789,7 +4797,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-04T01:20:47.277Z",
+    "updatedAt": "2026-10-04T01:21:21.332Z",
     "updatedBy": "residencial"
   }
 }
