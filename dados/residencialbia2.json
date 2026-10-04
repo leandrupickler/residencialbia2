@@ -4744,11 +4744,11 @@
       "month": "2026-10",
       "rent": 1350,
       "energyMode": "withKwh",
-      "kwhValue": 0.99,
+      "kwhValue": 1,
       "kwhPrevious": 1468,
       "kwhCurrent": 1568.6,
       "kwhConsumed": 100.59999999999991,
-      "cosip": 32,
+      "cosip": 33,
       "trashFee": 0,
       "maintenanceFee": 0,
       "entrySource": "",
@@ -4821,7 +4821,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-04T01:26:27.532Z",
+    "updatedAt": "2026-10-04T01:26:46.151Z",
     "updatedBy": "residencial"
   }
 }
