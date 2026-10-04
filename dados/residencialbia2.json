@@ -4723,10 +4723,31 @@
       "contractStart": "",
       "paymentStatus": "paid",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_8a792a88-f02b-4981-8d49-b0c1446deb5c",
+      "apartmentId": "apartment_apto04",
+      "apartmentNumber": "Apto 04",
+      "tenantName": "ISMAEL ROSENDO DA SILVA",
+      "tenantCpf": "949.247.832-34",
+      "month": "2026-10",
+      "rent": 1300,
+      "energyMode": "withKwh",
+      "kwhValue": 0.99,
+      "kwhPrevious": 1246.9,
+      "kwhCurrent": 1340.79,
+      "kwhConsumed": 93.88999999999987,
+      "cosip": 32,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "pending",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-04T01:18:25.845Z",
+    "updatedAt": "2026-10-04T01:18:53.574Z",
     "updatedBy": "residencial"
   }
 }
