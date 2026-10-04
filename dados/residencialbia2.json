@@ -1243,6 +1243,14 @@
       "apartmentId": "",
       "amount": 100,
       "description": "Custo manutenção energia - Salvador"
+    },
+    {
+      "id": "expense_45f37968-ce43-4bd1-87bc-cd8ed5dfee59",
+      "month": "2026-10",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 200,
+      "description": "Troca da rede energia - Morais"
     }
   ],
   "entries": [
@@ -4797,7 +4805,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-04T01:21:21.332Z",
+    "updatedAt": "2026-10-04T01:21:51.743Z",
     "updatedBy": "residencial"
   }
 }
