@@ -704,7 +704,7 @@
       "baseRent": 1250,
       "maintenanceFee": 0,
       "contractStart": "2025-08-10",
-      "contractEnd": "2027-02-10",
+      "contractEnd": "2027-08-10",
       "tenant": {
         "name": "WANILSON DA SILVA TEIXEIRA",
         "cpf": "009.022.242-39",
@@ -4850,7 +4850,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-07T01:28:05.989Z",
+    "updatedAt": "2026-10-07T01:28:28.956Z",
     "updatedBy": "residencial"
   }
 }
