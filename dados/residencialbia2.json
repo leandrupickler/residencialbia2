@@ -4782,7 +4782,7 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "pending",
+      "paymentStatus": "paid",
       "paymentMethod": "pix"
     },
     {
@@ -4892,7 +4892,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-08T00:45:12.490Z",
+    "updatedAt": "2026-10-10T13:18:17.737Z",
     "updatedBy": "residencial"
   }
 }
