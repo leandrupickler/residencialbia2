@@ -4867,7 +4867,7 @@
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid",
-      "paymentMethod": "pix"
+      "paymentMethod": "dinheiro"
     },
     {
       "id": "entry_2eb1dd1c-ef82-417a-aeb4-948209c4dab6",
@@ -4892,7 +4892,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-15T01:20:58.328Z",
+    "updatedAt": "2026-10-15T01:21:26.108Z",
     "updatedBy": "residencial"
   }
 }
