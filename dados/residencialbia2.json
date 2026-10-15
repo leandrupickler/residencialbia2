@@ -4888,11 +4888,11 @@
       "entrySource": "",
       "contractStart": "",
       "paymentStatus": "paid",
-      "paymentMethod": "pix"
+      "paymentMethod": "dinheiro"
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-15T01:21:26.108Z",
+    "updatedAt": "2026-10-15T01:21:43.144Z",
     "updatedBy": "residencial"
   }
 }
