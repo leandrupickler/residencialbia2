@@ -1275,6 +1275,14 @@
       "apartmentId": "",
       "amount": 129,
       "description": ""
+    },
+    {
+      "id": "expense_9b19dbf8-3ae8-4a26-be42-9e33a5ad106e",
+      "month": "2026-10",
+      "type": "Manutenção Extra",
+      "apartmentId": "",
+      "amount": 28,
+      "description": "Spray e eletrodo para soldar o portão pequeno."
     }
   ],
   "entries": [
@@ -4892,7 +4900,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-15T01:25:21.272Z",
+    "updatedAt": "2026-10-15T01:26:22.905Z",
     "updatedBy": "residencial"
   }
 }
