@@ -35,7 +35,9 @@
     "contractWitness1Name": "DEBORA APARECIDA KIRCHNER PICKLER",
     "contractWitness1Cpf": "047.833.189-48",
     "contractWitness2Name": "",
-    "contractWitness2Cpf": ""
+    "contractWitness2Cpf": "",
+    "dashboardCustomStart": "2026-02",
+    "dashboardCustomEnd": ""
   },
   "users": [
     {
@@ -4900,7 +4902,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-18T17:05:42.738Z",
+    "updatedAt": "2026-10-18T17:05:50.713Z",
     "updatedBy": "residencial"
   }
 }
