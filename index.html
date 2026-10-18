@@ -935,6 +935,7 @@
         <button class="tab-btn" data-tab="entries"><i class="fa-solid fa-file-invoice-dollar"></i> Lançamentos</button>
         <button class="tab-btn" data-tab="history"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</button>
         <button class="tab-btn" data-tab="settings"><i class="fa-solid fa-gear"></i> Configurações</button>
+        <span class="sync-badge error" id="tokenStatusBadge" aria-live="polite"><i class="fa-solid fa-key"></i> Token não conectado</span>
         <button class="btn btn-light" id="reloadGithubBtn"><i class="fa-solid fa-rotate"></i> Atualizar</button>
         <button class="btn btn-danger" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
       </nav>
@@ -2968,7 +2969,22 @@
         await saveStateToGithub(message);
       }
 
+      function updateTokenStatus() {
+        // O token pertence ao armazenamento local deste navegador, não ao JSON.
+        const hasToken = Boolean(String(githubConfig.token || "").trim());
+        ["tokenStatusBadge"].forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.className = `sync-badge ${hasToken ? "ok" : "error"}`;
+          el.innerHTML = `<i class="fa-solid fa-key"></i> ${hasToken ? "Token conectado" : "Token não conectado"}`;
+          el.title = hasToken
+            ? "Token encontrado nas configurações deste navegador; não confirma a validade do token."
+            : "Nenhum token GitHub foi configurado neste navegador.";
+        });
+      }
+
       function updateSyncStatus(type = "", text = "") {
+        updateTokenStatus();
         const configured = hasGithubBaseConfig();
         const writable = hasGithubWriteConfig();
 
@@ -3025,6 +3041,7 @@
         });
 
         updateLoginGithubPanel();
+        updateTokenStatus();
       }
 
       function uid(prefix) {
