@@ -37,7 +37,7 @@
     "contractWitness2Name": "",
     "contractWitness2Cpf": "",
     "dashboardCustomStart": "2026-02",
-    "dashboardCustomEnd": ""
+    "dashboardCustomEnd": "2026-12"
   },
   "users": [
     {
@@ -4902,7 +4902,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-18T17:05:50.713Z",
+    "updatedAt": "2026-10-18T17:05:54.458Z",
     "updatedBy": "residencial"
   }
 }
