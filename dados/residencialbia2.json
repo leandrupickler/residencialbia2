@@ -36,7 +36,7 @@
     "contractWitness1Cpf": "047.833.189-48",
     "contractWitness2Name": "",
     "contractWitness2Cpf": "",
-    "dashboardCustomStart": "2026-02",
+    "dashboardCustomStart": "2026-08",
     "dashboardCustomEnd": "2026-12"
   },
   "users": [
@@ -4902,7 +4902,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-18T17:05:54.458Z",
+    "updatedAt": "2026-10-18T17:06:08.063Z",
     "updatedBy": "residencial"
   }
 }
