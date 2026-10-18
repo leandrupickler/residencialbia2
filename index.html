@@ -576,6 +576,14 @@
     }
 
     .contract-alert strong { color: #6f5100; }
+    .contract-alert.contract-urgent {
+      background: rgba(234, 67, 53, 0.10);
+      border-color: rgba(234, 67, 53, 0.45);
+    }
+    .contract-alert.contract-urgent strong, .alert-urgent-text {
+      color: #b3261e;
+      font-weight: 800;
+    }
 
     .alert-group-title {
       display: flex;
@@ -949,12 +957,22 @@
               <option value="currentYear">Último Ano (Padrão/Corrente)</option>
               <option value="last2">Últimos 2 Anos</option>
               <option value="all">Todo o Período</option>
+              <option value="custom">Período personalizado</option>
             </select>
           </div>
 
           <div class="field">
             <label for="dashboardYear">Histórico por Ano</label>
             <select id="dashboardYear"></select>
+          </div>
+
+          <div class="field" id="dashboardCustomStartField" style="display:none">
+            <label for="dashboardCustomStart">Mês inicial</label>
+            <input type="month" id="dashboardCustomStart">
+          </div>
+          <div class="field" id="dashboardCustomEndField" style="display:none">
+            <label for="dashboardCustomEnd">Mês final (inclusive)</label>
+            <input type="month" id="dashboardCustomEnd">
           </div>
 
           <div class="filter-badge" id="periodBadge">
@@ -1046,12 +1064,22 @@
               <option value="currentYear">Último Ano (Padrão/Corrente)</option>
               <option value="last2">Últimos 2 Anos</option>
               <option value="all">Todo o Período</option>
+              <option value="custom">Período personalizado</option>
             </select>
           </div>
 
           <div class="field">
             <label for="expenseDetailYear">Histórico por Ano</label>
             <select id="expenseDetailYear"></select>
+          </div>
+
+          <div class="field" id="expenseDetailCustomStartField" style="display:none">
+            <label for="expenseDetailCustomStart">Mês inicial</label>
+            <input type="month" id="expenseDetailCustomStart">
+          </div>
+          <div class="field" id="expenseDetailCustomEndField" style="display:none">
+            <label for="expenseDetailCustomEnd">Mês final (inclusive)</label>
+            <input type="month" id="expenseDetailCustomEnd">
           </div>
 
           <div class="filter-badge" id="expenseDetailPeriodBadge">
@@ -1195,7 +1223,7 @@
         <div class="section-title">
           <div>
             <h2>Alertas</h2>
-            <p>Contratos que vencem no mês seguinte e lançamentos com pagamento aguardando ou não pago.</p>
+            <p>Avisos de contratos a partir de dois meses antes do vencimento, com destaque vermelho no mês anterior (ciclo de recebimento até o dia 10), além dos pagamentos pendentes.</p>
           </div>
         </div>
 
@@ -3745,6 +3773,21 @@
         const selectedYear = Number(state.settings.dashboardYear || currentYear);
         const period = state.settings.dashboardPeriod || "currentYear";
 
+        if (period === "custom") {
+          const startMonth = String(state.settings.dashboardCustomStart || "");
+          const endMonth = String(state.settings.dashboardCustomEnd || "");
+          const start = /^\d{4}-(0[1-9]|1[0-2])$/.test(startMonth) ? parseMonth(startMonth) : null;
+          const last = /^\d{4}-(0[1-9]|1[0-2])$/.test(endMonth) ? parseMonth(endMonth) : null;
+          if (start && last && start <= last) {
+            return {
+              start,
+              end: new Date(last.getFullYear(), last.getMonth() + 1, 1),
+              label: `De ${startMonth.slice(5)}/${startMonth.slice(0,4)} até ${endMonth.slice(5)}/${endMonth.slice(0,4)}`
+            };
+          }
+          return { start: new Date(3000, 0, 1), end: new Date(3000, 0, 1), label: "Selecione um intervalo válido" };
+        }
+
         if (period === "last6") {
           return { start: new Date(now.getFullYear(), now.getMonth() - 5, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 6 meses" };
         }
@@ -3780,6 +3823,21 @@
         const currentYear = now.getFullYear();
         const selectedYear = Number(state.settings.expenseDetailYear || state.settings.dashboardYear || currentYear);
         const period = state.settings.expenseDetailPeriod || state.settings.dashboardPeriod || "currentYear";
+
+        if (period === "custom") {
+          const startMonth = String(state.settings.expenseDetailCustomStart || "");
+          const endMonth = String(state.settings.expenseDetailCustomEnd || "");
+          const start = /^\d{4}-(0[1-9]|1[0-2])$/.test(startMonth) ? parseMonth(startMonth) : null;
+          const last = /^\d{4}-(0[1-9]|1[0-2])$/.test(endMonth) ? parseMonth(endMonth) : null;
+          if (start && last && start <= last) {
+            return {
+              start,
+              end: new Date(last.getFullYear(), last.getMonth() + 1, 1),
+              label: `De ${startMonth.slice(5)}/${startMonth.slice(0,4)} até ${endMonth.slice(5)}/${endMonth.slice(0,4)}`
+            };
+          }
+          return { start: new Date(3000, 0, 1), end: new Date(3000, 0, 1), label: "Selecione um intervalo válido" };
+        }
 
         if (period === "last6") {
           return { start: new Date(now.getFullYear(), now.getMonth() - 5, 1), end: new Date(now.getFullYear(), now.getMonth() + 1, 1), label: "Últimos 6 meses" };
@@ -4089,6 +4147,12 @@
 
         yearSelect.disabled = periodSelect.value !== "currentYear";
 
+        const custom = periodSelect.value === "custom";
+        $("#dashboardCustomStartField").style.display = custom ? "" : "none";
+        $("#dashboardCustomEndField").style.display = custom ? "" : "none";
+        $("#dashboardCustomStart").value = state.settings.dashboardCustomStart || "";
+        $("#dashboardCustomEnd").value = state.settings.dashboardCustomEnd || "";
+
         const range = getPeriodRange();
         $("#periodBadge").innerHTML = `<i class="fa-solid fa-calendar-days"></i>${escapeHtml(range.label)}`;
       }
@@ -4117,6 +4181,12 @@
         }
 
         yearSelect.disabled = periodSelect.value !== "currentYear";
+
+        const custom = periodSelect.value === "custom";
+        $("#expenseDetailCustomStartField").style.display = custom ? "" : "none";
+        $("#expenseDetailCustomEndField").style.display = custom ? "" : "none";
+        $("#expenseDetailCustomStart").value = state.settings.expenseDetailCustomStart || "";
+        $("#expenseDetailCustomEnd").value = state.settings.expenseDetailCustomEnd || "";
 
         const range = getExpenseDetailPeriodRange();
         $("#expenseDetailPeriodBadge").innerHTML = `<i class="fa-solid fa-calendar-days"></i>${escapeHtml(range.label)}`;
@@ -4266,16 +4336,19 @@
       function renderContractAlerts() {
         const el = $("#contractAlerts");
         const now = new Date();
-        const firstNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-        const firstAfterNext = new Date(now.getFullYear(), now.getMonth() + 2, 1);
+        // Até o dia 10, os avisos continuam considerando o ciclo do mês anterior.
+        const reference = new Date(now.getFullYear(), now.getMonth() - (now.getDate() <= 10 ? 1 : 0), 1);
+        const referenceIndex = reference.getFullYear() * 12 + reference.getMonth();
 
         const contractAlerts = state.apartments
           .filter(apartment => apartment.status !== "free" && apartment.tenant?.name)
           .map(apartment => ({ ...apartment, currentEnd: apartment.contractEnd || addMonths(apartment.contractStart, 6) }))
-          .filter(apartment => {
+          .map(apartment => {
             const end = parseDate(apartment.currentEnd);
-            return end && end >= firstNextMonth && end < firstAfterNext;
+            const monthDistance = end ? (end.getFullYear() * 12 + end.getMonth() - referenceIndex) : null;
+            return { ...apartment, monthDistance };
           })
+          .filter(apartment => apartment.monthDistance !== null && apartment.monthDistance <= 2)
           .sort((a, b) => String(a.currentEnd).localeCompare(String(b.currentEnd)));
 
         const paymentAlerts = state.entries
@@ -4315,10 +4388,13 @@
             <span class="alert-count">${contractAlerts.length} alerta(s)</span>
           </div>
           ${contractAlerts.map(apartment => `
-            <div class="contract-alert">
+            <div class="contract-alert ${apartment.monthDistance <= 1 ? "contract-urgent" : "contract-early"}">
               <div>
                 <strong>${escapeHtml(apartment.number)} — ${escapeHtml(apartment.tenant.name)}</strong>
-                <div class="mini muted">Vencimento: ${formatDate(apartment.currentEnd)} • Telefone: ${escapeHtml(apartment.tenant.phone || "-")}</div>
+                <div class="mini ${apartment.monthDistance <= 1 ? "alert-urgent-text" : "muted"}">
+                  ${apartment.monthDistance < 0 ? "CONTRATO VENCIDO" : apartment.monthDistance === 0 ? "CONTRATO VENCE NESTE MÊS" : apartment.monthDistance === 1 ? "ATENÇÃO: CONTRATO VENCE NO PRÓXIMO MÊS" : "Aviso antecipado: contrato vence em 2 meses"}
+                  • Vencimento em ${formatDate(apartment.currentEnd)} • Telefone: ${escapeHtml(apartment.tenant.phone || "-")}
+                </div>
               </div>
               <button class="btn btn-warning btn-sm" data-action="renewApartment" data-id="${apartment.id}">
                 <i class="fa-solid fa-rotate-right"></i> Renovar por mais 6 meses
@@ -8025,6 +8101,26 @@
             state.settings.expenseDetailPeriod = "currentYear";
             await save("Ano do detalhamento das despesas selecionado.");
           });
+        }
+
+        // Períodos mensais personalizados, com término inclusivo.
+        for (const prefix of ["dashboard", "expenseDetail"]) {
+          const startInput = $("#" + prefix + "CustomStart");
+          const endInput = $("#" + prefix + "CustomEnd");
+          const updateRange = async () => {
+            const start = startInput.value;
+            const end = endInput.value;
+            if (start && end && start > end) {
+              toast("O mês inicial não pode ser posterior ao mês final.");
+              return;
+            }
+            state.settings[prefix + "CustomStart"] = start;
+            state.settings[prefix + "CustomEnd"] = end;
+            state.settings[prefix + "Period"] = "custom";
+            await save("Filtro mensal personalizado atualizado.");
+          };
+          startInput.addEventListener("change", updateRange);
+          endInput.addEventListener("change", updateRange);
         }
 
         $("#apartmentForm").addEventListener("submit", saveApartmentForm);
