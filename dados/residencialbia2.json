@@ -112,7 +112,7 @@
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2026-04-10",
-      "contractEnd": "2026-10-10",
+      "contractEnd": "2027-04-10",
       "tenant": {
         "name": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
         "cpf": "804.173.530-49",
@@ -4902,7 +4902,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-18T17:11:43.380Z",
+    "updatedAt": "2026-10-19T22:54:33.290Z",
     "updatedBy": "residencial"
   }
 }
