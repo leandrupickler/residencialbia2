@@ -5025,10 +5025,31 @@
       "contractStart": "",
       "paymentStatus": "pending",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_6bc52b47-fc98-47b7-a805-672c932a697e",
+      "apartmentId": "apartment_apto07",
+      "apartmentNumber": "Apto 07",
+      "tenantName": "RICARDO IACHITZKI JUNIOR",
+      "tenantCpf": "822.941.789-04",
+      "month": "2026-11",
+      "rent": 1350,
+      "energyMode": "withKwh",
+      "kwhValue": 0.99,
+      "kwhPrevious": 1395.7,
+      "kwhCurrent": 1474.8,
+      "kwhConsumed": 79.09999999999991,
+      "cosip": 32.9,
+      "trashFee": 0,
+      "maintenanceFee": 0,
+      "entrySource": "",
+      "contractStart": "",
+      "paymentStatus": "pending",
+      "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-27T17:32:21.617Z",
+    "updatedAt": "2026-10-27T17:33:25.693Z",
     "updatedBy": "residencial"
   }
 }
