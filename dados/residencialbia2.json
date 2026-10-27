@@ -1285,6 +1285,14 @@
       "apartmentId": "",
       "amount": 28,
       "description": "Spray e eletrodo para soldar o portão pequeno."
+    },
+    {
+      "id": "expense_094e5ae9-ba24-482b-9821-a2339ccc3991",
+      "month": "2026-10",
+      "type": "Água",
+      "apartmentId": "",
+      "amount": 553.15,
+      "description": ""
     }
   ],
   "entries": [
@@ -5091,7 +5099,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-10-27T17:34:32.296Z",
+    "updatedAt": "2026-10-27T17:36:47.191Z",
     "updatedBy": "residencial"
   }
 }
