@@ -5118,12 +5118,12 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "pending",
+      "paymentStatus": "paid",
       "paymentMethod": "pix"
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-08T12:07:02.822Z",
+    "updatedAt": "2026-11-08T12:07:16.929Z",
     "updatedBy": "residencial"
   }
 }
