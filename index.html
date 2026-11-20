@@ -1259,9 +1259,9 @@
               </div>
 
               <div class="field">
-                <label for="maintenanceFee">Taxa de manutenção</label>
+                <label for="maintenanceFee">Valor de limpeza e pintura</label>
                 <input id="maintenanceFee" type="number" min="0" step="0.01" placeholder="600,00">
-                <span class="mini muted">Cobrada apenas no primeiro mês do contrato e soma ao aluguel recebido.</span>
+                <span class="mini muted">Cobrado uma única vez na entrada para limpeza e pintura ao final da locação. Reparos por danos são separados.</span>
               </div>
 
               <div class="field">
@@ -7600,11 +7600,13 @@
 
   <p class="clause"><strong>CLÁUSULA PRIMEIRA:</strong> O LOCADOR oferta em locação um <strong>${escapeHtml(apartmentContractLabel)}</strong> de sua propriedade, contendo 1 (um) quarto, 1 (uma) sala, 1 (uma) cozinha, 1 (uma) área de serviço e 1 (um) banheiro. O imóvel é localizado na rua Albino Dias n 170, no Bairro Caminho Novo, Cidade Palhoça/SC.</p>
 
-  <p class="clause"><strong>CLÁUSULA SEGUNDA:</strong> O prazo da locação é de 06 meses, iniciando no dia <strong>${formatDateLong(startDate)}</strong> e terminando no dia <strong>${formatDateLong(endDate)}</strong>;</p>
+  <p class="clause"><strong>CLÁUSULA SEGUNDA:</strong> A vigência por prazo determinado indicada neste instrumento é de 06 (seis) meses, com início em <strong>${formatDateLong(startDate)}</strong> e término em <strong>${formatDateLong(endDate)}</strong>. Para identificação do período inicial da relação locatícia, considera-se a data de <strong>${formatDateLong(apartment.contractStart || startDate)}</strong>.</p>
 
-  <p class="subclause"><strong>§ 1º.</strong> Terminado o prazo inicialmente convencionado e não havendo qualquer manifestação das partes, a locação será prorrogada por prazo determinado de 06 meses, desde que exista anuência do Locador quanto ao valor a ser pago correspondente ao aluguel, passível de reajuste.</p>
+  <p class="subclause"><strong>§ 1º.</strong> A renovação expressa por prazo determinado dependerá do interesse e da concordância de ambas as partes. Os LOCATÁRIOS deverão manifestar por escrito o interesse em permanecer por mais 06 (seis) meses, inclusive por mensagem de WhatsApp, e o LOCADOR deverá confirmar expressamente a aceitação, também por escrito. A manifestação de apenas uma das partes não será suficiente para formalizar essa renovação.</p>
 
-  <p class="subclause"><strong>§ 2º.</strong> Caso não haja manifestação das partes para prorrogação, o contrato será automaticamente encerrado na data final do prazo acordado, salvo novo acordo entre as partes.</p>
+  <p class="subclause"><strong>§ 2º.</strong> As partes convencionam uma única renovação expressa de 06 (seis) meses, totalizando até 12 (doze) meses de prazo determinado, contados do início original da locação indicado nesta cláusula. A confirmação deverá identificar o imóvel, as partes e as datas de início e término da renovação, preservando-se o registro das mensagens ou do termo aditivo. A renovação não implica reajuste automático do aluguel, observadas as disposições legais aplicáveis.</p>
+
+  <p class="subclause"><strong>§ 3º.</strong> A ausência de acordo para renovação por prazo determinado não equivale a concordância com uma nova vigência de 06 (seis) meses. O limite convencional de 12 (doze) meses não afasta eventual prorrogação legal por prazo indeterminado, nem autoriza retomada automática do imóvel, devendo ser observados os artigos 45 e 47 e os demais dispositivos aplicáveis da Lei nº 8.245/1991.</p>
 
   <p class="clause"><strong>CLÁUSULA TERCEIRA:</strong> O aluguel mensal convencionado é de <strong>${money(rent)}</strong> (${escapeHtml(rentText)}) nos 6 meses consecutivos, a serem pagos pelo LOCATÁRIO sempre de forma adiantada, ou seja, primeiro paga o aluguel para ter direito à utilização do imóvel no mês corrente, sendo ajustado o pagamento até o dia 10 do mês subsequente ao vencido, a ser pago diretamente ao LOCADOR.</p>
 
@@ -7618,7 +7620,11 @@
 
   <p class="clause"><strong>CLÁUSULA SEXTA:</strong> Os LOCATÁRIOS declaram ter recebido o imóvel em perfeitas condições de habitabilidade e reparado em toda sua extensão.</p>
 
-  <p class="clause"><strong>CLÁUSULA SÉTIMA:</strong> Os LOCATÁRIOS obrigam-se a manter o imóvel locado sempre limpo e restituí-lo, finda a locação, nas mesmas e perfeitas condições de habitabilidade recebidas, correndo exclusivamente por sua conta todos os reparos tendentes à conservação do imóvel, das suas dependências, instalações e utensílios nele existentes, inclusive os consertos e reparos que se fizerem necessários, bem como as multas que der causa, por inobservância de quaisquer leis, decretos e regulamentos.</p>
+  <p class="clause"><strong>CLÁUSULA SÉTIMA:</strong> Os LOCATÁRIOS obrigam-se a utilizar o imóvel com cuidado, mantê-lo limpo e conservado e restituí-lo nas condições registradas no termo de vistoria de entrada, ressalvadas as deteriorações decorrentes do uso normal. A entrega do imóvel limpo e com pintura nova será registrada na vistoria, com indicação das condições efetivamente verificadas e de eventuais ressalvas.</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> Serão de responsabilidade dos LOCATÁRIOS os reparos de quebras, danos ou avarias causados por eles, por seus dependentes, familiares, visitantes ou prepostos, inclusive em portas, vidros, fechaduras, instalações e demais componentes do imóvel. A responsabilidade será apurada mediante comparação das vistorias e demais provas disponíveis, com discriminação dos danos e comprovação dos custos de reparação.</p>
+
+  <p class="subclause"><strong>§ 2º.</strong> Os reparos por danos causados pelos LOCATÁRIOS são distintos dos serviços de limpeza e pintura previstos na cláusula vigésima primeira. Não serão transferidos aos LOCATÁRIOS os custos de desgaste natural, vícios anteriores à locação ou reparos que sejam legalmente de responsabilidade do LOCADOR. Os LOCATÁRIOS deverão comunicar prontamente ao LOCADOR os defeitos cuja reparação a este incumba.</p>
 
   <p class="clause"><strong>CLÁUSULA OITAVA:</strong> Os LOCATÁRIOS obrigam-se a respeitar, além das posturas municipais e as de saúde, ficando responsáveis pelas multas a que derem causa.</p>
 
@@ -7662,7 +7668,13 @@
 
   <p class="subclause">I. <strong>${money(rent)}</strong> (${escapeHtml(rentText)}) referentes ao aluguel do primeiro mês;</p>
 
-  <p class="subclause">II. <strong>${money(maintenanceFee)}</strong> (${escapeHtml(maintenanceFeeText)}) para despesas com limpeza e pintura ao final da locação.</p>
+  <p class="subclause">II. <strong>${money(maintenanceFee)}</strong> (${escapeHtml(maintenanceFeeText)}), a título específico de <strong>limpeza e pintura</strong>, destinado à realização desses serviços ao final da locação, conforme as condições de entrega registradas na vistoria. Esse valor é separado do aluguel e dos reparos por danos ao imóvel.</p>
+
+  <p class="subclause"><strong>§ 1º.</strong> O valor indicado no inciso II será cobrado uma única vez no início da locação, sem nova cobrança em razão da renovação com os mesmos LOCATÁRIOS. Não corresponde a caução e não abrange o conserto de objetos quebrados, instalações danificadas ou outras avarias causadas pelos LOCATÁRIOS.</p>
+
+  <p class="subclause"><strong>§ 2º.</strong> Eventuais reparos por danos imputáveis aos LOCATÁRIOS serão apurados e cobrados separadamente, nos termos da cláusula sétima, mediante discriminação e comprovação dos custos. Não poderá haver cobrança em duplicidade por serviços já abrangidos pelo valor de limpeza e pintura.</p>
+
+  <p class="subclause"><strong>§ 3º.</strong> A cobrança e a aplicação do valor destinado à limpeza e pintura deverão respeitar as responsabilidades legais de cada parte e a ressalva relativa ao desgaste natural do imóvel, assegurada a apresentação dos comprovantes dos serviços e valores quando solicitada. Esta previsão não transfere aos LOCATÁRIOS obrigações que a lei atribua ao LOCADOR.</p>
 
   <p class="clause"><strong>CLÁUSULA VIGÉSIMA SEGUNDA:</strong> Checklist de Entrada do Imóvel.</p>
 
