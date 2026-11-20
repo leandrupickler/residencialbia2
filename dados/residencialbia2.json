@@ -165,7 +165,7 @@
       "photo": "",
       "inspectionDate": "2026-06-04",
       "inspectionPhotos": [],
-      "baseRent": 1350,
+      "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2026-06-10",
       "contractEnd": "2027-06-10",
@@ -5083,7 +5083,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-20T16:24:30.684Z",
+    "updatedAt": "2026-11-20T16:27:28.058Z",
     "updatedBy": "residencial"
   }
 }
