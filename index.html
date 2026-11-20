@@ -1356,6 +1356,12 @@
                 <label for="tenantBirth">Data de Nascimento</label>
                 <input id="tenantBirth" type="date">
               </div>
+              <div class="field">
+                <label for="tenantIsForeign" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input id="tenantIsForeign" type="checkbox" style="width:auto;min-height:auto;"> Estrangeiro(a)
+                </label>
+                <span class="mini muted">Marque para identificar esta pessoa como estrangeiro(a) no contrato e na vistoria.</span>
+              </div>
             </div>
 
             <div class="form-row two">
@@ -1387,6 +1393,12 @@
               <div class="field">
                 <label for="coTenantBirth">Data de nascimento</label>
                 <input id="coTenantBirth" type="date">
+              </div>
+              <div class="field">
+                <label for="coTenantIsForeign" style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input id="coTenantIsForeign" type="checkbox" style="width:auto;min-height:auto;"> Estrangeiro(a)
+                </label>
+                <span class="mini muted">Marque para identificar esta pessoa como estrangeiro(a) no contrato e na vistoria.</span>
               </div>
               <div class="field">
                 <label for="coTenantEmergencyName">Contato de emergência — nome</label>
@@ -2101,6 +2113,7 @@
       };
 
       const EMPTY_TENANT = {
+        isForeign: false,
         name: "",
         cpf: "",
         phone: "",
@@ -2136,7 +2149,7 @@
       }
 
       function normalizeTenant(tenant) {
-        return { ...EMPTY_TENANT, ...(tenant || {}) };
+        return { ...EMPTY_TENANT, ...(tenant || {}), isForeign: tenant?.isForeign === true };
       }
 
       function apartmentResidents(apartment) {
@@ -2153,6 +2166,8 @@
 
       function resetSecondResidentForm(apartment = null) {
         const person = normalizeTenant(apartment?.coTenant);
+        $("#tenantIsForeign").checked = apartment?.tenant?.isForeign === true;
+        $("#coTenantIsForeign").checked = person.isForeign;
         for (const [suffix, key] of [["Name", "name"], ["Cpf", "cpf"], ["Phone", "phone"], ["Birth", "birth"], ["EmergencyName", "emergencyName"], ["EmergencyPhone", "emergencyPhone"]]) {
           $("#coTenant" + suffix).value = person[key] || "";
         }
@@ -2161,7 +2176,7 @@
       }
 
       function residentContractIdentification(person) {
-        return `<strong>${escapeHtml(person.name)}</strong>, brasileiro(a), inscrito(a) no CPF sob o n. <strong>${escapeHtml(formatCpf(person.cpf))}</strong>, telefone <strong>${escapeHtml(person.phone || "________________")}</strong>`;
+        return `<strong>${escapeHtml(person.name)}</strong>, ${person.isForeign ? "estrangeiro(a)" : "brasileiro(a)"}, inscrito(a) no CPF sob o n. <strong>${escapeHtml(formatCpf(person.cpf))}</strong>, telefone <strong>${escapeHtml(person.phone || "________________")}</strong>`;
       }
 
       function secondResidentSignature(apartment) {
@@ -5848,6 +5863,7 @@
           contractEnd,
           status: "occupied",
           tenant: {
+            isForeign: $("#tenantIsForeign").checked,
             name: tenantName,
             cpf: $("#tenantCpf").value.trim(),
             phone: $("#tenantPhone").value.trim(),
@@ -5859,6 +5875,7 @@
         };
 
         const secondPerson = normalizeTenant({
+          isForeign: $("#coTenantIsForeign").checked,
           name: $("#coTenantName").value.trim(), cpf: $("#coTenantCpf").value.trim(),
           phone: $("#coTenantPhone").value.trim(), birth: $("#coTenantBirth").value,
           emergencyName: $("#coTenantEmergencyName").value.trim(), emergencyPhone: $("#coTenantEmergencyPhone").value.trim()
