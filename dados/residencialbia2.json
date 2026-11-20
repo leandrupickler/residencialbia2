@@ -70,6 +70,7 @@
       "contractStart": "2025-12-10",
       "contractEnd": "2027-06-10",
       "tenant": {
+        "isForeign": false,
         "name": "JARON GREGORI CAVALCANTE QUIRINO",
         "cpf": "122.805.159-38",
         "phone": "4199888-9168",
@@ -86,6 +87,7 @@
           "apartmentId": "apartment_apto01",
           "apartmentNumber": "Apto 01",
           "tenant": {
+            "isForeign": false,
             "name": "MARCOS AURELIO SOARES",
             "cpf": "016.960.059-90",
             "phone": "",
@@ -118,6 +120,7 @@
       "contractStart": "2026-04-10",
       "contractEnd": "2027-04-10",
       "tenant": {
+        "isForeign": false,
         "name": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
         "cpf": "804.173.530-49",
         "phone": "(48) 988022350",
@@ -134,6 +137,7 @@
           "apartmentId": "apartment_apto02",
           "apartmentNumber": "Apto 02",
           "tenant": {
+            "isForeign": false,
             "name": "LEANDRO LUIS DE ARAUJO OLIVEIRA",
             "cpf": "804.173.530-49",
             "phone": "",
@@ -166,6 +170,7 @@
       "contractStart": "2026-06-10",
       "contractEnd": "2027-06-10",
       "tenant": {
+        "isForeign": true,
         "name": "Yestsenia Navarro Matos",
         "cpf": "712.468.382-30",
         "phone": "48999785395",
@@ -174,6 +179,7 @@
         "emergencyPhone": ""
       },
       "coTenant": {
+        "isForeign": false,
         "name": "PAULO HENRIQUE FERREIRA DOS PASSOS",
         "cpf": "001.805.170.74",
         "phone": "48991175954",
@@ -183,12 +189,22 @@
       },
       "residentAliases": [
         {
+          "isForeign": false,
           "name": "Yestsenia Navarro Matos",
           "cpf": "71246838230",
           "phone": "",
           "birth": "1995-03-09",
           "emergencyName": "PAULO HENRIQUE FERREIRA DOS PASSOS - 001.805.170.74",
           "emergencyPhone": "48991175954"
+        },
+        {
+          "isForeign": false,
+          "name": "PAULO HENRIQUE FERREIRA DOS PASSOS",
+          "cpf": "001.805.170.74",
+          "phone": "48991175954",
+          "birth": "",
+          "emergencyName": "",
+          "emergencyPhone": ""
         }
       ],
       "status": "occupied",
@@ -198,6 +214,7 @@
           "apartmentId": "apartment_apto03",
           "apartmentNumber": "Apto 03",
           "tenant": {
+            "isForeign": false,
             "name": "ASHELY ORLANDO JORDAN",
             "cpf": "156.206.969-10",
             "phone": "",
@@ -221,6 +238,7 @@
           "apartmentId": "apartment_apto03",
           "apartmentNumber": "Apto 03",
           "tenant": {
+            "isForeign": false,
             "name": "KARINE KAUSS RODRIGUES",
             "cpf": "018.491.050-14",
             "phone": "54991920795",
@@ -244,6 +262,7 @@
           "apartmentId": "apartment_apto03",
           "apartmentNumber": "Apto 03",
           "tenant": {
+            "isForeign": false,
             "name": "PAULO HENRIQUE FERREIRA DOS PASSOS",
             "cpf": "001.805.170.74",
             "phone": "48991175954",
@@ -276,6 +295,7 @@
       "contractStart": "2026-01-16",
       "contractEnd": "2027-01-10",
       "tenant": {
+        "isForeign": false,
         "name": "ISMAEL ROSENDO DA SILVA",
         "cpf": "949.247.832-34",
         "phone": "(92) 98202-1989",
@@ -292,6 +312,7 @@
           "apartmentId": "apartment_apto04",
           "apartmentNumber": "Apto 04",
           "tenant": {
+            "isForeign": false,
             "name": "ERICA CRISTINA SANTOS CUNHA",
             "cpf": "609.013.783-99",
             "phone": "(99) 97400-9883",
@@ -315,6 +336,7 @@
           "apartmentId": "apartment_apto04",
           "apartmentNumber": "Apto 04",
           "tenant": {
+            "isForeign": false,
             "name": "EVELLE SOARES GUIMARÃES",
             "cpf": "187.197.347-35",
             "phone": "",
@@ -347,6 +369,7 @@
       "contractStart": "2026-03-10",
       "contractEnd": "2027-03-10",
       "tenant": {
+        "isForeign": false,
         "name": "ARTHUR SILVA CAVALCANTE",
         "cpf": "066.901.982-86",
         "phone": "48988614064",
@@ -363,6 +386,7 @@
           "apartmentId": "apartment_apto05",
           "apartmentNumber": "Apto 05",
           "tenant": {
+            "isForeign": false,
             "name": "CAROLINE BETTANZOS GONCALVES",
             "cpf": "057.008.770-82",
             "phone": "",
@@ -386,6 +410,7 @@
           "apartmentId": "apartment_apto05",
           "apartmentNumber": "Apto 05",
           "tenant": {
+            "isForeign": false,
             "name": "ARTHUR SILVA CAVALCANTE",
             "cpf": "066.901.982-86",
             "phone": "",
@@ -418,6 +443,7 @@
       "contractStart": "2026-03-15",
       "contractEnd": "2027-03-15",
       "tenant": {
+        "isForeign": false,
         "name": "KETLEN CRISTINA BARBOSA OLIVEIRA",
         "cpf": "055.898.932-24",
         "phone": "(91) 98460-5654 / (91) 98440-2936",
@@ -434,6 +460,7 @@
           "apartmentId": "apartment_apto06",
           "apartmentNumber": "Apto 06",
           "tenant": {
+            "isForeign": false,
             "name": "ALLYSON DE OLIVEIRA BARBOSA",
             "cpf": "019.227.782-06",
             "phone": "",
@@ -466,6 +493,7 @@
       "contractStart": "2026-03-16",
       "contractEnd": "2027-03-16",
       "tenant": {
+        "isForeign": false,
         "name": "RICARDO IACHITZKI JUNIOR",
         "cpf": "822.941.789-04",
         "phone": "48988307838",
@@ -482,6 +510,7 @@
           "apartmentId": "apartment_apto07",
           "apartmentNumber": "Apto 07",
           "tenant": {
+            "isForeign": false,
             "name": "MATHEUS DE SOUSA PEREIRA",
             "cpf": "053.365.502-13",
             "phone": "(68) 99961-0184",
@@ -505,6 +534,7 @@
           "apartmentId": "apartment_apto07",
           "apartmentNumber": "Apto 07",
           "tenant": {
+            "isForeign": false,
             "name": "RICARDO IACHITZKI JUNIOR",
             "cpf": "822.941.789-04",
             "phone": "",
@@ -537,6 +567,7 @@
       "contractStart": "2025-08-14",
       "contractEnd": "2027-02-14",
       "tenant": {
+        "isForeign": false,
         "name": "LUIZ PEREIRA DE SOUSA",
         "cpf": "772.410.121-49",
         "phone": "48984619223",
@@ -553,6 +584,7 @@
           "apartmentId": "apartment_apto08",
           "apartmentNumber": "Apto 08",
           "tenant": {
+            "isForeign": false,
             "name": "MARKS PAUL SANTIAGO MENDEZ GUZMAN",
             "cpf": "050.647.168-34",
             "phone": "",
@@ -576,6 +608,7 @@
           "apartmentId": "apartment_apto08",
           "apartmentNumber": "Apto 08",
           "tenant": {
+            "isForeign": false,
             "name": "LUIZ PEREIRA DE SOUSA",
             "cpf": "772.410.121-49",
             "phone": "",
@@ -608,6 +641,7 @@
       "contractStart": "2025-08-10",
       "contractEnd": "2027-08-10",
       "tenant": {
+        "isForeign": false,
         "name": "WANILSON DA SILVA TEIXEIRA",
         "cpf": "009.022.242-39",
         "phone": "48988599699",
@@ -624,6 +658,7 @@
           "apartmentId": "apartment_306b234f-f49e-4b2f-b192-2daa09255516",
           "apartmentNumber": "Casa Eldorado",
           "tenant": {
+            "isForeign": false,
             "name": "WANILSON DA SILVA TEIXEIRA",
             "cpf": "009.022.242-39",
             "phone": "48988599699",
@@ -5048,7 +5083,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-20T16:12:44.255Z",
+    "updatedAt": "2026-11-20T16:24:30.684Z",
     "updatedBy": "residencial"
   }
 }
