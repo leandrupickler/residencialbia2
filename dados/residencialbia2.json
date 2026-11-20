@@ -4931,7 +4931,7 @@
       "maintenanceFee": 0,
       "entrySource": "",
       "contractStart": "",
-      "paymentStatus": "pending",
+      "paymentStatus": "paid",
       "paymentMethod": "pix"
     },
     {
