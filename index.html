@@ -6765,6 +6765,141 @@
         URL.revokeObjectURL(url);
       }
 
+      let pdfLibraries;
+
+      function loadPdfLibraries() {
+        if (!pdfLibraries) {
+          const scripts = [
+            [window.html2canvas, "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"],
+            [window.jspdf?.jsPDF, "https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js"]
+          ];
+          pdfLibraries = Promise.all(scripts.map(([loaded, src]) => {
+            if (loaded) return;
+            return new Promise((resolve, reject) => {
+              const script = document.createElement("script");
+              script.src = src;
+              script.onload = resolve;
+              script.onerror = () => {
+                script.remove();
+                reject(new Error("Não foi possível carregar o gerador de PDF."));
+              };
+              document.head.appendChild(script);
+            });
+          })).catch(error => {
+            pdfLibraries = undefined;
+            throw error;
+          });
+        }
+        return pdfLibraries;
+      }
+
+      function paginatePdfDocument(doc, inspection) {
+        const main = doc.querySelector("main.page");
+        const blocks = Array.from(main.children);
+        const extraPages = Array.from(doc.querySelectorAll("body > section"));
+        const pages = [];
+        const addPage = () => {
+          const page = main.cloneNode(false);
+          page.classList.add("pdf-page");
+          doc.body.insertBefore(page, main);
+          pages.push(page);
+          return page;
+        };
+        const fits = (page, last) => {
+          const style = doc.defaultView.getComputedStyle(page);
+          const margin = parseFloat(doc.defaultView.getComputedStyle(last).marginBottom) || 0;
+          return last.getBoundingClientRect().bottom + margin <= page.getBoundingClientRect().bottom - parseFloat(style.paddingBottom) + 1;
+        };
+
+        doc.body.classList.toggle("pdf-inspection", inspection);
+        let page = addPage();
+        for (let index = 0; index < blocks.length; index++) {
+          const block = blocks[index];
+          const group = block.matches("h1, h2") && blocks[index + 1]
+            ? [block, blocks[++index]]
+            : [block];
+          const hasContent = page.childElementCount > 0;
+          page.append(...group);
+          if (hasContent && !fits(page, group[group.length - 1])) {
+            page = addPage();
+            page.append(...group);
+          }
+        }
+        main.remove();
+
+        for (const section of extraPages) {
+          section.classList.add("pdf-page");
+          pages.push(section);
+        }
+        return pages;
+      }
+
+      async function downloadDocumentPdf(filename, content, { inspection = false } = {}) {
+        await loadPdfLibraries();
+        const frame = document.createElement("iframe");
+        frame.setAttribute("aria-hidden", "true");
+        frame.setAttribute("sandbox", "allow-same-origin");
+        frame.style.cssText = "position:fixed;left:-10000px;top:0;width:210mm;height:297mm;border:0;pointer-events:none";
+        const ready = new Promise(resolve => frame.addEventListener("load", resolve, { once: true }));
+        frame.srcdoc = content;
+        document.body.appendChild(frame);
+
+        try {
+          await ready;
+          const doc = frame.contentDocument;
+          const style = doc.createElement("style");
+          style.textContent = `
+            body { background: #fff; }
+            .print-btn { display: none; }
+            .pdf-page {
+              display: flow-root;
+              width: 210mm;
+              height: 297mm;
+              min-height: 0;
+              margin: 0;
+              box-shadow: none;
+              box-sizing: border-box;
+            }
+            .pdf-page > :first-child { margin-top: 0; }
+            .pdf-page .signature-gap-locatario-testemunhas { height: 280px; }
+            .pdf-inspection main.pdf-page { padding: 16mm 14mm; }
+            .pdf-inspection .photo-page { padding: 12mm 14mm; }
+            .pdf-inspection .photo-grid { gap: 8mm; }
+            .pdf-inspection figure { min-height: 108mm; }
+            .pdf-inspection figure img {
+              width: auto;
+              height: auto;
+              max-width: 100%;
+              max-height: 92mm;
+              margin: auto;
+            }
+          `;
+          doc.head.appendChild(style);
+          await Promise.all(Array.from(doc.images, image => image.decode().catch(() => {})));
+          const pages = paginatePdfDocument(doc, inspection);
+          const pdf = new window.jspdf.jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+          const width = pdf.internal.pageSize.getWidth();
+          const height = pdf.internal.pageSize.getHeight();
+          pages.forEach(page => page.remove());
+          for (const page of pages) {
+            if (page !== pages[0]) pdf.addPage();
+            // Capture one page at a time so a long inspection never needs a full-document canvas.
+            doc.body.appendChild(page);
+            if (page.scrollHeight > page.clientHeight) page.style.height = `${page.scrollHeight}px`;
+            const canvas = await window.html2canvas(page, { scale: 2, backgroundColor: "#fff", logging: false, useCORS: true });
+            const scale = Math.min(width / canvas.width, height / canvas.height);
+            const imageWidth = canvas.width * scale;
+            pdf.addImage(canvas.toDataURL("image/jpeg", 0.94), "JPEG", (width - imageWidth) / 2, 0, imageWidth, canvas.height * scale);
+            canvas.width = 0;
+            canvas.height = 0;
+            page.remove();
+          }
+          pdf.save(filename);
+        } finally {
+          frame.remove();
+        }
+      }
+
       function buildPrintableReport({ title, subtitle, summaryCards = [], headers = [], rows = [], emptyMessage = "Nenhum registro encontrado no filtro atual." }) {
         const appName = state.settings.appName || "G.A - Gestão de Aluguel";
         const inspectionLogo = INSPECTION_CONTRACT_LOGO || state.settings.logo || "";
@@ -7696,9 +7831,9 @@
 
   <p style="margin-top:24px;">E por estarem justos e contratados, as partes firmam o presente contrato em duas vias de igual conteúdo e teor para que surjam seus legais e jurídicos efeitos na presença de testemunhas, que igualmente assinam.</p>
 
-  <p class="center" style="margin-top:26px;">${escapeHtml(contractSettings.landlordCity)}, ${todayText}.</p>
-
   <div class="signatures">
+    <p class="center" style="margin-bottom:26px;">${escapeHtml(contractSettings.landlordCity)}, ${todayText}.</p>
+
     <div class="line">
       <strong>LOCADOR</strong><br>
       ${escapeHtml(contractSettings.landlordName)}<br>
@@ -7722,9 +7857,8 @@
 
       ${contractWitnessSignature(contractSettings.witness2Name, contractSettings.witness2Cpf)}
     </div>
+    <p class="small center" style="margin:24px 0 0;">Documento gerado automaticamente pelo sistema G.A - Gestão de Aluguel.</p>
   </div>
-
-  <p class="small center" style="margin-top:24px;">Documento gerado automaticamente pelo sistema G.A - Gestão de Aluguel.</p>
   </main>
 </body>
 </html>`;
@@ -8136,20 +8270,21 @@
         try {
           updateSyncStatus("warn", "Carregando fotos do termo...");
           const contractHtml = await buildInspectionContractHtml(apartment);
-          const fileName = `termo_vistoria_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.html`;
+          const fileName = `termo_vistoria_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.pdf`;
 
-          downloadHtmlFile(fileName, contractHtml);
+          updateSyncStatus("warn", "Gerando PDF do termo...");
+          await downloadDocumentPdf(fileName, contractHtml, { inspection: true });
 
           updateSyncStatus("ok", "Termo de vistoria gerado");
-          toast("Termo de vistoria gerado com as fotos salvas no GitHub. As fotos continuam salvas até o imóvel ser liberado.");
+          toast("Termo de vistoria gerado em PDF.");
         } catch (error) {
           console.error(error);
           updateSyncStatus("error", "Erro no termo de vistoria");
-          toast("Erro ao carregar fotos do GitHub para o termo. Verifique token, permissão e conexão.");
+          toast("Não foi possível gerar o PDF do termo de vistoria. Verifique a conexão e tente novamente.");
         }
       }
 
-      function downloadContract(id) {
+      async function downloadContract(id) {
         const apartment = getApartment(id);
 
         if (!apartment) {
@@ -8162,20 +8297,15 @@
           return;
         }
 
-        const contractHtml = buildRentalContractHtml(apartment);
-        const blob = new Blob([contractHtml], { type: "text/html;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-        const fileName = `contrato_locacao_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.html`;
-
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
-
-        toast("Contrato de locação gerado. Abra o HTML baixado e use imprimir/salvar em PDF.");
+        try {
+          const fileName = `contrato_locacao_${sanitizeFileName(apartment.number)}_${sanitizeFileName(apartment.tenant.name)}.pdf`;
+          toast("Gerando PDF do contrato de locação...");
+          await downloadDocumentPdf(fileName, buildRentalContractHtml(apartment));
+          toast("Contrato de locação gerado em PDF.");
+        } catch (error) {
+          console.error(error);
+          toast("Não foi possível gerar o PDF do contrato. Verifique a conexão e tente novamente.");
+        }
       }
 
       function bindEvents() {
