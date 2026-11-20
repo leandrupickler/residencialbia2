@@ -77,6 +77,8 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "coTenant": null,
+      "residentAliases": [],
       "status": "occupied",
       "contractHistory": [
         {
@@ -91,6 +93,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-04-10",
           "contractEnd": "2025-10-10",
           "baseRent": 1300,
@@ -121,6 +125,8 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "coTenant": null,
+      "residentAliases": [],
       "status": "occupied",
       "contractHistory": [
         {
@@ -135,6 +141,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-04-10",
           "contractEnd": "2025-10-10",
           "baseRent": 1300,
@@ -153,18 +161,36 @@
       "photo": "",
       "inspectionDate": "2026-06-04",
       "inspectionPhotos": [],
-      "baseRent": 1300,
+      "baseRent": 1350,
       "maintenanceFee": 600,
       "contractStart": "2026-06-10",
       "contractEnd": "2027-06-10",
       "tenant": {
         "name": "Yestsenia Navarro Matos",
-        "cpf": "71246838230",
-        "phone": "",
+        "cpf": "712.468.382-30",
+        "phone": "48999785395",
         "birth": "1995-03-09",
-        "emergencyName": "PAULO HENRIQUE FERREIRA DOS PASSOS - 001.805.170.74",
-        "emergencyPhone": "48991175954"
+        "emergencyName": "",
+        "emergencyPhone": ""
       },
+      "coTenant": {
+        "name": "PAULO HENRIQUE FERREIRA DOS PASSOS",
+        "cpf": "001.805.170.74",
+        "phone": "48991175954",
+        "birth": "",
+        "emergencyName": "",
+        "emergencyPhone": ""
+      },
+      "residentAliases": [
+        {
+          "name": "Yestsenia Navarro Matos",
+          "cpf": "71246838230",
+          "phone": "",
+          "birth": "1995-03-09",
+          "emergencyName": "PAULO HENRIQUE FERREIRA DOS PASSOS - 001.805.170.74",
+          "emergencyPhone": "48991175954"
+        }
+      ],
       "status": "occupied",
       "contractHistory": [
         {
@@ -179,6 +205,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-04-10",
           "contractEnd": "2025-10-10",
           "baseRent": 1300,
@@ -200,6 +228,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-12-10",
           "contractEnd": "2026-06-10",
           "baseRent": 1300,
@@ -221,6 +251,8 @@
             "emergencyName": "Yestsenia Navarro Matos",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2026-06-10",
           "contractEnd": "2027-06-10",
           "baseRent": 1300,
@@ -251,6 +283,8 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "coTenant": null,
+      "residentAliases": [],
       "status": "occupied",
       "contractHistory": [
         {
@@ -265,6 +299,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-04-09",
           "contractEnd": "2025-10-09",
           "baseRent": 1300,
@@ -286,6 +322,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-07-10",
           "contractEnd": "2026-01-10",
           "baseRent": 1300,
@@ -316,6 +354,8 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "coTenant": null,
+      "residentAliases": [],
       "status": "occupied",
       "contractHistory": [
         {
@@ -330,6 +370,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-04-06",
           "contractEnd": "2025-10-06",
           "baseRent": 1300,
@@ -351,6 +393,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-09-10",
           "contractEnd": "2026-03-10",
           "baseRent": 1300,
@@ -381,6 +425,8 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "coTenant": null,
+      "residentAliases": [],
       "status": "occupied",
       "contractHistory": [
         {
@@ -395,6 +441,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-10-10",
           "contractEnd": "2026-04-10",
           "baseRent": 1300,
@@ -425,6 +473,8 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "coTenant": null,
+      "residentAliases": [],
       "status": "occupied",
       "contractHistory": [
         {
@@ -439,6 +489,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-05-16",
           "contractEnd": "2025-11-10",
           "baseRent": 1300,
@@ -460,6 +512,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-08-10",
           "contractEnd": "2026-02-16",
           "baseRent": 1300,
@@ -490,6 +544,8 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "coTenant": null,
+      "residentAliases": [],
       "status": "occupied",
       "contractHistory": [
         {
@@ -504,6 +560,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-04-10",
           "contractEnd": "2025-10-10",
           "baseRent": 1300,
@@ -525,6 +583,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-08-14",
           "contractEnd": "2026-02-10",
           "baseRent": 1300,
@@ -555,6 +615,8 @@
         "emergencyName": "",
         "emergencyPhone": ""
       },
+      "coTenant": null,
+      "residentAliases": [],
       "status": "occupied",
       "contractHistory": [
         {
@@ -569,6 +631,8 @@
             "emergencyName": "",
             "emergencyPhone": ""
           },
+          "coTenant": null,
+          "residentAliases": [],
           "contractStart": "2025-02-10",
           "contractEnd": "2025-08-10",
           "baseRent": 1250,
@@ -4984,7 +5048,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-20T15:44:05.821Z",
+    "updatedAt": "2026-11-20T16:12:44.255Z",
     "updatedBy": "residencial"
   }
 }
