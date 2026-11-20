@@ -6081,7 +6081,23 @@
           return;
         }
 
-        const currentEnd = apartment.contractEnd || addMonths(apartment.contractStart, 6);
+        if (!parseDate(apartment.contractStart)) {
+          toast("Informe a data de início do contrato antes de renovar.");
+          return;
+        }
+
+        const firstTermEnd = addMonths(apartment.contractStart, 6);
+        const currentEnd = apartment.contractEnd || firstTermEnd;
+        if (!parseDate(currentEnd) || currentEnd <= apartment.contractStart) {
+          toast("Corrija a data de vencimento do contrato antes de renovar.");
+          return;
+        }
+
+        if (currentEnd > firstTermEnd) {
+          alert(`Este contrato já teve a renovação de 6 meses prevista. O vencimento atual é ${formatDate(currentEnd)}.\n\nPara continuar, é preciso baixar um novo contrato de locação e colher novas assinaturas.`);
+          return;
+        }
+
         apartment.contractEnd = addMonths(currentEnd, 6);
 
         await save(`Contrato renovado até ${formatDate(apartment.contractEnd)}.`);
