@@ -152,199 +152,18 @@
       "description": "Apartamento importado dos contratos de locação. Imóvel com 1 quarto, sala, cozinha, área de serviço e banheiro. Localizado na Rua Albino Dias n. 170, Bairro Caminho Novo, Palhoça/SC.",
       "photo": "",
       "inspectionDate": "2026-06-04",
-      "inspectionPhotos": [
-        {
-          "id": "inspection_photo_256ada41-a9fe-496e-ae7d-78f203cfe9fb",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204011_01_11a238_whatsapp_image_2026-06-04_at_15_53_14_1_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204011_01_11a238_whatsapp_image_2026-06-04_at_15_53_14_1_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.14 (1).jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.14 (1).jpeg",
-          "contentType": "image/jpeg",
-          "size": 150030,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:13.444Z"
-        },
-        {
-          "id": "inspection_photo_b7d913fd-15d6-410c-8dd2-28f43bc7b039",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204014_03_ba8a6c_whatsapp_image_2026-06-04_at_15_53_14_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204014_03_ba8a6c_whatsapp_image_2026-06-04_at_15_53_14_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.14.jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.14.jpeg",
-          "contentType": "image/jpeg",
-          "size": 140304,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:16.619Z"
-        },
-        {
-          "id": "inspection_photo_a110c044-dcfb-441f-a754-06e731635dfe",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204017_05_4ad110_whatsapp_image_2026-06-04_at_15_53_15_1_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204017_05_4ad110_whatsapp_image_2026-06-04_at_15_53_15_1_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.15 (1).jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.15 (1).jpeg",
-          "contentType": "image/jpeg",
-          "size": 128247,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:19.836Z"
-        },
-        {
-          "id": "inspection_photo_78538056-3fc1-4119-af35-7470f4fd1da4",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204021_07_78bd67_whatsapp_image_2026-06-04_at_15_53_15_2_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204021_07_78bd67_whatsapp_image_2026-06-04_at_15_53_15_2_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.15 (2).jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.15 (2).jpeg",
-          "contentType": "image/jpeg",
-          "size": 176520,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:23.131Z"
-        },
-        {
-          "id": "inspection_photo_a5987fe4-3836-46c3-8f34-10f153ce0cfd",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204024_09_fe86b3_whatsapp_image_2026-06-04_at_15_53_15_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204024_09_fe86b3_whatsapp_image_2026-06-04_at_15_53_15_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.15.jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.15.jpeg",
-          "contentType": "image/jpeg",
-          "size": 121923,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:26.277Z"
-        },
-        {
-          "id": "inspection_photo_da1f1362-e0a6-4e02-a767-701a4bf23bae",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204027_11_4bde14_whatsapp_image_2026-06-04_at_15_53_16_1_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204027_11_4bde14_whatsapp_image_2026-06-04_at_15_53_16_1_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.16 (1).jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.16 (1).jpeg",
-          "contentType": "image/jpeg",
-          "size": 140175,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:29.513Z"
-        },
-        {
-          "id": "inspection_photo_09cfc4a1-4786-48a6-b0c5-653d35ce1f18",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204030_13_f1c6a5_whatsapp_image_2026-06-04_at_15_53_16_2_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204030_13_f1c6a5_whatsapp_image_2026-06-04_at_15_53_16_2_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.16 (2).jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.16 (2).jpeg",
-          "contentType": "image/jpeg",
-          "size": 108852,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:32.671Z"
-        },
-        {
-          "id": "inspection_photo_5edf02cc-7f7d-40e4-a6fe-863949ca36bb",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204036_17_e57069_whatsapp_image_2026-06-04_at_15_53_16_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204036_17_e57069_whatsapp_image_2026-06-04_at_15_53_16_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.16.jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.16.jpeg",
-          "contentType": "image/jpeg",
-          "size": 117351,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:38.837Z"
-        },
-        {
-          "id": "inspection_photo_e6fb60a8-63eb-46a2-8917-f6d895ab3b0b",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204043_21_b106d0_whatsapp_image_2026-06-04_at_15_53_17_2_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204043_21_b106d0_whatsapp_image_2026-06-04_at_15_53_17_2_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.17 (2).jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.17 (2).jpeg",
-          "contentType": "image/jpeg",
-          "size": 137529,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:45.172Z"
-        },
-        {
-          "id": "inspection_photo_b17e6ba1-5262-4de0-9765-a3b8eda69e4c",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204046_23_7afa62_whatsapp_image_2026-06-04_at_15_53_17_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204046_23_7afa62_whatsapp_image_2026-06-04_at_15_53_17_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.17.jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.17.jpeg",
-          "contentType": "image/jpeg",
-          "size": 112017,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:48.405Z"
-        },
-        {
-          "id": "inspection_photo_cfbdec51-46e9-4ccd-92f0-9ed0733228b2",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204049_25_9e6200_whatsapp_image_2026-06-04_at_15_53_18_1_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204049_25_9e6200_whatsapp_image_2026-06-04_at_15_53_18_1_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.18 (1).jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.18 (1).jpeg",
-          "contentType": "image/jpeg",
-          "size": 122616,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:51.610Z"
-        },
-        {
-          "id": "inspection_photo_470c9ef3-bfe9-43b7-85c0-057f18604f41",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204052_27_fc1863_whatsapp_image_2026-06-04_at_15_53_18_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204052_27_fc1863_whatsapp_image_2026-06-04_at_15_53_18_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.53.18.jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.53.18.jpeg",
-          "contentType": "image/jpeg",
-          "size": 176085,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:55.459Z"
-        },
-        {
-          "id": "inspection_photo_71388249-3de8-4f7a-b661-5b9194d1b429",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260604204056_29_3d8d06_whatsapp_image_2026-06-04_at_15_55_55_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260604204056_29_3d8d06_whatsapp_image_2026-06-04_at_15_55_55_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-04 at 15.55.55.jpeg",
-          "name": "WhatsApp Image 2026-06-04 at 15.55.55.jpeg",
-          "contentType": "image/jpeg",
-          "size": 154080,
-          "storage": "github",
-          "createdAt": "2026-06-04T20:40:58.771Z"
-        },
-        {
-          "id": "inspection_photo_427d6855-9add-48c0-a825-556a52dfabf3",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260609011425_14_243370_whatsapp_image_2026-06-08_at_22_11_27_1_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260609011425_14_243370_whatsapp_image_2026-06-08_at_22_11_27_1_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-08 at 22.11.27 (1).jpeg",
-          "name": "WhatsApp Image 2026-06-08 at 22.11.27 (1).jpeg",
-          "contentType": "image/jpeg",
-          "size": 100152,
-          "storage": "github",
-          "createdAt": "2026-06-09T01:14:27.667Z"
-        },
-        {
-          "id": "inspection_photo_61bfa45b-9b6b-4985-9847-0e0770b7b290",
-          "src": "",
-          "path": "fotos-vistoria/apto-03/20260609011429_16_1df4d2_whatsapp_image_2026-06-08_at_22_11_27_jpeg.jpg",
-          "rawUrl": "https://raw.githubusercontent.com/leandrupickler/residencialbia2/main/fotos-vistoria/apto-03/20260609011429_16_1df4d2_whatsapp_image_2026-06-08_at_22_11_27_jpeg.jpg",
-          "caption": "WhatsApp Image 2026-06-08 at 22.11.27.jpeg",
-          "name": "WhatsApp Image 2026-06-08 at 22.11.27.jpeg",
-          "contentType": "image/jpeg",
-          "size": 160788,
-          "storage": "github",
-          "createdAt": "2026-06-09T01:14:30.831Z"
-        }
-      ],
+      "inspectionPhotos": [],
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2026-06-10",
       "contractEnd": "2027-06-10",
       "tenant": {
-        "name": "PAULO HENRIQUE FERREIRA DOS PASSOS",
-        "cpf": "001.805.170.74",
-        "phone": "48991175954",
-        "birth": "1981-05-31",
-        "emergencyName": "Yestsenia Navarro Matos",
-        "emergencyPhone": ""
+        "name": "Yestsenia Navarro Matos",
+        "cpf": "71246838230",
+        "phone": "",
+        "birth": "1995-03-09",
+        "emergencyName": "PAULO HENRIQUE FERREIRA DOS PASSOS - 001.805.170.74",
+        "emergencyPhone": "48991175954"
       },
       "status": "occupied",
       "contractHistory": [
@@ -389,6 +208,27 @@
           "inspectionPhotos": [],
           "endedAt": "2026-05-30T22:51:43.049Z",
           "reason": "Apartamento liberado para novo contrato"
+        },
+        {
+          "id": "history_383182ad-c2f4-4151-b51b-c13436bd7d70",
+          "apartmentId": "apartment_apto03",
+          "apartmentNumber": "Apto 03",
+          "tenant": {
+            "name": "PAULO HENRIQUE FERREIRA DOS PASSOS",
+            "cpf": "001.805.170.74",
+            "phone": "48991175954",
+            "birth": "1981-05-31",
+            "emergencyName": "Yestsenia Navarro Matos",
+            "emergencyPhone": ""
+          },
+          "contractStart": "2026-06-10",
+          "contractEnd": "2027-06-10",
+          "baseRent": 1300,
+          "maintenanceFee": 600,
+          "inspectionDate": "2026-06-04",
+          "inspectionPhotos": [],
+          "endedAt": "2026-11-20T15:43:22.689Z",
+          "reason": "Substituição manual do morador"
         }
       ]
     },
@@ -5120,10 +4960,31 @@
       "contractStart": "",
       "paymentStatus": "paid",
       "paymentMethod": "pix"
+    },
+    {
+      "id": "entry_initial_contract_b187007b-00ac-4044-95ac-a6552eec1da8",
+      "apartmentId": "apartment_apto03",
+      "apartmentNumber": "Apto 03",
+      "tenantName": "Yestsenia Navarro Matos",
+      "tenantCpf": "71246838230",
+      "month": "2026-06",
+      "rent": 1300,
+      "energyMode": "noKwh",
+      "kwhValue": 0,
+      "kwhPrevious": 0,
+      "kwhCurrent": 0,
+      "kwhConsumed": 0,
+      "cosip": 0,
+      "trashFee": 0,
+      "maintenanceFee": 600,
+      "entrySource": "contractInitial",
+      "contractStart": "2026-06-10",
+      "paymentStatus": "paid",
+      "paymentMethod": ""
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-20T15:34:38.806Z",
+    "updatedAt": "2026-11-20T15:44:05.821Z",
     "updatedBy": "residencial"
   }
 }
