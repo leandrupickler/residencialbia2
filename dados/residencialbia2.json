@@ -337,7 +337,7 @@
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2026-06-10",
-      "contractEnd": "2026-12-10",
+      "contractEnd": "2027-06-10",
       "tenant": {
         "name": "PAULO HENRIQUE FERREIRA DOS PASSOS",
         "cpf": "001.805.170.74",
@@ -5123,7 +5123,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-20T15:34:01.771Z",
+    "updatedAt": "2026-11-20T15:34:38.806Z",
     "updatedBy": "residencial"
   }
 }
