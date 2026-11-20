@@ -1315,7 +1315,26 @@
               </div>
             </div>
 
-            <h3>Ficha cadastral do morador atual</h3>
+            <h3>Moradores e responsáveis pelo contrato</h3>
+            <p class="mini muted">Cadastre até duas pessoas. Escolha quem será o responsável principal e aparecerá primeiro no contrato; os dois constarão no documento.</p>
+            <div class="form-row two">
+              <div class="field">
+                <label for="apartmentSaveMode">Tipo de atualização</label>
+                <select id="apartmentSaveMode">
+                  <option value="update">Atualizar cadastro / renovar — manter moradores e histórico</option>
+                  <option value="replace">Trocar moradores — enviar contrato anterior ao histórico</option>
+                </select>
+                <span class="mini muted">Na atualização, as fotos e os lançamentos financeiros anteriores são preservados. Para renovar, ajuste o vencimento do contrato.</span>
+              </div>
+              <div class="field">
+                <label for="primaryResident">Responsável principal / primeiro no contrato</label>
+                <select id="primaryResident">
+                  <option value="first">Pessoa 1</option>
+                  <option value="second">Pessoa 2</option>
+                </select>
+              </div>
+            </div>
+            <h3>Pessoa 1</h3>
 
             <div class="form-row">
               <div class="field">
@@ -1348,6 +1367,34 @@
               <div class="field">
                 <label for="emergencyPhone">Contato de Emergência - Telefone</label>
                 <input id="emergencyPhone" type="text" placeholder="(48) 99999-9999">
+              </div>
+            </div>
+
+            <h3>Pessoa 2 — cônjuge ou segundo locatário (opcional)</h3>
+            <div class="form-row">
+              <div class="field">
+                <label for="coTenantName">Nome completo</label>
+                <input id="coTenantName" type="text">
+              </div>
+              <div class="field">
+                <label for="coTenantCpf">CPF</label>
+                <input id="coTenantCpf" type="text">
+              </div>
+              <div class="field">
+                <label for="coTenantPhone">Telefone</label>
+                <input id="coTenantPhone" type="text">
+              </div>
+              <div class="field">
+                <label for="coTenantBirth">Data de nascimento</label>
+                <input id="coTenantBirth" type="date">
+              </div>
+              <div class="field">
+                <label for="coTenantEmergencyName">Contato de emergência — nome</label>
+                <input id="coTenantEmergencyName" type="text">
+              </div>
+              <div class="field">
+                <label for="coTenantEmergencyPhone">Contato de emergência — telefone</label>
+                <input id="coTenantEmergencyPhone" type="text">
               </div>
             </div>
 
@@ -2092,7 +2139,37 @@
         return { ...EMPTY_TENANT, ...(tenant || {}) };
       }
 
-            function normalizeInspectionPhoto(photo) {
+      function apartmentResidents(apartment) {
+        return [apartment?.tenant, apartment?.coTenant].filter(person => person?.name?.trim()).map(normalizeTenant);
+      }
+
+      function currentResidentIdentities(apartment) {
+        return [...apartmentResidents(apartment), ...(apartment?.residentAliases || [])];
+      }
+
+      function entryMatchesCurrentResidents(entry, apartment) {
+        return currentResidentIdentities(apartment).some(person => sameResident(person, { name: entry.tenantName, cpf: entry.tenantCpf }));
+      }
+
+      function resetSecondResidentForm(apartment = null) {
+        const person = normalizeTenant(apartment?.coTenant);
+        for (const [suffix, key] of [["Name", "name"], ["Cpf", "cpf"], ["Phone", "phone"], ["Birth", "birth"], ["EmergencyName", "emergencyName"], ["EmergencyPhone", "emergencyPhone"]]) {
+          $("#coTenant" + suffix).value = person[key] || "";
+        }
+        $("#primaryResident").value = "first";
+        $("#apartmentSaveMode").value = "update";
+      }
+
+      function residentContractIdentification(person) {
+        return `<strong>${escapeHtml(person.name)}</strong>, brasileiro(a), inscrito(a) no CPF sob o n. <strong>${escapeHtml(formatCpf(person.cpf))}</strong>, telefone <strong>${escapeHtml(person.phone || "________________")}</strong>`;
+      }
+
+      function secondResidentSignature(apartment) {
+        if (!apartment.coTenant?.name) return "";
+        return `<div class="line" style="margin-top:44px; break-inside:avoid;"><strong>SEGUNDO(A) LOCATÁRIO(A)</strong><br>${escapeHtml(apartment.coTenant.name)}<br>CPF n. ${escapeHtml(formatCpf(apartment.coTenant.cpf))}</div>`;
+      }
+
+      function normalizeInspectionPhoto(photo) {
         if (!photo) return null;
 
         if (typeof photo === "string") {
@@ -2196,6 +2273,8 @@
           contractStart: apt.contractStart || "",
           contractEnd: apt.contractEnd || "",
           tenant,
+          coTenant: apt.coTenant?.name ? normalizeTenant(apt.coTenant) : null,
+          residentAliases: Array.isArray(apt.residentAliases) ? apt.residentAliases.map(normalizeTenant) : [],
           status: apt.status || (hasTenant ? "occupied" : "free"),
           contractHistory: Array.isArray(apt.contractHistory) ? apt.contractHistory.map(normalizeHistoryItem) : []
         };
@@ -2216,6 +2295,8 @@
             emergencyName: source.emergencyName || "",
             emergencyPhone: source.emergencyPhone || ""
           }),
+          coTenant: source.coTenant?.name ? normalizeTenant(source.coTenant) : null,
+          residentAliases: Array.isArray(source.residentAliases) ? source.residentAliases.map(normalizeTenant) : [],
           contractStart: source.contractStart || source.inicioContrato || "",
           contractEnd: source.contractEnd || source.fimContrato || "",
           baseRent: toNumber(source.baseRent ?? source.valorAluguelMensal),
@@ -2916,8 +2997,8 @@
           saveLocalCache();
           renderAll();
           updateSyncStatus("warn", "Sem token para salvar");
-          toast("Configure o token do GitHub para salvar online.");
-          return;
+          toast("Configure o token do GitHub para salvar online. Os dados permanecem no cache local.");
+          return false;
         }
 
         try {
@@ -2931,6 +3012,7 @@
           renderAll();
 
           if (message) toast(message);
+          return true;
         } catch (error) {
           console.error(error);
           saveLocalCache();
@@ -2943,6 +3025,7 @@
             updateSyncStatus("error", "Erro ao salvar");
             toast("Erro ao salvar no GitHub. Verifique token, permissão e caminho do JSON.");
           }
+          return false;
         } finally {
           isSaving = false;
 
@@ -2966,7 +3049,7 @@
           return;
         }
 
-        await saveStateToGithub(message);
+        return await saveStateToGithub(message);
       }
 
       function updateTokenStatus() {
@@ -3347,7 +3430,7 @@
         const periods = [];
 
         (apartment.contractHistory || []).forEach(item => {
-          if (!sameResident(item.tenant, tenant)) return;
+          if (!currentResidentIdentities(item).some(person => sameResident(person, tenant))) return;
 
           const start = item.contractStart || "";
           const end = item.contractEnd || (item.endedAt ? String(item.endedAt).slice(0, 10) : "");
@@ -3355,7 +3438,7 @@
           if (start) periods.push({ start, end, active: false });
         });
 
-        if (includeCurrent && apartment.status !== "free" && apartment.tenant?.name && sameResident(apartment.tenant, tenant)) {
+        if (includeCurrent && apartment.status !== "free" && apartment.tenant?.name && currentResidentIdentities(apartment).some(person => sameResident(person, tenant))) {
           if (apartment.contractStart) {
             periods.push({
               start: apartment.contractStart,
@@ -3420,7 +3503,7 @@
                 return `
                   <span class="pill">
                     <i class="fa-solid fa-clock-rotate-left"></i>
-                    ${escapeHtml(tenant.name || "-")} • Contrato: ${escapeHtml(contractDurationRangeLabel(item.contractStart, endDate, false))} • Total no imóvel: ${escapeHtml(residentTotalRangeLabel(apartment, tenant, false))}
+                    ${escapeHtml(tenant.name || "-")}${item.coTenant?.name ? ` e ${escapeHtml(item.coTenant.name)}` : ""} • Contrato: ${escapeHtml(contractDurationRangeLabel(item.contractStart, endDate, false))} • Total no imóvel: ${escapeHtml(residentTotalRangeLabel(apartment, tenant, false))}
                   </span>
                 `;
               }).join("")}
@@ -3613,14 +3696,7 @@
       }
 
       function sameTenantForMaintenanceFee(entry, apartment) {
-        if (!entry || !apartment) return false;
-
-        const entryCpf = normalizeFilterText(entry.tenantCpf || "");
-        const tenantCpf = normalizeFilterText(apartment.tenant?.cpf || "");
-
-        if (entryCpf && tenantCpf) return entryCpf === tenantCpf;
-
-        return normalizeFilterText(entry.tenantName || "") === normalizeFilterText(apartment.tenant?.name || "");
+        return Boolean(entry && apartment && entryMatchesCurrentResidents(entry, apartment));
       }
 
       function suggestedMaintenanceFeeForEntry(apartment, month, entryId = "") {
@@ -3655,14 +3731,7 @@
       }
 
       function sameTenantForInitialContractEntry(entry, apartment) {
-        if (!entry || !apartment) return false;
-
-        const entryCpf = normalizeFilterText(entry.tenantCpf || "");
-        const tenantCpf = normalizeFilterText(apartment.tenant?.cpf || "");
-
-        if (entryCpf && tenantCpf) return entryCpf === tenantCpf;
-
-        return normalizeFilterText(entry.tenantName || "") === normalizeFilterText(apartment.tenant?.name || "");
+        return Boolean(entry && apartment && entryMatchesCurrentResidents(entry, apartment));
       }
 
       function hasMaintenanceFeeAlreadyChargedForTenant(apartment, ignoreEntryId = "") {
@@ -4531,6 +4600,7 @@
                   `}
                 </p>
                 <p class="mini muted" style="margin:6px 0 0;">${escapeHtml(apartment.description || "Sem descrição cadastrada.")}</p>
+                ${!isFree && apartment.coTenant?.name ? `<p class="mini" style="margin:8px 0;"><strong>Segundo(a) locatário(a):</strong> ${escapeHtml(apartment.coTenant.name)} • CPF: ${escapeHtml(apartment.coTenant.cpf)} • Telefone: ${escapeHtml(apartment.coTenant.phone || "-")}</p>` : ""}
                 ${residentHistoryHtml}
               </div>
               <div class="actions">
@@ -4930,6 +5000,8 @@
           return false;
         }
 
+        if (entryMatchesCurrentResidents(entry, apartment)) return true;
+
         const entryCpf = String(entry.tenantCpf || "").trim();
         const currentCpf = String(apartment.tenant?.cpf || "").trim();
         const entryName = String(entry.tenantName || "").trim().toLowerCase();
@@ -5297,6 +5369,7 @@
               apartmentId: item.apartmentId || apartment.id,
               apartmentNumber: item.apartmentNumber || apartment.number,
               tenant: normalizeTenant(item.tenant),
+              coTenant: item.coTenant,
               contractStart: item.contractStart,
               contractEnd: item.contractEnd,
               baseRent: item.baseRent,
@@ -5314,6 +5387,7 @@
               apartmentId: apartment.id,
               apartmentNumber: apartment.number,
               tenant: apartment.tenant,
+              coTenant: apartment.coTenant,
               contractStart: apartment.contractStart,
               contractEnd: apartment.contractEnd,
               baseRent: apartment.baseRent,
@@ -5393,9 +5467,9 @@
                         <td>${rowIndex + 1}</td>
                         <td><span class="pill ${row.status === "Contrato Ativo" ? "green" : "yellow"}">${row.status}</span></td>
                         <td>${escapeHtml(row.apartmentNumber)}</td>
-                        <td><strong>${escapeHtml(row.tenant.name || "-")}</strong></td>
-                        <td>${escapeHtml(row.tenant.cpf || "-")}</td>
-                        <td>${escapeHtml(row.tenant.phone || "-")}</td>
+                        <td><strong>${escapeHtml(row.tenant.name || "-")}</strong>${row.coTenant?.name ? `<br><span class="mini">${escapeHtml(row.coTenant.name)} (segundo locatário)</span>` : ""}</td>
+                        <td>${escapeHtml(row.tenant.cpf || "-")}${row.coTenant?.name ? `<br>${escapeHtml(row.coTenant.cpf || "-")}` : ""}</td>
+                        <td>${escapeHtml(row.tenant.phone || "-")}${row.coTenant?.name ? `<br>${escapeHtml(row.coTenant.phone || "-")}` : ""}</td>
                         <td>${formatDate(row.contractStart)}</td>
                         <td>${formatDate(row.contractEnd)}</td>
                         <td>${escapeHtml(contractDurationLabel(row.contractStart, row.status === "Contrato Ativo" ? "" : row.contractEnd, row.status === "Contrato Ativo"))}</td>
@@ -5593,6 +5667,7 @@
       }
 
       function clearApartmentForm() {
+        resetSecondResidentForm();
         $("#apartmentEditId").value = "";
         $("#apartmentNumber").value = "";
         $("#baseRent").value = "";
@@ -5721,6 +5796,8 @@
           apartmentId: apartment.id,
           apartmentNumber: apartment.number,
           tenant: normalizeTenant(apartment.tenant),
+          coTenant: apartment.coTenant ? normalizeTenant(apartment.coTenant) : null,
+          residentAliases: clone(apartment.residentAliases || []),
           contractStart: apartment.contractStart,
           contractEnd: apartment.contractEnd,
           baseRent: toNumber(apartment.baseRent),
@@ -5758,6 +5835,7 @@
         const existing = id ? getApartment(id) : null;
 
         const nextApartment = {
+          ...(existing || {}),
           id: id || uid("apartment"),
           number,
           description: $("#apartmentDescription").value.trim(),
@@ -5780,40 +5858,58 @@
           contractHistory: existing?.contractHistory || []
         };
 
+        const secondPerson = normalizeTenant({
+          name: $("#coTenantName").value.trim(), cpf: $("#coTenantCpf").value.trim(),
+          phone: $("#coTenantPhone").value.trim(), birth: $("#coTenantBirth").value,
+          emergencyName: $("#coTenantEmergencyName").value.trim(), emergencyPhone: $("#coTenantEmergencyPhone").value.trim()
+        });
+        if (Object.values(secondPerson).some(Boolean) && (!secondPerson.name || !secondPerson.cpf)) {
+          toast("Preencha nome e CPF da pessoa 2 ou deixe todos os campos dela vazios.");
+          return;
+        }
+        if (secondPerson.name && sameResident(nextApartment.tenant, secondPerson)) {
+          toast("As duas pessoas devem ter CPFs diferentes.");
+          return;
+        }
+        if (contractEnd < contractStart) {
+          toast("O vencimento não pode ser anterior ao início do contrato.");
+          return;
+        }
+        nextApartment.coTenant = secondPerson.name ? secondPerson : null;
+        if ($("#primaryResident").value === "second") {
+          if (!nextApartment.coTenant) { toast("Cadastre a pessoa 2 antes de escolhê-la como principal."); return; }
+          [nextApartment.tenant, nextApartment.coTenant] = [nextApartment.coTenant, nextApartment.tenant];
+        }
+
         if (nextApartment.baseRent < 0 || nextApartment.maintenanceFee < 0) {
           toast("O valor base do aluguel e a taxa de manutenção não podem ser negativos.");
           return;
         }
 
+        const replacing = existing && existing.status !== "free" && existing.tenant?.name && $("#apartmentSaveMode").value === "replace";
+        if (replacing && !confirm("Trocar os moradores e enviar o contrato anterior para o histórico? Para corrigir o cadastro ou renovar com as mesmas pessoas, use Atualizar cadastro / renovar.")) return;
+        const continuing = existing && existing.status !== "free" && existing.tenant?.name && !replacing;
+        nextApartment.residentAliases = continuing
+          ? [...(existing.residentAliases || []), ...apartmentResidents(existing)].filter((person, index, all) => all.findIndex(other => sameResident(person, other)) === index)
+          : [];
+
+        if (replacing) {
+          nextApartment.contractHistory = [...(existing.contractHistory || []), currentContractSnapshot(existing, "Troca de moradores")];
+        }
         if (existing) {
-          const changedTenant = existing.tenant?.name && existing.status !== "free" &&
-            (
-              existing.tenant.name.trim().toLowerCase() !== nextApartment.tenant.name.trim().toLowerCase() ||
-              existing.tenant.cpf.trim() !== nextApartment.tenant.cpf.trim()
-            );
-
-          if (changedTenant) {
-            const confirmed = confirm("Você alterou o morador principal deste apartamento. Deseja enviar o morador anterior para o histórico?");
-            if (confirmed) {
-              nextApartment.contractHistory = [
-                ...(existing.contractHistory || []),
-                currentContractSnapshot(existing, "Substituição manual do morador")
-              ];
-            }
-
-            await deleteInspectionPhotosFromGithub(existing);
-            nextApartment.inspectionPhotos = [];
-            tempInspectionPhotos = [];
-          }
-
           state.apartments = state.apartments.map(item => item.id === id ? nextApartment : item);
-          upsertInitialContractEntry(nextApartment);
-          await save("Apartamento e morador atualizados. Entrada inicial do contrato registrada no histórico financeiro.");
         } else {
           state.apartments.push(nextApartment);
-          upsertInitialContractEntry(nextApartment);
-          await save("Apartamento e morador cadastrados. Entrada inicial do contrato registrada no histórico financeiro.");
         }
+        // Edição e renovação nunca recriam cobranças nem alteram recebimentos anteriores.
+        if (!continuing) upsertInitialContractEntry(nextApartment);
+        // Uma nova tentativa de gravação não deve duplicar cadastro ou histórico.
+        $("#apartmentEditId").value = nextApartment.id;
+        $("#apartmentSaveMode").value = "update";
+        const saved = await save(continuing
+          ? "Cadastro/contrato atualizado. Histórico, fotos e lançamentos anteriores preservados."
+          : "Imóvel e moradores cadastrados.");
+        if (saved === false) return;
 
         clearApartmentForm();
       }
@@ -5821,6 +5917,7 @@
       function editApartment(id) {
         const apartment = getApartment(id);
         if (!apartment) return;
+        resetSecondResidentForm(apartment);
 
         $("#apartmentEditId").value = apartment.id;
         $("#apartmentNumber").value = apartment.number || "";
@@ -5848,6 +5945,8 @@
       }
 
       function newTenantApartment(id) {
+        resetSecondResidentForm();
+        $("#apartmentSaveMode").value = "replace";
         const apartment = getApartment(id);
         if (!apartment) return;
 
@@ -5897,6 +5996,8 @@
 
         apartment.status = "free";
         apartment.tenant = clone(EMPTY_TENANT);
+        apartment.coTenant = null;
+        apartment.residentAliases = [];
         apartment.contractStart = "";
         apartment.contractEnd = "";
         apartment.inspectionPhotos = [];
@@ -7476,7 +7577,7 @@
 
   <h1>Contrato de Locação com Prazo Determinado de 6 Meses</h1>
 
-  <p class="opening">Fazem entre si, <strong>${escapeHtml(contractSettings.landlordName)}</strong>, ${escapeHtml(contractSettings.landlordNationality)}, ${escapeHtml(contractSettings.landlordMaritalStatus)}, ${escapeHtml(contractSettings.landlordProfession)}, inscrito no RG n. ${escapeHtml(contractSettings.landlordRg)} expedida pela ${escapeHtml(contractSettings.landlordRgIssuer)} e portador do CPF sob o n. <strong>${escapeHtml(contractSettings.landlordCpf)}</strong>, residente e domiciliado na ${escapeHtml(contractSettings.landlordAddress)}, doravante denominado <strong>LOCADOR</strong>; de outro lado <strong>${escapeHtml(tenantName)}</strong>, brasileiro(a), inscrito(a) no CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número de telefone <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado(a) <strong>LOCATÁRIO(A)</strong>, firmam o presente <strong>CONTRATO DE LOCAÇÃO</strong>.</p>
+  <p class="opening">Fazem entre si, <strong>${escapeHtml(contractSettings.landlordName)}</strong>, ${escapeHtml(contractSettings.landlordNationality)}, ${escapeHtml(contractSettings.landlordMaritalStatus)}, ${escapeHtml(contractSettings.landlordProfession)}, inscrito no RG n. ${escapeHtml(contractSettings.landlordRg)} expedida pela ${escapeHtml(contractSettings.landlordRgIssuer)} e portador do CPF sob o n. <strong>${escapeHtml(contractSettings.landlordCpf)}</strong>, residente e domiciliado na ${escapeHtml(contractSettings.landlordAddress)}, doravante denominado <strong>LOCADOR</strong>; de outro lado ${apartmentResidents(apartment).map(residentContractIdentification).join("; e ")}, doravante ${apartment.coTenant?.name ? "denominados <strong>LOCATÁRIOS</strong>" : "denominado(a) <strong>LOCATÁRIO(A)</strong>"}, firmam o presente <strong>CONTRATO DE LOCAÇÃO</strong>.</p>
 
   <h2>Das Cláusulas do Contrato</h2>
 
@@ -7552,8 +7653,9 @@
 
   <div class="checklist">
     <p><strong>Declaração do Locatário:</strong></p>
-    <p>Eu, <strong>${escapeHtml(tenantName)}</strong>, abaixo assinado, confirmo que o imóvel foi inspecionado e que as condições de uso foram verificadas e estão de acordo com o que foi acordado no termo de vistoria.</p>
+    <p>${apartment.coTenant?.name ? "Nós" : "Eu"}, <strong>${apartmentResidents(apartment).map(person => escapeHtml(person.name)).join(" e ")}</strong>, ${apartment.coTenant?.name ? "abaixo assinados, confirmamos" : "abaixo assinado, confirmo"} que o imóvel foi inspecionado e que as condições de uso foram verificadas e estão de acordo com o que foi acordado no termo de vistoria.</p>
     <p>Assinatura do Locatário: _______________________ Data: ____/____/______</p>
+    ${apartment.coTenant?.name ? "<p>Assinatura do Segundo Locatário: _______________________ Data: ____/____/______</p>" : ""}
     <p>Assinatura do Locador: _______________________ Data: ____/____/______</p>
   </div>
 
@@ -7575,6 +7677,8 @@
       ${escapeHtml(tenantName)}<br>
       CPF n. ${escapeHtml(tenantCpf)}
     </div>
+
+    ${secondResidentSignature(apartment)}
 
     <div class="signature-gap-locatario-testemunhas"></div>
 
@@ -7845,7 +7949,7 @@
 
     <h1>TERMO DE VISTORIA DE ENTRADA</h1>
 
-    <p><strong>${escapeHtml(contractSettings.landlordName)}</strong>, ${escapeHtml(contractSettings.landlordMaritalStatus)}, ${escapeHtml(contractSettings.landlordProfession)}, inscrito no RG n. ${escapeHtml(contractSettings.landlordRg)} e portador do CPF sob o n. ${escapeHtml(contractSettings.landlordCpf)}, residente e domiciliado na ${escapeHtml(contractSettings.landlordAddress)}, doravante denominado <strong>LOCADOR</strong>; <strong>${escapeHtml(tenantName)}</strong>, brasileiro, e portador do CPF sob o n. <strong>${escapeHtml(tenantCpf)}</strong>, número telefônico <strong>${escapeHtml(tenantPhone)}</strong>, doravante denominado <strong>LOCATÁRIO</strong> no presente termo de vistoria.</p>
+    <p><strong>${escapeHtml(contractSettings.landlordName)}</strong>, ${escapeHtml(contractSettings.landlordMaritalStatus)}, ${escapeHtml(contractSettings.landlordProfession)}, inscrito no RG n. ${escapeHtml(contractSettings.landlordRg)} e portador do CPF sob o n. ${escapeHtml(contractSettings.landlordCpf)}, residente e domiciliado na ${escapeHtml(contractSettings.landlordAddress)}, doravante denominado <strong>LOCADOR</strong>; ${apartmentResidents(apartment).map(residentContractIdentification).join("; e ")}, doravante ${apartment.coTenant?.name ? "denominados <strong>LOCATÁRIOS</strong>" : "denominado(a) <strong>LOCATÁRIO(A)</strong>"} no presente termo de vistoria.</p>
 
     <h2>DADOS DO IMÓVEL</h2>
 
@@ -7960,6 +8064,8 @@
       ${escapeHtml(tenantName)} - LOCATÁRIO(A)<br>
       CPF n. ${escapeHtml(tenantCpf)}
     </div>
+
+    ${secondResidentSignature(apartment)}
 
     <p class="footer-note">Documento gerado automaticamente pelo sistema ${escapeHtml(appName)}.</p>
   </section>
