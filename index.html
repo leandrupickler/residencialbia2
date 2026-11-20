@@ -7332,12 +7332,13 @@
 
       function contractWitnessSignature(name, cpf) {
         const witnessName = String(name || "").trim();
+        if (!witnessName) return "";
         const witnessCpf = String(cpf || "").trim();
 
         return `
       <div class="line">
         <strong>TESTEMUNHA</strong><br>
-        ${witnessName ? escapeHtml(witnessName) : "Nome: _______________________________"}<br>
+        ${escapeHtml(witnessName)}<br>
         ${witnessCpf ? `CPF n. ${escapeHtml(contractCpf(witnessCpf))}` : "CPF: ________________________________"}
       </div>`;
       }
@@ -7521,11 +7522,16 @@
       min-height: 42px;
     }
 
-    .two {
+    .witness-signatures {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 42px;
-      margin-top: 0;
+    }
+
+    .witness-signatures > .line:only-child {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc((100% - 42px) / 2);
     }
 
     .checklist {
@@ -7711,7 +7717,7 @@
 
     <div class="signature-gap-locatario-testemunhas"></div>
 
-    <div class="two">
+    <div class="witness-signatures">
       ${contractWitnessSignature(contractSettings.witness1Name, contractSettings.witness1Cpf)}
 
       ${contractWitnessSignature(contractSettings.witness2Name, contractSettings.witness2Cpf)}
