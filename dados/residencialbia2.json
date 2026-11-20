@@ -68,7 +68,7 @@
       "baseRent": 1300,
       "maintenanceFee": 600,
       "contractStart": "2025-12-10",
-      "contractEnd": "2026-12-10",
+      "contractEnd": "2027-06-10",
       "tenant": {
         "name": "JARON GREGORI CAVALCANTE QUIRINO",
         "cpf": "122.805.159-38",
@@ -5123,7 +5123,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-08T12:07:16.929Z",
+    "updatedAt": "2026-11-20T15:33:24.641Z",
     "updatedBy": "residencial"
   }
 }
