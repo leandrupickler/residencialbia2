@@ -65,7 +65,7 @@
       "photo": "",
       "inspectionDate": "2025-12-10",
       "inspectionPhotos": [],
-      "baseRent": 1300,
+      "baseRent": 1350,
       "maintenanceFee": 600,
       "contractStart": "2025-12-10",
       "contractEnd": "2027-06-10",
@@ -1453,7 +1453,7 @@
       "tenantName": "JARON GREGORI CAVALCANTE QUIRINO",
       "tenantCpf": "122.805.159-38",
       "month": "2025-12",
-      "rent": 1300,
+      "rent": 1350,
       "energyMode": "noKwh",
       "kwhValue": 0,
       "kwhPrevious": 0,
@@ -5123,7 +5123,7 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-20T15:33:24.641Z",
+    "updatedAt": "2026-11-20T15:34:01.771Z",
     "updatedBy": "residencial"
   }
 }
